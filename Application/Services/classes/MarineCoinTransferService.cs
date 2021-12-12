@@ -25,11 +25,8 @@ namespace Application.Services.classes
             var user = await _MCTransferRepository.GetActiveUserById(id);
             if (user == null)
                 return null;
-            var mcTransferModel = new CashTransfer(Coin)
-            {
-                UserId = user.Id
-            };
-
+            var mcTransferModel = new CashTransfer(Coin, user.Id);
+            
             user.Wallet += Coin;
             await _MCTransferRepository.AddMCTransfer(mcTransferModel);
             return user.Wallet.ToString();
@@ -44,10 +41,8 @@ namespace Application.Services.classes
             if (user == null)
                 return null;
 
-            var mcTransferModel = new CashTransfer(Coin)
-            {
-                UserId = user.Id
-            };
+            var mcTransferModel = new CashTransfer(Coin, user.Id);
+            
 
             user.Wallet -= Coin;
             await _MCTransferRepository.AddMCTransfer(mcTransferModel);

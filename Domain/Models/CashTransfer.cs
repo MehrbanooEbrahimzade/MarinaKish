@@ -4,32 +4,34 @@ namespace Domain.Models
 {
     public class CashTransfer
     {
-        public CashTransfer(decimal cash)
+        public CashTransfer(decimal cash,Guid userid)
         {
+            Id = Guid.NewGuid();
             TransferDate = DateTime.Now;
             MarineCoin = cash;
             TransferNumber = TransferNumberGenerate();
+            UserId = userid; 
         }
 
         /// <summary>
         /// آیدی گردش مالی
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// شماره پیگیری
         /// </summary>
-        public string TransferNumber { get; set; }
+        public string TransferNumber { get; private set; }
 
         /// <summary>
         /// زمان گردش
         /// </summary>
-        public DateTime TransferDate { get; set; }
+        public DateTime TransferDate { get; private set; }
 
         /// <summary>
         /// مقدار پول جابجا شده
         /// </summary>
-        public decimal MarineCoin { get; set; }
+        public decimal MarineCoin { get; private set; }
 
         /// <summary>
         /// موفقیت امیز بودن تراکنش
@@ -39,7 +41,7 @@ namespace Domain.Models
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserId { get; set; }
+        public Guid UserId { get; private set; }
 
         public string TransferNumberGenerate()
         {
@@ -48,10 +50,10 @@ namespace Domain.Models
             var RandomNum = new Random().Next(1111, 9999);
             return milisecond + RandomNum + "-" + second;
         }
-
-        private CashTransfer()
+        public CashTransfer()
         {
 
         }
+        
     }
 }

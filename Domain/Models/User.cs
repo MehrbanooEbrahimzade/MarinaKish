@@ -21,7 +21,7 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set ; }
 
         /// <summary>
         /// تلفن همراه
