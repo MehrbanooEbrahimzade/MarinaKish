@@ -32,6 +32,11 @@ namespace Domain.Models
         public decimal MarineCoin { get; set; }
 
         /// <summary>
+        /// موفقیت امیز بودن تراکنش
+        /// </summary>
+        public bool IsSuccessful { get; set; }
+
+        /// <summary>
         /// آیدی کاربر
         /// </summary>
         public Guid UserId { get; set; }

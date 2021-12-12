@@ -73,7 +73,7 @@ namespace Infrastructure.Repository.classes
         /// </summary>
         public async Task<User> GetActiveUserById(Guid id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id );
         }
 
         /// <summary>

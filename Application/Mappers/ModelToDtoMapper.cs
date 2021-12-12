@@ -56,7 +56,6 @@ namespace Application.Mappers
                 Provice = x.Provice,
                 BirthDay = x.BirthDay,
                 Gender = x.Gender,
-                IsActive = x.IsActive,
                 Wallet = x.Wallet,
                 NationalCode = x.NationalCode,
                 CardNumber = x.CardNumber,
