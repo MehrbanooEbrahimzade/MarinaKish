@@ -31,12 +31,8 @@ namespace Application.Services.classes
             if (user == null || fun == null)
                 return null;
 
-            var commentObj = new Comment(command.Message, command.FunId, command.UserId)
-            {
-                FunType = fun.FunType,
-                UserCellPhone = user.CellPhone,
-                UserName = user.UserName
-            };
+            var commentObj = new Comment(command.Message, command.FunId, command.UserId, fun.FunType, user.CellPhone, user.UserName);
+            
             var addCommentResult = await _commentRepository.AddCommentAsync(commentObj);
 
             if (!addCommentResult)
@@ -51,7 +47,7 @@ namespace Application.Services.classes
         public async Task<bool> ChangeCommentStatus(ChangeCommentStatusCommand command)
         {
             var comment = await _commentRepository.GetCommentById(command.Id);
-            comment.Status = command.Status;
+            comment.UpdateCommentStatus(command.Status);
 
             return await _commentRepository.SaveChangeCommentAsync();
         }
@@ -64,7 +60,7 @@ namespace Application.Services.classes
             foreach (var guid in command.IDs)
             {
                 var comment = await _commentRepository.GetCommentById(guid);
-                comment.Status = command.Status;
+                comment.UpdateCommentStatus(command.Status);
             }
             return await _commentRepository.SaveChangeCommentAsync();
         }
@@ -89,7 +85,7 @@ namespace Application.Services.classes
             if (comment == null)
                 return false;
 
-            comment.Like += 1;
+            comment.UpdateCommentLikes(1);
             return await _commentRepository.SaveChangeCommentAsync();
         }
 
@@ -102,7 +98,7 @@ namespace Application.Services.classes
             if (comment == null)
                 return false;
 
-            comment.Like -= 1;
+            comment.UpdateCommentDislikes(1);
             return await _commentRepository.SaveChangeCommentAsync();
         }
 
@@ -114,7 +110,7 @@ namespace Application.Services.classes
 
             foreach (var comment in userComments)
             {
-                comment.Status = EStatus.Blocked;
+                comment.UpdateCommentStatus(EStatus.Blocked);
             }
             var save = await _commentRepository.SaveChangeCommentAsync();
             if (!save)
@@ -130,7 +126,7 @@ namespace Application.Services.classes
             var comment = await _commentRepository.GetWaitingCommentById(id);
             if (comment == null)
                 return null;
-            comment.Status = EStatus.Accepted;
+            comment.UpdateCommentStatus(EStatus.Accepted);
 
             var save = await _commentRepository.SaveChangeCommentAsync();
             if (!save)
@@ -146,7 +142,7 @@ namespace Application.Services.classes
             var comment = await _commentRepository.GetWaitingCommentById(id);
             if (comment == null)
                 return null;
-            comment.Status = EStatus.Declined;
+            comment.UpdateCommentStatus(EStatus.Declined);
 
             var save = await _commentRepository.SaveChangeCommentAsync();
             if (!save)
@@ -162,7 +158,7 @@ namespace Application.Services.classes
             var comment = await _commentRepository.GetNotBlockedCommentById(id);
             if (comment == null)
                 return null;
-            comment.Status = EStatus.Blocked;
+            comment.UpdateCommentStatus(EStatus.Blocked);
 
             var save = await _commentRepository.SaveChangeCommentAsync();
             if (!save)

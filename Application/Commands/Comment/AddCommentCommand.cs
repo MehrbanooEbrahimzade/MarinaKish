@@ -1,5 +1,6 @@
 ﻿using System;
 using Application.Validators.Comment;
+using Domain.Models.enums;
 
 namespace Application.Commands.Comment
 {
@@ -20,10 +21,16 @@ namespace Application.Commands.Comment
         /// شناسه کاربری
         /// </summary>
         public Guid UserId { get; set; }
-
+        /// <summary>
+        /// نام کاربری
+        /// </summary>
+        public string UserName { get; set; }
+        public FunType FunType { get; set; }
+        public string  CellPhone { get; set; }
         /// <summary>
         /// Command Validation
         /// </summary>
+
         public override bool Validate()
         {
             return new AddCommentCommandValidator().Validate(this).IsValid;
