@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Marina_Club.Commands.User;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Marina_Club.Services.interfaces;
-using Marina_Club.Commands;
+using Application.Commands;
+using Application.Services.interfaces;
 
 namespace Marina_Club.Controllers
 {

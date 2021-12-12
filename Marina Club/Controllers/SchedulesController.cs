@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Marina_Club.Services.interfaces;
 using System.Threading.Tasks;
-using Marina_Club.Commands.Schedule;
 using System;
 using System.Globalization;
-using Marina_Club.Commands;
+using Application.Commands;
+using Application.Commands.Schedule;
+using Application.Services.interfaces;
 
 namespace Marina_Club.Controllers
 {

@@ -1,9 +1,9 @@
-﻿using Marina_Club.Services.interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Marina_Club.Commands.Message;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Marina_Club.Commands;
+using Application.Commands;
+using Application.Commands.Message;
+using Application.Services.interfaces;
 
 namespace Marina_Club.Controllers
 {

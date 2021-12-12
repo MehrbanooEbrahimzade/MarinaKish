@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Marina_Club.Services.interfaces;
-using Marina_Club.Commands.User;
-using Marina_Club.Commands;
+using Application.Commands.User;
+using Application.Services.interfaces;
 
 namespace Marina_Club.Controllers
 {
