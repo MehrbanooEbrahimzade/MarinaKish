@@ -35,15 +35,8 @@ namespace Application.Services.classes
             if (command.NumberOfTicket > schedule.AvailableCapacity || schedule == null || user == null)
                 return null;
 
-            var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket)
-            {
-                ScheduleId = schedule.Id,
-                FunId = schedule.FunId,
-                UserId = user.Id,
-                TotalPrice = schedule.Price * command.NumberOfTicket,
-                CellPhone = user.CellPhone,
-                FullName = user.FullName
-            };
+            var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+           
 
             var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
             if (!addAndSave)
@@ -93,18 +86,10 @@ namespace Application.Services.classes
                 fun.SellerCapacity += command.NumberOfTicket;
             }
 
-            schedule.AvailableCapacity -= command.NumberOfTicket;
+            command.AvailableCapacity -= command.NumberOfTicket;
 
-            var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket)
-            {
-                ScheduleId = schedule.Id,
-                FunId = fun.Id,
-                UserId = user.Id,
-                TotalPrice = schedule.Price * command.NumberOfTicket,
-                Condition = ECondition.Reservation,
-                CellPhone = user.CellPhone,
-                FullName = user.FullName
-            };
+            var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+         
 
             var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
             if (!addAndSave)
@@ -258,7 +243,7 @@ namespace Application.Services.classes
             fun.OnlineCapacity -= ticket.NumberOfTicket;
 
             ticket.Condition = ECondition.Reservation;
-            schedule.AvailableCapacity -= ticket.NumberOfTicket;
+            //schedule.AvailableCapacity -= ticket.NumberOfTicket;
 
             var save = await _ticketRepository.SaveChangesAsync();
             if (!save)
@@ -286,7 +271,7 @@ namespace Application.Services.classes
 
             fun.RealTimeCapacity += ticket.NumberOfTicket;
             ticket.Condition = ECondition.Cancel;
-            schedule.AvailableCapacity += ticket.NumberOfTicket;
+            //schedule.AvailableCapacity += ticket.NumberOfTicket;
             user.Wallet += ticket.TotalPrice;
 
             var save = await _ticketRepository.SaveChangesAsync();

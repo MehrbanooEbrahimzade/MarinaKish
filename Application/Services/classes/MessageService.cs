@@ -127,8 +127,10 @@ namespace Application.Services.classes
         {
             var message = await _messageRepository.GetMessageById(command.MessageID);
             if (message == null)
+            {
                 return null;
-            message.message = command.EditedMessage;
+                command.Text = command.EditedMessage;  
+            }
             var save = await _messageRepository.UpdateMessages();
             if (!save)
                 return null;

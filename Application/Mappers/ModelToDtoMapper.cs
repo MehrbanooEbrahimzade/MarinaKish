@@ -423,7 +423,7 @@ namespace Application.Mappers
                 Id = message.Id,
                 UserName = message.UserName,
                 ShamsiPlaceDate = persianDate,
-                message = message.message,
+                Text = message.Text,
                 ConversationID = message.ConversationID,
                 MessageStatus = message.MessageStatus
 
@@ -443,7 +443,7 @@ namespace Application.Mappers
                 Id = x.Id,
                 UserName = x.UserName,
                 ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
-                message = x.message,
+                Text = x.Text,
                 ConversationID = x.ConversationID,
                 MessageStatus = x.MessageStatus
 

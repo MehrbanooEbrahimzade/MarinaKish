@@ -14,11 +14,11 @@ namespace Application.Commands.Message
         /// پیام برای ویرایش کردن
         /// </summary>
         public string EditedMessage { get; set; }
+        public string Text { get; internal set; }
 
         public override bool Validate()
         {
             return new EditMessageCommandValidator().Validate(this).IsValid;
-
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Application.Commands.Schedule
         /// قیمت تخفیف
         /// </summary>
         public decimal DiscountPrice { get; set; }
+        public decimal Price { get; internal set; }
 
         public override bool Validate()
         {
