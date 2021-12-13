@@ -45,7 +45,7 @@ namespace Application.Services.classes
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
                 return null;
-            return conversation.State;
+            return conversation.State=EStates.Open;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Application.Services.classes
                 return null;
             return conversation.State;
         }
-
+        
         /// <summary>
         /// کم اهمیت کردن تالار گفتگو
         /// </summary>

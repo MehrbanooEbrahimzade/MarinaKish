@@ -33,72 +33,72 @@ namespace Domain.Models
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public enums.FunType FunType { get;private set; }
+        public enums.FunType FunType { get;/*private*/ set; }
 
         /// <summary>
         /// قیمت :
         /// </summary>
-        public decimal Price { get;private set; }
+        public decimal Price { get;/*private*/ set; }
 
         /// <summary>
         /// زمان شروع :
         /// </summary>
-        public TimeSpan StartTime { get;private set; }
+        public TimeSpan StartTime { get;/*private*/ set; }
 
         /// <summary>
         /// زمان پایان :
         /// </summary>
-        public TimeSpan EndTime { get;private set; }
+        public TimeSpan EndTime { get;/*private*/ set; }
 
         /// <summary>
         /// مدت زمان : 
         /// </summary>
-        public int SansDuration { get;private set; }
+        public int SansDuration { get;/*private*/ set; }
 
         /// <summary>
         /// کل فضای سانس
         /// </summary>
-        public int SansTotalCapacity { get;private set; }
+        public int SansTotalCapacity { get;/*private*/ set; }
 
         /// <summary>
         /// زمان استراحت بین 2 سانس :
         /// </summary>
-        public int SansGapTime { get;private set; }
+        public int SansGapTime { get;/*private*/ set; }
 
         /// <summary>
         /// فضای باقی مانده انلاین :
         /// </summary>
-        public int OnlineCapacity { get;private set; }
+        public int OnlineCapacity { get; set; } //فقط خواندینه
 
         /// <summary>
         /// فضای باقی مانده حقیقی :
         /// </summary>
-        public int RealTimeCapacity { get;private set; }
+        public int RealTimeCapacity { get;/*private*/ set; }
 
         /// <summary>
         /// فضای مانده فروشنده :
         /// </summary>
-        public int SellerCapacity { get;private set; }
+        public int SellerCapacity { get;/*private*/ set; }
 
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get;private set; }
+        public bool IsActive { get;/*private*/ set; }
 
         /// <summary>
         /// درباره تفریح
         /// </summary>
-        public string About { get;private set; }
+        public string About { get;/*private*/ set; } //?
 
         /// <summary>
         /// عکس پس زمینه
         /// </summary>
-        public string BackgroundPicture { get;private set; }
+        public string BackgroundPicture { get; set; }
 
         /// <summary>
         /// آیکون
         /// </summary>
-        public string Icon { get;private set; }
+        public string Icon { get; set; }
 
         public string GenerateFunCode()
         {

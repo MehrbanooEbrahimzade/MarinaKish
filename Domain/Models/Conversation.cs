@@ -18,31 +18,31 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get;private set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// عنوان
         /// </summary>
-        public string Title { get;private set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// وضعیت
         /// </summary>
-        public EStates State { get;private set; }
+        public EStates State { get; set; }
 
         /// <summary>
         /// میزان اهمیت
         /// </summary>
-        public EPriority Priority { get;private set; }
+        public EPriority Priority { get; set; }
 
         /// <summary>
         /// زمان ساخته شدن
         /// </summary>
-        public DateTime CreatedTime { get;private set; }
+        public DateTime CreatedTime { get; private set; }
         /// <summary>
         /// آخرین فعالیت
         /// </summary>
-        public DateTime LastActivity { get;private set; }
+        public DateTime LastActivity { get; set; }
 
         private Conversation()
         {

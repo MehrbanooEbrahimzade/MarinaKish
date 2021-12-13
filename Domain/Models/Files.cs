@@ -18,47 +18,47 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get;private set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// نام فایل
         /// </summary>
-        public string Name { get;private set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// مسیر
         /// </summary>
-        public string FilePath { get;private set; }
+        public string FilePath { get; private set; }
 
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { get;private set; }
+        public string Size { set { } } //فقظ خواندنی
 
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get;private set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// زمان اضافه شدن
         /// </summary>
-        public DateTime PlaceDate { get;private set; }
+        public DateTime PlaceDate { get; private set; }
 
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public string UserID { get;private set; }
+        public string UserID { get; set; }
 
         /// <summary>
         /// آیدی تفریح
         /// </summary>
-        public string FunID { get;private set; }
+        public string FunID { get; set; }
 
         /// <summary>
         /// آیدی سانس
         /// </summary>
-        public string ScheduleID { get;private set; }
+        public string ScheduleID { get; set; }
 
         private Files()
         {
