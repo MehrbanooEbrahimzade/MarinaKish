@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Web.Http;
-using Application.Validators.User;
+﻿using Application.Validators.User;
 
 namespace Application.Commands.User
 {
