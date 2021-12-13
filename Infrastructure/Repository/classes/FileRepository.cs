@@ -31,7 +31,7 @@ namespace Infrastructure.Repository.classes
         public async Task<Files> GetFileById(Guid id)
         {
             return await _context.Files
-                .FirstOrDefaultAsync(x => x.Id == id && x.isActive == true);
+                .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Files>> GetAllPicForFun(string funid)
         {
             return await _context.Files
-                .Where(x => x.FunID.Contains(funid) && x.isActive == true)
+                .Where(x => x.FunID.Contains(funid) && x.IsActive == true)
                 .ToListAsync();
         }
 
@@ -130,7 +130,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Files>> GetAllPicForUser(string userid)
         {
             return await _context.Files
-                .Where(x => x.UserID.Contains(userid) && x.isActive == true)
+                .Where(x => x.UserID.Contains(userid) && x.IsActive == true)
                 .ToListAsync();
         }
 
@@ -140,7 +140,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Files>> GetAllPicForSchedule(string scheduleid)
         {
             return await _context.Files
-                .Where(x => x.ScheduleID.Contains(scheduleid) && x.isActive == true)
+                .Where(x => x.ScheduleID.Contains(scheduleid) && x.IsActive == true)
                 .ToListAsync();
         }
 

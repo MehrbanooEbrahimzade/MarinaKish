@@ -131,12 +131,12 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.icon = pic.Id.ToString();
+            fun.Icon = pic.Id.ToString();
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
                 return null;
-            return fun.icon;
+            return fun.Icon;
         }
 
         /// <summary>

@@ -23,82 +23,82 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get;private set; }
 
         /// <summary>
         /// کد شناسایی تفریح - ساخته شده توسط ما
         /// </summary>
-        public string SystemFunCode { get; set; }
+        public string SystemFunCode { get;private set; }
 
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public enums.FunType FunType { get; set; }
+        public enums.FunType FunType { get;private set; }
 
         /// <summary>
         /// قیمت :
         /// </summary>
-        public decimal Price { get; set; }
+        public decimal Price { get;private set; }
 
         /// <summary>
         /// زمان شروع :
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan StartTime { get;private set; }
 
         /// <summary>
         /// زمان پایان :
         /// </summary>
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan EndTime { get;private set; }
 
         /// <summary>
         /// مدت زمان : 
         /// </summary>
-        public int SansDuration { get; set; }
+        public int SansDuration { get;private set; }
 
         /// <summary>
         /// کل فضای سانس
         /// </summary>
-        public int SansTotalCapacity { get; set; }
+        public int SansTotalCapacity { get;private set; }
 
         /// <summary>
         /// زمان استراحت بین 2 سانس :
         /// </summary>
-        public int SansGapTime { get; set; }
+        public int SansGapTime { get;private set; }
 
         /// <summary>
         /// فضای باقی مانده انلاین :
         /// </summary>
-        public int OnlineCapacity { get; set; }
+        public int OnlineCapacity { get;private set; }
 
         /// <summary>
         /// فضای باقی مانده حقیقی :
         /// </summary>
-        public int RealTimeCapacity { get; set; }
+        public int RealTimeCapacity { get;private set; }
 
         /// <summary>
         /// فضای مانده فروشنده :
         /// </summary>
-        public int SellerCapacity { get; set; }
+        public int SellerCapacity { get;private set; }
 
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get;private set; }
 
         /// <summary>
         /// درباره تفریح
         /// </summary>
-        public string About { get; set; }
+        public string About { get;private set; }
 
         /// <summary>
         /// عکس پس زمینه
         /// </summary>
-        public string BackgroundPicture { get; set; }
+        public string BackgroundPicture { get;private set; }
 
         /// <summary>
         /// آیکون
         /// </summary>
-        public string icon { get; set; }
+        public string Icon { get;private set; }
 
         public string GenerateFunCode()
         {
