@@ -76,6 +76,7 @@ namespace Domain.Models
         /// شناسه کاربری
         /// </summary>
         public Guid UserId { get; private set; }
+
         /// <summary>
         /// آپدیت کردن Status کامنت 
         /// </summary>
@@ -84,6 +85,7 @@ namespace Domain.Models
         {
             this.Status = status;
         }
+
         /// <summary>
         /// آپدیت لایک ها 
         /// </summary>
@@ -92,6 +94,7 @@ namespace Domain.Models
         {
             this.Like += like; 
         }
+
         /// <summary>
         /// کاهش تعداد لایک ها 
         /// </summary>

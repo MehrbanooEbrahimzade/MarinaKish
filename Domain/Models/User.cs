@@ -14,7 +14,7 @@ namespace Domain.Models
             SystemUserCode = GenerateUserCode();
             RoleType = RoleTypec.Buyer;
             Gender = EGender.Other;
-            BirthDay = default;
+            BirthDay = default;  
             DateJoin = DateTime.Now;
         }
         

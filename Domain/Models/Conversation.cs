@@ -28,7 +28,7 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت
         /// </summary>
-        public EStates State { get; set; }
+        public EStates State { get;  set; }
 
         /// <summary>
         /// میزان اهمیت

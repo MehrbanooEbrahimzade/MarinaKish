@@ -9,6 +9,7 @@ namespace Domain.Models
     {
         public Files(string fileName, string filePath)
         {
+
             Name = fileName;
             FilePath = filePath;
             IsActive = true;
@@ -38,7 +39,7 @@ namespace Domain.Models
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get;  set; }
 
         /// <summary>
         /// زمان اضافه شدن

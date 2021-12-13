@@ -41,7 +41,7 @@ namespace Domain.Models
         /// <summary>
         /// زمان برگزاری سانس - به میلادی
         /// </summary>
-        public DateTime ScheduleMiladiTime { get; set; } // badan bhash ye harekatayi bznm
+        public DateTime ScheduleMiladiTime { get; set; } // badan bhash ye harekatayi bznm //🎤عالی نواختی
 
         /// <summary>
         /// زمان شروع
