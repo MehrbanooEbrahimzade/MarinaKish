@@ -28,19 +28,21 @@ namespace Application.Services.classes
         {
             var fileName = NameGenerator(file.FileName);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
-            var size = file.Length.ToString();
+            //var size = file.Length.ToString();
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            List<string> fileProperties = new List<string>();
-            fileProperties.Add(fileName);
-            fileProperties.Add(filePath);
-            fileProperties.Add(size);
+            var fileObj = new List<string>
+            {
+                fileName,
+                filePath,
+                file.Length.ToString()
+            }.ToModel();
 
-            var fileObj = fileProperties.ToModel();
+            //var fileObj = fileProperties.ToModel();
 
             var addedFileResult = await _fileRepository.UploadFileAsync(fileObj);
 
@@ -55,9 +57,10 @@ namespace Application.Services.classes
         public async Task<Files> GetFileById(Guid id)
         {
             var file = await _fileRepository.GetFileById(id);
-            if (file == null)
-                return null;
-            return file;
+             //if (file == null)
+             //   return null;
+             //return file;
+            return file?? null;
         }
 
         /// <summary>
