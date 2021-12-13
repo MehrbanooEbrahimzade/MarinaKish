@@ -11,39 +11,39 @@ namespace Domain.Models
         {
             Name = fileName;
             FilePath = filePath;
-            isActive = true;
+            IsActive = true;
             PlaceDate = DateTime.Now;
         }
 
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// نام فایل
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// مسیر
         /// </summary>
-        public string FilePath { get; set; }
+        public string FilePath { get; private set; }
 
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { get; set; }
+        public string Size { set { } } //فقظ خواندنی
 
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool isActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// زمان اضافه شدن
         /// </summary>
-        public DateTime PlaceDate { get; set; }
+        public DateTime PlaceDate { get; private set; }
 
         /// <summary>
         /// آیدی کاربر

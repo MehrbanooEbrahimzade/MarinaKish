@@ -18,12 +18,12 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// عنوان
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// وضعیت
@@ -38,14 +38,16 @@ namespace Domain.Models
         /// <summary>
         /// زمان ساخته شدن
         /// </summary>
-        public DateTime CreatedTime { get; set; }
-
+        public DateTime CreatedTime { get; private set; }
         /// <summary>
         /// آخرین فعالیت
         /// </summary>
         public DateTime LastActivity { get; set; }
 
-        private Conversation() {   }
+        private Conversation()
+        {
+
+        }
 
         //internal List<MessageDto> ToDto(List<Message> messages)
         //{

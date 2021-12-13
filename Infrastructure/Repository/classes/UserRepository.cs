@@ -129,7 +129,7 @@ namespace Infrastructure.Repository.classes
         public async Task<Files> GetFileById(Guid id)
         {
             return await _context.Files
-                .SingleOrDefaultAsync(x => x.Id == id && x.isActive == true);
+                .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         }
 
         /// <summary>

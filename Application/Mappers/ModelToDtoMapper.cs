@@ -103,7 +103,7 @@ namespace Application.Mappers
                 SellerCapacity = fun.SellerCapacity,
                 RealTimeCapacity = fun.RealTimeCapacity,
                 BackgroundPicture = fun.BackgroundPicture,
-                icon = fun.icon
+                icon = fun.Icon
 
                 #endregion
             };
@@ -133,7 +133,7 @@ namespace Application.Mappers
                 SellerCapacity = x.SellerCapacity,
                 RealTimeCapacity = x.RealTimeCapacity,
                 BackgroundPicture = x.BackgroundPicture,
-                icon = x.icon
+                icon = x.Icon
 
                 #endregion
             }).ToList();
@@ -335,7 +335,7 @@ namespace Application.Mappers
                 Id = file.Id,
                 Name = file.Name,
                 ShamsiPlaceDate = shamsiPlaceDate,
-                isActive = file.isActive
+                isActive = file.IsActive
                 #endregion
             };
         }
@@ -352,7 +352,7 @@ namespace Application.Mappers
                 Id = x.Id,
                 Name = x.Name,
                 ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
-                isActive = x.isActive
+                isActive = x.IsActive
 
                 #endregion
             }).ToList();

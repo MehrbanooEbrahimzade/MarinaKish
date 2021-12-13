@@ -221,7 +221,7 @@ namespace Application.Services.classes
             var pic = await _fileRepository.GetFileById(id);
             if (pic == null)
                 return false;
-            pic.isActive = false;
+            pic.IsActive = false;
             return await _fileRepository.UpdateFileAsync();
         }
 
@@ -233,7 +233,7 @@ namespace Application.Services.classes
             var pic = await _fileRepository.getNotActiveFileById(id);
             if (pic == null)
                 return false;
-            pic.isActive = true;
+            pic.IsActive = true;
             return await _fileRepository.UpdateFileAsync();
         }
 
