@@ -5,7 +5,7 @@ namespace Domain.Models
 {
     public class Fun
     {
-        public Fun(enums.FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime, int sansDuration, int sansTotalCapacity, int sansGapTime)
+        public Fun(enums.FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime, int sansDuration, int sansTotalCapacity, int sansGapTime, string about)
         {
             SystemFunCode = GenerateFunCode();
             FunType = funType;
@@ -19,6 +19,7 @@ namespace Domain.Models
             OnlineCapacity = 0;
             RealTimeCapacity = 0;
             SellerCapacity = 0;
+            About = about;
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Domain.Models
         public enums.FunType FunType { get; private set; }
 
         /// <summary>
-        ///  متد سازی اسامی تفریح  //mbrk
+        ///  متد سازی اسامی تفریح  
         /// </summary>
         public void ForFunType(FunType funtype)
         {
@@ -49,7 +50,7 @@ namespace Domain.Models
         public decimal Price { get; private set; }
 
         /// <summary>
-        /// متد سازی قیمت : //mbrk
+        /// متد سازی قیمت 
         /// </summary>
         public void ForPrice(decimal price)
         {
@@ -63,7 +64,7 @@ namespace Domain.Models
 
 
         /// <summary>
-        /// متد سازی زمان شروع : //mbrk
+        /// متد سازی زمان شروع  
         /// </summary>
         public void ForStartTime(TimeSpan starttime)
         {
@@ -75,7 +76,7 @@ namespace Domain.Models
         public TimeSpan EndTime { get; private set; }
 
         /// <summary>
-        /// متد سازی زمان پایان : //mbrk
+        /// متد سازی زمان پایان  
         /// </summary>
         public void ForEndTime(TimeSpan endtime)
         {
@@ -87,7 +88,7 @@ namespace Domain.Models
         public int SansDuration { get; private set; }
 
         /// <summary>
-        /// متد سازی مدت زمان : //mbrk
+        /// متد سازی مدت زمان  
         /// </summary>
         public void ForSansDuration(int sansduration)
         {
@@ -100,7 +101,7 @@ namespace Domain.Models
         public int SansTotalCapacity { get; private set; }
 
         /// <summary>
-        /// متد سازی کل فضای سانس  : //mbrk
+        /// متد سازی کل فضای سانس 
         /// </summary>
         public void ForSansTotalCapacity(int sanstotalcapacity)
         {
@@ -113,41 +114,43 @@ namespace Domain.Models
         public int SansGapTime { get; private set; }
 
         /// <summary>
-        /// متد سازی زمان استراحت بین 2 سانس :  : //mbrk
+        /// متد سازی زمان استراحت بین 2 سانس     
         /// </summary>
         public void ForSansGapTime(int sansgaptime)
         {
             this.SansGapTime = sansgaptime;
         }
-        //***************************************************************
+
         /// <summary>
         /// فضای باقی مانده انلاین :
         /// </summary>
         public int OnlineCapacity { get; private set; }
 
         /// <summary>
-        ///  ++متد سازی فضای باقی مانده انلاین  : //mbrk
+        ///  ++متد سازی فضای باقی مانده انلاین   
         /// </summary>
         public void PlassOnlineCapacity(int onlinecapacity)
         {
             this.OnlineCapacity += onlinecapacity;
+            this.OnlineCapacity -= onlinecapacity;
+
         }
 
         /// <summary>
-        ///  --متد سازی فضای باقی مانده انلاین  : //mbrk
+        ///  --متد سازی فضای باقی مانده انلاین   
         /// </summary>
         public void MinusOnlineCapacity(int onlinecapacity)
         {
             this.OnlineCapacity -= onlinecapacity;
         }
-        //*******************************************************************
+
         /// <summary>
         /// فضای باقی مانده حقیقی :
         /// </summary>
         public int RealTimeCapacity { get; private set; }
 
         /// <summary>
-        ///  ++متد سازی فضای باقی مانده حقیقی  : //mbrk
+        ///  ++متد سازی فضای باقی مانده حقیقی   
         /// </summary>
         public void PlassRealTimeCapacity(int realtimecapacity)
         {
@@ -155,20 +158,20 @@ namespace Domain.Models
         }
 
         /// <summary>
-        ///  --متد سازی فضای باقی مانده حقیقی  : //mbrk
+        ///  --متد سازی فضای باقی مانده حقیقی  
         /// </summary>
         public void MinusRealTimeCapacity(int realtimecapacity)
         {
             this.RealTimeCapacity -= realtimecapacity;
         }
-        //**************************************************************
+
         /// <summary>
         /// فضای مانده فروشنده :
         /// </summary>
         public int SellerCapacity { get; private set; }
 
         /// <summary>
-        ///  ++متد سازی فضای مانده فروشنده  : //mbrk
+        ///  ++متد سازی فضای مانده فروشنده  
         /// </summary>
         public void PlassSellerCapacity(int sellercapacity)
         {
@@ -176,20 +179,20 @@ namespace Domain.Models
         }
 
         /// <summary>
-        ///  --متد سازی فضای مانده فروشنده  : //mbrk
+        ///  --متد سازی فضای مانده فروشنده   
         /// </summary>
         public void MinusSellerCapacity(int sellercapacity)
         {
             this.SellerCapacity -= sellercapacity;
         }
-        //******************************************************************
+
         /// <summary>
         /// فعال بودن
         /// </summary>
         public bool IsActive { get; private set; }
 
         /// <summary>
-        ///  متد سازی فعال بودن  //mbrk
+        ///  متد سازی فعال بودن   
         /// </summary>
         public void ForIsActive(bool isactive)
         {
@@ -203,7 +206,7 @@ namespace Domain.Models
         public string About { get; private set; }
 
         /// <summary>
-        ///  متد سازی درباره تفریح  //mbrk
+        ///  متد سازی درباره تفریح  
         /// </summary>
         public void ForAbout(string aboute)
         {
@@ -214,10 +217,10 @@ namespace Domain.Models
         /// <summary>
         /// عکس پس زمینه
         /// </summary>
-        public string BackgroundPicture { get;private set; }
+        public string BackgroundPicture { get; private set; }
 
         /// <summary>
-        ///  متد سازی عکس پس زمینه  //mbrk
+        ///  متد سازی عکس پس زمینه   
         /// </summary>
         public void ForBackgroundPicture(string backgroundpicture)
         {
@@ -228,10 +231,10 @@ namespace Domain.Models
         /// <summary>
         /// آیکون
         /// </summary>
-        public string Icon { get;private set; }
+        public string Icon { get; private set; }
 
         /// <summary>
-        ///  متد سازی آیکون  //mbrk
+        ///  متد سازی آیکون   
         /// </summary>
         public void ForIcon(string icon)
         {

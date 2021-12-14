@@ -33,7 +33,7 @@ namespace Domain.Models
         public EStates State { get;private set; }
         
         /// <summary>
-        ///متد سازی وضعیت  //mbrk
+        ///متد سازی وضعیت  
         /// </summary>
         public void ForStates(EStates eStates)
         {
@@ -46,7 +46,7 @@ namespace Domain.Models
         public EPriority Priority { get;private set; }
         
         /// <summary>
-        ///متد سازی میزان اهمیت  //mbrk
+        ///متد سازی میزان اهمیت 
         /// </summary>
         public void ForPriority(EPriority ePriority)
         {
@@ -64,7 +64,7 @@ namespace Domain.Models
         public DateTime LastActivity { get;private set; }
 
         /// <summary>
-        ///متد سازی آخرین فعالیت  //mbrk
+        ///متد سازی آخرین فعالیت  
         /// </summary>
         public void ForLastActivity(DateTime dateTime)
         {

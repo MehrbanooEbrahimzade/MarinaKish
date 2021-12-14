@@ -41,8 +41,8 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetOpenConversationById(id);
             if (conversation == null)
                 return null;
-            //conversation.State = EStates.Closed;
-             conversation.ForStates(EStates.Closed);
+              conversation.ForStates(EStates.Closed);
+
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
