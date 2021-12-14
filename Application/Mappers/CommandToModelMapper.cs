@@ -39,7 +39,7 @@ namespace Application.Mappers
             return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime),
                 command.SansDuration, command.SansTotalCapacity, command.SansGapTime)
             {
-                About = command.About
+                //About=About.command
             };
         }
 
