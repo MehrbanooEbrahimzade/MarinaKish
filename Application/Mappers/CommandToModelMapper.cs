@@ -37,7 +37,7 @@ namespace Application.Mappers
         public static Fun ToModel(this AddFunCommand command)
         {
             return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime),
-                command.SansDuration, command.SansTotalCapacity, command.SansGapTime)
+                command.SansDuration, command.SansTotalCapacity, command.SansGapTime,command.About)
             {
                 //About=About.command
             };
