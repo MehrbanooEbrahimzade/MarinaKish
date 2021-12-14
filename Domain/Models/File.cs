@@ -61,7 +61,7 @@ namespace Domain.Models
         /// <summary>
         /// آیدی سانس
         /// </summary>
-        public string ScheduleID { get; set; }////TODO:delete
+        public string ScheduleID { get; set; }//TODO:delete
 
         private File()
         {

@@ -21,6 +21,7 @@ namespace Domain.Models
             OnlineCapacity = 0;
             RealTimeCapacity = 0;
             SellerCapacity = 0;
+            About = about;
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Domain.Models
         public enums.FunType FunType { get; private set; }
 
         /// <summary>
-        ///  متد سازی اسامی تفریح  //mbrk
+        ///  متد سازی اسامی تفریح  
         /// </summary>
         public void ForFunType(FunType funtype)
         {
@@ -111,7 +112,7 @@ namespace Domain.Models
         public string About { get; private set; }
 
         /// <summary>
-        ///  متد سازی درباره تفریح  //mbrk
+        ///  متد سازی درباره تفریح  
         /// </summary>
 
         /// <summary>

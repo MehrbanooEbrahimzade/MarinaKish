@@ -37,11 +37,9 @@ namespace Application.Mappers
         /// </summary>
         public static Fun ToModel(this AddFunCommand command)
         {
-            return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime),
-                command.SansDuration, command.SansTotalCapacity, command.SansGapTime,command.About)
-            {
-                //About=About.command
-            };
+            return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
+                TimeSpan.Parse(command.EndTime),
+                command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
         }
 
         /// <summary>
@@ -101,7 +99,7 @@ namespace Application.Mappers
 
         public static Message ToModel(this AddMessageCommand command)
         {
-            return new Message(command.Username,command.Message,command.ConversationID,command.UserID);
+            return new Message(command.ConversationID, command.UserID,command.Username, command.Message);
         }
     }
 }
