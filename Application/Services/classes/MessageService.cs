@@ -93,7 +93,7 @@ namespace Application.Services.classes
             var message = await _messageRepository.GetMessageById(id);
             if (message == null)
                 return null;
-            message.MessageStatus = EMessageStatus.Deleted;
+            message.MessageStatusSet(EMessageStatus.Deleted);
             return await _messageRepository.UpdateMessages();
         }
 
@@ -127,8 +127,10 @@ namespace Application.Services.classes
         {
             var message = await _messageRepository.GetMessageById(command.MessageID);
             if (message == null)
+            {
                 return null;
-            message.message = command.EditedMessage;
+                command.Text = command.EditedMessage;  
+            }
             var save = await _messageRepository.UpdateMessages();
             if (!save)
                 return null;

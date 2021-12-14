@@ -45,11 +45,13 @@ namespace Application.Services.classes
                 for (int j = 0; j < sansCount; j++)
                 {
                     var startTimes = fun.StartTime.Add(j * totalSansTime);
-                    var sansModel = new Schedule(fun.SystemFunCode, fun.FunType, scheduleExcuteTime, fun.Price, startTimes, startTimes.Add(totalSansTime))
-                    {
-                        AvailableCapacity = fun.SansTotalCapacity,
-                        FunId = fun.Id
-                    };
+                    var sansModel = new Schedule(fun.FunType, scheduleExcuteTime, fun.Price, fun.SansTotalCapacity, fun.StartTime, fun.EndTime);
+                  
+                    //var sansModel = new Schedule(fun.SystemFunCode, fun.FunType, scheduleExcuteTime, fun.Price, startTimes, startTimes.Add(totalSansTime))
+                    //{
+                    // AvailableCapacity = fun.SansTotalCapacity,
+                    //FunId = fun.Id
+                    //};
 
                     fun.PlassOnlineCapacity((int)sansModel.AvailableCapacity); 
                     fun.PlassRealTimeCapacity((int)sansModel.AvailableCapacity ); 
@@ -103,7 +105,7 @@ namespace Application.Services.classes
             foreach (var guid in command.IDs)
             {
                 var schedule = await _scheduleRepository.GetScheduleByIdAsync(guid);
-                schedule.IsExist = command.IsExist;
+                command.IsExist = command.IsExist;
             }
             await _scheduleRepository.UpdateScheduleAsync();
             return command.IsExist;
@@ -152,7 +154,7 @@ namespace Application.Services.classes
             foreach (var guid in command.IDs)
             {
                 var schedule = await _scheduleRepository.GetScheduleByIdAsync(guid);
-                schedule.Price -= (schedule.Price * command.DiscountPercent) / 100;
+                command.Price -= (schedule.Price * command.DiscountPercent) / 100;
                 schedules.Add(schedule);
             }
 
@@ -172,7 +174,7 @@ namespace Application.Services.classes
             foreach (var guid in command.IDs)
             {
                 var schedule = await _scheduleRepository.GetScheduleByIdAsync(guid);
-                schedule.Price -= command.DiscountPrice;
+                command.Price -= command.DiscountPrice;
                 schedules.Add(schedule);
             }
 
@@ -190,9 +192,10 @@ namespace Application.Services.classes
             var schedules = await _scheduleRepository.GetAllSchedulesForFunWithId(command.FunId);
             if (schedules.Count == 0)
                 return null;
-            foreach (var schedule in schedules)
+            for (int i = 0; i < schedules.Count; i++)
             {
-                schedule.Price -= (schedule.Price * command.DiscountPercent) / 100;
+                Schedule schedule = schedules[i];
+                command.Price -= (command.Price * command.DiscountPercent) / 100;
             }
 
             var save = await _scheduleRepository.UpdateScheduleAsync();
@@ -209,9 +212,10 @@ namespace Application.Services.classes
             var schedules = await _scheduleRepository.GetAllSchedulesForFunWithId(command.FunId);
             if (schedules.Count == 0)
                 return null;
-            foreach (var schedule in schedules)
+            for (int i = schedules.Count - 1; i >= 0; i--)
             {
-                schedule.Price -= command.DiscountPrice;
+                Schedule schedule = schedules[i];
+                command.Price -= command.DiscountPrice;
             }
 
             var save = await _scheduleRepository.UpdateScheduleAsync();
@@ -230,7 +234,7 @@ namespace Application.Services.classes
             foreach (var guid in command.IDs)
             {
                 var schedule = await _scheduleRepository.GetScheduleByIdAsync(guid);
-                schedule.Price += (schedule.Price * command.IncreasePricePercent) / 100;
+                command.Price += (schedule.Price * command.IncreasePricePercent) / 100;
                 schedules.Add(schedule);
             }
 
@@ -250,7 +254,7 @@ namespace Application.Services.classes
                 return null;
             foreach (var schedule in schedules)
             {
-                schedule.Price += (schedule.Price * command.IncreasePricePercent) / 100;
+                command.IncreasePricePercent += (schedule.Price * command.IncreasePricePercent) / 100;
             }
 
             var save = await _scheduleRepository.UpdateScheduleAsync();
@@ -269,7 +273,7 @@ namespace Application.Services.classes
                 return null;
             foreach (var schedule in schedules)
             {
-                schedule.Price += command.IncreasePrice;
+                command.Price += command.IncreasePrice;
             }
             var save = await _scheduleRepository.UpdateScheduleAsync();
             if (!save)
@@ -304,7 +308,7 @@ namespace Application.Services.classes
             var schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
             if (schedule == null)
                 return 404;
-            schedule.AvailableCapacity += command.Capacity;
+            command.AvailableCapacity += command.Capacity;
 
             var save = await _scheduleRepository.UpdateScheduleAsync();
             if (!save)
@@ -320,7 +324,7 @@ namespace Application.Services.classes
             var schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
             if (schedule == null)
                 return 404;
-            schedule.AvailableCapacity -= command.Capacity;
+            command.AvailableCapacity -= command.Capacity;
 
             var save = await _scheduleRepository.UpdateScheduleAsync();
             if (!save)

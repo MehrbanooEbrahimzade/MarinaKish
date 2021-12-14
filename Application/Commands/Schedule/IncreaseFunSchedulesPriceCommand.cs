@@ -14,6 +14,7 @@ namespace Application.Commands.Schedule
         /// قیمت افزایشی
         /// </summary>
         public decimal IncreasePrice { get; set; }
+        public decimal Price { get; internal set; }
 
         public override bool Validate()
         {

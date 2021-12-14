@@ -5,12 +5,13 @@ namespace Domain.Models
 {
     public class Message
     {
-        public Message(Guid conversationID, Guid userID, string username, string massage)
+        public Message(string username, string text, Guid conversationID, Guid userId)
         {
-            ConversationID = conversationID;
-            UserID = userID;
+            Id = Guid.NewGuid();
             UserName = username;
-            message = massage;
+            Text = text;
+            ConversationID = conversationID;
+            UserId = userId;
             MessageStatus = EMessageStatus.Sent;
             PlaceDate = DateTime.Now;
         }
@@ -18,38 +19,44 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// زمان فرستاده شدن پیامک
-        /// </summary>
-        public DateTime PlaceDate { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// نام کاربری فرستنده
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
         /// <summary>
         /// پیام
         /// </summary>
-        public string message { get; set; }
+        public string Text { get; private set; }
+
+        /// <summary>
+        /// زمان فرستاده شدن پیامک
+        /// </summary>
+        public DateTime PlaceDate { get; private set; }
 
         /// <summary>
         /// وضعیت پیام
         /// </summary>
-        public EMessageStatus MessageStatus { get; set; }
+        public EMessageStatus MessageStatus { get; private set; }
+        public void MessageStatusSet(EMessageStatus eMessageStatus)
+        {
+            this.MessageStatus = eMessageStatus;
+        }
 
         /// <summary>
         /// آیدی تالار گفت و گو
         /// </summary>
-        public Guid ConversationID { get; set; }
+        public Guid ConversationID { get; private set; }
 
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserID { get; set; }
+        public Guid UserId { get; private set; }
 
-        private Message() {   }
+        public Message()
+        {
+        }
     }
 }
