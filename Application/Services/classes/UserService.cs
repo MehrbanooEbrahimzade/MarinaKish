@@ -19,11 +19,11 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// وارد کردن شماره تلفن و ارسال کد تایید جدید : (ثبت نام)
+        /// وارد کردن شماره تلفن و ارسال کد تایید جدید : ثبت نام
         /// </summary>
         public async Task<List<string>> GetPhoneAndSetVerifyCode(GetPhoneAndSetVerifyCodeCommand command)
         {
-            var isPhoneExist = await _userRepository.isPhoneExist(command.CellPhone);
+            var isPhoneExist = await _userRepository.IsPhoneExist(command.PhoneNumber);
             List<string> ResultList = new List<string>();
             if (!isPhoneExist)
             {
@@ -37,9 +37,9 @@ namespace Application.Services.classes
                 return ResultList;
             }
 
-            var user = await _userRepository.GetUserByPhone(command.CellPhone);
+            var user = await _userRepository.GetUserByPhone(command.PhoneNumber);
             var randomVerify = new Random().Next(1000, 9999).ToString();
-            user.VerifyCode = randomVerify;
+            user.SetVerifycode(randomVerify);
 
             ResultList.Add("Login");
             ResultList.Add(user.Id.ToString());
@@ -101,11 +101,11 @@ namespace Application.Services.classes
                 var isUsernameExist = await _userRepository.IsUserNameExist(command.UserName);
                 if (isUsernameExist)
                     return null;
-                user.UserName = command.UserName;
+                user.SetUserName(command.UserName);
             }
 
-            user.FullName = command.FirstName + " " + command.LastName;
-            user.Password = command.Password;
+            user.SetFullName(command.FirstName + " " + command.LastName );
+            user.SetPassword(command.Password );
             await _userRepository.UpdateUserAsync();
             return user.ToDto();
         }
@@ -123,7 +123,7 @@ namespace Application.Services.classes
             {
                 return false;
             }
-            user.Password = command.NewPassword;
+            user.SetPassword(command.NewPassword );
             return await _userRepository.UpdateUserAsync();
         }
 
@@ -138,7 +138,7 @@ namespace Application.Services.classes
 
             #region Validation and Update
 
-            user.FullName = command.FirstName + " " + command.LastName;
+            user.SetFullName(command.FirstName + " " + command.LastName );
 
             if (user.UserName != command.Username)
             {
@@ -146,12 +146,12 @@ namespace Application.Services.classes
                 if (isUsernameExist)
                     return null;
 
-                user.UserName = command.Username;
+                user.SetUserName(command.Username);
             }
 
-            user.Provice = command.Provice;
-            user.Gender = command.Gender;
-            user.BirthDay = command.BirthDay;
+            user.SetProvince(command.Provice);
+            user.SetGender(command.Gender);
+            user.SetBirthdate(command.BirthDay);
 
             #endregion
 
@@ -234,7 +234,7 @@ namespace Application.Services.classes
             var user = await _userRepository.GetActiveUserById(id);
             if (user == null)
                 return false;
-            user.IsActive = false;
+            user.SetIsActive(false);
             return await _userRepository.UpdateUserAsync();
         }
 
@@ -246,7 +246,7 @@ namespace Application.Services.classes
             var user = await _userRepository.GetBlockedUser(id);
             if (user == null)
                 return false;
-            user.IsActive = true;
+            user.SetIsActive(true);
             return await _userRepository.UpdateUserAsync();
         }
 
@@ -302,7 +302,7 @@ namespace Application.Services.classes
             {
                 var rand1 = new Random().Next(100, 999).ToString();
                 var rand2 = new Random().Next(100, 999).ToString();
-                user.VerifyCode = rand1 + "-" + rand2;
+                user.SetVerifycode(rand1 + "-" + rand2);
             }
             return await _userRepository.UpdateUserAsync();
         }
@@ -317,7 +317,7 @@ namespace Application.Services.classes
                 return false;
             foreach (var user in blockedUsers)
             {
-                user.IsActive = true;
+                user.SetIsActive(true);
             }
             return await _userRepository.UpdateUserAsync();
         }

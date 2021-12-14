@@ -17,7 +17,7 @@ namespace Application.Mappers
         /// </summary>
         public static User ToModel(this GetPhoneAndSetVerifyCodeCommand command)
         {
-            return new User(command.CellPhone)
+            return new User(command.PhoneNumber,command.FullName,command.UserName,command.Password,command.NationalCode)
             {
             };
         }

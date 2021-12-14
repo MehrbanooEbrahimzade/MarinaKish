@@ -24,9 +24,9 @@ namespace Application.Mappers
 
                 Id = user.Id,
                 FullName = user.FullName,
-                CellPhone = user.CellPhone,
+                CellPhone = user.PhoneNumber,
                 UserName = user.UserName,
-                Provice = user.Provice,
+                Provice = user.Province,
                 Gender = user.Gender,
                 BirthDay = user.BirthDay,
                 CardNumber = user.CardNumber,
@@ -51,9 +51,9 @@ namespace Application.Mappers
 
                 Id = x.Id,
                 FullName = x.FullName,
-                CellPhone = x.CellPhone,
+                CellPhone = x.PhoneNumber,
                 UserName = x.UserName,
-                Provice = x.Provice,
+                Provice = x.Province,
                 BirthDay = x.BirthDay,
                 Gender = x.Gender,
                 IsActive = x.IsActive,

@@ -30,7 +30,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// چک کردن unique بودن کد ملی
         /// </summary>
-        public async Task<bool> isNCExist(string nationalCode)
+        public async Task<bool> IsNCExist(string nationalCode)
         {
             return await _context.Users
                 .AnyAsync(x => x.NationalCode == nationalCode);
@@ -39,10 +39,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// چک کردن unique بودن شاره تلفن
         /// </summary>
-        public async Task<bool> isPhoneExist(string phone)
+        public async Task<bool> IsPhoneExist(string phone)
         {
             return await _context.Users
-                .AnyAsync(x => x.CellPhone == phone);
+                .AnyAsync(x => x.PhoneNumber == phone);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Users
                 .Include(x => x.ContactInfo)
-                .FirstOrDefaultAsync(x => x.CellPhone == phone);
+                .FirstOrDefaultAsync(x => x.PhoneNumber == phone);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن کاربر با کد تایید :
         /// </summary>
-        public async Task<Domain.Models.User> GetUserByVerifyCode(string verifyCode)
+        public async Task<User> GetUserByVerifyCode(string verifyCode)
         {
             return await _context.Users
                 .Include(x => x.ContactInfo)
@@ -148,7 +148,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Users
                 .Where(x => x.IsActive && x.RoleType == RoleTypec.Buyer)
-                .OrderByDescending(x=> x.DateJoin)
+                .OrderByDescending(x => x.DateJoin)
                 .ToListAsync();
         }
 

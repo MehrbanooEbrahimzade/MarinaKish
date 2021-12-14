@@ -15,12 +15,12 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// چک کردن unique بودن کد ملی
         /// </summary>
-        Task<bool> isNCExist(string nationalCode);
+        Task<bool> IsNCExist(string nationalCode);
 
         /// <summary>
         /// چک کردن unique بودن شاره تلفن
         /// </summary>
-        Task<bool> isPhoneExist(string phone);
+        Task<bool> IsPhoneExist(string phone);
 
         /// <summary>
         /// عملیات ثبت نام کاربر :
