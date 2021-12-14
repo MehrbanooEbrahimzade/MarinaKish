@@ -20,6 +20,7 @@ namespace Application.Mappers
             return new User(command.CellPhone)
             {
             };
+
         }
 
         /// <summary>
