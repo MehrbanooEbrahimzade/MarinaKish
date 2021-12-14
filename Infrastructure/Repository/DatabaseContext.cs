@@ -9,7 +9,23 @@ namespace Infrastructure.Repository
         {
 
         }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Ticket>(s =>
+            {
+                s.HasOne<User>()
+                    .WithMany(x => x.Tickets).HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+            modelBuilder.Entity<User>(x => x.OwnsOne(e => e.UserCart));
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Fun> Funs { get; set; }
         public DbSet<Schedule> Schedules { get; set; }

@@ -137,7 +137,7 @@ namespace Marina_Club.Controllers
 
             var result = await _messageService.SearchUserMessages(id, command);
             if (result == null)
-                return BadReq(ApiMessage.SearchedUserMessageNotFound, new { Reasons = $"1-Message not found, 2-user id is wrong " });
+                return BadReq(ApiMessage.SearchedUserMessageNotFound, new { Reasons = $"1-Text not found, 2-user id is wrong " });
             return OkResult(ApiMessage.SearchedUserMessageFound, new { UserMessages = result });
         }
 

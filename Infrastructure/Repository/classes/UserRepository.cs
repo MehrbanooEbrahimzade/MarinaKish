@@ -60,7 +60,6 @@ namespace Infrastructure.Repository.classes
         public async Task<User> UserLoginAsync(string UserName)
         {
             return await _context.Users
-                .Include(x => x.ContactInfo)
                 .SingleOrDefaultAsync(x => x.UserName == UserName);
         }
 
@@ -70,7 +69,6 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetUserByPhone(string phone)
         {
             return await _context.Users
-                .Include(x => x.ContactInfo)
                 .FirstOrDefaultAsync(x => x.CellPhone == phone);
         }
 
@@ -88,7 +86,6 @@ namespace Infrastructure.Repository.classes
         public async Task<Domain.Models.User> GetUserByVerifyCode(string verifyCode)
         {
             return await _context.Users
-                .Include(x => x.ContactInfo)
                 .SingleOrDefaultAsync(x => x.VerifyCode == verifyCode);
         }
 
@@ -118,8 +115,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<User>> GetAllSeller()
         {
             return await _context.Users
-                .Where(x => x.RoleType == RoleTypec.Seller && x.IsActive == true)
-                .Include(x => x.ContactInfo)
+                .Where(x => x.RoleType == RoleType.Seller && x.IsActive == true)
                 .ToListAsync();
         }
 
@@ -147,7 +143,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<User>> AllActiveUsers()
         {
             return await _context.Users
-                .Where(x => x.IsActive && x.RoleType == RoleTypec.Buyer)
+                .Where(x => x.IsActive && x.RoleType == RoleType.Buyer)
                 .OrderByDescending(x=> x.DateJoin)
                 .ToListAsync();
         }
@@ -158,7 +154,7 @@ namespace Infrastructure.Repository.classes
         public async Task<int> AllActiveUsersCount()
         {
             return await _context.Users
-                .CountAsync(x => x.IsActive == true && x.RoleType == RoleTypec.Buyer);
+                .CountAsync(x => x.IsActive == true && x.RoleType == RoleType.Buyer);
         }
 
         /// <summary>
@@ -187,7 +183,7 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetNotSellerUserById(Guid id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleTypec.Seller);
+                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Seller);
         }
 
         /// <summary>
@@ -196,7 +192,7 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetNotAdminUserById(Guid id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleTypec.Ad_min);
+                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Admin);
         }
 
         /// <summary>
@@ -205,7 +201,7 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetAdminOrSellerUserById(Guid id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleTypec.Buyer);
+                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Buyer);
         }
 
         /// <summary>

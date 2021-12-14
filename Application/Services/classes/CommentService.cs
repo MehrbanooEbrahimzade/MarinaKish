@@ -101,22 +101,21 @@ namespace Application.Services.classes
             comment.UpdateCommentDislikes(1);
             return await _commentRepository.SaveChangeCommentAsync();
         }
+        //public async Task<int> BlockAllUserComments(Guid id)
+        //{
+        //    var userComments = await _commentRepository.GetAllAcceptedUserComments(id);
+        //    if (userComments == null)
+        //        return 404;
 
-        public async Task<int> BlockAllUserComments(Guid id)
-        {
-            var userComments = await _commentRepository.GetAllAcceptedUserComments(id);
-            if (userComments == null)
-                return 404;
-
-            foreach (var comment in userComments)
-            {
-                comment.UpdateCommentStatus(EStatus.Blocked);
-            }
-            var save = await _commentRepository.SaveChangeCommentAsync();
-            if (!save)
-                return 503;
-            return userComments.Count;
-        }
+        //    foreach (var comment in userComments)
+        //    {
+        //        comment.UpdateCommentStatus(EStatus.Blocked);
+        //    }
+        //    var save = await _commentRepository.SaveChangeCommentAsync();
+        //    if (!save)
+        //        return 503;
+        //    return userComments.Count;
+        //}
 
         /// <summary>
         /// قبول کردن یک کامنت با آیدی
@@ -153,18 +152,18 @@ namespace Application.Services.classes
         /// <summary>
         /// بلاک کردن یک کامنت با آیدی
         /// </summary>
-        public async Task<CommentDto> BlockingComment(Guid id)
-        {
-            var comment = await _commentRepository.GetNotBlockedCommentById(id);
-            if (comment == null)
-                return null;
-            comment.UpdateCommentStatus(EStatus.Blocked);
+        //public async Task<CommentDto> BlockingComment(Guid id)
+        //{
+        //    var comment = await _commentRepository.GetNotBlockedCommentById(id);
+        //    if (comment == null)
+        //        return null;
+        //    comment.UpdateCommentStatus(EStatus.Blocked);
 
-            var save = await _commentRepository.SaveChangeCommentAsync();
-            if (!save)
-                return null;
-            return comment.ToDto();
-        }
+        //    var save = await _commentRepository.SaveChangeCommentAsync();
+        //    if (!save)
+        //        return null;
+        //    return comment.ToDto();
+        //}
 
         /// <summary>
         /// دریافت کامنت های درحال انتظار یک تفریح با آیدی

@@ -26,15 +26,12 @@ namespace Application.Mappers
                 FullName = user.FullName,
                 CellPhone = user.CellPhone,
                 UserName = user.UserName,
-                Provice = user.Provice,
                 Gender = user.Gender,
                 BirthDay = user.BirthDay,
-                CardNumber = user.CardNumber,
-                ShabaNumber = user.ShabaNumber,
+                CardNumber = user.UserCart.CardNumber,
+                ShabaNumber = user.UserCart.ShabaNumber,
                 IsActive = user.IsActive,
-                Wallet = user.Wallet,
                 DateJoinInShamsi = persianJoinTime,
-                ContactInfo = user.ContactInfo.ToDto()
 
                 #endregion
             };
@@ -53,13 +50,11 @@ namespace Application.Mappers
                 FullName = x.FullName,
                 CellPhone = x.CellPhone,
                 UserName = x.UserName,
-                Provice = x.Provice,
                 BirthDay = x.BirthDay,
                 Gender = x.Gender,
-                Wallet = x.Wallet,
                 NationalCode = x.NationalCode,
-                CardNumber = x.CardNumber,
-                ShabaNumber = x.ShabaNumber,
+                CardNumber = x.UserCart.CardNumber,
+                ShabaNumber = x.UserCart.ShabaNumber,
                 DateJoinInShamsi = x.ToDto().DateJoinInShamsi
                 #endregion
             }).ToList();
@@ -222,7 +217,7 @@ namespace Application.Mappers
                 StartTime = ticket.StartTime,
                 EndTime = ticket.EndTime,
                 Condition = ticket.Condition,
-                TotalPrice = ticket.TotalPrice,
+                TotalPrice = ticket.Price,
                 SubmitPersianDate = persianSubmitDate,
                 CellPhone = ticket.CellPhone,
                 FullName = ticket.FullName,
@@ -259,7 +254,7 @@ namespace Application.Mappers
                 StartTime = x.StartTime,
                 EndTime = x.EndTime,
                 Condition = x.Condition,
-                TotalPrice = x.TotalPrice,
+                TotalPrice = x.Price,
                 SubmitPersianDate = x.ToDto().SubmitPersianDate,
                 CellPhone = x.CellPhone,
                 FullName = x.FullName,
@@ -282,7 +277,7 @@ namespace Application.Mappers
             {
                 #region Select
                 Id = comment.Id,
-                Message = comment.Message,
+                Message = comment.Text,
                 Status = comment.Status,
                 Like = comment.Like,
                 DisLike = comment.DisLike,
@@ -305,7 +300,7 @@ namespace Application.Mappers
                 #region Select
 
                 Id = x.Id,
-                Message = x.Message,
+                Message = x.Text,
                 Status = x.Status,
                 Like = x.Like,
                 DisLike = x.DisLike,
@@ -412,8 +407,8 @@ namespace Application.Mappers
 
             PersianCalendar persianParse = new PersianCalendar();
             string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-                persianParse.GetYear(message.PlaceDate), persianParse.GetMonth(message.PlaceDate), persianParse.GetDayOfMonth(message.PlaceDate),
-                persianParse.GetHour(message.PlaceDate), persianParse.GetMinute(message.PlaceDate));
+                persianParse.GetYear(message.SubmitDate), persianParse.GetMonth(message.SubmitDate), persianParse.GetDayOfMonth(message.SubmitDate),
+                persianParse.GetHour(message.SubmitDate), persianParse.GetMinute(message.SubmitDate));
 
             return new MessageDto
             {
@@ -423,7 +418,7 @@ namespace Application.Mappers
                 UserName = message.UserName,
                 ShamsiPlaceDate = persianDate,
                 Text = message.Text,
-                ConversationID = message.ConversationID,
+                ConversationID = message.ConversationId,
                 MessageStatus = message.MessageStatus
 
                 #endregion
@@ -443,7 +438,7 @@ namespace Application.Mappers
                 UserName = x.UserName,
                 ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
                 Text = x.Text,
-                ConversationID = x.ConversationID,
+                ConversationID = x.ConversationId,
                 MessageStatus = x.MessageStatus
 
                 #endregion

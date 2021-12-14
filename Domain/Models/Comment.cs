@@ -3,12 +3,12 @@ using Domain.Models.enums;
 
 namespace Domain.Models
 {
-    public class Comment
+    public class Comment: Writing
     {
-        public Comment(string message, Guid funId, Guid userId, FunType funType , string userPhoneNumber,string username)
+        public Comment(string text, Guid funId, Guid userId, FunType funType , string userPhoneNumber,string username)
         {
             Id = Guid.NewGuid(); 
-            Message = message;
+            Text = text;
             FunId = funId;
             UserId = userId;
             FunType = funType;
@@ -19,17 +19,7 @@ namespace Domain.Models
             Status = EStatus.Waiting;
             SubmitDate = DateTime.Now;
         }
-
-        /// <summary>
-        /// Id
-        /// </summary>
-        public Guid Id { get; private set; }
-
-        /// <summary>
-        /// پیام :
-        /// </summary>
-        public string Message { get; private set; }
-
+        
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
@@ -46,11 +36,6 @@ namespace Domain.Models
         public int DisLike { get; private set; }
 
         /// <summary>
-        /// زمان فرستادن کامنت
-        /// </summary>
-        public DateTime SubmitDate { get; private set; }
-
-        /// <summary>
         /// نوع تفریح
         /// </summary>
         public FunType FunType { get; private set; }
@@ -59,11 +44,6 @@ namespace Domain.Models
         /// شناسه مدل تفریح :
         /// </summary>
         public Guid FunId { get; private set; }
-
-        /// <summary>
-        /// نام کاربری
-        /// </summary>
-        public string UserName { get; private set; }
 
         /// <summary>
         /// شماره تلفن کاربر
@@ -84,12 +64,14 @@ namespace Domain.Models
             this.Status = status;
         }
 
+        #region Methods
+
         /// <summary>
-        /// آپدیت لایک ها 
+        /// افزایش تعداد لایک ها 
         /// </summary>
         public void UpdateCommentLikes(int like)
         {
-            this.Like += like; 
+            this.Like += like;
         }
 
         /// <summary>
@@ -99,6 +81,10 @@ namespace Domain.Models
         {
             this.Like -= dislike;
         }
+
+        #endregion
+      
+
         public  Comment() {  }
     }
 }

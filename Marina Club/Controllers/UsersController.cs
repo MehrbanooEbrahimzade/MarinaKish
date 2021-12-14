@@ -44,7 +44,7 @@ namespace Marina_Club.Controllers
         {
             try
             {
-                var values = new Dictionary<string, string> { { "PhoneNumber", phoneNumber }, { "Message", code } };
+                var values = new Dictionary<string, string> { { "PhoneNumber", phoneNumber }, { "Text", code } };
 
                 var response = await client.PostAsync("http://localhost:5002/api/Notification/add", values, new JsonMediaTypeFormatter());
 
@@ -186,16 +186,16 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// اضافه کردن پول به کیف پول کاربر
-        /// </summary>
-        [HttpPut("IncreaseWallet/{id}")] // dont in Postman
-        public async Task<IActionResult> IncreaseUserWallet(Guid id, IncreaseUserWalletCommand command)
-        {
-            var result = await _userService.IncreaseUserWallet(id, command);
-            if (result == null)
-                return BadReq(ApiMessage.WalletNotIncreased, new { Reason = $"user not found" });
-            return OkResult(ApiMessage.WalletIncreased, new { Cash = result });
-        }
+        ///// اضافه کردن پول به کیف پول کاربر
+        ///// </summary>
+        //[HttpPut("IncreaseWallet/{id}")] // dont in Postman
+        //public async Task<IActionResult> IncreaseUserWallet(Guid id, IncreaseUserWalletCommand command)
+        //{
+        //    var result = await _userService.IncreaseUserWallet(id, command);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.WalletNotIncreased, new { Reason = $"user not found" });
+        //    return OkResult(ApiMessage.WalletIncreased, new { Cash = result });
+        //}
         #endregion
 
         #region GET
@@ -337,7 +337,7 @@ namespace Marina_Club.Controllers
         //    if (result)
         //        return Ok(result);
         //    else
-        //        return BadRequest(new { Message = "یوزر نیم مورد نظر وجود دارد." });
+        //        return BadRequest(new { Text = "یوزر نیم مورد نظر وجود دارد." });
         //}
         #endregion
 

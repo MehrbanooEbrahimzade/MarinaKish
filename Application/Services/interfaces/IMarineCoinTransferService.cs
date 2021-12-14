@@ -7,15 +7,15 @@ namespace Application.Services.interfaces
 {
     public interface IMarineCoinTransferService
     {
-        /// <summary>
-        /// اضافه کردن کیف پول کاربر
-        /// </summary>
-        Task<string> IncreaseUserWallet(Guid id, decimal Coin);
+        ///// <summary>
+        ///// اضافه کردن کیف پول کاربر
+        ///// </summary>
+        //Task<string> IncreaseUserWallet(Guid id, decimal Coin);
 
-        /// <summary>
-        /// کم کردن کیف پول کاربر
-        /// </summary>
-        Task<List<string>> DecreaseUserWallet(Guid id, decimal Coin);
+        ///// <summary>
+        ///// کم کردن کیف پول کاربر
+        ///// </summary>
+        //Task<List<string>> DecreaseUserWallet(Guid id, decimal Coin);
 
         /// <summary>
         /// همه تراکنش های انجام داده شده یک کاربر
@@ -59,7 +59,7 @@ namespace Application.Services.interfaces
 
         /// <summary>
         /// جمع مبلغ همه تراکنش های یک کاربر
-        /// </summary>
-        Task<decimal> TotalUsersWalletSum();
+        ///// </summary>
+        //Task<decimal> TotalUsersWalletSum();
     }
 }

@@ -52,17 +52,17 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Like");
 
-                    b.Property<string>("Message");
-
                     b.Property<int>("Status");
 
                     b.Property<DateTime>("SubmitDate");
 
-                    b.Property<string>("UserPhoneNumber");
+                    b.Property<string>("Text");
 
                     b.Property<Guid>("UserId");
 
                     b.Property<string>("UserName");
+
+                    b.Property<string>("UserPhoneNumber");
 
                     b.HasKey("Id");
 
@@ -105,7 +105,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Conversations");
                 });
 
-            modelBuilder.Entity("Domain.Models.Files", b =>
+            modelBuilder.Entity("Domain.Models.File", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -113,6 +113,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FilePath");
 
                     b.Property<string>("FunID");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name");
 
@@ -123,8 +125,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Size");
 
                     b.Property<string>("UserID");
-
-                    b.Property<bool>("isActive");
 
                     b.HasKey("Id");
 
@@ -143,6 +143,8 @@ namespace Infrastructure.Migrations
                     b.Property<TimeSpan>("EndTime");
 
                     b.Property<int>("FunType");
+
+                    b.Property<string>("Icon");
 
                     b.Property<bool>("IsActive");
 
@@ -164,8 +166,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("SystemFunCode");
 
-                    b.Property<string>("icon");
-
                     b.HasKey("Id");
 
                     b.ToTable("Funs");
@@ -176,17 +176,17 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ConversationID");
+                    b.Property<Guid>("ConversationId");
 
                     b.Property<int>("MessageStatus");
 
-                    b.Property<DateTime>("PlaceDate");
+                    b.Property<DateTime>("SubmitDate");
 
-                    b.Property<Guid>("UserID");
+                    b.Property<string>("Text");
+
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("UserName");
-
-                    b.Property<string>("message");
 
                     b.HasKey("Id");
 
@@ -240,6 +240,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("NumberOfTicket");
 
+                    b.Property<decimal>("Price");
+
                     b.Property<Guid>("ScheduleId");
 
                     b.Property<DateTime>("ScheduleMiladiTime");
@@ -250,13 +252,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("TicketNumber");
 
-                    b.Property<decimal>("TotalPrice");
-
                     b.Property<Guid>("UserId");
 
                     b.Property<int>("WhereBuy");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -268,11 +270,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("BirthDay");
 
-                    b.Property<string>("CardNumber");
-
                     b.Property<string>("CellPhone");
-
-                    b.Property<Guid?>("ContactInfoId");
 
                     b.Property<DateTime>("DateJoin");
 
@@ -286,11 +284,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Provice");
-
                     b.Property<int>("RoleType");
-
-                    b.Property<string>("ShabaNumber");
 
                     b.Property<string>("SystemUserCode");
 
@@ -298,20 +292,40 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("VerifyCode");
 
-                    b.Property<decimal>("Wallet");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ContactInfoId");
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Domain.Models.Ticket", b =>
+                {
+                    b.HasOne("Domain.Models.User")
+                        .WithMany("Tickets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
-                    b.HasOne("Domain.Models.ContactInfo", "ContactInfo")
-                        .WithMany()
-                        .HasForeignKey("ContactInfoId");
+                    b.OwnsOne("Domain.Models.UserCart", "UserCart", b1 =>
+                        {
+                            b1.Property<Guid>("UserId");
+
+                            b1.Property<string>("CardNumber");
+
+                            b1.Property<Guid>("Id");
+
+                            b1.Property<string>("ShabaNumber");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.HasOne("Domain.Models.User", "User")
+                                .WithOne("UserCart")
+                                .HasForeignKey("Domain.Models.UserCart", "UserId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 #pragma warning restore 612, 618
         }

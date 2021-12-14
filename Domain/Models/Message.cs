@@ -3,38 +3,18 @@ using Domain.Models.enums;
 
 namespace Domain.Models
 {
-    public class Message
+    public class Message: Writing
     {
         public Message(string username, string text, Guid conversationId, Guid userId)
         {
             Id = Guid.NewGuid();
             UserName = username;
             Text = text;
-            ConversationID = conversationId;
+            ConversationId = conversationId;
             UserId = userId;
             MessageStatus = EMessageStatus.Sent;
-            PlaceDate = DateTime.Now;
+            SubmitDate = DateTime.Now;
         }
-
-        /// <summary>
-        /// ID
-        /// </summary>
-        public Guid Id { get; private set; }
-
-        /// <summary>
-        /// نام کاربری فرستنده
-        /// </summary>
-        public string UserName { get; private set; }
-
-        /// <summary>
-        /// پیام
-        /// </summary>
-        public string Text { get; private set; }
-
-        /// <summary>
-        /// زمان فرستاده شدن پیامک
-        /// </summary>
-        public DateTime PlaceDate { get; private set; }
 
         /// <summary>
         /// وضعیت پیام
@@ -48,12 +28,12 @@ namespace Domain.Models
         /// <summary>
         /// آیدی تالار گفت و گو
         /// </summary>
-        public Guid ConversationID { get; private set; }
+        public Guid ConversationId { get; private set; }
 
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; private set; }//TODO:DELETE
 
         public Message()
         {

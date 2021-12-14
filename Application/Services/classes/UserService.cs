@@ -149,7 +149,6 @@ namespace Application.Services.classes
                 user.UserName = command.Username;
             }
 
-            user.Provice = command.Provice;
             user.Gender = command.Gender;
             user.BirthDay = command.BirthDay;
 
@@ -180,7 +179,7 @@ namespace Application.Services.classes
             var user = await _userRepository.GetNotAdminUserById(id);
             if (user == null)
                 return null;
-            user.RoleType = RoleTypec.Ad_min;
+            user.RoleType = RoleType.Admin;
             await _userRepository.UpdateUserAsync();
             return user.ToDto();
         }
@@ -193,7 +192,7 @@ namespace Application.Services.classes
             var user = await _userRepository.GetNotSellerUserById(id);
             if (user == null)
                 return null;
-            user.RoleType = RoleTypec.Seller;
+            user.RoleType = RoleType.Seller;
             await _userRepository.UpdateUserAsync();
             return user.ToDto();
         }
@@ -206,7 +205,7 @@ namespace Application.Services.classes
             var user = await _userRepository.GetAdminOrSellerUserById(id);
             if (user == null)
                 return null;
-            user.RoleType = RoleTypec.Buyer;
+            user.RoleType = RoleType.Buyer;
             await _userRepository.UpdateUserAsync();
             return user.ToDto();
         }
@@ -216,15 +215,15 @@ namespace Application.Services.classes
         /// <summary>
         /// اضافه کردن پول به کیف پول کاربر
         /// </summary>
-        public async Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command)
-        {
-            var user = await _userRepository.GetActiveUserById(userid);
-            if (user == null)
-                return null;
-            user.Wallet += command.Cash;
-            await _userRepository.UpdateUserAsync();
-            return user.Wallet.ToString();
-        }
+        //public async Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command)
+        //{
+        //    var user = await _userRepository.GetActiveUserById(userid);
+        //    if (user == null)
+        //        return null;
+        //    user.Wallet += command.Cash;
+        //    await _userRepository.UpdateUserAsync();
+        //    return user.Wallet.ToString();
+        //}
 
         /// <summary>
         /// بلاک کردن کاربر :

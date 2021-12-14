@@ -171,15 +171,15 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// بلاک کردن همه کامنت های یک کاربر
         /// </summary>
-        [HttpPut("BlockAllUserComments/{id}")]
-        public async Task<IActionResult> BlockAllUserComments(Guid id)
-        { 
-            var result = await _commentService.BlockAllUserComments(id);
-            if (result == 404)
-                return BadReq(ApiMessage.UserNotFound, new { Reason = $"user with this id not have any accepted comments" });
-            if (result == 503)
-                return BadReq(ApiMessage.ServiceUnAvailable, new { Reason = $"1-all user comments already blocked, 2-there is a problem when saving changes. TryAgain!" });
-            return OkResult(ApiMessage.AllUserCommentsBlocked, new { BlockedCommentsCount = result });
-        }
+        //[HttpPut("BlockAllUserComments/{id}")]
+        //public async Task<IActionResult> BlockAllUserComments(Guid id)
+        //{ 
+        //    var result = await _commentService.BlockAllUserComments(id);
+        //    if (result == 404)
+        //        return BadReq(ApiMessage.UserNotFound, new { Reason = $"user with this id not have any accepted comments" });
+        //    if (result == 503)
+        //        return BadReq(ApiMessage.ServiceUnAvailable, new { Reason = $"1-all user comments already blocked, 2-there is a problem when saving changes. TryAgain!" });
+        //    return OkResult(ApiMessage.AllUserCommentsBlocked, new { BlockedCommentsCount = result });
+        //}
     }
 }

@@ -148,7 +148,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Tickets
                 .Where(x => x.ScheduleId == id && x.Condition == ECondition.Reservation)
-                .SumAsync(x => x.TotalPrice);
+                .SumAsync(x => x.Price);
         }
 
         #region Search Options
@@ -184,7 +184,7 @@ namespace Infrastructure.Repository.classes
             return await _context.Tickets
             .FromSql("Select * from dbo.Tickets as t Where t.SubmitDate Between {0} And {1}", firstDate, secondDate)
             .Where(x => x.Condition == ECondition.Reservation)
-            .SumAsync(x => x.TotalPrice);
+            .SumAsync(x => x.Price);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Tickets
             .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == ECondition.Reservation)
-            .SumAsync(x => x.TotalPrice);
+            .SumAsync(x => x.Price);
         }
 
         /// <summary>

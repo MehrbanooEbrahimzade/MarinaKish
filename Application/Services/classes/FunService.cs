@@ -39,24 +39,9 @@ namespace Application.Services.classes
             if (fun == null)
                 return null;
 
-            #region Update
-
-            fun.ForFunType(command.FunType);
-
-            fun.ForPrice(command.Price);
-
-            fun.ForStartTime(TimeSpan.Parse(command.StartTime));  //fun.StartTime = TimeSpan.Parse(command.StartTime); 
-
-            fun.ForEndTime(TimeSpan.Parse(command.EndTime));   //fun.EndTime = TimeSpan.Parse(command.EndTime);
-
-            fun.ForSansDuration(command.SansDuration);
-
-            fun.ForSansTotalCapacity(command.SansTotalCapacity);
-
-            fun.ForSansGapTime(command.SansGapTime);
-
-            fun.ForAbout(command.About); 
-            #endregion
+            fun.Update(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
+                TimeSpan.Parse(command.EndTime), command.SansDuration, command.SansTotalCapacity,
+                command.SansGapTime, command.About);
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -117,7 +102,7 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.ForBackgroundPicture(pic.Id.ToString()); 
+            fun.SetBackgroundPicture(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -135,14 +120,14 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.ForIcon(pic.Id.ToString()); 
+            fun.SetIcon(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
                 return null;
             return fun.Icon;
         }
-
+   
         /// <summary>
         /// غیرفعال کردن یک تفریح
         /// </summary>
@@ -159,10 +144,10 @@ namespace Application.Services.classes
                 schedule.IsExist = false;
             }
 
-            fun.ForIsActive(false); 
+            fun.SetIsActive(false); 
             return await _funRepository.UpdateFunAsync();
         }
-
+       
         /// <summary>
         /// دوباره فعال کردن یک تفریح
         /// </summary>
@@ -179,7 +164,7 @@ namespace Application.Services.classes
                 schedule.IsExist = true;
             }
 
-            fun.ForIsActive(true); 
+            fun.SetIsActive(true); 
             return await _funRepository.UpdateFunAsync();
         }
 

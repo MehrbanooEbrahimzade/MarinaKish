@@ -19,6 +19,8 @@ namespace Domain.Models
             WhereBuy = EWhereBuy.Site;
         }
 
+        public Guid UserId { get; set; }
+
         /// <summary>
         /// ID
         /// </summary>
@@ -66,7 +68,7 @@ namespace Domain.Models
         /// <summary>
         /// قیمت کل
         /// </summary>
-        public decimal TotalPrice { get; private set; }
+        public decimal Price { get; private set; }
       
         /// <summary>
         /// آی دیه مدل تفریحات
@@ -77,11 +79,6 @@ namespace Domain.Models
         /// آی دیه مدل سانس ها
         /// </summary>
         public Guid ScheduleId { get; private set; }
-
-        /// <summary>
-        /// آیدی کاربر
-        /// </summary>
-        public Guid UserId { get; private set; }
 
         /// <summary>
         /// وضعیت

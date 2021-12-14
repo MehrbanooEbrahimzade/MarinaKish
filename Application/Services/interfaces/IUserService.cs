@@ -12,7 +12,6 @@ namespace Application.Services.interfaces
         /// ثبت نام کاربر :
         /// </summary>
         //Task<bool> UserSignUpAsync(UserSignUpCommand command);
-
         /// <summary>
         /// وارد شدن کاربر :
         /// </summary>
@@ -67,11 +66,6 @@ namespace Application.Services.interfaces
         /// تنزل رتبه کاربر فروشنده/ادمین به خریدار
         /// </summary>
         Task<UserDto> DemoteToUser(Guid id);
-
-        /// <summary>
-        /// اضافه کردن پول به کیف پول کاربر
-        /// </summary>
-        Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command);
 
         /// <summary>
         /// همه کاربر های فعال

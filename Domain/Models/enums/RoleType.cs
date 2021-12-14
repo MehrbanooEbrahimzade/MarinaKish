@@ -2,10 +2,10 @@
 
 namespace Domain.Models.enums
 {
-    public enum RoleTypec
+    public enum RoleType
     {
         [Description("خریدار")]Buyer = 1,
         [Description("فروشنده")]Seller = 2,
-        [Description("ادمین")]Ad_min = 3
+        [Description("ادمین")]Admin = 3
     }
 }

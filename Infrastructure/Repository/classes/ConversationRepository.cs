@@ -105,8 +105,8 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Message>> GetAllConversationMessageById(Guid id)
         {
             return await _context.Messages
-                .Where(x => x.ConversationID == id && x.MessageStatus != EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .Where(x => x.ConversationId == id && x.MessageStatus != EMessageStatus.Deleted)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -116,8 +116,8 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Message>> GetAllConversationDeletedMessageById(Guid id)
         {
             return await _context.Messages
-                .Where(x => x.ConversationID == id && x.MessageStatus == EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .Where(x => x.ConversationId == id && x.MessageStatus == EMessageStatus.Deleted)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -128,8 +128,8 @@ namespace Infrastructure.Repository.classes
         {
             var messages = await _context.Messages
                 .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
-                .Where(x => x.ConversationID == id && x.MessageStatus != EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .Where(x => x.ConversationId == id && x.MessageStatus != EMessageStatus.Deleted)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
             if (messages == null)
                 return null;

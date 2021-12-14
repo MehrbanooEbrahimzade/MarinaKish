@@ -53,8 +53,8 @@ namespace Application.Services.classes
                     //FunId = fun.Id
                     //};
 
-                    fun.PlassOnlineCapacity((int)sansModel.AvailableCapacity); 
-                    fun.PlassRealTimeCapacity((int)sansModel.AvailableCapacity ); 
+                    fun.PlusOnlineCapacity((int)sansModel.AvailableCapacity); 
+                    fun.PlusRealTimeCapacity((int)sansModel.AvailableCapacity ); 
                     await _scheduleRepository.AddScheduleAsync(sansModel);
                     schedules.Add(sansModel);
                 }

@@ -10,6 +10,9 @@ namespace Domain.Models
             ShabaNumber = shabaNumber;
             CardNumber = cardNumber;
         }
+
+        public User User { get; set; }
+        public Guid UserId { get; set; }
         /// <summary>
         /// ID
         /// </summary>
@@ -18,12 +21,12 @@ namespace Domain.Models
         /// <summary>
         /// شماره شبا
         /// </summary>
-        public string ShabaNumber { get; private set; }
+        public string ShabaNumber { get;  set; }
 
         /// <summary>
         /// شماره کارت
         /// </summary>
-        public string CardNumber { get; private set; }
+        public string CardNumber { get;  set; }
 
     }
 }

@@ -7,11 +7,8 @@ using Application.Commands.Fun;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace Application.Services.classes
 {

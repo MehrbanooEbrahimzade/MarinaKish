@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    public class CashTransfer
+    public class CashTransfer//فعلا کاری باهاش نداریم نادیده بگیرینش
     {
         public CashTransfer(decimal cash,Guid userid)
         {

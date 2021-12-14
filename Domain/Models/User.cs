@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Domain.Models.enums;
 
 namespace Domain.Models
@@ -12,7 +13,7 @@ namespace Domain.Models
             VerifyCode = GenerateVerifyCode();
             IsActive = true;
             SystemUserCode = GenerateUserCode();
-            RoleType = RoleTypec.Buyer;
+            RoleType = enums.RoleType.Buyer;
             Gender = EGender.Other;
             BirthDay = default;  
             DateJoin = DateTime.Now;
@@ -22,6 +23,8 @@ namespace Domain.Models
         /// ID
         /// </summary>
         public Guid Id { get; set ; }
+        public UserCart UserCart { get; set; }
+        public List<Ticket> Tickets { get; set; }
 
         /// <summary>
         /// تلفن همراه
@@ -43,10 +46,6 @@ namespace Domain.Models
         /// </summary>
         public string Password { get; set; }
 
-        /// <summary>
-        /// استان
-        /// </summary>
-        public string Provice { get; set; } //TODO:delete
 
         /// <summary>
         /// فعال بودن کاربر
@@ -56,33 +55,22 @@ namespace Domain.Models
         /// <summary>
         /// کد شناساییه کاربر ، ساخته شده توسط ما
         /// </summary>
-        public string SystemUserCode { get; set; } // generate 
+        public string SystemUserCode { get; set; } // Identity 
 
         /// <summary>
         /// سطح دسترسی
         /// </summary>
-        public enums.RoleTypec RoleType { get; set; }  //TODO:delete                                                         
+        public enums.RoleType RoleType { get; set; }   // Identity                                                         
 
         /// <summary>
         /// کد تایید
         /// </summary>
-        public string VerifyCode { get; set; } //generate (adad)
+        public string VerifyCode { get; set; }  // Identity 
 
         /// <summary>
         /// شماره ملی
         /// </summary>
         public string NationalCode { get; set; }
-         
-        /// <summary>
-        /// شماره کارت
-        /// </summary>
-        public string CardNumber { get; set; }   //TODO:delete
-
-        /// <summary>
-        /// شماره شبا
-        /// </summary>
-        public string ShabaNumber { get; set; }  //TODO:delete
-         
 
         /// <summary>
         /// جنسیت
@@ -93,28 +81,18 @@ namespace Domain.Models
         /// تاریخ تولد
         /// </summary>
         public DateTime BirthDay { get; set; }
-
-        /// <summary>
-        /// اطلاعات کانتکته کاربر
-        /// </summary>
-        public ContactInfo ContactInfo { get; set; }  //TODO:delete
-
-        /// <summary>
-        /// کیف پول
-        /// </summary>
-        public decimal Wallet { get; set; }  //TODO:delete
-
+        
         /// <summary>
         /// زمان وارد شدن به مارینا
         /// </summary>
-        public DateTime DateJoin { get; set; }  //TODO:delete
+        public DateTime DateJoin { get; set; }   // Identity 
 
 
         public string GenerateUserCode()
         {
-            var milisecond = DateTime.Now.Millisecond.ToString();
+            var millisecond = DateTime.Now.Millisecond.ToString();
             var randomGenerate = new Random().Next(10000, 99999).ToString();
-            return randomGenerate + "-" + milisecond;
+            return randomGenerate + "-" + millisecond;
         }
 
         public string GenerateVerifyCode()
@@ -123,6 +101,6 @@ namespace Domain.Models
             return verifyCode;
         }
 
-        private User() { }
+        public User() { }
     }
 }

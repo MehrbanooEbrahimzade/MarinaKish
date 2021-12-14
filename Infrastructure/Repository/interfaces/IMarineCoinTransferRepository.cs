@@ -67,7 +67,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// جمع مبلغ همه تراکنش های یک کاربر
         /// </summary>
-        Task<decimal> TotalUsersWalletSum();
+        //Task<decimal> TotalUsersWalletSum();
 
         Task<bool> SaveChanges();
     }

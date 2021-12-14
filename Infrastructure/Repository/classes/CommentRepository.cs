@@ -142,7 +142,7 @@ namespace Infrastructure.Repository.classes
         /// </summary>
         public async Task<Comment> GetNotBlockedCommentById(Guid id)
         {
-            return await _context.Comments.FirstOrDefaultAsync(x => x.Id == id && x.Status != EStatus.Blocked);
+            return await _context.Comments.FirstOrDefaultAsync(x => x.Id == id );
         }
 
         /// <summary>
@@ -173,7 +173,6 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Comment>> GetAllBlockedCommentsForFun(Guid id)
         {
             return await _context.Comments
-                .Where(x => x.FunId == id && x.Status == EStatus.Blocked)
                 .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }

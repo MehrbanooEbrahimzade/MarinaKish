@@ -127,10 +127,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// جمع مبلغ همه تراکنش های یک کاربر
         /// </summary>
-        public async Task<decimal> TotalUsersWalletSum()
-        {
-            return await _context.Users
-                .SumAsync(x => x.Wallet);
-        }
+        //public async Task<decimal> TotalUsersWalletSum()
+        //{
+        //    return await _context.Users
+        //        .SumAsync(x => x.Wallet);
+        //}
     }
 }

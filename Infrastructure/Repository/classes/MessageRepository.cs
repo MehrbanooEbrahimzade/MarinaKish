@@ -42,7 +42,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Messages
                 .Where(x => x.UserName == cellphone && x.MessageStatus != EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -72,7 +72,7 @@ namespace Infrastructure.Repository.classes
             return await _context.Messages
                 .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
                 .Where(x => x.MessageStatus != EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -84,7 +84,7 @@ namespace Infrastructure.Repository.classes
             return await _context.Messages
                 .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
                 .Where(x => x.UserName == cellphone && x.MessageStatus != EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -103,7 +103,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Messages
                 .Where(x => x.MessageStatus == EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 
@@ -114,7 +114,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Messages
                 .Where(x => x.UserName == cellPhone && x.MessageStatus == EMessageStatus.Deleted)
-                .OrderByDescending(x => x.PlaceDate)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
 

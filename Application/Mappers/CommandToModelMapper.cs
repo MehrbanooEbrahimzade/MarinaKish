@@ -46,14 +46,14 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به سانس
         /// </summary>
-        /* public static Schedule ToModel(this AddScheduleCommand command) 
-         {
-              return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
-                  TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
-              {
-                  AvailableCapacity = command.AvailableCapacity
-              };
-         }*/
+         //public static Schedule ToModel(this AddScheduleCommand command) 
+         //{
+         //     return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
+         //         TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
+         //     {
+         //         AvailableCapacity = command.AvailableCapacity
+         //     };
+         //}
 
         /// <summary>
         /// تبدیل کردن کامند به بلیط
@@ -66,7 +66,7 @@ namespace Application.Mappers
 
                 FunId = command.FunId,
                 ScheduleId = command.ScheduleId,
-                TotalPrice = command.TotalPrice, 
+                Price = command.Price, 
                 CellPhone = command.CellPhone,
                 FullName = command.FullName
 

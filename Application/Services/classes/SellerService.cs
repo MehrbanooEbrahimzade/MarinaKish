@@ -46,7 +46,7 @@ namespace Application.Services.classes
 
             command.AvailableCapacity -= ResultBuyedTicket.Count;
             fun.MinusOnlineCapacity(ResultBuyedTicket.Count);
-            fun.PlassSellerCapacity(ResultBuyedTicket.Count); 
+            fun.PlusSellerCapacity(ResultBuyedTicket.Count); 
 
             var save = await _sellerRepository.SaveChanges();
             if (save)
@@ -150,8 +150,8 @@ namespace Application.Services.classes
                     return null;
                 seller.NationalCode = command.NationalCode;
             }
-            seller.CardNumber = command.CardNumber;
-            seller.ShabaNumber = command.ShabaNumber;
+            seller.UserCart.CardNumber = command.CardNumber;
+            seller.UserCart.ShabaNumber = command.ShabaNumber;
             await _sellerRepository.SaveChanges();
             return seller.ToDto();
         }

@@ -5,7 +5,7 @@ namespace Domain.Models
 {
     public class Fun
     {
-        public Fun(enums.FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime
+        public Fun(FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime
             , int sansDuration, int sansTotalCapacity, int sansGapTime,string about)
         {
             SystemFunCode = GenerateFunCode();
@@ -14,15 +14,44 @@ namespace Domain.Models
             StartTime = startTime;
             EndTime = endTime;
             SansDuration = sansDuration;
-            SansTotalCapacity = sansTotalCapacity;
-            SansGapTime = sansGapTime;
-            About = about; 
+            SansTotalCapacity = sansTotalCapacity;//
+            SansGapTime = sansGapTime;//
+            About = about;
+            Id = Guid.NewGuid();
             IsActive = true;
             OnlineCapacity = 0;
             RealTimeCapacity = 0;
             SellerCapacity = 0;
         }
-
+        #region Method
+        public void Update(FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime
+            , int sansDuration, int sansTotalCapacity, int sansGapTime, string about)
+        {
+            SystemFunCode = GenerateFunCode();
+            FunType = funType;
+            Price = price;
+            StartTime = startTime;
+            EndTime = endTime;
+            SansDuration = sansDuration;
+            SansTotalCapacity = sansTotalCapacity;//
+            SansGapTime = sansGapTime;//
+            About = about;
+        }
+        public void SetBackgroundPicture(string backgroundPicture)
+        {
+            BackgroundPicture = backgroundPicture;
+        }
+        public void SetIcon(string icon)
+        {
+            Icon = icon;
+        }
+        public void SetIsActive(bool isActive)
+        {
+            IsActive = isActive;
+        }
+        
+      
+        #endregion
         /// <summary>
         /// ID
         /// </summary>
@@ -37,64 +66,30 @@ namespace Domain.Models
         /// اسامی تفریح
         /// </summary>
         public enums.FunType FunType { get; private set; }
-
-        /// <summary>
-        ///  متد سازی اسامی تفریح  //mbrk
-        /// </summary>
-        public void ForFunType(FunType funtype)
-        {
-            this.FunType = funtype;
-        }
+        
+      
         /// <summary>
         /// قیمت :
         /// </summary>
         public decimal Price { get; private set; }
-
-        /// <summary>
-        /// متد سازی قیمت : //mbrk
-        /// </summary>
-        public void ForPrice(decimal price)
-        {
-            this.Price = price;
-        }
+        
 
         /// <summary>
         /// زمان شروع :
         /// </summary>
         public TimeSpan StartTime { get; private set; }
 
-
-        /// <summary>
-        /// متد سازی زمان شروع : //mbrk
-        /// </summary>
-        public void ForStartTime(TimeSpan starttime)
-        {
-            this.StartTime = starttime;
-        }
         /// <summary>
         /// زمان پایان :
         /// </summary>
         public TimeSpan EndTime { get; private set; }
-
-        /// <summary>
-        /// متد سازی زمان پایان : //mbrk
-        /// </summary>
-        public void ForEndTime(TimeSpan endtime)
-        {
-            this.EndTime = endtime;
-        }
+        
+        
         /// <summary>
         /// مدت زمان : 
         /// </summary>
         public int SansDuration { get; private set; }
 
-        /// <summary>
-        /// متد سازی مدت زمان : //mbrk
-        /// </summary>
-        public void ForSansDuration(int sansduration)
-        {
-            this.SansDuration = sansduration;
-        }
 
         /// <summary>
         /// کل فضای سانس
@@ -102,116 +97,38 @@ namespace Domain.Models
         public int SansTotalCapacity { get; private set; }
 
         /// <summary>
-        /// متد سازی کل فضای سانس  : //mbrk
-        /// </summary>
-        public void ForSansTotalCapacity(int sanstotalcapacity)
-        {
-            this.SansTotalCapacity = sanstotalcapacity;
-        }
-
-        /// <summary>
         /// زمان استراحت بین 2 سانس :
         /// </summary>
         public int SansGapTime { get; private set; }
 
-        /// <summary>
-        /// متد سازی زمان استراحت بین 2 سانس :  : //mbrk
-        /// </summary>
-        public void ForSansGapTime(int sansgaptime)
-        {
-            this.SansGapTime = sansgaptime;
-        }
-        //***************************************************************
+       
         /// <summary>
         /// فضای باقی مانده انلاین :
         /// </summary>
         public int OnlineCapacity { get; private set; }
 
-        /// <summary>
-        ///  ++متد سازی فضای باقی مانده انلاین  : //mbrk
-        /// </summary>
-        public void PlassOnlineCapacity(int onlinecapacity)
-        {
-            this.OnlineCapacity += onlinecapacity;
-        }
-
-        /// <summary>
-        ///  --متد سازی فضای باقی مانده انلاین  : //mbrk
-        /// </summary>
-        public void MinusOnlineCapacity(int onlinecapacity)
-        {
-            this.OnlineCapacity -= onlinecapacity;
-        }
-        //*******************************************************************
+      
         /// <summary>
         /// فضای باقی مانده حقیقی :
         /// </summary>
         public int RealTimeCapacity { get; private set; }
 
         /// <summary>
-        ///  ++متد سازی فضای باقی مانده حقیقی  : //mbrk
-        /// </summary>
-        public void PlassRealTimeCapacity(int realtimecapacity)
-        {
-            this.RealTimeCapacity += realtimecapacity;
-        }
-
-        /// <summary>
-        ///  --متد سازی فضای باقی مانده حقیقی  : //mbrk
-        /// </summary>
-        public void MinusRealTimeCapacity(int realtimecapacity)
-        {
-            this.RealTimeCapacity -= realtimecapacity;
-        }
-        //**************************************************************
-        /// <summary>
-        /// فضای مانده فروشنده :
-        /// </summary>
-        public int SellerCapacity { get; private set; }
-
-        /// <summary>
-        ///  ++متد سازی فضای مانده فروشنده  : //mbrk
-        /// </summary>
-        public void PlassSellerCapacity(int sellercapacity)
-        {
-            this.SellerCapacity += sellercapacity;
-        }
-
-        /// <summary>
-        ///  --متد سازی فضای مانده فروشنده  : //mbrk
-        /// </summary>
-        public void MinusSellerCapacity(int sellercapacity)
-        {
-            this.SellerCapacity -= sellercapacity;
-        }
-        //******************************************************************
-        /// <summary>
         /// فعال بودن
         /// </summary>
         public bool IsActive { get; private set; }
-
-        /// <summary>
-        ///  متد سازی فعال بودن  //mbrk
-        /// </summary>
-        public void ForIsActive(bool isactive)
-        {
-
-            this.IsActive = isactive;
-        }
+      
 
         /// <summary>
         /// درباره تفریح
         /// </summary>
         public string About { get; private set; }
 
+       
         /// <summary>
-        ///  متد سازی درباره تفریح  //mbrk
+        /// فضای مانده فروشنده :
         /// </summary>
-        public void ForAbout(string aboute)
-        {
-
-            this.About = aboute;
-        }
+        public int SellerCapacity { get; private set; }
 
         /// <summary>
         /// عکس پس زمینه
@@ -219,36 +136,51 @@ namespace Domain.Models
         public string BackgroundPicture { get;private set; }
 
         /// <summary>
-        ///  متد سازی عکس پس زمینه  //mbrk
-        /// </summary>
-        public void ForBackgroundPicture(string backgroundpicture)
-        {
-
-            this.BackgroundPicture = backgroundpicture;
-        }
-
-        /// <summary>
         /// آیکون
         /// </summary>
         public string Icon { get;private set; }
 
-        /// <summary>
-        ///  متد سازی آیکون  //mbrk
-        /// </summary>
-        public void ForIcon(string icon)
-        {
-            this.Icon = icon;
-        }
+
         public string GenerateFunCode()
         {
-            var milisecond = DateTime.Now.Millisecond.ToString();
+            var millisecond = DateTime.Now.Millisecond.ToString();
             var randomGenerate = new Random().Next(10000, 99999).ToString();
-            return milisecond + "-" + randomGenerate;
+            return millisecond + "-" + randomGenerate;
         }
 
-        private Fun()
+        #region + -
+
+        public void PlusRealTimeCapacity(int realTimeCapacity)
         {
-
+            this.RealTimeCapacity += realTimeCapacity;
         }
+        public void MinusRealTimeCapacity(int realTimeCapacity)
+        {
+            this.RealTimeCapacity -= realTimeCapacity;
+        }
+
+
+        public void PlusOnlineCapacity(int onlineCapacity)
+        {
+            this.OnlineCapacity -= onlineCapacity;
+        }
+        public void MinusOnlineCapacity(int onlineCapacity)
+        {
+            this.OnlineCapacity += onlineCapacity;
+        }
+
+
+
+        public void PlusSellerCapacity(int sellerCapacity)
+        {
+            this.SellerCapacity += sellerCapacity;
+        }
+        public void MinusSellerCapacity(int sellerCapacity)
+        {
+            this.SellerCapacity -= sellerCapacity;
+        }
+
+        #endregion
+
     }
 }

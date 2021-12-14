@@ -12,7 +12,8 @@ namespace Application.Services.interfaces
         /// اضافه کردن کامنت
         /// </summary>
         Task<CommentDto> AddCommentToFun(AddCommentCommand command);
-
+        //public async Task<CommentDto> BlockingComment(Guid id)
+        //public async Task<int> BlockAllUserComments(Guid id)
         /// <summary>
         /// تایید شدن یا نشدن کامنت
         /// </summary>
@@ -38,10 +39,6 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<bool> DecreaseLikeComment(Guid id);
 
-        /// <summary>
-        /// بلاک کردن کل کامنت های یک کاربر
-        /// </summary>
-        Task<int> BlockAllUserComments(Guid id);
 
         /// <summary>
         /// قبول کردن یک کامنت با آیدی
@@ -53,10 +50,7 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<CommentDto> DecliningComment(Guid id);
 
-        /// <summary>
-        /// بلاک کردن یک کامنت با آیدی
-        /// </summary>
-        Task<CommentDto> BlockingComment(Guid id);
+   
 
         /// <summary>
         /// دریافت کامنت های درحال انتظار یک تفریح با آیدی

@@ -119,7 +119,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس
         /// </summary>
-        [HttpGet("{id}/ScheduleTickets-TotalPrice")] // ScheduleId ( schedules model )
+        [HttpGet("{id}/ScheduleTickets-Price")] // ScheduleId ( schedules model )
         public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid id)
         {
             var result = await _ticketService.ScheduleTicketsPrice(id);
