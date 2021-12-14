@@ -46,7 +46,7 @@ namespace Application.Services.classes
 
             command.AvailableCapacity -= ResultBuyedTicket.Count;
             fun.MinusOnlineCapacity(ResultBuyedTicket.Count);
-            fun.PlassSellerCapacity(ResultBuyedTicket.Count); 
+            fun.AddSellerCapacity(ResultBuyedTicket.Count); 
 
             var save = await _sellerRepository.SaveChanges();
             if (save)
