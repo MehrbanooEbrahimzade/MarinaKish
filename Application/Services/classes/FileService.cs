@@ -55,13 +55,15 @@ namespace Application.Services.classes
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        public async Task<FilesDto> GetFileById(Guid id)
+        //public async Task<File> GetFileById(Guid id)
+
+        public async Task GetFileById(Guid id)
         {
             
             var file = await _fileRepository.GetFileById(id);
 
-            if (file == null || !System.IO.File.Exists(file.FilePath))
-                return null;
+            //if (file == null || !System.IO.File.Exists(file.FilePath))
+               // return null;
 
             var memoryStream = new MemoryStream();
 
@@ -71,7 +73,6 @@ namespace Application.Services.classes
             }
             memoryStream.Position = 0;
             //GetContentType()
-            return 
             //dto konamesh
         }
 

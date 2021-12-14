@@ -6,7 +6,7 @@ namespace Domain.Models
     public class User
     {
 
-        public User(string cellPhone)
+        public User(string cellPhone )
         {
             CellPhone = cellPhone;
             VerifyCode = GenerateVerifyCode();
@@ -14,7 +14,7 @@ namespace Domain.Models
             SystemUserCode = GenerateUserCode();
             RoleType = RoleTypec.Buyer;
             Gender = EGender.Other;
-            BirthDay = default;
+            BirthDay = default;  
             DateJoin = DateTime.Now;
         }
         
@@ -46,7 +46,7 @@ namespace Domain.Models
         /// <summary>
         /// استان
         /// </summary>
-        public string Provice { get; set; }
+        public string Provice { get; set; } //TODO:delete
 
         /// <summary>
         /// فعال بودن کاربر
@@ -56,12 +56,12 @@ namespace Domain.Models
         /// <summary>
         /// کد شناساییه کاربر ، ساخته شده توسط ما
         /// </summary>
-        public string SystemUserCode { get; set; } // generate
+        public string SystemUserCode { get; set; } // generate 
 
         /// <summary>
         /// سطح دسترسی
         /// </summary>
-        public enums.RoleTypec RoleType { get; set; }
+        public enums.RoleTypec RoleType { get; set; }  //TODO:delete                                                         
 
         /// <summary>
         /// کد تایید
@@ -72,16 +72,17 @@ namespace Domain.Models
         /// شماره ملی
         /// </summary>
         public string NationalCode { get; set; }
-
+         
         /// <summary>
         /// شماره کارت
         /// </summary>
-        public string CardNumber { get; set; }
+        public string CardNumber { get; set; }   //TODO:delete
 
         /// <summary>
         /// شماره شبا
         /// </summary>
-        public string ShabaNumber { get; set; }
+        public string ShabaNumber { get; set; }  //TODO:delete
+         
 
         /// <summary>
         /// جنسیت
@@ -96,17 +97,17 @@ namespace Domain.Models
         /// <summary>
         /// اطلاعات کانتکته کاربر
         /// </summary>
-        public ContactInfo ContactInfo { get; set; }
+        public ContactInfo ContactInfo { get; set; }  //TODO:delete
 
         /// <summary>
         /// کیف پول
         /// </summary>
-        public decimal Wallet { get; set; }
+        public decimal Wallet { get; set; }  //TODO:delete
 
         /// <summary>
         /// زمان وارد شدن به مارینا
         /// </summary>
-        public DateTime DateJoin { get; set; }
+        public DateTime DateJoin { get; set; }  //TODO:delete
 
 
         public string GenerateUserCode()

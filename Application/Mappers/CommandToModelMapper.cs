@@ -39,7 +39,7 @@ namespace Application.Mappers
             return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime),
                 command.SansDuration, command.SansTotalCapacity, command.SansGapTime)
             {
-                About = command.About
+                //About=About.command
             };
         }
 
@@ -48,7 +48,7 @@ namespace Application.Mappers
         /// </summary>
         /* public static Schedule ToModel(this AddScheduleCommand command) 
          {
-              return new Schedule(command.SystemFunCode, command.FunType, command.ExcuteDateTime, command.Price,
+              return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
                   TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
               {
                   AvailableCapacity = command.AvailableCapacity
@@ -85,11 +85,11 @@ namespace Application.Mappers
         }
 
 
-        public static Files ToModel(this List<string> fileProps)
+        public static File ToModel(this List<string> fileProps)
         {
-            return new Files(fileProps[0], fileProps[1])
+            return new File(fileProps[0], fileProps[1])
             {
-                Size = fileProps[2]
+                Size = fileProps[3]
             };
         }
 
@@ -100,7 +100,7 @@ namespace Application.Mappers
 
         public static Message ToModel(this AddMessageCommand command)
         {
-            return new Message(command.ConversationID, command.UserID,command.Username, command.Message);
+            return new Message(command.Username,command.Message,command.ConversationID,command.UserID);
         }
     }
 }

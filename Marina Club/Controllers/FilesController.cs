@@ -38,10 +38,11 @@ namespace Marina_Club.Controllers
         [HttpGet("Download/{id}")]
         public async Task<IActionResult> DownloadFileAsync(Guid id)
         {
-            var myFile = await _fileService.GetFileById(id);
+            //var myFile = await _fileService.GetFileById(id);
 
-            return myFile==null ? BadReq(ApiMessage.PicNotExist)
-                : File(memory, GetContentType(myFile.FilePath), myFile.Name);
+            //return myFile==null ? BadReq(ApiMessage.PicNotExist)
+            //    : File(memory, GetContentType(myFile.FilePath), myFile.Name);
+            return null;
         }
 
         //[HttpGet("MusicDownload/{id}")]

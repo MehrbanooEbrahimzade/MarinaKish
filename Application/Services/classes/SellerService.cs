@@ -36,25 +36,18 @@ namespace Application.Services.classes
             List<Ticket> ResultBuyedTicket = new List<Ticket>();
             for (int i = 0; i < command.NumberOfTicket; i++)
             {
-                var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, 1)
-                {
-                    ScheduleId = schedule.Id,
-                    FunId = fun.Id,
-                    UserId = user.Id,
-                    Condition = ECondition.Reservation,
-                    WhereBuy = EWhereBuy.Seller,
-                    TotalPrice = schedule.Price * command.NumberOfTicket,
-                    CellPhone = user.CellPhone,
-                    FullName = user.FullName
-                };
+
+                var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, 1);
 
                 var addTicket = await _sellerRepository.AddTicketAsync(ticketModel);
                 if (addTicket)
                     ResultBuyedTicket.Add(ticketModel);
             }
-            schedule.AvailableCapacity -= ResultBuyedTicket.Count;
-            fun.OnlineCapacity -= ResultBuyedTicket.Count;
-            fun.SellerCapacity += ResultBuyedTicket.Count;
+
+            command.AvailableCapacity -= ResultBuyedTicket.Count;
+            fun.MinusOnlineCapacity(ResultBuyedTicket.Count);
+            fun.PlassSellerCapacity(ResultBuyedTicket.Count); 
+
             var save = await _sellerRepository.SaveChanges();
             if (save)
                 return ResultBuyedTicket.ToDto();

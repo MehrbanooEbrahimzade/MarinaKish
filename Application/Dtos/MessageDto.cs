@@ -24,7 +24,7 @@ namespace Application.Dtos
         /// <summary>
         /// پیام
         /// </summary>
-        public string message { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// آیدی تالار گفت و گو
@@ -35,5 +35,6 @@ namespace Application.Dtos
         /// وضعیت پیام
         /// </summary>
         public EMessageStatus MessageStatus { get; set; }
+        
     }
 }

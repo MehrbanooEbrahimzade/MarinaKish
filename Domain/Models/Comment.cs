@@ -5,16 +5,14 @@ namespace Domain.Models
 {
     public class Comment
     {
-        public Comment(string message, Guid funId, Guid userId
-            , FunType funtype , string usercellphone
-            ,string username)
+        public Comment(string message, Guid funId, Guid userId, FunType funType , string userPhoneNumber,string username)
         {
             Id = Guid.NewGuid(); 
             Message = message;
             FunId = funId;
             UserId = userId;
-            FunType = funtype;
-            UserCellPhone = usercellphone;
+            FunType = funType;
+            UserPhoneNumber = userPhoneNumber;
             UserName = username; 
             Like = 0;
             DisLike = 0;
@@ -70,12 +68,13 @@ namespace Domain.Models
         /// <summary>
         /// شماره تلفن کاربر
         /// </summary>
-        public string UserCellPhone { get; private set; }
+        public string UserPhoneNumber { get; private set; }
 
         /// <summary>
         /// شناسه کاربری
         /// </summary>
         public Guid UserId { get; private set; }
+
         /// <summary>
         /// آپدیت کردن Status کامنت 
         /// </summary>
@@ -84,14 +83,15 @@ namespace Domain.Models
         {
             this.Status = status;
         }
+
         /// <summary>
         /// آپدیت لایک ها 
         /// </summary>
-        /// <param name="like"></param>
         public void UpdateCommentLikes(int like)
         {
             this.Like += like; 
         }
+
         /// <summary>
         /// کاهش تعداد لایک ها 
         /// </summary>

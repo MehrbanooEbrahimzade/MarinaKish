@@ -19,6 +19,7 @@ namespace Application.Commands.Ticket
         /// شماره تلفن کاربر
         /// </summary>
         public string UserCellPhone { get; set; }
+        public int AvailableCapacity { get; internal set; }
 
         public override bool Validate()
         {

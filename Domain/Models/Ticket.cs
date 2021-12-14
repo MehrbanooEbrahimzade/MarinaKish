@@ -7,6 +7,7 @@ namespace Domain.Models
     {
         public Ticket(FunType funType, DateTime scheduleMiladiTime, TimeSpan startTime, TimeSpan endTime, int numberOfTicket)
         {
+            Id = Guid.NewGuid();
             FunType = funType;
             ScheduleMiladiTime = scheduleMiladiTime;
             StartTime = startTime;
@@ -21,84 +22,94 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get;private set; }
 
         /// <summary>
         /// شماره تلفن همراه
         /// </summary>
-        public string CellPhone { get; set; }
+        public string CellPhone { get; private set; }
 
         /// <summary>
         /// نام و نام خانوادگی
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; private set; }
 
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public enums.FunType FunType { get; set; }
+        public FunType FunType { get; private set; }
+        public void FunTypeSet(FunType funType)
+        {
+            this.FunType = funType;
+        }
 
         /// <summary>
         /// زمان برگزاری سانس - به میلادی
         /// </summary>
-        public DateTime ScheduleMiladiTime { get; set; } // badan bhash ye harekatayi bznm
+        public DateTime ScheduleMiladiTime { get; private set; } // badan bhash ye harekatayi bznm
 
         /// <summary>
         /// زمان شروع
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan StartTime { get; private set; }
 
         /// <summary>
         /// زمان پایان
         /// </summary>
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan EndTime { get; private set; }
 
         /// <summary>
         /// شماره بلیط
         /// </summary>
-        public string TicketNumber { get; set; }
+        public string TicketNumber { get; private set; }
 
         /// <summary>
         /// قیمت کل
         /// </summary>
-        public decimal TotalPrice { get; set; }
-
+        public decimal TotalPrice { get; private set; }
+      
         /// <summary>
         /// آی دیه مدل تفریحات
         /// </summary>
-        public Guid FunId { get; set; }
+        public Guid FunId { get; private set; }
 
         /// <summary>
         /// آی دیه مدل سانس ها
         /// </summary>
-        public Guid ScheduleId { get; set; }
+        public Guid ScheduleId { get; private set; }
 
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserId { get; set; }
+        public Guid UserId { get; private set; }
 
         /// <summary>
         /// وضعیت
         /// </summary>
-        public ECondition Condition { get; set; }
+        public ECondition Condition { get; private set; }
+        public void ConditionSet(ECondition eCondition)
+        {
+            this.Condition = eCondition;
+        }
 
         /// <summary>
         /// تعداد بلیط
         /// </summary>
-        public int NumberOfTicket { get; set; }
+        public int NumberOfTicket { get; private set; }
 
         /// <summary>
         /// زمان فروش بلیط
         /// </summary>
-        public DateTime SubmitDate { get; set; }
+        public DateTime SubmitDate { get; private set; }
 
         /// <summary>
         /// کجا خریداری شده
         /// </summary>
-        public EWhereBuy WhereBuy { get; set; }
-
-
+        public EWhereBuy WhereBuy { get; private set; }
+        public void WhereBuySet(EWhereBuy eWhereBuy)
+        {
+            this.WhereBuy = eWhereBuy;
+        }
 
         public string GenerateTicketNumber()
         {
@@ -109,9 +120,8 @@ namespace Domain.Models
             return "00" + milisecond + second + minute  + randomNumber;
         }
 
-        private Ticket()
+        public Ticket()
         {
-
         }
     }
 }

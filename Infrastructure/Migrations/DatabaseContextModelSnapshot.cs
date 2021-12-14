@@ -58,7 +58,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("SubmitDate");
 
-                    b.Property<string>("UserCellPhone");
+                    b.Property<string>("UserPhoneNumber");
 
                     b.Property<Guid>("UserId");
 
@@ -202,7 +202,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<TimeSpan>("EndTime");
 
-                    b.Property<DateTime>("ExcuteMiladiDateTime");
+                    b.Property<DateTime>("ExecuteDateTime");
 
                     b.Property<Guid>("FunId");
 

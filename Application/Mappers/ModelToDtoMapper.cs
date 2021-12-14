@@ -146,7 +146,7 @@ namespace Application.Mappers
         {
             PersianCalendar persianParse = new PersianCalendar();
             string persianDate = string.Format("{0}/{1}/{2}",
-                persianParse.GetYear(schedule.ExcuteMiladiDateTime), persianParse.GetMonth(schedule.ExcuteMiladiDateTime), persianParse.GetDayOfMonth(schedule.ExcuteMiladiDateTime));
+                persianParse.GetYear(schedule.ExecuteDateTime), persianParse.GetMonth(schedule.ExecuteDateTime), persianParse.GetDayOfMonth(schedule.ExecuteDateTime));
 
             return new ScheduleDto()
             {
@@ -174,8 +174,8 @@ namespace Application.Mappers
             //{
             //    PersianCalendar persianParse = new PersianCalendar();
             //    string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-            //        persianParse.GetYear(schedule.ExcuteMiladiDateTime), persianParse.GetMonth(schedule.ExcuteMiladiDateTime), persianParse.GetDayOfMonth(schedule.ExcuteMiladiDateTime),
-            //        persianParse.GetHour(schedule.ExcuteMiladiDateTime), persianParse.GetMinute(schedule.ExcuteMiladiDateTime));
+            //        persianParse.GetYear(schedule.ExecuteDateTime), persianParse.GetMonth(schedule.ExecuteDateTime), persianParse.GetDayOfMonth(schedule.ExecuteDateTime),
+            //        persianParse.GetHour(schedule.ExecuteDateTime), persianParse.GetMinute(schedule.ExecuteDateTime));
             //    schedule.ToDto().ExcutePersianDateTime = persianDate;
             //}
 
@@ -322,7 +322,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل فایل به dto فایل
         /// </summary>
-        public static FilesDto ToDto(this Files file)
+        public static FilesDto ToDto(this File file)
         {
             PersianCalendar persianParse = new PersianCalendar();
             string shamsiPlaceDate = string.Format("{0}/{1}/{2} {3}:{4}",
@@ -343,7 +343,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل لیست فایل به dto لیست فایل
         /// </summary>
-        public static List<FilesDto> ToDto(this List<Files> pics)
+        public static List<FilesDto> ToDto(this List<File> pics)
         {
             return pics.Select(x => new FilesDto
             {
@@ -422,7 +422,7 @@ namespace Application.Mappers
                 Id = message.Id,
                 UserName = message.UserName,
                 ShamsiPlaceDate = persianDate,
-                message = message.message,
+                Text = message.Text,
                 ConversationID = message.ConversationID,
                 MessageStatus = message.MessageStatus
 
@@ -442,7 +442,7 @@ namespace Application.Mappers
                 Id = x.Id,
                 UserName = x.UserName,
                 ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
-                message = x.message,
+                Text = x.Text,
                 ConversationID = x.ConversationID,
                 MessageStatus = x.MessageStatus
 

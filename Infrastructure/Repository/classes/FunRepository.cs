@@ -81,7 +81,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// دریافت فایل با آیدی
         /// </summary>
-        public async Task<Files> GetFileById(Guid id)
+        public async Task<File> GetFileById(Guid id)
         {
             return await _context.Files
                 .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
@@ -135,8 +135,8 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid id)
         {
             return await _context.Schedules
-                .Where(x => x.FunId == id && x.IsExist == true && x.ExcuteMiladiDateTime >= DateTime.Now)
-                .OrderByDescending(x => x.ExcuteMiladiDateTime)
+                .Where(x => x.FunId == id && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
+                .OrderByDescending(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
 
@@ -146,8 +146,8 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> GetAllFunDisActiveSchedulesById(Guid id)
         {
             return await _context.Schedules
-                .Where(x => x.FunId == id && x.IsExist == false && x.ExcuteMiladiDateTime >= DateTime.Now)
-                .OrderByDescending(x => x.ExcuteMiladiDateTime)
+                .Where(x => x.FunId == id && x.IsExist == false && x.ExecuteDateTime >= DateTime.Now)
+                .OrderByDescending(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
     }

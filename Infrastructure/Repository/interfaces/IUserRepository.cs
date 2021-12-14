@@ -85,7 +85,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن فایل با آیدی
         /// </summary>
-        Task<Files> GetFileById(Guid id);
+        Task<File> GetFileById(Guid id);
 
         /// <summary>
         /// دریافت کاربر بلاک شده

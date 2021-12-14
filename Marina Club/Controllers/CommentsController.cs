@@ -24,7 +24,7 @@ namespace Marina_Club.Controllers
         {
             command.FunId = id;
             if (!command.Validate())
-                return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-enter funID, 2-enter message, 3-enter userID, 4-funType & Username & UserCellPhone must null" });
+                return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-enter funID, 2-enter message, 3-enter userID, 4-funType & Username & UserPhoneNumber must null" });
 
             var result = await _commentService.AddCommentToFun(command);
             if (result == null)

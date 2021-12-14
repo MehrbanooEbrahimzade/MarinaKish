@@ -15,6 +15,11 @@ namespace Application.Commands.Schedule
         /// </summary>
         public decimal DiscountPercent { get; set; }
 
+        /// <summary>
+        /// قیمت تفریح
+        /// </summary>
+        public decimal Price { get; set; }
+
         public override bool Validate()
         {
             return new DiscountPercentAllFunSchedulesCommandValidator().Validate(this).IsValid;

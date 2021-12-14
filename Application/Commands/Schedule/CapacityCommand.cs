@@ -14,6 +14,7 @@ namespace Application.Commands.Schedule
         /// فضای سانس
         /// </summary>
         public int Capacity { get; set; }
+        public int AvailableCapacity { get; internal set; }
 
         public override bool Validate()
         {

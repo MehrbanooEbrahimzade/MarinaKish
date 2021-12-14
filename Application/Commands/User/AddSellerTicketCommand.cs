@@ -21,6 +21,7 @@ namespace Application.Commands.User
         /// آیدی فروشنده
         /// </summary>
         public Guid SellerId { get; set; }
+        public int AvailableCapacity { get; internal set; }
 
         public override bool Validate()
         {
