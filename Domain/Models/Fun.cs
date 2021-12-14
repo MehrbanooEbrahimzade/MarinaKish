@@ -5,7 +5,8 @@ namespace Domain.Models
 {
     public class Fun
     {
-        public Fun(enums.FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime, int sansDuration, int sansTotalCapacity, int sansGapTime)
+        public Fun(enums.FunType funType, decimal price, TimeSpan startTime, TimeSpan endTime
+            , int sansDuration, int sansTotalCapacity, int sansGapTime,string about)
         {
             SystemFunCode = GenerateFunCode();
             FunType = funType;
@@ -15,6 +16,7 @@ namespace Domain.Models
             SansDuration = sansDuration;
             SansTotalCapacity = sansTotalCapacity;
             SansGapTime = sansGapTime;
+            About = about; 
             IsActive = true;
             OnlineCapacity = 0;
             RealTimeCapacity = 0;
