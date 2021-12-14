@@ -53,8 +53,8 @@ namespace Application.Services.classes
                     ResultBuyedTicket.Add(ticketModel);
             }
             schedule.AvailableCapacity -= ResultBuyedTicket.Count;
-            fun.OnlineCapacity -= ResultBuyedTicket.Count;
-            fun.SellerCapacity += ResultBuyedTicket.Count;
+            fun.MinusOnlineCapacity(ResultBuyedTicket.Count);
+            fun.PlassSellerCapacity(ResultBuyedTicket.Count); 
             var save = await _sellerRepository.SaveChanges();
             if (save)
                 return ResultBuyedTicket.ToDto();

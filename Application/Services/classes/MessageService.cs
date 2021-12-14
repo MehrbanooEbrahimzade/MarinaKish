@@ -31,7 +31,7 @@ namespace Application.Services.classes
             command.Username = user.CellPhone;
             var messageObj = command.ToModel();
 
-            conversation.LastActivity = DateTime.Now;
+            conversation.ForLastActivity(DateTime.Now);
             var addAndSave = await _messageRepository.AddMessage(messageObj);
             if (!addAndSave)
                 return null;

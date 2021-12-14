@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
+using File = Domain.Models.File;
 
 namespace Infrastructure.Repository.classes
 {
@@ -19,7 +20,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// اپلود کردن عکس
         /// </summary>
-        public async Task<bool> UploadFileAsync(Files pic)
+        public async Task<bool> UploadFileAsync(File pic)
         {
             await _context.Files.AddAsync(pic);
             return await _context.SaveChangesAsync() > 0;
@@ -28,7 +29,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        public async Task<Files> GetFileById(Guid id)
+        public async Task<File> GetFileById(Guid id)
         {
             return await _context.Files
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
@@ -45,7 +46,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن عکس با اسم عکس
         /// </summary>
-        public async Task<Files> GetImageByName(string fileName)
+        public async Task<File> GetImageByName(string fileName)
         {
             return await _context.Files
                 .FirstOrDefaultAsync(x => x.Name == fileName);
@@ -54,7 +55,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// پاک کردن فایل
         /// </summary>
-        public async Task<bool> DeleteFileAsync(Files pic)
+        public async Task<bool> DeleteFileAsync(File pic)
         {
             _context.Files.Remove(pic);
             return await _context.SaveChangesAsync() > 0;
@@ -117,7 +118,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن همه عکس ها برای یک تفریح 
         /// </summary>
-        public async Task<List<Files>> GetAllPicForFun(string funid)
+        public async Task<List<File>> GetAllPicForFun(string funid)
         {
             return await _context.Files
                 .Where(x => x.FunID.Contains(funid) && x.IsActive == true)
@@ -127,7 +128,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن همه عکس ها برای یک کاربر
         /// </summary>
-        public async Task<List<Files>> GetAllPicForUser(string userid)
+        public async Task<List<File>> GetAllPicForUser(string userid)
         {
             return await _context.Files
                 .Where(x => x.UserID.Contains(userid) && x.IsActive == true)
@@ -137,7 +138,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن همه عکس ها برای یک سانس
         /// </summary>
-        public async Task<List<Files>> GetAllPicForSchedule(string scheduleid)
+        public async Task<List<File>> GetAllPicForSchedule(string scheduleid)
         {
             return await _context.Files
                 .Where(x => x.ScheduleID.Contains(scheduleid) && x.IsActive == true)
@@ -147,7 +148,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن عکس غیرفعال با آیدی
         /// </summary>
-        public async Task<Files> getNotActiveFileById(Guid id)
+        public async Task<File> getNotActiveFileById(Guid id)
         {
             return await _context.Files
                 .FirstOrDefaultAsync(x => x.Id == id);

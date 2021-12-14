@@ -323,7 +323,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل فایل به dto فایل
         /// </summary>
-        public static FilesDto ToDto(this Files file)
+        public static FilesDto ToDto(this File file)
         {
             PersianCalendar persianParse = new PersianCalendar();
             string shamsiPlaceDate = string.Format("{0}/{1}/{2} {3}:{4}",
@@ -344,7 +344,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل لیست فایل به dto لیست فایل
         /// </summary>
-        public static List<FilesDto> ToDto(this List<Files> pics)
+        public static List<FilesDto> ToDto(this List<File> pics)
         {
             return pics.Select(x => new FilesDto
             {

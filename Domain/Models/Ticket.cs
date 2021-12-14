@@ -46,7 +46,7 @@ namespace Domain.Models
         /// <summary>
         /// زمان شروع
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan StartTime { get; set; } 
 
         /// <summary>
         /// زمان پایان
@@ -61,7 +61,7 @@ namespace Domain.Models
         /// <summary>
         /// قیمت کل
         /// </summary>
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }  //اینجا price باشه
 
         /// <summary>
         /// آی دیه مدل تفریحات
@@ -76,7 +76,7 @@ namespace Domain.Models
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; }  //حذف شه   //nationalid بیاد تو
 
         /// <summary>
         /// وضعیت
@@ -86,7 +86,7 @@ namespace Domain.Models
         /// <summary>
         /// تعداد بلیط
         /// </summary>
-        public int NumberOfTicket { get; set; }
+        public int NumberOfTicket { get; set; } //غلطه اسمش
 
         /// <summary>
         /// زمان فروش بلیط

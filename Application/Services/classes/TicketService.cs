@@ -89,8 +89,8 @@ namespace Application.Services.classes
 
             if (user.RoleType == RoleTypec.Seller)
             {
-                fun.OnlineCapacity -= command.NumberOfTicket;
-                fun.SellerCapacity += command.NumberOfTicket;
+                fun.MinusOnlineCapacity(command.NumberOfTicket);
+                fun.PlassSellerCapacity(command.NumberOfTicket); 
             }
 
             schedule.AvailableCapacity -= command.NumberOfTicket;
@@ -251,11 +251,11 @@ namespace Application.Services.classes
             var user = await _ticketRepository.GetUserById(ticket.UserId);
 
             if (user.RoleType == RoleTypec.Seller)
-                fun.SellerCapacity += ticket.NumberOfTicket;
+                fun.PlassSellerCapacity(ticket.NumberOfTicket); 
             else
-                fun.RealTimeCapacity -= ticket.NumberOfTicket;
+                fun.MinusRealTimeCapacity(ticket.NumberOfTicket);
 
-            fun.OnlineCapacity -= ticket.NumberOfTicket;
+            fun.MinusOnlineCapacity(ticket.NumberOfTicket); 
 
             ticket.Condition = ECondition.Reservation;
             schedule.AvailableCapacity -= ticket.NumberOfTicket;
@@ -280,11 +280,11 @@ namespace Application.Services.classes
 
             if (user.RoleType == RoleTypec.Seller)
             {
-                fun.SellerCapacity -= ticket.NumberOfTicket;
-                fun.OnlineCapacity += ticket.NumberOfTicket;
+                fun.MinusSellerCapacity(ticket.NumberOfTicket);
+                fun.PlassOnlineCapacity(ticket.NumberOfTicket);
             }
 
-            fun.RealTimeCapacity += ticket.NumberOfTicket;
+            fun.PlassRealTimeCapacity(ticket.NumberOfTicket);
             ticket.Condition = ECondition.Cancel;
             schedule.AvailableCapacity += ticket.NumberOfTicket;
             user.Wallet += ticket.TotalPrice;

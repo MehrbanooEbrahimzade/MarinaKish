@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    public class ContactInfo
+    public class ContactInfo //TODO:delete 
     {
         public ContactInfo(string phone , string email , string address)
         {

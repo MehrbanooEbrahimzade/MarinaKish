@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Files
+    public class File
     {
-        public Files(string fileName, string filePath)
+        public File(string fileName, string filePath)
         {
-
+            Id = Guid.NewGuid();
             Name = fileName;
             FilePath = filePath;
             IsActive = true;
             PlaceDate = DateTime.Now;
+            
+
         }
 
         /// <summary>
@@ -34,12 +36,12 @@ namespace Domain.Models
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { set { } } //فقظ خواندنی
+        public string Size { get; set; } //نمیدونم توش چی کار کرده؟؟
 
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get;  set; }
+        public bool IsActive { get; set; } //TODO:delete
 
         /// <summary>
         /// زمان اضافه شدن
@@ -49,19 +51,19 @@ namespace Domain.Models
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public string UserID { get; set; }
+        public string UserID { get; set; } //TODO:delete
 
         /// <summary>
         /// آیدی تفریح
         /// </summary>
-        public string FunID { get; set; }
+        public string FunID { get; set; } //TODO:delete
 
         /// <summary>
         /// آیدی سانس
         /// </summary>
-        public string ScheduleID { get; set; }
+        public string ScheduleID { get; set; }////TODO:delete
 
-        private Files()
+        private File()
         {
 
         }

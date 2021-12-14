@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Application.Commands.Conversation;
 using Application.Dtos;
@@ -40,12 +41,14 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetOpenConversationById(id);
             if (conversation == null)
                 return null;
-            conversation.State = EStates.Closed;
+            //conversation.State = EStates.Closed;
+             conversation.ForStates(EStates.Closed);
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
                 return null;
-            return conversation.State=EStates.Open;
+            conversation.ForStates(EStates.Open);
+               return null;
         }
 
         /// <summary>
@@ -56,14 +59,14 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetClosedConversationById(id);
             if (conversation == null)
                 return null;
-            conversation.State = EStates.Open;
+            conversation.ForStates(EStates.Open);
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
                 return null;
             return conversation.State;
         }
-        
+
         /// <summary>
         /// کم اهمیت کردن تالار گفتگو
         /// </summary>
@@ -72,7 +75,7 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetOpenConversationById(id);
             if (conversation == null)
                 return null;
-            conversation.Priority = EPriority.Less;
+            conversation.ForPriority(EPriority.Less);
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
@@ -88,7 +91,7 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetOpenConversationById(id);
             if (conversation == null)
                 return null;
-            conversation.Priority = EPriority.Medium;
+            conversation.ForPriority(EPriority.Medium);
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
@@ -104,7 +107,7 @@ namespace Application.Services.classes
             var conversation = await _conversationRepository.GetOpenConversationById(id);
             if (conversation == null)
                 return null;
-            conversation.Priority = EPriority.High;
+            conversation.ForPriority(EPriority.High);
 
             var save = await _conversationRepository.UpdateConversation();
             if (!save)
@@ -122,8 +125,8 @@ namespace Application.Services.classes
                 return null;
             var conversationDto = conversation.ToDto();
             var conversationMessages = await _conversationRepository.GetAllConversationMessageById(id);
-            
-            if(conversationMessages != null)
+
+            if (conversationMessages != null)
                 conversationDto.RecentMessages = conversationMessages.ToDto();
             return conversationDto;
         }
@@ -137,7 +140,7 @@ namespace Application.Services.classes
             foreach (var conversation in conversations)
             {
                 var conversationMessages = await _conversationRepository.GetAllConversationMessageById(conversation.Id);
-                if(conversationMessages != null)
+                if (conversationMessages != null)
                     conversation.ToDto().RecentMessages = conversationMessages.ToDto();
             }
             return conversations.ToDto();

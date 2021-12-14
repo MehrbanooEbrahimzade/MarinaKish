@@ -195,7 +195,7 @@ namespace Marina_Club.Controllers
 
             #endregion
 
-            #region Files
+            #region File
             public const string OkPicAdd = "عکس مورد نظر با موفقیت اضافه شد";
             public const string OkFileAdd = "فایل مورد نظر با موفقیت اضافه شد";
             public const string PicNotAdd = "اضافه کردن عکس مورد نظر با شکست مواجه شد";

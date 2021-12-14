@@ -85,11 +85,11 @@ namespace Application.Mappers
         }
 
 
-        public static Files ToModel(this List<string> fileProps)
+        public static File ToModel(this List<string> fileProps)
         {
-            return new Files(fileProps[0], fileProps[1])
+            return new File(fileProps[0], fileProps[1])
             {
-                Size = fileProps[2]
+                Size = fileProps[3]
             };
         }
 
