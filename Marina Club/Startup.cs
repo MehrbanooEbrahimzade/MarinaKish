@@ -10,6 +10,9 @@ using Infrastructure.Repository;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.interfaces;
 using Application.Services.interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure;
 
 namespace Marina_Club
 {
@@ -26,10 +29,10 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<DatabaseContext>(x =>
-            {
-                x.UseSqlServer(Configuration.GetConnectionString("DB"));
-            });
+            //from DependencyInjectionPersist
+            services.ConfigureApplicationPersistence(Configuration);
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
             // AddScoped for users model(table)
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();

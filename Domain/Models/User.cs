@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Domain.Models.enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public User(string phoneNumber, string fullname, string username, string password, string nationalcode)
+        public User(string phoneNumber, string fullname, string username, string password, string nationalcode
+            ,UserCart userCart,List<Ticket>tickets)
+
         {
             PhoneNumber = phoneNumber;
+            FullName = fullname;
+            UserName = username;
+            Password = password;
+            NationalCode = nationalcode;
+            UserCart = userCart;
+            Tickets = tickets;
             VerifyCode = GenerateVerifyCode();
             IsActive = true;
-            SystemUserCode = GenerateUserCode();
             RoleType = enums.RoleType.Buyer;
             Gender = EGender.Other;
             BirthDay = default;  
@@ -22,28 +30,15 @@ namespace Domain.Models
         /// ID
         /// </summary>
       
-        public UserCart UserCart { get; set; }
-        public List<Ticket> Tickets { get; set; }
-        public Guid Id { get; private set; }
-
-        /// <summary>
-        /// تلفن همراه
-        /// </summary>
-        public string PhoneNumber { get; private set; }
-
-        /// <summary>
-        /// نام و نام خانوادگی
-        /// </summary>
+        public UserCart UserCart { get; private set; }
+        public List<Ticket> Tickets { get;private set; }
+        
         public string FullName { get; private set; }
 
         /// <summary>
-        /// نام کاربری
+        ///  رمز عبور کاربر
         /// </summary>
-        public string UserName { get; private set; }
-
-        /// <summary>
-        /// رمزعبور
-        /// </summary>
+       
         public string Password { get; private set; }
         
 
@@ -52,52 +47,36 @@ namespace Domain.Models
         /// </summary>
         public bool IsActive { get; private set; }
 
-        /// <summary>
-        /// کد شناساییه کاربر ، ساخته شده توسط ما
-        /// </summary>
-        public string SystemUserCode { get; set; } // Identity 
 
         /// <summary>
         /// سطح دسترسی
         /// </summary>
-        public enums.RoleType RoleType { get; set; }   // Identity                                                         
+        public enums.RoleType RoleType { get; private set; }                                                     
 
         /// <summary>
         /// کد تایید
         /// </summary>
-        public string VerifyCode { get; set; }  // Identity 
+        public string VerifyCode { get; private set; }  
 
         /// <summary>
         /// شماره ملی
         /// </summary>
-        public string NationalCode { get; set; }
+        public string NationalCode { get; private set; }
 
         /// <summary>
         /// جنسیت
         /// </summary>
-        public EGender Gender { get; set; }
+        public EGender Gender { get; private set; }
 
         /// <summary>
         /// تاریخ تولد
         /// </summary>
-        public DateTime BirthDay { get; set; }
-   
-
-        /// <summary>
-        /// اطلاعات کانتکته کاربر
-        /// </summary>
-        public ContactInfo ContactInfo { get; set; }  //TODO:delete
-
-        /// <summary>
-        /// کیف پول
-        /// </summary>
-        public decimal Wallet { get; set; }  //TODO:delete
+        public DateTime BirthDay { get; private set; }
 
         /// <summary>
         /// زمان وارد شدن به مارینا
         /// </summary>
-        public DateTime DateJoin { get; set; }   // Identity 
-        
+        public DateTime DateJoin { get; private set; }  
 
         public void SetUserName(string username)
         {

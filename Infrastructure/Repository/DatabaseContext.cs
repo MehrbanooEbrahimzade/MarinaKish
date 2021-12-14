@@ -1,9 +1,10 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -26,7 +27,6 @@ namespace Infrastructure.Repository
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Fun> Funs { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
