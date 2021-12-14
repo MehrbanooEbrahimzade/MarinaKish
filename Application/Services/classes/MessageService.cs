@@ -28,7 +28,7 @@ namespace Application.Services.classes
             if (conversation == null || user == null)
                 return null;
 
-            command.Username = user.CellPhone;
+            command.Username = user.PhoneNumber;
             var messageObj = command.ToModel();
 
             conversation.ForLastActivity(DateTime.Now);
@@ -44,7 +44,7 @@ namespace Application.Services.classes
         public async Task<List<MessageDto>> GetAllUserMessages(Guid id)
         {
             var user = await _messageRepository.GetUserById(id);
-            var messages = await _messageRepository.GetAllUserMessagesByCellPhone(user.CellPhone);
+            var messages = await _messageRepository.GetAllUserMessagesByCellPhone(user.PhoneNumber);
             if (user == null || messages == null)
                 return null;
             return messages.ToDto();
@@ -56,7 +56,7 @@ namespace Application.Services.classes
         public async Task<List<MessageDto>> SearchUserMessages(Guid id, SearchUserMessageCommand command)
         {
             var user = await _messageRepository.GetUserById(id);
-            var messages = await _messageRepository.SearchUserMessages(user.CellPhone, command.SearchBoxUserMessage);
+            var messages = await _messageRepository.SearchUserMessages(user.PhoneNumber, command.SearchBoxUserMessage);
             if (user == null || messages == null)
                 return null;
             return messages.ToDto();
@@ -114,7 +114,7 @@ namespace Application.Services.classes
         public async Task<List<MessageDto>> AllUserDeletedMessages(Guid userid)
         {
             var user = await _messageRepository.GetUserById(userid);
-            var messages = await _messageRepository.AllUserDeletedMessages(user.CellPhone);
+            var messages = await _messageRepository.AllUserDeletedMessages(user.PhoneNumber);
             if (user == null || messages == null)
                 return null;
             return messages.ToDto();

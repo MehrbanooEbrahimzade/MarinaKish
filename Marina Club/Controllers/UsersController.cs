@@ -32,7 +32,7 @@ namespace Marina_Club.Controllers
 
             var result = await _userService.GetPhoneAndSetVerifyCode(command);
 
-            await SendSms(result[2], command.CellPhone);
+            await SendSms(result[2], command.PhoneNumber);
 
             if (result[0] == "Register")
                 return OkResult(ApiMessage.userRegisterAndVerifyCodeSent, new { NewUserObj = $"id : {result[1]}, verifyCode : {result[2]}" });

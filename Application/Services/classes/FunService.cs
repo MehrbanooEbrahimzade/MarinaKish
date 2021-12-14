@@ -39,24 +39,15 @@ namespace Application.Services.classes
             if (fun == null)
                 return null;
 
-            #region Update
+            
 
             fun.ForFunType(command.FunType);
 
-            fun.ForPrice(command.Price);
+            fun.UpdateFun(command.Price, command.StartTime, command.EndTime
+                , command.SansDuration, command.SansTotalCapacity
+                , command.SansGapTime, command.About);
 
-            fun.ForStartTime(TimeSpan.Parse(command.StartTime));  //fun.StartTime = TimeSpan.Parse(command.StartTime); 
 
-            fun.ForEndTime(TimeSpan.Parse(command.EndTime));   //fun.EndTime = TimeSpan.Parse(command.EndTime);
-
-            fun.ForSansDuration(command.SansDuration);
-
-            fun.ForSansTotalCapacity(command.SansTotalCapacity);
-
-            fun.ForSansGapTime(command.SansGapTime);
-
-            fun.ForAbout(command.About); 
-            #endregion
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -117,7 +108,7 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.ForBackgroundPicture(pic.Id.ToString()); 
+            fun.UpdateBackGround(pic.Id.ToString());
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -135,7 +126,7 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.ForIcon(pic.Id.ToString()); 
+            fun.UpdateIcon(pic.Id.ToString());
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -159,7 +150,7 @@ namespace Application.Services.classes
                 schedule.IsExist = false;
             }
 
-            fun.ForIsActive(false); 
+            fun.UpdateFunStatus(false);
             return await _funRepository.UpdateFunAsync();
         }
 
@@ -179,7 +170,7 @@ namespace Application.Services.classes
                 schedule.IsExist = true;
             }
 
-            fun.ForIsActive(true); 
+            fun.UpdateFunStatus(true);
             return await _funRepository.UpdateFunAsync();
         }
 
@@ -204,5 +195,5 @@ namespace Application.Services.classes
                 return null;
             return funs.ToDto();
         }
-    }
+    } 
 }
