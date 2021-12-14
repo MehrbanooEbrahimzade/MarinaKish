@@ -57,6 +57,7 @@ namespace Domain.Models
 
         public Message()
         {
+
         }
     }
 }
