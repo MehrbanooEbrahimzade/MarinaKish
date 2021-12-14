@@ -27,9 +27,9 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
             var result = await _fileService.UploadFileAsync(file);
-            if (result == null)
-                return BadReq(ApiMessage.PicNotAdd);
-            return OkResult(ApiMessage.OkFileAdd, new { Id = $"{result}" });
+
+            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult
+                (ApiMessage.OkFileAdd, new { Id = $"{result}" });
         }
 
         /// <summary>
@@ -40,18 +40,8 @@ namespace Marina_Club.Controllers
         {
             var myFile = await _fileService.GetFileById(id);
 
-            if (myFile == null || !System.IO.File.Exists(myFile.FilePath))
-                return BadReq(ApiMessage.PicNotExist);
-
-            var memory = new MemoryStream();
-
-            using (var stream = new FileStream(myFile.FilePath, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-
-            return File(memory, GetContentType(myFile.FilePath), myFile.Name);
+            return myFile==null ? BadReq(ApiMessage.PicNotExist)
+                : File(memory, GetContentType(myFile.FilePath), myFile.Name);
         }
 
         //[HttpGet("MusicDownload/{id}")]
@@ -213,9 +203,8 @@ namespace Marina_Club.Controllers
         private string GetContentType(string path)
         {
             var provider = new FileExtensionContentTypeProvider();
-            string contentType;
 
-            if (!provider.TryGetContentType(path, out contentType))
+            if (!provider.TryGetContentType(path, out var contentType))
             {
                 contentType = "application/octet-stream";
             }

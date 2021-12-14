@@ -10,6 +10,8 @@ using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace Application.Services.classes
 {
@@ -28,7 +30,6 @@ namespace Application.Services.classes
         {
             var fileName = NameGenerator(file.FileName);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
-            //var size = file.Length.ToString();
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -42,25 +43,36 @@ namespace Application.Services.classes
                 file.Length.ToString()
             }.ToModel();
 
-            //var fileObj = fileProperties.ToModel();
 
             var addedFileResult = await _fileRepository.UploadFileAsync(fileObj);
 
             if (addedFileResult)
                 return fileObj.Id;
+
             return null;
         }
 
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        public async Task<Files> GetFileById(Guid id)
+        public async Task<FilesDto> GetFileById(Guid id)
         {
+            
             var file = await _fileRepository.GetFileById(id);
-             //if (file == null)
-             //   return null;
-             //return file;
-            return file?? null;
+
+            if (file == null || !System.IO.File.Exists(file.FilePath))
+                return null;
+
+            var memoryStream = new MemoryStream();
+
+            using (var fileStream = new FileStream(file.FilePath, FileMode.Open , FileAccess.Read))
+            {
+                await fileStream.CopyToAsync(memoryStream);
+            }
+            memoryStream.Position = 0;
+            //GetContentType()
+            return 
+            //dto konamesh
         }
 
         /// <summary>
