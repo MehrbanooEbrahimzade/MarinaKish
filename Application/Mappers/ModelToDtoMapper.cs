@@ -24,7 +24,7 @@ namespace Application.Mappers
 
                 Id = user.Id,
                 FullName = user.FullName,
-                CellPhone = user.CellPhone,
+                CellPhone = user.PhoneNumber,
                 UserName = user.UserName,
                 Gender = user.Gender,
                 BirthDay = user.BirthDay,
@@ -48,7 +48,7 @@ namespace Application.Mappers
 
                 Id = x.Id,
                 FullName = x.FullName,
-                CellPhone = x.CellPhone,
+                CellPhone = x.PhoneNumber,
                 UserName = x.UserName,
                 BirthDay = x.BirthDay,
                 Gender = x.Gender,

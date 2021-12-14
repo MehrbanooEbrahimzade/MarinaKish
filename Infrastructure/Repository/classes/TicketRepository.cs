@@ -22,7 +22,7 @@ namespace Infrastructure.Repository.classes
         public async Task<bool> AnyUserExist(string cellPhone)
         {
             return await _context.Users
-                .AnyAsync(x => x.CellPhone == cellPhone && x.IsActive == true);
+                .AnyAsync(x => x.PhoneNumber == cellPhone && x.IsActive == true);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetUserByPhone(string phone)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.CellPhone == phone && x.IsActive == true);
+                .FirstOrDefaultAsync(x => x.PhoneNumber == phone && x.IsActive == true);
         }
 
         /// <summary>

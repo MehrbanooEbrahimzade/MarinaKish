@@ -6,10 +6,9 @@ namespace Domain.Models
 {
     public class User
     {
-
-        public User(string cellPhone )
+        public User(string phoneNumber, string fullname, string username, string password, string nationalcode)
         {
-            CellPhone = cellPhone;
+            PhoneNumber = phoneNumber;
             VerifyCode = GenerateVerifyCode();
             IsActive = true;
             SystemUserCode = GenerateUserCode();
@@ -22,35 +21,36 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set ; }
+      
         public UserCart UserCart { get; set; }
         public List<Ticket> Tickets { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// تلفن همراه
         /// </summary>
-        public string CellPhone { get; set; }
+        public string PhoneNumber { get; private set; }
 
         /// <summary>
         /// نام و نام خانوادگی
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; private set; }
 
         /// <summary>
         /// نام کاربری
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
         /// <summary>
         /// رمزعبور
         /// </summary>
-        public string Password { get; set; }
-
+        public string Password { get; private set; }
+        
 
         /// <summary>
         /// فعال بودن کاربر
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; private set; }
 
         /// <summary>
         /// کد شناساییه کاربر ، ساخته شده توسط ما
@@ -81,11 +81,52 @@ namespace Domain.Models
         /// تاریخ تولد
         /// </summary>
         public DateTime BirthDay { get; set; }
-        
+   
+
+        /// <summary>
+        /// اطلاعات کانتکته کاربر
+        /// </summary>
+        public ContactInfo ContactInfo { get; set; }  //TODO:delete
+
+        /// <summary>
+        /// کیف پول
+        /// </summary>
+        public decimal Wallet { get; set; }  //TODO:delete
+
         /// <summary>
         /// زمان وارد شدن به مارینا
         /// </summary>
         public DateTime DateJoin { get; set; }   // Identity 
+        
+
+        public void SetUserName(string username)
+        {
+            this.UserName = username;
+        }
+
+        public void SetFullName(string fullname)
+        {
+            this.FullName = fullname;
+        }
+
+        public void SetPassword(string password)
+        {
+            this.Password = password;
+        }
+
+        public void SetGender(EGender gender)
+        {
+            this.Gender = gender;
+        }
+        public void SetBirthdate(DateTime BirthDay)
+        {
+            this.BirthDay = BirthDay;
+        }
+        
+        public void SetVerifycode(string verifycode)
+        {
+            this.VerifyCode = verifycode;
+        }
 
 
         public string GenerateUserCode()

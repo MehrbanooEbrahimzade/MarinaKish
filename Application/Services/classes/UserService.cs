@@ -19,11 +19,11 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// وارد کردن شماره تلفن و ارسال کد تایید جدید : (ثبت نام)
+        /// وارد کردن شماره تلفن و ارسال کد تایید جدید : ثبت نام
         /// </summary>
         public async Task<List<string>> GetPhoneAndSetVerifyCode(GetPhoneAndSetVerifyCodeCommand command)
         {
-            var isPhoneExist = await _userRepository.isPhoneExist(command.CellPhone);
+            var isPhoneExist = await _userRepository.IsPhoneExist(command.PhoneNumber);
             List<string> ResultList = new List<string>();
             if (!isPhoneExist)
             {
@@ -37,9 +37,9 @@ namespace Application.Services.classes
                 return ResultList;
             }
 
-            var user = await _userRepository.GetUserByPhone(command.CellPhone);
+            var user = await _userRepository.GetUserByPhone(command.PhoneNumber);
             var randomVerify = new Random().Next(1000, 9999).ToString();
-            user.VerifyCode = randomVerify;
+            user.SetVerifycode(randomVerify);
 
             ResultList.Add("Login");
             ResultList.Add(user.Id.ToString());
@@ -101,11 +101,11 @@ namespace Application.Services.classes
                 var isUsernameExist = await _userRepository.IsUserNameExist(command.UserName);
                 if (isUsernameExist)
                     return null;
-                user.UserName = command.UserName;
+                user.SetUserName(command.UserName);
             }
 
-            user.FullName = command.FirstName + " " + command.LastName;
-            user.Password = command.Password;
+            user.SetFullName(command.FirstName + " " + command.LastName );
+            user.SetPassword(command.Password );
             await _userRepository.UpdateUserAsync();
             return user.ToDto();
         }
@@ -123,7 +123,7 @@ namespace Application.Services.classes
             {
                 return false;
             }
-            user.Password = command.NewPassword;
+            user.SetPassword(command.NewPassword );
             return await _userRepository.UpdateUserAsync();
         }
 
@@ -138,7 +138,7 @@ namespace Application.Services.classes
 
             #region Validation and Update
 
-            user.FullName = command.FirstName + " " + command.LastName;
+            user.SetFullName(command.FirstName + " " + command.LastName );
 
             if (user.UserName != command.Username)
             {
@@ -146,11 +146,12 @@ namespace Application.Services.classes
                 if (isUsernameExist)
                     return null;
 
-                user.UserName = command.Username;
+                user.SetUserName(command.Username);
             }
 
-            user.Gender = command.Gender;
-            user.BirthDay = command.BirthDay;
+ 
+            user.SetGender(command.Gender);
+            user.SetBirthdate(command.BirthDay);
 
             #endregion
 
@@ -212,118 +213,7 @@ namespace Application.Services.classes
 
         #endregion
 
-        /// <summary>
-        /// اضافه کردن پول به کیف پول کاربر
-        /// </summary>
-        //public async Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command)
-        //{
-        //    var user = await _userRepository.GetActiveUserById(userid);
-        //    if (user == null)
-        //        return null;
-        //    user.Wallet += command.Cash;
-        //    await _userRepository.UpdateUserAsync();
-        //    return user.Wallet.ToString();
-        //}
 
-        /// <summary>
-        /// بلاک کردن کاربر :
-        /// </summary>
-        public async Task<bool> BlockUserAsync(Guid id)
-        {
-            var user = await _userRepository.GetActiveUserById(id);
-            if (user == null)
-                return false;
-            user.IsActive = false;
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// فعال کردن کاربر :
-        /// </summary>
-        public async Task<bool> UnBlockUserAsync(Guid id)
-        {
-            var user = await _userRepository.GetBlockedUser(id);
-            if (user == null)
-                return false;
-            user.IsActive = true;
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// همه کاربر های فعال
-        /// </summary>
-        public async Task<List<UserDto>> AllActiveUsers()
-        {
-            var activeUsers = await _userRepository.AllActiveUsers();
-            if (activeUsers.Count == 0)
-                return null;
-            return activeUsers.ToDto();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های فعال
-        /// </summary>
-        public async Task<int> AllActiveUsersCount()
-        {
-            var activeUsersCount = await _userRepository.AllActiveUsersCount();
-            return activeUsersCount;
-        }
-
-        /// <summary>
-        ///  همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<List<UserDto>> AllBlockedUsers()
-        {
-            var blockedUsers = await _userRepository.AllBlockedUsers();
-            if (blockedUsers.Count == 0)
-                return null;
-            return blockedUsers.ToDto();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<int> AllBlockedUsersCount()
-        {
-            var blockedUsersCount = await _userRepository.AllBlockedUsersCount();
-            return blockedUsersCount;
-        }
-
-        /// <summary>
-        /// ریست کردن کد تایید همه کاربران فعال
-        /// </summary>
-        public async Task<bool> RestartAllActiveUsersVerifyCode()
-        {
-            var activeUsers = await _userRepository.AllActiveUsers();
-            if (activeUsers.Count == 0)
-                return false;
-            foreach (var user in activeUsers)
-            {
-                var rand1 = new Random().Next(100, 999).ToString();
-                var rand2 = new Random().Next(100, 999).ToString();
-                user.VerifyCode = rand1 + "-" + rand2;
-            }
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// آنبلاک کردن همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<bool> UnBlockAllBlockedUsers()
-        {
-            var blockedUsers = await _userRepository.AllBlockedUsers();
-            if (blockedUsers.Count == 0)
-                return false;
-            foreach (var user in blockedUsers)
-            {
-                user.IsActive = true;
-            }
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// دریافت تعداد تفریح کردن کاربر
-        /// </summary>
         public async Task<int> UserPlayingFunCount(Guid id)
         {
             var userTickets = await _userRepository.AllBuyedOrCanceledUserTickets(id);

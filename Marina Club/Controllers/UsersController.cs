@@ -32,7 +32,7 @@ namespace Marina_Club.Controllers
 
             var result = await _userService.GetPhoneAndSetVerifyCode(command);
 
-            await SendSms(result[2], command.CellPhone);
+            await SendSms(result[2], command.PhoneNumber);
 
             if (result[0] == "Register")
                 return OkResult(ApiMessage.userRegisterAndVerifyCodeSent, new { NewUserObj = $"id : {result[1]}, verifyCode : {result[2]}" });
@@ -125,29 +125,6 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.ProfileUpdated, new { UserInfo = result });
         }
 
-        /// <summary>
-        /// بلاک کردن کاربر :
-        /// </summary>
-        [HttpPut("Block/{id}")]
-        public async Task<IActionResult> BlockUserAsync(Guid id)
-        {
-            var result = await _userService.BlockUserAsync(id);
-            if (!result)
-                return BadReq(ApiMessage.UserNotBlocked, new { Reasons = $"1-user not found, 2-user already blocked" });
-            return OkResult(ApiMessage.UserBlocked, new { Result = $"{result} / Blocked" });
-        }
-
-        /// <summary>
-        /// فعال کردن کاربر - آنبلاک
-        /// </summary>
-        [HttpPut("UnBlock/{id}")]
-        public async Task<IActionResult> UnBlockUserAsync(Guid id)
-        {
-            var result = await _userService.UnBlockUserAsync(id);
-            if (!result)
-                return BadReq(ApiMessage.UserNotUnBlocked, new { Reasons = $"1-user not found, 2-user already unblocked(actived)" });
-            return OkResult(ApiMessage.UserUnBlocked, new { Result = $"{result} / UnBlocked" });
-        }
 
         /// <summary>
         /// ارتقا دادن کاربر به ادمین :
@@ -185,20 +162,8 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.DemoteUser, new { UserInfo = result });
         }
 
-        /// <summary>
-        ///// اضافه کردن پول به کیف پول کاربر
-        ///// </summary>
-        //[HttpPut("IncreaseWallet/{id}")] // dont in Postman
-        //public async Task<IActionResult> IncreaseUserWallet(Guid id, IncreaseUserWalletCommand command)
-        //{
-        //    var result = await _userService.IncreaseUserWallet(id, command);
-        //    if (result == null)
-        //        return BadReq(ApiMessage.WalletNotIncreased, new { Reason = $"user not found" });
-        //    return OkResult(ApiMessage.WalletIncreased, new { Cash = result });
-        //}
         #endregion
 
-        #region GET
 
         /// <summary>
         /// جستجوی کاربر :
@@ -215,94 +180,6 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.UserFound, new { FoundedUsers = result });
         }
 
-        /// <summary>
-        /// همه کاربر های فعال
-        /// </summary>
-        [HttpGet("AllActiveUsers")]
-        public async Task<IActionResult> AllActiveUsers()
-        {
-            var result = await _userService.AllActiveUsers();
-            if (result == null)
-                return BadReq(ApiMessage.AnyActiveUserNotFount, new { UserFoundedCount = $"0" });
-            return OkResult(ApiMessage.UsersActiveFound, new { ActiveUsers = result });
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های فعال
-        /// </summary>
-        [HttpGet("AllActiveUsers-Count")]
-        public async Task<IActionResult> AllActiveUsersCount()
-        {
-            var result = await _userService.AllActiveUsersCount();
-            if (result == 0)
-                return BadReq(ApiMessage.AnyActiveUserNotFount, new { UserFoundedCount = result });
-            return OkResult(ApiMessage.UsersActiveFound, new { ActiveUsersCount = result });
-        }
-
-        /// <summary>
-        ///  همه کاربر های بلاک شده
-        /// </summary>
-        [HttpGet("AllBlockedUsers")]
-        public async Task<IActionResult> AllBlockedUsers()
-        {
-            var result = await _userService.AllBlockedUsers();
-            if (result == null)
-                return BadReq(ApiMessage.AnyBlockedUserNotFound, new { UserFoundedCount = $"0" });
-            return OkResult(ApiMessage.UsersBlockedFound, new { BlockedUsers = result });
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های بلاک شده
-        /// </summary>
-        [HttpGet("AllBlockedUsers-Count")]
-        public async Task<IActionResult> AllBlockedUsersCount()
-        {
-            var result = await _userService.AllBlockedUsersCount();
-            if (result == 0)
-                return BadReq(ApiMessage.AnyBlockedUserNotFound, new { UserFoundedCount = result });
-            return OkResult(ApiMessage.UsersBlockedFound, new { BlockedUsersCount = result });
-        }
-
-        #endregion
-
-        #region Specials
-
-        /// <summary>
-        /// ریست کردن کد تایید همه کاربران فعال
-        /// </summary>
-        [HttpPut("RestartVerifyCode")]
-        public async Task<IActionResult> RestartAllActiveUsersVerifyCode()
-        {
-            var result = await _userService.RestartAllActiveUsersVerifyCode();
-            if (!result)
-                return BadReq(ApiMessage.AllActiveUsersVerifyCodeNotRestarted, new { Reason = $"any active users not found" });
-            return OkResult(ApiMessage.AllActiveUsersVerifyCodeRestarted, new { Message = $"All active users verify code restarted" });
-        }
-
-        /// <summary>
-        /// آنبلاک کردن همه کاربر های بلاک شده
-        /// </summary>
-        [HttpPut("UnBlockAllBlocked")]
-        public async Task<IActionResult> UnBlockAllBlockedUsers()
-        {
-            var result = await _userService.UnBlockAllBlockedUsers();
-            if (!result)
-                return BadReq(ApiMessage.AnyBlockedUserNotFound, new { Reason = $"any active users not found" });
-            return OkResult(ApiMessage.AllBlockedUsersUnBlocked, new { Message = $"All blocked users are now active" });
-        }
-
-        /// <summary>
-        /// دریافت تعداد تفریح کردن کاربر
-        /// </summary>
-        [HttpGet("UserPlayingFun-Count/{id}")]
-        public async Task<IActionResult> UserPlayingFunCount(Guid id)
-        {
-            var result = await _userService.UserPlayingFunCount(id);
-            if (result == 0)
-                return BadReq(ApiMessage.UserNotHavePlayAnyFunYet, new { Reason = $"1-user not have play any fun, 2-user id is wrong" });
-            return OkResult(ApiMessage.AllUserPlayingFunCount, new { UserPlayingFunCount = result });
-        }
-        #endregion
 
         #region ForgetPass(newVersion)
         /// <summary>

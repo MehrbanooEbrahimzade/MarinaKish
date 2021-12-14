@@ -31,7 +31,7 @@ namespace Application.Services.classes
             if (user == null || fun == null)
                 return null;
 
-            var commentObj = new Comment(command.Message, command.FunId, command.UserId, fun.FunType, user.CellPhone, user.UserName);
+            var commentObj = new Comment(command.Message, command.FunId, command.UserId, fun.FunType, user.PhoneNumber, user.UserName);
             
             var addCommentResult = await _commentRepository.AddCommentAsync(commentObj);
 

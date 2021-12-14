@@ -21,7 +21,7 @@ namespace Infrastructure.Repository.classes
         /// </summary>
         public async Task<User> GetUserByPhone(string phone)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.CellPhone == phone);
+            return await _context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phone);
         }
 
         /// <summary>
