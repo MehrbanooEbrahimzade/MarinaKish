@@ -28,8 +28,8 @@ namespace Application.Mappers
         /// </summary>
         public static ContactInfo ToModel(this AddContactInfoCommand command)
         {
-            return new ContactInfo(command.Phone , command.Email ,command.Address);
-           
+            return new ContactInfo(command.Phone, command.Email, command.Address);
+
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Application.Mappers
         {
             return new Comment(command.Message, command.FunId, command.UserId, command.FunType, command.CellPhone,
                 command.UserName);
-            
+
         }
 
 
@@ -99,7 +99,7 @@ namespace Application.Mappers
 
         public static Message ToModel(this AddMessageCommand command)
         {
-            return new Message(command.ConversationID, command.UserID,command.Username, command.Message);
+            return new Message(command.Username, command.Message, command.ConversationID, command.UserID);
         }
     }
 }
