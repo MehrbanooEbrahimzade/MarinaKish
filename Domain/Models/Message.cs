@@ -5,8 +5,7 @@ namespace Domain.Models
 {
     public class Message
     {
-       
-        public Message(string username, string text,Guid conversationID, Guid userId)
+        public Message(string username, string text, Guid conversationID, Guid userId)
         {
             Id = Guid.NewGuid();
             UserName = username;
@@ -21,7 +20,7 @@ namespace Domain.Models
         /// ID
         /// </summary>
         public Guid Id { get; private set; }
-      
+
         /// <summary>
         /// نام کاربری فرستنده
         /// </summary>
@@ -40,7 +39,11 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت پیام
         /// </summary>
-        public EMessageStatus MessageStatus { get; set; }
+        public EMessageStatus MessageStatus { get; private set; }
+        public void MessageStatusSet(EMessageStatus eMessageStatus)
+        {
+            this.MessageStatus = eMessageStatus;
+        }
 
         /// <summary>
         /// آیدی تالار گفت و گو
@@ -52,6 +55,8 @@ namespace Domain.Models
         /// </summary>
         public Guid UserId { get; private set; }
 
-        private Message() {   }
+        public Message()
+        {
+        }
     }
 }

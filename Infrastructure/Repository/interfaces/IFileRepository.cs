@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Domain.Models;
+using File = Domain.Models.File;
 
 namespace Infrastructure.Repository.interfaces
 {
@@ -11,12 +12,12 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// اپلود کردن عکس
         /// </summary>
-        Task<bool> UploadFileAsync(Files pic);
+        Task<bool> UploadFileAsync(File pic);
 
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        Task<Domain.Models.Files> GetFileById(Guid id);
+        Task<Domain.Models.File> GetFileById(Guid id);
 
         /// <summary>
         /// دانلود عکس
@@ -26,12 +27,12 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن عکس با اسم عکس
         /// </summary>
-        Task<Files> GetImageByName(string fileName);
+        Task<File> GetImageByName(string fileName);
 
         /// <summary>
         /// پاک کردن فایل
         /// </summary>
-        Task<bool> DeleteFileAsync(Files pic);
+        Task<bool> DeleteFileAsync(File pic);
 
         /// <summary>
         /// وجود داشتن کاربر
@@ -66,22 +67,22 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن همه عکس ها برای یک تفریح 
         /// </summary>
-        Task<List<Files>> GetAllPicForFun(string funid);
+        Task<List<File>> GetAllPicForFun(string funid);
 
         /// <summary>
         /// گرفتن همه عکس ها برای یک کاربر
         /// </summary>
-        Task<List<Files>> GetAllPicForUser(string userid);
+        Task<List<File>> GetAllPicForUser(string userid);
 
         /// <summary>
         /// گرفتن همه عکس ها برای یک سانس
         /// </summary>
-        Task<List<Files>> GetAllPicForSchedule(string scheduleid);
+        Task<List<File>> GetAllPicForSchedule(string scheduleid);
 
         /// <summary>
         /// گرفتن عکس غیرفعال با آیدی
         /// </summary>
-        Task<Files> getNotActiveFileById(Guid id);
+        Task<File> getNotActiveFileById(Guid id);
 
         /// <summary>
         /// ذخیره اعمال انجام شده

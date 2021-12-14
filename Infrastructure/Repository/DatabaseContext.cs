@@ -16,7 +16,7 @@ namespace Infrastructure.Repository
         public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Files> Files { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<CashTransfer> MarineCoinTransfers { get; set; }

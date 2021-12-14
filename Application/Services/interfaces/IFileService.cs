@@ -7,6 +7,7 @@ using Application.Commands.Fun;
 using Application.Dtos;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
+using File = Domain.Models.File;
 
 namespace Application.Services.interfaces
 {
@@ -20,7 +21,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        Task<Files> GetFileById(Guid id);
+        Task<File> GetFileById(Guid id);
 
         /// <summary>
         /// دانلود عکس

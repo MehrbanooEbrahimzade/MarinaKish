@@ -82,8 +82,8 @@ namespace Application.Services.classes
 
             if (user.RoleType == RoleTypec.Seller)
             {
-                fun.OnlineCapacity -= command.NumberOfTicket;
-                fun.SellerCapacity += command.NumberOfTicket;
+                fun.MinusOnlineCapacity(command.NumberOfTicket);
+                fun.PlassSellerCapacity(command.NumberOfTicket); 
             }
 
             command.AvailableCapacity -= command.NumberOfTicket;
@@ -116,7 +116,7 @@ namespace Application.Services.classes
             var ticket = await _ticketRepository.GetTicketById(command.TicketId);
             if (ticket == null)
                 return null;
-            ticket.Condition = command.ChangeCondition;
+            ticket.ConditionSet(command.ChangeCondition);
             var save = await _ticketRepository.SaveChangesAsync();
             if (!save)
                 return null;
@@ -236,13 +236,13 @@ namespace Application.Services.classes
             var user = await _ticketRepository.GetUserById(ticket.UserId);
 
             if (user.RoleType == RoleTypec.Seller)
-                fun.SellerCapacity += ticket.NumberOfTicket;
+                fun.PlassSellerCapacity(ticket.NumberOfTicket); 
             else
-                fun.RealTimeCapacity -= ticket.NumberOfTicket;
+                fun.MinusRealTimeCapacity(ticket.NumberOfTicket);
 
-            fun.OnlineCapacity -= ticket.NumberOfTicket;
+            fun.MinusOnlineCapacity(ticket.NumberOfTicket);
 
-            ticket.Condition = ECondition.Reservation;
+            ticket.ConditionSet(ECondition.Reservation);
             //schedule.AvailableCapacity -= ticket.NumberOfTicket;
 
             var save = await _ticketRepository.SaveChangesAsync();
@@ -265,12 +265,12 @@ namespace Application.Services.classes
 
             if (user.RoleType == RoleTypec.Seller)
             {
-                fun.SellerCapacity -= ticket.NumberOfTicket;
-                fun.OnlineCapacity += ticket.NumberOfTicket;
+                fun.MinusSellerCapacity(ticket.NumberOfTicket);
+                fun.PlassOnlineCapacity(ticket.NumberOfTicket);
             }
 
-            fun.RealTimeCapacity += ticket.NumberOfTicket;
-            ticket.Condition = ECondition.Cancel;
+            fun.PlassRealTimeCapacity(ticket.NumberOfTicket);
+            ticket.ConditionSet(ECondition.Cancel);
             //schedule.AvailableCapacity += ticket.NumberOfTicket;
             user.Wallet += ticket.TotalPrice;
 
@@ -526,7 +526,7 @@ namespace Application.Services.classes
 
             foreach (var ticket in performedTickets)
             {
-                ticket.Condition = ECondition.Played;
+                ticket.ConditionSet(ECondition.Played);
             }
 
             var save = await _ticketRepository.SaveChangesAsync();

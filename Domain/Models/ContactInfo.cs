@@ -2,30 +2,37 @@
 
 namespace Domain.Models
 {
-    public class ContactInfo
+    public class ContactInfo //TODO:delete 
     {
-        public ContactInfo()
-        { 
+        public ContactInfo(string phone , string email , string address)
+        {
+            Id = Guid.NewGuid();
+            Phone = phone;
+            Address = address; 
         }
 
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// تلفن ثابت
         /// </summary>
-        public string Phone { get; set; }
+        public string Phone { get; private set; }
 
         /// <summary>
         /// ایمیل
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get;private set; }
 
         /// <summary>
         /// آدرس
         /// </summary>
-        public string Address { get; set; }
+        public string Address { get;private set; }
+        public ContactInfo()
+        {
+
+        }
     }
 }

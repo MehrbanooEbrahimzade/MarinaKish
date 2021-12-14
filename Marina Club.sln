@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3- Host", "3- Host", "{8E31
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4- Infrastructure", "4- Infrastructure", "{BD1D8C2C-5F6F-4F5D-966A-0C26AEE7BE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{33CA17A2-6D08-43BF-BAB2-2616A2BEE4FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{33CA17A2-6D08-43BF-BAB2-2616A2BEE4FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{067E57AA-01F2-4361-B379-EE910A50A102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{067E57AA-01F2-4361-B379-EE910A50A102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{20D6C49E-3DDF-4BE8-A784-E27306882379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{20D6C49E-3DDF-4BE8-A784-E27306882379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

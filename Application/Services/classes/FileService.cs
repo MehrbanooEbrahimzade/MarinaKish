@@ -10,6 +10,7 @@ using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
+using File = Domain.Models.File;
 
 namespace Application.Services.classes
 {
@@ -52,7 +53,7 @@ namespace Application.Services.classes
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        public async Task<Files> GetFileById(Guid id)
+        public async Task<File> GetFileById(Guid id)
         {
             var file = await _fileRepository.GetFileById(id);
             if (file == null)
@@ -221,7 +222,7 @@ namespace Application.Services.classes
             var pic = await _fileRepository.GetFileById(id);
             if (pic == null)
                 return false;
-            pic.isActive = false;
+            pic.IsActive = false;
             return await _fileRepository.UpdateFileAsync();
         }
 
@@ -233,7 +234,7 @@ namespace Application.Services.classes
             var pic = await _fileRepository.getNotActiveFileById(id);
             if (pic == null)
                 return false;
-            pic.isActive = true;
+            pic.IsActive = true;
             return await _fileRepository.UpdateFileAsync();
         }
 

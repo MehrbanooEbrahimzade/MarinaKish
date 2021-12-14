@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Application.Commands.Comment;
 using Application.Commands.ContactInfo;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
@@ -26,15 +27,8 @@ namespace Application.Mappers
         /// </summary>
         public static ContactInfo ToModel(this AddContactInfoCommand command)
         {
-            return new ContactInfo()
-            {
-                #region Set
-
-                Phone = command.Phone,
-                Email = command.Email
-
-                #endregion
-            };
+            return new ContactInfo(command.Phone , command.Email ,command.Address);
+           
         }
 
         /// <summary>
@@ -45,21 +39,21 @@ namespace Application.Mappers
             return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime),
                 command.SansDuration, command.SansTotalCapacity, command.SansGapTime)
             {
-                About = command.About
+                //About=About.command
             };
         }
-        
+
         /// <summary>
         /// تبدیل کردن کامند به سانس
         /// </summary>
-       /* public static Schedule ToModel(this AddScheduleCommand command) 
-        {
-             return new Schedule(command.SystemFunCode, command.FunType, command.ExcuteDateTime, command.Price,
-                 TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
-             {
-                 AvailableCapacity = command.AvailableCapacity
-             };
-        }*/
+        /* public static Schedule ToModel(this AddScheduleCommand command) 
+         {
+              return new Schedule(command.SystemFunCode, command.FunType, command.ExcuteDateTime, command.Price,
+                  TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
+              {
+                  AvailableCapacity = command.AvailableCapacity
+              };
+         }*/
 
         /// <summary>
         /// تبدیل کردن کامند به بلیط
@@ -83,26 +77,19 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به کامنت
         /// </summary>
-        /*public static Comment ToModel(this AddCommentCommand command)
+        public static Comment ToModel(this AddCommentCommand command)
         {
-            return new Comment(command.Message, command.FunId, command.UserId)
-            {
-                #region Set
-
-                UserCellPhone = command.UserCellPhone,
-                UserName = command.Username,
-                FunType = command.FunType
-
-                #endregion
-            };
-        }*/
+            return new Comment(command.Message, command.FunId, command.UserId, command.FunType, command.CellPhone,
+                command.UserName);
+            
+        }
 
 
-        public static Files ToModel(this List<string> fileProps)
+        public static File ToModel(this List<string> fileProps)
         {
-            return new Files(fileProps[0], fileProps[1])
+            return new File(fileProps[0], fileProps[1])
             {
-                Size = fileProps[2]
+                Size = fileProps[3]
             };
         }
 

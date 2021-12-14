@@ -5,7 +5,8 @@ namespace Domain.Models
 {
     public class Ticket
     {
-        public Ticket(FunType funType, DateTime scheduleMiladiTime, TimeSpan startTime, TimeSpan endTime, int numberOfTicket)
+        public Ticket
+           (FunType funType, DateTime scheduleMiladiTime, TimeSpan startTime, TimeSpan endTime, int numberOfTicket)
         {
             Id = Guid.NewGuid();
             FunType = funType;
@@ -37,7 +38,11 @@ namespace Domain.Models
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public enums.FunType FunType { get; private set; }
+        public FunType FunType { get; private set; }
+        public void FunTypeSet(FunType funType)
+        {
+            this.FunType = funType;
+        }
 
         /// <summary>
         /// زمان برگزاری سانس - به میلادی
@@ -63,7 +68,7 @@ namespace Domain.Models
         /// قیمت کل
         /// </summary>
         public decimal TotalPrice { get; private set; }
-
+      
         /// <summary>
         /// آی دیه مدل تفریحات
         /// </summary>
@@ -82,7 +87,11 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت
         /// </summary>
-        public ECondition Condition { get; set; }
+        public ECondition Condition { get; private set; }
+        public void ConditionSet(ECondition eCondition)
+        {
+            this.Condition = eCondition;
+        }
 
         /// <summary>
         /// تعداد بلیط
@@ -98,8 +107,10 @@ namespace Domain.Models
         /// کجا خریداری شده
         /// </summary>
         public EWhereBuy WhereBuy { get; private set; }
-
-
+        public void WhereBuySet(EWhereBuy eWhereBuy)
+        {
+            this.WhereBuy = eWhereBuy;
+        }
 
         public string GenerateTicketNumber()
         {
@@ -110,9 +121,8 @@ namespace Domain.Models
             return "00" + milisecond + second + minute  + randomNumber;
         }
 
-        private Ticket()
+        public Ticket()
         {
-
         }
     }
 }

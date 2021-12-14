@@ -41,17 +41,21 @@ namespace Application.Services.classes
 
             #region Update
 
-            fun.FunType = command.FunType;
+            fun.ForFunType(command.FunType);
 
-            fun.Price = command.Price;
+            fun.ForPrice(command.Price);
 
-            fun.StartTime = TimeSpan.Parse(command.StartTime);
-            fun.EndTime = TimeSpan.Parse(command.EndTime);
-            fun.SansDuration = command.SansDuration;
-            fun.SansTotalCapacity = command.SansTotalCapacity;
-            fun.SansGapTime = command.SansGapTime;
+            fun.ForStartTime(TimeSpan.Parse(command.StartTime));  //fun.StartTime = TimeSpan.Parse(command.StartTime); 
 
-            fun.About = command.About;
+            fun.ForEndTime(TimeSpan.Parse(command.EndTime));   //fun.EndTime = TimeSpan.Parse(command.EndTime);
+
+            fun.ForSansDuration(command.SansDuration);
+
+            fun.ForSansTotalCapacity(command.SansTotalCapacity);
+
+            fun.ForSansGapTime(command.SansGapTime);
+
+            fun.ForAbout(command.About); 
             #endregion
 
             var save = await _funRepository.UpdateFunAsync();
@@ -113,7 +117,7 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.BackgroundPicture = pic.Id.ToString();
+            fun.ForBackgroundPicture(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -131,12 +135,12 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.icon = pic.Id.ToString();
+            fun.ForIcon(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
                 return null;
-            return fun.icon;
+            return fun.Icon;
         }
 
         /// <summary>
@@ -155,7 +159,7 @@ namespace Application.Services.classes
                 schedule.IsExist = false;
             }
 
-            fun.IsActive = false;
+            fun.ForIsActive(false); 
             return await _funRepository.UpdateFunAsync();
         }
 
@@ -175,7 +179,7 @@ namespace Application.Services.classes
                 schedule.IsExist = true;
             }
 
-            fun.IsActive = true;
+            fun.ForIsActive(true); 
             return await _funRepository.UpdateFunAsync();
         }
 

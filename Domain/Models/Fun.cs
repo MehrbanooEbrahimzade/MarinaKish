@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Models.enums;
 
 namespace Domain.Models
 {
@@ -23,83 +24,219 @@ namespace Domain.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// کد شناسایی تفریح - ساخته شده توسط ما
         /// </summary>
-        public string SystemFunCode { get; set; }
+        public string SystemFunCode { get; private set; }
 
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public enums.FunType FunType { get; set; }
+        public enums.FunType FunType { get; private set; }
 
+        /// <summary>
+        ///  متد سازی اسامی تفریح  //mbrk
+        /// </summary>
+        public void ForFunType(FunType funtype)
+        {
+            this.FunType = funtype;
+        }
         /// <summary>
         /// قیمت :
         /// </summary>
-        public decimal Price { get; set; }
+        public decimal Price { get; private set; }
+
+        /// <summary>
+        /// متد سازی قیمت : //mbrk
+        /// </summary>
+        public void ForPrice(decimal price)
+        {
+            this.Price = price;
+        }
 
         /// <summary>
         /// زمان شروع :
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan StartTime { get; private set; }
 
+
+        /// <summary>
+        /// متد سازی زمان شروع : //mbrk
+        /// </summary>
+        public void ForStartTime(TimeSpan starttime)
+        {
+            this.StartTime = starttime;
+        }
         /// <summary>
         /// زمان پایان :
         /// </summary>
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan EndTime { get; private set; }
 
+        /// <summary>
+        /// متد سازی زمان پایان : //mbrk
+        /// </summary>
+        public void ForEndTime(TimeSpan endtime)
+        {
+            this.EndTime = endtime;
+        }
         /// <summary>
         /// مدت زمان : 
         /// </summary>
-        public int SansDuration { get; set; }
+        public int SansDuration { get; private set; }
+
+        /// <summary>
+        /// متد سازی مدت زمان : //mbrk
+        /// </summary>
+        public void ForSansDuration(int sansduration)
+        {
+            this.SansDuration = sansduration;
+        }
 
         /// <summary>
         /// کل فضای سانس
         /// </summary>
-        public int SansTotalCapacity { get; set; }
+        public int SansTotalCapacity { get; private set; }
+
+        /// <summary>
+        /// متد سازی کل فضای سانس  : //mbrk
+        /// </summary>
+        public void ForSansTotalCapacity(int sanstotalcapacity)
+        {
+            this.SansTotalCapacity = sanstotalcapacity;
+        }
 
         /// <summary>
         /// زمان استراحت بین 2 سانس :
         /// </summary>
-        public int SansGapTime { get; set; }
+        public int SansGapTime { get; private set; }
 
+        /// <summary>
+        /// متد سازی زمان استراحت بین 2 سانس :  : //mbrk
+        /// </summary>
+        public void ForSansGapTime(int sansgaptime)
+        {
+            this.SansGapTime = sansgaptime;
+        }
+        //***************************************************************
         /// <summary>
         /// فضای باقی مانده انلاین :
         /// </summary>
-        public int OnlineCapacity { get; set; }
+        public int OnlineCapacity { get; private set; }
 
+        /// <summary>
+        ///  ++متد سازی فضای باقی مانده انلاین  : //mbrk
+        /// </summary>
+        public void PlassOnlineCapacity(int onlinecapacity)
+        {
+            this.OnlineCapacity += onlinecapacity;
+        }
+
+        /// <summary>
+        ///  --متد سازی فضای باقی مانده انلاین  : //mbrk
+        /// </summary>
+        public void MinusOnlineCapacity(int onlinecapacity)
+        {
+            this.OnlineCapacity -= onlinecapacity;
+        }
+        //*******************************************************************
         /// <summary>
         /// فضای باقی مانده حقیقی :
         /// </summary>
-        public int RealTimeCapacity { get; set; }
+        public int RealTimeCapacity { get; private set; }
 
+        /// <summary>
+        ///  ++متد سازی فضای باقی مانده حقیقی  : //mbrk
+        /// </summary>
+        public void PlassRealTimeCapacity(int realtimecapacity)
+        {
+            this.RealTimeCapacity += realtimecapacity;
+        }
+
+        /// <summary>
+        ///  --متد سازی فضای باقی مانده حقیقی  : //mbrk
+        /// </summary>
+        public void MinusRealTimeCapacity(int realtimecapacity)
+        {
+            this.RealTimeCapacity -= realtimecapacity;
+        }
+        //**************************************************************
         /// <summary>
         /// فضای مانده فروشنده :
         /// </summary>
-        public int SellerCapacity { get; set; }
+        public int SellerCapacity { get; private set; }
 
+        /// <summary>
+        ///  ++متد سازی فضای مانده فروشنده  : //mbrk
+        /// </summary>
+        public void PlassSellerCapacity(int sellercapacity)
+        {
+            this.SellerCapacity += sellercapacity;
+        }
+
+        /// <summary>
+        ///  --متد سازی فضای مانده فروشنده  : //mbrk
+        /// </summary>
+        public void MinusSellerCapacity(int sellercapacity)
+        {
+            this.SellerCapacity -= sellercapacity;
+        }
+        //******************************************************************
         /// <summary>
         /// فعال بودن
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; private set; }
+
+        /// <summary>
+        ///  متد سازی فعال بودن  //mbrk
+        /// </summary>
+        public void ForIsActive(bool isactive)
+        {
+
+            this.IsActive = isactive;
+        }
 
         /// <summary>
         /// درباره تفریح
         /// </summary>
-        public string About { get; set; }
+        public string About { get; private set; }
+
+        /// <summary>
+        ///  متد سازی درباره تفریح  //mbrk
+        /// </summary>
+        public void ForAbout(string aboute)
+        {
+
+            this.About = aboute;
+        }
 
         /// <summary>
         /// عکس پس زمینه
         /// </summary>
-        public string BackgroundPicture { get; set; }
+        public string BackgroundPicture { get;private set; }
+
+        /// <summary>
+        ///  متد سازی عکس پس زمینه  //mbrk
+        /// </summary>
+        public void ForBackgroundPicture(string backgroundpicture)
+        {
+
+            this.BackgroundPicture = backgroundpicture;
+        }
 
         /// <summary>
         /// آیکون
         /// </summary>
-        public string icon { get; set; }
+        public string Icon { get;private set; }
 
+        /// <summary>
+        ///  متد سازی آیکون  //mbrk
+        /// </summary>
+        public void ForIcon(string icon)
+        {
+            this.Icon = icon;
+        }
         public string GenerateFunCode()
         {
             var milisecond = DateTime.Now.Millisecond.ToString();

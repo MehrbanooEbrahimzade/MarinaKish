@@ -31,7 +31,7 @@ namespace Application.Services.classes
             command.Username = user.CellPhone;
             var messageObj = command.ToModel();
 
-            conversation.LastActivity = DateTime.Now;
+            conversation.ForLastActivity(DateTime.Now);
             var addAndSave = await _messageRepository.AddMessage(messageObj);
             if (!addAndSave)
                 return null;
@@ -93,7 +93,7 @@ namespace Application.Services.classes
             var message = await _messageRepository.GetMessageById(id);
             if (message == null)
                 return null;
-            message.MessageStatus = EMessageStatus.Deleted;
+            message.MessageStatusSet(EMessageStatus.Deleted);
             return await _messageRepository.UpdateMessages();
         }
 

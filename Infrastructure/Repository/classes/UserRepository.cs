@@ -126,10 +126,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن فایل با آیدی
         /// </summary>
-        public async Task<Files> GetFileById(Guid id)
+        public async Task<File> GetFileById(Guid id)
         {
             return await _context.Files
-                .SingleOrDefaultAsync(x => x.Id == id && x.isActive == true);
+                .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         }
 
         /// <summary>
