@@ -40,7 +40,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Schedules
                 .Where(x => x.FunType == fun && x.IsExist == true)
-                .OrderBy(x => x.ExcuteMiladiDateTime)
+                .OrderBy(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
 
@@ -48,7 +48,7 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Schedules
                 .Where(x => x.FunId == id && x.IsExist == true)
-                .OrderBy(x => x.ExcuteMiladiDateTime)
+                .OrderBy(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
 
@@ -58,9 +58,9 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id)
         {
             return await _context.Schedules
-                .Where(x => x.ExcuteMiladiDateTime.Year == excuteMiladiDate.Year && x.ExcuteMiladiDateTime.Month == excuteMiladiDate.Month &&
-                x.ExcuteMiladiDateTime.Day == excuteMiladiDate.Day && x.FunId == id && x.IsExist == true)//
-                .OrderByDescending(x => x.ExcuteMiladiDateTime)
+                .Where(x => x.ExecuteDateTime.Year == excuteMiladiDate.Year && x.ExecuteDateTime.Month == excuteMiladiDate.Month &&
+                x.ExecuteDateTime.Day == excuteMiladiDate.Day && x.FunId == id && x.IsExist == true)//
+                .OrderByDescending(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
 
@@ -87,11 +87,11 @@ namespace Infrastructure.Repository.classes
         public async Task<DateTime?> GetLastScheduleTimeByFunType(FunType funType) // momeni
         {
             var sans = await _context.Schedules.Where(s => s.FunType == funType)
-                .OrderByDescending(x => x.ExcuteMiladiDateTime).ToListAsync();
+                .OrderByDescending(x => x.ExecuteDateTime).ToListAsync();
 
             if (sans.Count > 0)
             {
-                return sans.OrderByDescending(s => s.ExcuteMiladiDateTime).First().ExcuteMiladiDateTime;
+                return sans.OrderByDescending(s => s.ExecuteDateTime).First().ExecuteDateTime;
             }
 
             return null;
@@ -103,8 +103,8 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> SearchScheduleByOneDate(DateTime firstDate)
         {
             return await _context.Schedules
-                .Where(x => x.ExcuteMiladiDateTime.Year == firstDate.Year && x.ExcuteMiladiDateTime.Month == firstDate.Month &&
-                x.ExcuteMiladiDateTime.Day == firstDate.Day && x.IsExist == true)
+                .Where(x => x.ExecuteDateTime.Year == firstDate.Year && x.ExecuteDateTime.Month == firstDate.Month &&
+                x.ExecuteDateTime.Day == firstDate.Day && x.IsExist == true)
                 .ToListAsync();
         }
 
@@ -114,7 +114,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> SearchScheduleByTwoDate(DateTime firstDate, DateTime secondDate) //with problem
         {
             return await _context.Schedules
-                .FromSql("Select * from dbo.Schedules as s where s.ExcuteMiladiDateTime between {0} and {1}", firstDate, secondDate)
+                .FromSql("Select * from dbo.Schedules as s where s.ExecuteDateTime between {0} and {1}", firstDate, secondDate)
                 .Where(x => x.IsExist == true)
                 .ToListAsync();
         }
@@ -130,7 +130,7 @@ namespace Infrastructure.Repository.classes
             var sans = await _context.Schedules.Where(x => x.FunId == id).ToListAsync();
             if (sans.Count == 0)
                 return null;
-            return sans.OrderByDescending(x => x.ExcuteMiladiDateTime).First().ExcuteMiladiDateTime;
+            return sans.OrderByDescending(x => x.ExecuteDateTime).First().ExecuteDateTime;
 
         }
 
@@ -140,7 +140,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<Schedule>> GetAllExpiredActiveSchedules()
         {
             return await _context.Schedules
-                .Where(x => x.ExcuteMiladiDateTime < DateTime.Now && x.IsExist == true)
+                .Where(x => x.ExecuteDateTime < DateTime.Now && x.IsExist == true)
                 .ToListAsync();
         }
 

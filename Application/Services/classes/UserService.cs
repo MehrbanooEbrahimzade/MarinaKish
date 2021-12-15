@@ -5,6 +5,7 @@ using Application.Commands.User;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.Models;
 using Domain.Models.enums;
 using Infrastructure.Repository.interfaces;
 
@@ -45,7 +46,7 @@ namespace Application.Services.classes
             ResultList.Add(user.Id.ToString());
             ResultList.Add(user.VerifyCode);
 
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return ResultList;
         }
 
@@ -106,7 +107,7 @@ namespace Application.Services.classes
 
             user.SetFullName(command.FirstName + " " + command.LastName );
             user.SetPassword(command.Password );
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -124,7 +125,7 @@ namespace Application.Services.classes
                 return false;
             }
             user.SetPassword(command.NewPassword );
-            return await _userRepository.UpdateUserAsync();
+            return await _userRepository.SaveChanges();
         }
 
         /// <summary>
@@ -149,13 +150,13 @@ namespace Application.Services.classes
                 user.SetUserName(command.Username);
             }
 
-            user.SetProvince(command.Provice);
+ 
             user.SetGender(command.Gender);
             user.SetBirthdate(command.BirthDay);
 
             #endregion
 
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -177,11 +178,11 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<UserDto> PromoteToAdmin(Guid id)
         {
-            var user = await _userRepository.GetNotAdminUserById(id);
-            if (user == null)
+            var user = await _userRepository.GetUserById(id);
+            if (user == null || user.RoleType==RoleType.Admin)
                 return null;
-            user.RoleType = RoleTypec.Ad_min;
-            await _userRepository.UpdateUserAsync();
+            user.RoleType = RoleType.Admin;
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -190,11 +191,15 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<UserDto> PromoteToSeller(Guid id)
         {
-            var user = await _userRepository.GetNotSellerUserById(id);
-            if (user == null)
+            var user = await _userRepository.GetUserById(id);
+
+            if (user == null|| user.RoleType == RoleType.Seller)
                 return null;
-            user.RoleType = RoleTypec.Seller;
-            await _userRepository.UpdateUserAsync();
+
+            user.RoleType = RoleType.Seller;
+
+            await _userRepository.SaveChanges();
+
             return user.ToDto();
         }
 
@@ -202,129 +207,18 @@ namespace Application.Services.classes
         /// تنزل رتبه کاربر فروشنده/ادمین به خریدار
         /// </summary>
         public async Task<UserDto> DemoteToUser(Guid id)
-        {
-            var user = await _userRepository.GetAdminOrSellerUserById(id);
-            if (user == null)
+        {//GetAdminOrSellerUserById
+            var user = await _userRepository.GetUserById(id);
+            if (user == null || user.RoleType== RoleType.Buyer)
                 return null;
-            user.RoleType = RoleTypec.Buyer;
-            await _userRepository.UpdateUserAsync();
+            user.RoleType = RoleType.Buyer;
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
         #endregion
 
-        /// <summary>
-        /// اضافه کردن پول به کیف پول کاربر
-        /// </summary>
-        public async Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command)
-        {
-            var user = await _userRepository.GetActiveUserById(userid);
-            if (user == null)
-                return null;
-            user.Wallet += command.Cash;
-            await _userRepository.UpdateUserAsync();
-            return user.Wallet.ToString();
-        }
 
-        /// <summary>
-        /// بلاک کردن کاربر :
-        /// </summary>
-        public async Task<bool> BlockUserAsync(Guid id)
-        {
-            var user = await _userRepository.GetActiveUserById(id);
-            if (user == null)
-                return false;
-            user.SetIsActive(false);
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// فعال کردن کاربر :
-        /// </summary>
-        public async Task<bool> UnBlockUserAsync(Guid id)
-        {
-            var user = await _userRepository.GetBlockedUser(id);
-            if (user == null)
-                return false;
-            user.SetIsActive(true);
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// همه کاربر های فعال
-        /// </summary>
-        public async Task<List<UserDto>> AllActiveUsers()
-        {
-            var activeUsers = await _userRepository.AllActiveUsers();
-            if (activeUsers.Count == 0)
-                return null;
-            return activeUsers.ToDto();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های فعال
-        /// </summary>
-        public async Task<int> AllActiveUsersCount()
-        {
-            var activeUsersCount = await _userRepository.AllActiveUsersCount();
-            return activeUsersCount;
-        }
-
-        /// <summary>
-        ///  همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<List<UserDto>> AllBlockedUsers()
-        {
-            var blockedUsers = await _userRepository.AllBlockedUsers();
-            if (blockedUsers.Count == 0)
-                return null;
-            return blockedUsers.ToDto();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<int> AllBlockedUsersCount()
-        {
-            var blockedUsersCount = await _userRepository.AllBlockedUsersCount();
-            return blockedUsersCount;
-        }
-
-        /// <summary>
-        /// ریست کردن کد تایید همه کاربران فعال
-        /// </summary>
-        public async Task<bool> RestartAllActiveUsersVerifyCode()
-        {
-            var activeUsers = await _userRepository.AllActiveUsers();
-            if (activeUsers.Count == 0)
-                return false;
-            foreach (var user in activeUsers)
-            {
-                var rand1 = new Random().Next(100, 999).ToString();
-                var rand2 = new Random().Next(100, 999).ToString();
-                user.SetVerifycode(rand1 + "-" + rand2);
-            }
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// آنبلاک کردن همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<bool> UnBlockAllBlockedUsers()
-        {
-            var blockedUsers = await _userRepository.AllBlockedUsers();
-            if (blockedUsers.Count == 0)
-                return false;
-            foreach (var user in blockedUsers)
-            {
-                user.SetIsActive(true);
-            }
-            return await _userRepository.UpdateUserAsync();
-        }
-
-        /// <summary>
-        /// دریافت تعداد تفریح کردن کاربر
-        /// </summary>
         public async Task<int> UserPlayingFunCount(Guid id)
         {
             var userTickets = await _userRepository.AllBuyedOrCanceledUserTickets(id);

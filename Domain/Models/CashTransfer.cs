@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    public class CashTransfer
+    public class CashTransfer//فعلا کاری باهاش نداریم نادیده بگیرینش
     {
         public CashTransfer(decimal cash,Guid userid)
         {
@@ -32,6 +32,11 @@ namespace Domain.Models
         /// مقدار پول جابجا شده
         /// </summary>
         public decimal MarineCoin { get; private set; }
+
+        /// <summary>
+        /// موفقیت امیز بودن تراکنش
+        /// </summary>
+        public bool IsSuccessful { get; set; }
 
         /// <summary>
         /// آیدی کاربر

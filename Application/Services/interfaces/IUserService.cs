@@ -8,11 +8,11 @@ namespace Application.Services.interfaces
 {
     public interface IUserService
     {
+        //IncreaseUserWallet
         /// <summary>
         /// ثبت نام کاربر :
         /// </summary>
         //Task<bool> UserSignUpAsync(UserSignUpCommand command);
-
         /// <summary>
         /// وارد شدن کاربر :
         /// </summary>
@@ -42,17 +42,8 @@ namespace Application.Services.interfaces
         /// جستجوی کاربر
         /// </summary>
         Task<List<UserDto>> SearchUser(FindUserCommand command);
-
-        /// <summary>
-        /// بلاک کردن کاربر :
-        /// </summary>
-        Task<bool> BlockUserAsync(Guid id);
-
-        /// <summary>
-        /// فعال کردن کاربر :
-        /// </summary>
-        Task<bool> UnBlockUserAsync(Guid id);
-
+        
+        
         /// <summary>
         /// ارتقا دادن کاربر به ادمین
         /// </summary>
@@ -67,42 +58,8 @@ namespace Application.Services.interfaces
         /// تنزل رتبه کاربر فروشنده/ادمین به خریدار
         /// </summary>
         Task<UserDto> DemoteToUser(Guid id);
-
-        /// <summary>
-        /// اضافه کردن پول به کیف پول کاربر
-        /// </summary>
-        Task<string> IncreaseUserWallet(Guid userid, IncreaseUserWalletCommand command);
-
-        /// <summary>
-        /// همه کاربر های فعال
-        /// </summary>
-        Task<List<UserDto>> AllActiveUsers();
-
-        /// <summary>
-        /// تعداد همه کاربر های فعال
-        /// </summary>
-        Task<int> AllActiveUsersCount();
-
-        /// <summary>
-        ///  همه کاربر های بلاک شده
-        /// </summary>
-        Task<List<UserDto>> AllBlockedUsers();
-
-        /// <summary>
-        /// تعداد همه کاربر های بلاک شده
-        /// </summary>
-        Task<int> AllBlockedUsersCount();
-
-        /// <summary>
-        /// ریست کردن کد تایید همه کاربران فعال
-        /// </summary>
-        Task<bool> RestartAllActiveUsersVerifyCode();
-
-        /// <summary>
-        /// آنبلاک کردن همه کاربر های بلاک شده
-        /// </summary>
-        Task<bool> UnBlockAllBlockedUsers();
-
+       
+     
         /// <summary>
         /// دریافت تعداد تفریح کردن کاربر
         /// </summary>

@@ -15,20 +15,11 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به کاربر
         /// </summary>
-        public static User ToModel(this GetPhoneAndSetVerifyCodeCommand command)
+        public static User ToModeluser(this GetPhoneAndSetVerifyCodeCommand command)
         {
             return new User(command.PhoneNumber,command.FullName,command.UserName,command.Password,command.NationalCode)
             {
             };
-
-        }
-
-        /// <summary>
-        /// تبدیل کردن کامند به اطلاعات کانتکت
-        /// </summary>
-        public static ContactInfo ToModel(this AddContactInfoCommand command)
-        {
-            return new ContactInfo(command.Phone, command.Email, command.Address);
 
         }
 
@@ -45,14 +36,14 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به سانس
         /// </summary>
-        /* public static Schedule ToModel(this AddScheduleCommand command) 
-         {
-              return new Schedule(command.SystemFunCode, command.FunType, command.ExcuteDateTime, command.Price,
-                  TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
-              {
-                  AvailableCapacity = command.AvailableCapacity
-              };
-         }*/
+         //public static Schedule ToModel(this AddScheduleCommand command) 
+         //{
+         //     return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
+         //         TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
+         //     {
+         //         AvailableCapacity = command.AvailableCapacity
+         //     };
+         //}
 
         /// <summary>
         /// تبدیل کردن کامند به بلیط
@@ -65,8 +56,8 @@ namespace Application.Mappers
 
                 FunId = command.FunId,
                 ScheduleId = command.ScheduleId,
-                TotalPrice = command.TotalPrice, 
-                CellPhone = command.CellPhone,
+                Price = command.Price, 
+                PhoneNumber = command.PhoneNumber,
                 FullName = command.FullName
 
                 #endregion
@@ -78,7 +69,7 @@ namespace Application.Mappers
         /// </summary>
         public static Comment ToModel(this AddCommentCommand command)
         {
-            return new Comment(command.Message, command.FunId, command.UserId, command.FunType, command.CellPhone,
+            return new Comment(command.Message, command.FunId, command.PhoneNumber,
                 command.UserName);
 
         }

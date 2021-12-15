@@ -37,7 +37,7 @@ namespace Application.Services.classes
             for (int i = 0; i < command.NumberOfTicket; i++)
             {
 
-                var ticketModel = new Ticket(schedule.FunType, schedule.ExcuteMiladiDateTime, schedule.StartTime, schedule.EndTime, 1);
+                var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, 1);
 
                 var addTicket = await _sellerRepository.AddTicketAsync(ticketModel);
                 if (addTicket)
@@ -46,7 +46,7 @@ namespace Application.Services.classes
 
             command.AvailableCapacity -= ResultBuyedTicket.Count;
             fun.MinusOnlineCapacity(ResultBuyedTicket.Count);
-            fun.AddSellerCapacity(ResultBuyedTicket.Count); 
+            fun.PlusSellerCapacity(ResultBuyedTicket.Count); 
 
             var save = await _sellerRepository.SaveChanges();
             if (save)
@@ -150,8 +150,8 @@ namespace Application.Services.classes
                     return null;
                 seller.NationalCode = command.NationalCode;
             }
-            seller.CardNumber = command.CardNumber;
-            seller.ShabaNumber = command.ShabaNumber;
+            seller.UserCart.CardNumber = command.CardNumber;
+            seller.UserCart.ShabaNumber = command.ShabaNumber;
             await _sellerRepository.SaveChanges();
             return seller.ToDto();
         }

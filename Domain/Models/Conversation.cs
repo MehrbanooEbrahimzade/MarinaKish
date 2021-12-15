@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Domain.Models.enums;
 
 namespace Domain.Models
@@ -43,8 +42,12 @@ namespace Domain.Models
         /// <summary>
         /// میزان اهمیت
         /// </summary>
-        public EPriority Priority { get;private set; }
-        
+        public EPriority Priority { get;private set; }//EPriority حذف بشه و
+        //Priority هم حذف بشه
+
+
+
+
         /// <summary>
         ///متد سازی میزان اهمیت 
         /// </summary>
@@ -76,7 +79,7 @@ namespace Domain.Models
 
         }
 
-        //internal List<MessageDto> ToDto(List<Message> messages)
+        //internal List<MessageDto> ToDto(List<Text> messages)
         //{
         //    throw new NotImplementedException();
         //}

@@ -6,13 +6,13 @@ namespace Domain.Models
     public class Schedule
     {
         public Schedule
-            (enums.FunType funType, DateTime excuteMiladiDateTime, decimal price,
+            (enums.FunType funType, DateTime executeDateTime, decimal price,
             decimal availableCapacity, TimeSpan startTime, TimeSpan endTime)
         {
             Id = Guid.NewGuid();
             SystemFunCode = GenerateScheduleCode();
             FunType = funType;
-            ExcuteMiladiDateTime = excuteMiladiDateTime;
+            ExecuteDateTime = executeDateTime;
             Price = price;
             AvailableCapacity = availableCapacity;
             StartTime = startTime;
@@ -34,15 +34,11 @@ namespace Domain.Models
         /// تنوع تفریح ها :
         /// </summary> 
         public FunType FunType { get; private set; }
-        public void FunTypeSet(FunType funType)
-        {
-            this.FunType = funType;
-        }
 
         /// <summary>
         /// زمان سانس : - به میلادی
         /// </summary>
-        public DateTime ExcuteMiladiDateTime { get; private set; }
+        public DateTime ExecuteDateTime { get; private set; }
         
         /// <summary>
         /// قیمت تفریح :
@@ -72,13 +68,17 @@ namespace Domain.Models
         /// <summary>
         /// آیدی تفریح
         /// </summary>
-        public Guid FunId { get; private set; }
+        public Guid FunId { get; private set; }//TODO:CHANGE
+        public void FunTypeSet(FunType funType)
+        {
+            this.FunType = funType;
+        }
 
         public string GenerateScheduleCode()
         {
-            var miliSecond = DateTime.Now.Millisecond.ToString();
+            var millisecond = DateTime.Now.Millisecond.ToString();
             var randomCode = new Random().Next(10000, 99999).ToString();
-            return miliSecond + "" + randomCode; 
+            return millisecond  + "" + randomCode; 
         }
 
         public Schedule()

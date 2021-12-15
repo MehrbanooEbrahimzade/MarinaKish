@@ -10,6 +10,9 @@ using Infrastructure.Repository;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.interfaces;
 using Application.Services.interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure;
 
 namespace Marina_Club
 {
@@ -26,10 +29,10 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<DatabaseContext>(x =>
-            {
-                x.UseSqlServer(Configuration.GetConnectionString("DB"));
-            });
+            //from DependencyInjectionPersist
+            services.ConfigureApplicationPersistence(Configuration);
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
             // AddScoped for users model(table)
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -51,19 +54,19 @@ namespace Marina_Club
             services.AddScoped<ICommentRepository, CommentRepository>();
 
             // AddScoped for File model
-            services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IFileRepository, FileRepository>();
+            //services.AddScoped<IFileService, FileService>();
+            //services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            //services.AddScoped<IMessageRepository, MessageRepository>();
 
             // AddScoped for Conversations model
             services.AddScoped<IConversationService, ConversationService>();
-            services.AddScoped<IConversationRepository, ConversationRepository>();
+            //services.AddScoped<IConversationRepository, ConversationRepository>();
 
             // AddScoped for MarineCoinTransfers model
-            services.AddScoped<IMarineCoinTransferRepository, MarineCoinTransferRepository>();
+            //services.AddScoped<IMarineCoinTransferRepository, MarineCoinTransferRepository>();
             services.AddScoped<IMarineCoinTransferService, MarineCoinTransferService>();
 
             // AddScoped for Sellers model

@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Application.Commands.Comment;
 using Application.Services.interfaces;
+using Domain.Models.enums;
 
 namespace Marina_Club.Controllers
 {
@@ -24,7 +25,7 @@ namespace Marina_Club.Controllers
         {
             command.FunId = id;
             if (!command.Validate())
-                return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-enter funID, 2-enter message, 3-enter userID, 4-funType & Username & UserCellPhone must null" });
+                return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-enter funID, 2-enter message, 3-enter userID, 4-funType & Username & UserPhoneNumber must null" });
 
             var result = await _commentService.AddCommentToFun(command);
             if (result == null)
@@ -36,9 +37,9 @@ namespace Marina_Club.Controllers
         /// قبول کردن یک کامنت با آیدی
         /// </summary>
         [HttpPut("Accepting/{id}")] 
-        public async Task<IActionResult> AcceptingComment(Guid id)
+        public async Task<IActionResult> AcceptingComment(Guid id )
         {
-            var result = await _commentService.AcceptingComment(id);
+            var result = await _commentService.ChangeStatusComment(id, EStatus.Accepted);
             if (result == null)
                 return BadReq(ApiMessage.CommentNotFound, new { Reason = $"1-comment isn't in waiting list, 2-there is a problem when saveChanges.TryAgain!" });
             return OkResult(ApiMessage.CommentAccepted, new { Comment = result });
@@ -50,22 +51,10 @@ namespace Marina_Club.Controllers
         [HttpPut("Declining/{id}")] 
         public async Task<IActionResult> DecliningComment(Guid id)
         {
-            var result = await _commentService.DecliningComment(id);
+            var result = await _commentService.ChangeStatusComment(id, EStatus.Declined);
             if (result == null)
                 return BadReq(ApiMessage.CommentNotFound, new { Reason = $"1-comment isn't in waiting list, 2-there is a problem when saveChanges.TryAgain!" });
             return OkResult(ApiMessage.CommentDeclined, new { Comment = result });
-        }
-
-        /// <summary>
-        /// بلاک کردن یک کامنت با آیدی
-        /// </summary>
-        [HttpPut("Blocking/{id}")] 
-        public async Task<IActionResult> BlockingComment(Guid id)
-        {
-            var result = await _commentService.AcceptingComment(id);
-            if (result == null)
-                return BadReq(ApiMessage.CommentNotFound, new { Reason = $"1-comment id blocked already, 2-there is a problem when saveChanges.TryAgain!" });
-            return OkResult(ApiMessage.CommentBlocked, new { Comment = result });
         }
 
         /// <summary>
@@ -97,53 +86,18 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// گرفتن همه کامنت های قبول شده برای یک تفریح
-        /// </summary>
-        [HttpGet("Fun-Comments-Accepted/{id}")] // funiD - edit 
-        public async Task<IActionResult> GetAllAcceptedCommentsForFun(Guid id)
-        {
-            var result = await _commentService.GetAllAcceptedCommentsForFun(id);
-            if (result == null)
-                return BadReq(ApiMessage.FunNotHaveAnyAcceptedComment, new { Reasons = $"1-fun not have accepted comments, 2-check funID and TryAgain!" });
-            return OkResult(ApiMessage.FunAcceptedCommentGetted, new { LatestComments = result });
-        }
-
-        /// <summary>
         /// گرفتن همه کامنت های درحال انتظار برای یک تفریح
         /// </summary>
-        [HttpGet("Fun-Comments-Waiting/{id}")] // funiD - edit 
-        public async Task<IActionResult> GetAllWaitingCommentsForFun(Guid id)
+        [HttpGet("Fun-Comments-Waiting/{funId}")] // funiD - edit 
+        public async Task<IActionResult> GetAllWaitingCommentsForFun(Guid funId)
         {
-            var result = await _commentService.GetAllWaitingCommentsForFun(id);
+            var result = await _commentService.GetAllCommentsForFunWithStatus(funId,EStatus.Waiting);
             if (result == null)
                 return BadReq(ApiMessage.FunNotHaveAnyAcceptedComment, new { Reasons = $"1-fun not have waiting comments, 2-check funID and TryAgain!" });
             return OkResult(ApiMessage.WaitingFunCommentsGetted, new { LatestComments = result });
         }
 
-        /// <summary>
-        /// گرفتن همه کامنت های رد شده برای یک تفریح
-        /// </summary>
-        [HttpGet("Fun-Comments-Declined/{id}")] // funiD - edit 
-        public async Task<IActionResult> GetAllDeclinedCommentsForFun(Guid id)
-        {
-            var result = await _commentService.GetAllDeclinedCommentsForFun(id);
-            if (result == null)
-                return BadReq(ApiMessage.FunNotHaveAnyAcceptedComment, new { Reasons = $"1-fun not have declined comments, 2-check funID and TryAgain!" });
-            return OkResult(ApiMessage.DeclinedFunCommentsGetted, new { LatestComments = result });
-        }
-
-        /// <summary>
-        /// گرفتن همه کامنت های بلاک شده برای یک تفریح
-        /// </summary>
-        [HttpGet("Fun-Comments-blocked/{id}")] // funiD - edit 
-        public async Task<IActionResult> GetAllBlockedCommentsForFun(Guid id)
-        {
-            var result = await _commentService.GetAllBlockedCommentsForFun(id);
-            if (result == null)
-                return BadReq(ApiMessage.FunNotHaveAnyAcceptedComment, new { Reasons = $"1-fun not have blocked comments, 2-check funID and TryAgain!" });
-            return OkResult(ApiMessage.BlockedFunCommentsGetted, new { LatestComments = result });
-        }
-
+ 
         /// <summary>
         /// افزایش لایک کامنت
         /// </summary>
@@ -166,20 +120,6 @@ namespace Marina_Club.Controllers
             if (!result)
                 return BadReq(ApiMessage.DecreaseLikeFaild, new { Reasons = $"1-comment not found, 2-there is a problem when saveChanges. TryAgain!" });
             return OkResult(ApiMessage.DecreasedLike, new { Result = $"1 like decreased to comment" });
-        }
-
-        /// <summary>
-        /// بلاک کردن همه کامنت های یک کاربر
-        /// </summary>
-        [HttpPut("BlockAllUserComments/{id}")]
-        public async Task<IActionResult> BlockAllUserComments(Guid id)
-        { 
-            var result = await _commentService.BlockAllUserComments(id);
-            if (result == 404)
-                return BadReq(ApiMessage.UserNotFound, new { Reason = $"user with this id not have any accepted comments" });
-            if (result == 503)
-                return BadReq(ApiMessage.ServiceUnAvailable, new { Reason = $"1-all user comments already blocked, 2-there is a problem when saving changes. TryAgain!" });
-            return OkResult(ApiMessage.AllUserCommentsBlocked, new { BlockedCommentsCount = result });
         }
     }
 }

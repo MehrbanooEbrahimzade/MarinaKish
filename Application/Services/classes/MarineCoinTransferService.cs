@@ -20,41 +20,41 @@ namespace Application.Services.classes
         /// <summary>
         /// اضافه کردن کیف پول کاربر
         /// </summary>
-        public async Task<string> IncreaseUserWallet(Guid id, decimal Coin)
-        {
-            var user = await _MCTransferRepository.GetActiveUserById(id);
-            if (user == null)
-                return null;
-            var mcTransferModel = new CashTransfer(Coin, user.Id);
+        //public async Task<string> IncreaseUserWallet(Guid id, decimal Coin)
+        //{
+        //    var user = await _MCTransferRepository.GetActiveUserById(id);
+        //    if (user == null)
+        //        return null;
+        //    var mcTransferModel = new CashTransfer(Coin, user.Id);
             
-            user.Wallet += Coin;
-            await _MCTransferRepository.AddMCTransfer(mcTransferModel);
-            return user.Wallet.ToString();
-        }
+        //    user.Wallet += Coin;
+        //    await _MCTransferRepository.AddMCTransfer(mcTransferModel);
+        //    return user.Wallet.ToString();
+        //}
 
         /// <summary>
         /// کم کردن کیف پول کاربر
         /// </summary>
-        public async Task<List<string>> DecreaseUserWallet(Guid id, decimal Coin)
-        {
-            var user = await _MCTransferRepository.GetActiveUserById(id);
-            if (user == null)
-                return null;
+        //public async Task<List<string>> DecreaseUserWallet(Guid id, decimal Coin)
+        //{
+        //    var user = await _MCTransferRepository.GetActiveUserById(id);
+        //    if (user == null)
+        //        return null;
 
-            var mcTransferModel = new CashTransfer(Coin, user.Id);
+        //    var mcTransferModel = new CashTransfer(Coin, user.Id);
             
 
-            user.Wallet -= Coin;
-            await _MCTransferRepository.AddMCTransfer(mcTransferModel);
+        //    user.Wallet -= Coin;
+        //    await _MCTransferRepository.AddMCTransfer(mcTransferModel);
 
-            List<string> ResultList = new List<string>();
-            ResultList.Add(user.Wallet.ToString());
-            ResultList.Add(mcTransferModel.TransferNumber);
-            return ResultList;
-        }
+        //    List<string> ResultList = new List<string>();
+        //    ResultList.Add(user.Wallet.ToString());
+        //    ResultList.Add(mcTransferModel.TransferNumber);
+        //    return ResultList;
+        //}
 
-        /// <summary>
-        /// همه تراکنش های مالی دریایی
+        ///// <summary>
+        ///// همه تراکنش های مالی دریایی
         /// </summary>
         public async Task<List<CashTransferDto>> AllMarineCoinTransfers()
         {
@@ -136,13 +136,13 @@ namespace Application.Services.classes
         /// <summary>
         /// جمع مبلغ همه تراکنش های یک کاربر
         /// </summary>
-        public async Task<decimal> TotalUsersWalletSum()
-        {
-            var userWalletSum = await _MCTransferRepository.TotalUsersWalletSum();
-            if (userWalletSum == 0)
-                return 0;
-            return userWalletSum;
+        //public async Task<decimal> TotalUsersWalletSum()
+        //{
+        //    var userWalletSum = await _MCTransferRepository.TotalUsersWalletSum();
+        //    if (userWalletSum == 0)
+        //        return 0;
+        //    return userWalletSum;
 
-        }
+        //}
     }
 }

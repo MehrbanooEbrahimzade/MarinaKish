@@ -17,11 +17,12 @@ namespace Application.Services.interfaces
         /// اپلود کردن عکس
         /// </summary>
         Task<Guid?> UploadFileAsync(IFormFile file);
-
+        
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        Task<File> GetFileById(Guid id);
+        //Task<File> GetFileById(Guid id);
+        Task GetFileById(Guid id);
 
         /// <summary>
         /// دانلود عکس

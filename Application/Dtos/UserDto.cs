@@ -64,7 +64,7 @@ namespace Application.Dtos
         /// <summary>
         /// اطلاعات roleType کاربر
         /// </summary>
-        public RoleTypec RoleType { get; set; }
+        public RoleType RoleType { get; set; }
 
         /// <summary>
         /// اطلاعات کانتکته کاربر

@@ -1,24 +1,36 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
 
         }
-        
-        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Ticket>(s =>
+            {
+                s.HasOne<User>()
+                    .WithMany(x => x.Tickets).HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+            modelBuilder.Entity<User>(x => x.HasOne(e => e.UserCart));
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Fun> Funs { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<File> Files { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Conversation> Conversations { get; set; }
-        public DbSet<CashTransfer> MarineCoinTransfers { get; set; }
     }
 }

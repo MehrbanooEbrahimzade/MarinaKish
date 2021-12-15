@@ -14,8 +14,9 @@ namespace Application.Commands.User
         /// <summary>
         /// کد تایید
         /// </summary>
-        public string VerifyCode { get; set; }
+        public string Password { get; set; }
 
+        public GetPhoneAndSetVerifyCodeCommand GetPhoneAndSetVerifyCodeCommand { get; set; }
 
         public override bool Validate()
         {

@@ -19,26 +19,26 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// اضافه کردن کیف پول کاربر
         /// </summary>
-        [HttpPost("IncreaseUserWallet/{id}")] // userid ( users model )
-        public async Task<IActionResult> IncreaseUserWallet(Guid id, CoinCommand command)
-        {
-            var result = await _MCTransferService.IncreaseUserWallet(id, command.Coin);
-            if (result == null)
-                return BadReq(ApiMessage.WalletNotIncreased, new {Reasons = $"1-user is not active(is blocked), 2-user not found(user id is wrong)" });
-            return OkResult(ApiMessage.WalletIncreased, new { Wallet = result });
-        }
+        //[HttpPost("IncreaseUserWallet/{id}")] // userid ( users model )
+        //public async Task<IActionResult> IncreaseUserWallet(Guid id, CoinCommand command)
+        //{
+        //    var result = await _MCTransferService.IncreaseUserWallet(id, command.Coin);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.WalletNotIncreased, new {Reasons = $"1-user is not active(is blocked), 2-user not found(user id is wrong)" });
+        //    return OkResult(ApiMessage.WalletIncreased, new { Wallet = result });
+        //}
 
-        /// <summary>
-        /// کم کردن کیف پول کاربر
-        /// </summary>
-        [HttpPost("DecreaseUserWallet/{id}")] // userid ( users model )
-        public async Task<IActionResult> DecreaseUserWallet(Guid id, CoinCommand command)
-        {
-            var result = await _MCTransferService.DecreaseUserWallet(id, command.Coin);
-            if (result == null)
-                return BadReq(ApiMessage.WalletNotDecreased, new { Reasons = $"1-user is not active(is blocked), 2-user not found(user id is wrong)" });
-            return OkResult(ApiMessage.WalletDecreased, new { TransferInfo = $"Wallet : {result[0]}, ShomarehPeygiri : {result[1]}" });
-        }
+        ///// <summary>
+        ///// کم کردن کیف پول کاربر
+        ///// </summary>
+        //[HttpPost("DecreaseUserWallet/{id}")] // userid ( users model )
+        //public async Task<IActionResult> DecreaseUserWallet(Guid id, CoinCommand command)
+        //{
+        //    var result = await _MCTransferService.DecreaseUserWallet(id, command.Coin);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.WalletNotDecreased, new { Reasons = $"1-user is not active(is blocked), 2-user not found(user id is wrong)" });
+        //    return OkResult(ApiMessage.WalletDecreased, new { TransferInfo = $"Wallet : {result[0]}, ShomarehPeygiri : {result[1]}" });
+        //}
 
         /// <summary>
         /// همه تراکنش های انجام داده شده یک کاربر
@@ -135,14 +135,14 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// جمع مبلغ کیف پول همه کاربران
         /// </summary>
-        [HttpGet("UsersWallet-Sum")]
-        public async Task<IActionResult> TotalUsersWalletSum()
-        {
-            var result = await _MCTransferService.TotalUsersWalletSum();
-            if (result == 0)
-                return BadReq(ApiMessage.TransferNotYet);
-            return OkResult(ApiMessage.GetTotalUsersWallet, new { WalletsSum = result });
-        }
+        //[HttpGet("UsersWallet-Sum")]
+        //public async Task<IActionResult> TotalUsersWalletSum()
+        //{
+        //    var result = await _MCTransferService.TotalUsersWalletSum();
+        //    if (result == 0)
+        //        return BadReq(ApiMessage.TransferNotYet);
+        //    return OkResult(ApiMessage.GetTotalUsersWallet, new { WalletsSum = result });
+        //}
 
         // add label to model to see incoming(variz be kife pul) ya outgoing(bardasht az kife pul) e
         // add searches wih shamsi ( sum , count )

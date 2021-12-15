@@ -15,9 +15,15 @@ namespace Application.Services.classes
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
-        public CommentService(ICommentRepository commentRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IFunRepository _funRepository;
+
+
+        public CommentService(ICommentRepository commentRepository, IUserRepository userRepository, IFunRepository funRepository)
         {
             _commentRepository = commentRepository;
+            _userRepository = userRepository;
+            _funRepository = funRepository;
         }
 
         /// <summary>
@@ -25,15 +31,15 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<CommentDto> AddCommentToFun(AddCommentCommand command)
         {
-            var user = await _commentRepository.GetActiveUserById(command.UserId);
-            var fun = await _commentRepository.GetActiveFunById(command.FunId);
+            var user = await _userRepository.GetUserById(command.UserId);
+            var fun = await _funRepository.GetActiveFunById(command.FunId);
 
             if (user == null || fun == null)
                 return null;
 
-            var commentObj = new Comment(command.Message, command.FunId, command.UserId, fun.FunType, user.PhoneNumber, user.UserName);
+            var commentObj = new Comment(command.Message, command.FunId,  user.PhoneNumber, user.UserName);
             
-            var addCommentResult = await _commentRepository.AddCommentAsync(commentObj);
+            var addCommentResult = await _commentRepository.AddAsync(commentObj);
 
             if (!addCommentResult)
                 return null;
@@ -46,11 +52,12 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> ChangeCommentStatus(ChangeCommentStatusCommand command)
         {
-            var comment = await _commentRepository.GetCommentById(command.Id);
-            comment.UpdateCommentStatus(command.Status);
+            var comment = await _commentRepository.GetById(command.Id);
+            comment.SetStatus(command.Status);
 
-            return await _commentRepository.SaveChangeCommentAsync();
+            return await _commentRepository.SaveChangeAsync();
         }
+
 
         /// <summary>
         /// تایید شدن یا نشدن لیستی از کامنت ها
@@ -59,144 +66,75 @@ namespace Application.Services.classes
         {
             foreach (var guid in command.IDs)
             {
-                var comment = await _commentRepository.GetCommentById(guid);
-                comment.UpdateCommentStatus(command.Status);
+                var comment = await _commentRepository.GetById(guid);
+                comment.SetStatus(command.Status);
             }
-            return await _commentRepository.SaveChangeCommentAsync();
+            return await _commentRepository.SaveChangeAsync();
         }
 
         /// <summary>
         /// گرفتن همه کامنت های قبول شده برای یک تفریح
         /// </summary>
-        public async Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid id)
+        public async Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, EStatus status)
         {
-            var comments = await _commentRepository.GetAllAcceptedCommentsForFun(id);
-            if (comments == null)
-                return null;
-            return comments.ToDto();
-        }
+            var comments = await _commentRepository.GetFunCommentsByStatus(funId, status);
 
+            return comments?.ToDto();
+        }
+  
         /// <summary>
         /// افزایش لایک کامنت
         /// </summary>
         public async Task<bool> IncreaseLikeComment(Guid id)
         {
-            var comment = await _commentRepository.GetCommentById(id);
+            var comment = await _commentRepository.GetById(id);
             if (comment == null)
                 return false;
 
-            comment.UpdateCommentLikes(1);
-            return await _commentRepository.SaveChangeCommentAsync();
+            comment.UpdateCommentLikes();
+            return await _commentRepository.SaveChangeAsync();
         }
+        //این دو متد مشابه (لایک) باهم  ترکیب شوند!!
 
         /// <summary>
         /// کاهش لایک کامنت
         /// </summary>
         public async Task<bool> DecreaseLikeComment(Guid id)
         {
-            var comment = await _commentRepository.GetCommentById(id);
+            var comment = await _commentRepository.GetById(id);
             if (comment == null)
                 return false;
 
-            comment.UpdateCommentDislikes(1);
-            return await _commentRepository.SaveChangeCommentAsync();
+            comment.UpdateCommentDislikes();
+            return await _commentRepository.SaveChangeAsync();
         }
-
-        public async Task<int> BlockAllUserComments(Guid id)
-        {
-            var userComments = await _commentRepository.GetAllAcceptedUserComments(id);
-            if (userComments == null)
-                return 404;
-
-            foreach (var comment in userComments)
-            {
-                comment.UpdateCommentStatus(EStatus.Blocked);
-            }
-            var save = await _commentRepository.SaveChangeCommentAsync();
-            if (!save)
-                return 503;
-            return userComments.Count;
-        }
-
+        
         /// <summary>
-        /// قبول کردن یک کامنت با آیدی
+        /// تغییر وضعیت دادن یک کامنت با آیدی
         /// </summary>
-        public async Task<CommentDto> AcceptingComment(Guid id)
+        public async Task<CommentDto> ChangeStatusComment(Guid id, EStatus status)
         {
-            var comment = await _commentRepository.GetWaitingCommentById(id);
+            var comment = await _commentRepository.GetById(id);
+
             if (comment == null)
                 return null;
-            comment.UpdateCommentStatus(EStatus.Accepted);
+            comment.SetStatus(status);
 
-            var save = await _commentRepository.SaveChangeCommentAsync();
+            var save = await _commentRepository.SaveChangeAsync();
             if (!save)
                 return null;
             return comment.ToDto();
         }
 
-        /// <summary>
-        /// رد کردن یک کامنت با آیدی
-        /// </summary>
-        public async Task<CommentDto> DecliningComment(Guid id)
-        {
-            var comment = await _commentRepository.GetWaitingCommentById(id);
-            if (comment == null)
-                return null;
-            comment.UpdateCommentStatus(EStatus.Declined);
-
-            var save = await _commentRepository.SaveChangeCommentAsync();
-            if (!save)
-                return null;
-            return comment.ToDto();
-        }
 
         /// <summary>
-        /// بلاک کردن یک کامنت با آیدی
+        /// دریافت کامنت های یک وضعیت خاص یک تفریح با فان آیدی
         /// </summary>
-        public async Task<CommentDto> BlockingComment(Guid id)
+        public async Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, EStatus status)
         {
-            var comment = await _commentRepository.GetNotBlockedCommentById(id);
-            if (comment == null)
-                return null;
-            comment.UpdateCommentStatus(EStatus.Blocked);
+            var funComments = await _commentRepository.GetFunCommentsByStatus(funId,status);
 
-            var save = await _commentRepository.SaveChangeCommentAsync();
-            if (!save)
-                return null;
-            return comment.ToDto();
-        }
-
-        /// <summary>
-        /// دریافت کامنت های درحال انتظار یک تفریح با آیدی
-        /// </summary>
-        public async Task<List<CommentDto>> GetAllWaitingCommentsForFun(Guid id)
-        {
-            var funComments = await _commentRepository.GetAllWaitingCommentsForFun(id);
-            if (funComments == null)
-                return null;
-            return funComments.ToDto();
-        }
-
-        /// <summary>
-        /// دریافت کامنت های رد شده یک تفریح با آیدی
-        /// </summary>
-        public async Task<List<CommentDto>> GetAllDeclinedCommentsForFun(Guid id)
-        {
-            var funComments = await _commentRepository.GetAllDeclinedCommentsForFun(id);
-            if (funComments == null)
-                return null;
-            return funComments.ToDto();
-        }
-
-        /// <summary>
-        /// دریافت کامنت های بلاک شده یک تفریح با آیدی
-        /// </summary>
-        public async Task<List<CommentDto>> GetAllBlockedCommentsForFun(Guid id)
-        {
-            var funComments = await _commentRepository.GetAllBlockedCommentsForFun(id);
-            if (funComments == null)
-                return null;
-            return funComments.ToDto();
+            return funComments?.ToDto();
         }
     }
 }

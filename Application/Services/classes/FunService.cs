@@ -39,15 +39,9 @@ namespace Application.Services.classes
             if (fun == null)
                 return null;
 
-            
-
-            fun.ForFunType(command.FunType);
-
-            fun.UpdateFun(command.Price, command.StartTime, command.EndTime
-                , command.SansDuration, command.SansTotalCapacity
-                , command.SansGapTime, command.About);
-
-
+            fun.Update(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
+                TimeSpan.Parse(command.EndTime), command.SansDuration, command.SansTotalCapacity,
+                command.SansGapTime, command.About);
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -108,7 +102,7 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.UpdateBackGround(pic.Id.ToString());
+            fun.SetBackgroundPicture(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
@@ -126,14 +120,14 @@ namespace Application.Services.classes
             if (pic == null || fun == null)
                 return null;
 
-            fun.UpdateIcon(pic.Id.ToString());
+            fun.SetIcon(pic.Id.ToString()); 
 
             var save = await _funRepository.UpdateFunAsync();
             if (!save)
                 return null;
             return fun.Icon;
         }
-
+   
         /// <summary>
         /// غیرفعال کردن یک تفریح
         /// </summary>
@@ -150,10 +144,10 @@ namespace Application.Services.classes
                 schedule.IsExist = false;
             }
 
-            fun.UpdateFunStatus(false);
+            fun.SetIsActive(false); 
             return await _funRepository.UpdateFunAsync();
         }
-
+       
         /// <summary>
         /// دوباره فعال کردن یک تفریح
         /// </summary>
@@ -170,7 +164,7 @@ namespace Application.Services.classes
                 schedule.IsExist = true;
             }
 
-            fun.UpdateFunStatus(true);
+            fun.SetIsActive(true); 
             return await _funRepository.UpdateFunAsync();
         }
 
@@ -195,5 +189,5 @@ namespace Application.Services.classes
                 return null;
             return funs.ToDto();
         }
-    } 
+    }
 }

@@ -5,8 +5,7 @@ namespace Domain.Models
 {
     public class Ticket
     {
-        public Ticket
-           (FunType funType, DateTime scheduleMiladiTime, TimeSpan startTime, TimeSpan endTime, int numberOfTicket)
+        public Ticket(FunType funType, DateTime scheduleMiladiTime, TimeSpan startTime, TimeSpan endTime, int numberOfTicket)
         {
             Id = Guid.NewGuid();
             FunType = funType;
@@ -19,6 +18,8 @@ namespace Domain.Models
             SubmitDate = DateTime.Now;
             WhereBuy = EWhereBuy.Site;
         }
+
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// ID
@@ -67,7 +68,7 @@ namespace Domain.Models
         /// <summary>
         /// قیمت کل
         /// </summary>
-        public decimal TotalPrice { get; private set; }
+        public decimal Price { get; private set; }
       
         /// <summary>
         /// آی دیه مدل تفریحات
@@ -78,11 +79,6 @@ namespace Domain.Models
         /// آی دیه مدل سانس ها
         /// </summary>
         public Guid ScheduleId { get; private set; }
-
-        /// <summary>
-        /// آیدی کاربر
-        /// </summary>
-        public Guid UserId { get; private set; }
 
         /// <summary>
         /// وضعیت
