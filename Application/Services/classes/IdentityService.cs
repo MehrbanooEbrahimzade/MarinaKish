@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Dtos;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
@@ -21,7 +23,7 @@ namespace Application.Services.classes
         private readonly IUserRepository _userRepository;
         private readonly IUserRepository2 _userRepository2;
         public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-            ,IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
+            , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,7 +41,7 @@ namespace Application.Services.classes
             List<string> ResultList = new List<string>();
             if (!isPhoneExist)
             {
-                var newUser = command.ToModel();
+                var newUser = command.ToModeluser();
                 await _userRepository.UserSignUpAsync(newUser);
 
                 ResultList.Add("Register");
@@ -65,7 +67,7 @@ namespace Application.Services.classes
 
         public async Task<Result<string>> RegisterAsync(RegisterUserCommand command)
         {
-            
+
             var user = new User
             {
                 UserName = command.UserName,
@@ -79,14 +81,38 @@ namespace Application.Services.classes
             }
             return result.ToApplicationResult("", user.Id);
         }
-        public async Task<Result<string>> LoginAsync()
-        {
-            var result = await _SignInManager.PasswordSignInAsync(phoneNumber,userName);
 
-            if (result.Succeeded)
+
+
+        public async Task<UserDto> LoginAsync(UserLoginCommand command)
+        {
+            var user = await _userRepository2.GetUserByPhone(command.CellPhone);
+
+            if (user ==null)
             {
-                return RedirectToAction("Index", "Home");
+                for (int i = 1; i <= 4; i++)
+                {
+                    if (user != null && command.Password == user.Password)
+                    {
+                        return user.ToDto();
+                        break;
+                    }
+                    return throw new Exception("شماره تلفن یا رمز عبور اشتباه است ");
+
+                }
             }
+
+        
+
+
+        
+
+            //{
+            //    //break;
+            //}
+
+
+
         }
     }
 }

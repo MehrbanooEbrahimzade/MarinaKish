@@ -15,7 +15,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به کاربر
         /// </summary>
-        public static User ToModel(this GetPhoneAndSetVerifyCodeCommand command)
+        public static User ToModeluser(this GetPhoneAndSetVerifyCodeCommand command)
         {
             return new User(command.PhoneNumber,command.FullName,command.UserName,command.Password,command.NationalCode)
             {
