@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Domain.Models.enums;
 
 namespace Domain.Models

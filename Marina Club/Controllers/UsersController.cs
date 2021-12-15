@@ -146,7 +146,7 @@ namespace Marina_Club.Controllers
         {
             var result = await _userService.PromoteToSeller(id);
             if (result == null)
-                return BadReq(ApiMessage.NotPromoteSeller, new { Reasons = $"1-user already seller, 2-user not found" });
+                return BadReq(ApiMessage.NotPromoteSeller, new { Reasons = "user already seller or user not found" });
             return OkResult(ApiMessage.PromoteSeller, new { UserInfo = result });
         }
 

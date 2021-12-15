@@ -75,7 +75,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// ذخیره کردن عملیات انجام شده :
         /// </summary>
-        public async Task<bool> UpdateUserAsync()
+        public async Task<bool> SaveChanges()
         {
             return await _context.SaveChangesAsync() > 0;
         }
@@ -89,10 +89,11 @@ namespace Infrastructure.Repository.classes
                 .SingleOrDefaultAsync(x => x.VerifyCode == verifyCode);
         }
 
+
         /// <summary>
-        /// دریافت کاربر با آیدی
-        /// </summary>
-        public async Task<User> GetUserById(Guid id)
+            /// دریافت کاربر با آیدی
+            /// </summary>
+            public async Task<User> GetUserById(Guid id)
         {
             return await _context.Users
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -105,7 +106,6 @@ namespace Infrastructure.Repository.classes
         {
             return await _context.Users
                 .FromSql("Select * from dbo.Users as u where u.FullName like {0} or u.UserName like {0}", $"%{username}%")
-                .Where(x => x.IsActive == true)
                 .ToListAsync();
         }
 
@@ -115,7 +115,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<User>> GetAllSeller()
         {
             return await _context.Users
-                .Where(x => x.RoleType == RoleType.Seller && x.IsActive == true)
+                .Where(x => x.RoleType == RoleType.Seller)
                 .ToListAsync();
         }
 
@@ -128,94 +128,10 @@ namespace Infrastructure.Repository.classes
                 .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         }
 
-        /// <summary>
-        /// دریافت کاربر بلاک شده
-        /// </summary>
-        public async Task<User> GetBlockedUser(Guid userid)
-        {
-            return await _context.Users
-                .SingleOrDefaultAsync(x => x.Id == userid && x.IsActive == false);
-        }
-
-        /// <summary>
-        /// همه کاربر های فعال
-        /// </summary>
-        public async Task<List<User>> AllActiveUsers()
-        {
-            return await _context.Users
-                .Where(x => x.IsActive && x.RoleType == RoleType.Buyer)
-                .OrderByDescending(x=> x.DateJoin)
-                .ToListAsync();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های فعال
-        /// </summary>
-        public async Task<int> AllActiveUsersCount()
-        {
-            return await _context.Users
-                .CountAsync(x => x.IsActive == true && x.RoleType == RoleType.Buyer);
-        }
-
-        /// <summary>
-        ///  همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<List<User>> AllBlockedUsers()
-        {
-            return await _context.Users
-                .Where(x => x.IsActive == false)
-                .OrderByDescending(x => x.DateJoin)
-                .ToListAsync();
-        }
-
-        /// <summary>
-        /// تعداد همه کاربر های بلاک شده
-        /// </summary>
-        public async Task<int> AllBlockedUsersCount()
-        {
-            return await _context.Users
-                .CountAsync(x => x.IsActive == false);
-        }
-
-        /// <summary>
-        /// دریافت کاربری که فروشنده نیست با آیدی
-        /// </summary>
-        public async Task<User> GetNotSellerUserById(Guid id)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Seller);
-        }
-
-        /// <summary>
-        /// دریافت کاربری که ادمین نیست با آیدی
-        /// </summary>
-        public async Task<User> GetNotAdminUserById(Guid id)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Admin);
-        }
-
-        /// <summary>
-        /// دریافت کاربری که ادمین یا فروشنده است با آیدی
-        /// </summary>
-        public async Task<User> GetAdminOrSellerUserById(Guid id)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType != RoleType.Buyer);
-        }
-
-        /// <summary>
-        /// دریافت کاربر فعال با آیدی
-        /// </summary>
-        public async Task<User> GetActiveUserById(Guid id)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
-        }
-
-        /// <summary>
-        /// دریافت همه بلیط های خریده شده یا لغو شده کاربر
-        /// </summary>
+        
+            /// <summary>
+            /// دریافت همه بلیط های خریده شده یا لغو شده کاربر
+            /// </summary>
         public async Task<List<Ticket>> AllBuyedOrCanceledUserTickets(Guid id)
         {
             return await _context.Tickets

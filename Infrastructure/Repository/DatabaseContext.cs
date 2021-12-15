@@ -21,7 +21,7 @@ namespace Infrastructure.Repository
                     .OnDelete(DeleteBehavior.Restrict);
 
             });
-            modelBuilder.Entity<User>(x => x.OwnsOne(e => e.UserCart));
+            modelBuilder.Entity<User>(x => x.HasOne(e => e.UserCart));
 
 
             base.OnModelCreating(modelBuilder);
@@ -29,12 +29,8 @@ namespace Infrastructure.Repository
 
         public DbSet<Fun> Funs { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<File> Files { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Conversation> Conversations { get; set; }
-        public DbSet<CashTransfer> MarineCoinTransfers { get; set; }
     }
 }

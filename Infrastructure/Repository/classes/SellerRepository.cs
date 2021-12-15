@@ -40,7 +40,7 @@ namespace Infrastructure.Repository.classes
         public async Task<bool> CheckUserIdForSeller(Guid id)
         {
             return await _context.Users
-                .AnyAsync(x => x.Id == id && x.IsActive == true && x.RoleType == RoleType.Seller);
+                .AnyAsync(x => x.Id == id && x.RoleType == RoleType.Seller);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Infrastructure.Repository.classes
         public async Task<User> GetActiveSellerById(Guid id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType == RoleType.Seller && x.IsActive == true);
+                .FirstOrDefaultAsync(x => x.Id == id && x.RoleType == RoleType.Seller);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Infrastructure.Repository.classes
         public async Task<List<User>> GetAllSellers()
         {
             return await _context.Users
-                .Where(x => x.IsActive == true && x.RoleType == RoleType.Seller)
+                .Where(x =>x.RoleType == RoleType.Seller)
                 .ToListAsync();
         }
 
@@ -88,7 +88,7 @@ namespace Infrastructure.Repository.classes
         public async Task<int> GetAllSellersCount()
         {
             return await _context.Users
-                .CountAsync(x => x.IsActive == true && x.RoleType == RoleType.Seller);
+                .CountAsync(x => x.RoleType == RoleType.Seller);
         }
 
         /// <summary>

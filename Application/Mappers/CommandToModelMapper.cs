@@ -24,15 +24,6 @@ namespace Application.Mappers
         }
 
         /// <summary>
-        /// تبدیل کردن کامند به اطلاعات کانتکت
-        /// </summary>
-        public static ContactInfo ToModel(this AddContactInfoCommand command)
-        {
-            return new ContactInfo(command.Phone, command.Email, command.Address);
-
-        }
-
-        /// <summary>
         /// تبدیل کردن کامند به تفریح
         /// </summary>
         public static Fun ToModel(this AddFunCommand command)
@@ -66,7 +57,7 @@ namespace Application.Mappers
                 FunId = command.FunId,
                 ScheduleId = command.ScheduleId,
                 Price = command.Price, 
-                CellPhone = command.CellPhone,
+                PhoneNumber = command.PhoneNumber,
                 FullName = command.FullName
 
                 #endregion
@@ -78,7 +69,7 @@ namespace Application.Mappers
         /// </summary>
         public static Comment ToModel(this AddCommentCommand command)
         {
-            return new Comment(command.Message, command.FunId, command.UserId, command.FunType, command.CellPhone,
+            return new Comment(command.Message, command.FunId, command.PhoneNumber,
                 command.UserName);
 
         }
