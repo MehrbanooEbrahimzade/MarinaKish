@@ -1,47 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using Domain.Models.enums;
 
 namespace Domain.Models
 {
     public class Comment: Writing
     {
-        public Comment(string text, Guid funId, Guid userId, FunType funType , string userPhoneNumber,string username)
+        public Comment(string text, Guid funId , string userPhoneNumber,string userName)
         {
             Id = Guid.NewGuid(); 
             Text = text;
             FunId = funId;
-            UserId = userId;
-            FunType = funType;
             UserPhoneNumber = userPhoneNumber;
-            UserName = username; 
-            Like = 0;
-            DisLike = 0;
-            Status = EStatus.Waiting;
+            UserName = userName;
+            Status= EStatus.Waiting;
             SubmitDate = DateTime.Now;
         }
         
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
-        public EStatus Status { get; private set; }
-
+        public EStatus Status { get; private set; } 
+      
         /// <summary>
         /// لایک
         /// </summary>
-        public int Like { get; private set; }
+        public int Like { get; private set; } 
 
         /// <summary>
         /// نپسندیدن
         /// </summary>
-        public int DisLike { get; private set; }
-
+        public int DisLike { get; private set; } 
+        
         /// <summary>
-        /// نوع تفریح
-        /// </summary>
-        public FunType FunType { get; private set; }
-
-        /// <summary>
-        /// شناسه مدل تفریح :
+        /// شناسه مدل تفریح 
         /// </summary>
         public Guid FunId { get; private set; }
 
@@ -50,41 +42,41 @@ namespace Domain.Models
         /// </summary>
         public string UserPhoneNumber { get; private set; }
 
-        /// <summary>
-        /// شناسه کاربری
-        /// </summary>
-        public Guid UserId { get; private set; }
+
+        #region SetMethod
 
         /// <summary>
         /// آپدیت کردن Status کامنت 
         /// </summary>
-        /// <param name="status"></param>
-        public void UpdateCommentStatus(EStatus status)
+        public void SetStatus(EStatus status)
         {
             this.Status = status;
         }
+
+
+        #endregion
 
         #region Methods
 
         /// <summary>
         /// افزایش تعداد لایک ها 
         /// </summary>
-        public void UpdateCommentLikes(int like)
+        public void UpdateCommentLikes()
         {
-            this.Like += like;
+            this.Like += 1;
         }
 
         /// <summary>
         /// کاهش تعداد لایک ها 
         /// </summary>
-        public void UpdateCommentDislikes(int dislike)
+        public void UpdateCommentDislikes()
         {
-            this.Like -= dislike;
+            this.Like -= 1;
         }
 
         #endregion
       
 
-        public  Comment() {  }
+        public Comment() {  }
     }
 }

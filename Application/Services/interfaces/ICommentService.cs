@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Comment;
 using Application.Dtos;
+using Domain.Models.enums;
 
 namespace Application.Services.interfaces
 {
@@ -24,11 +25,12 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<bool> ChangeStatusCommentList(ChangeStatusCommentListCommand command);
 
+
         /// <summary>
         /// گرفتن همه کامنت های قبول شده برای یک تفریح
         /// </summary>
-        Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid id);
-
+        Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, EStatus status);
+    
         /// <summary>
         /// افزایش لایک
         /// </summary>
@@ -41,30 +43,15 @@ namespace Application.Services.interfaces
 
 
         /// <summary>
-        /// قبول کردن یک کامنت با آیدی
+        /// تغییر وضعیت دادن یک کامنت با آیدی
         /// </summary>
-        Task<CommentDto> AcceptingComment(Guid id);
+        Task<CommentDto> ChangeStatusComment(Guid id, EStatus status);
+
 
         /// <summary>
-        /// رد کردن یک کامنت با آیدی
+        /// دریافت کامنت های یک وضعیت خاص یک تفریح با فان آیدی
         /// </summary>
-        Task<CommentDto> DecliningComment(Guid id);
-
-   
-
-        /// <summary>
-        /// دریافت کامنت های درحال انتظار یک تفریح با آیدی
-        /// </summary>
-        Task<List<CommentDto>> GetAllWaitingCommentsForFun(Guid id);
-
-        /// <summary>
-        /// دریافت کامنت های رد شده یک تفریح با آیدی
-        /// </summary>
-        Task<List<CommentDto>> GetAllDeclinedCommentsForFun(Guid id);
-
-        /// <summary>
-        /// دریافت کامنت های بلاک شده یک تفریح با آیدی
-        /// </summary>
-        Task<List<CommentDto>> GetAllBlockedCommentsForFun(Guid id);
+        Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, EStatus status);
+        
     }
 }

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Domain.Models
 {
-    public abstract class Writing
+    public class Writing
     {
-        public Guid Id { get; set; }
-        public string UserName { get; set; }
-        public string Text { get; set; }
-        public DateTime SubmitDate { get; set; }
+        public Guid Id { get;protected set; }
+        public string UserName { get; protected set; }
+        public string Text { get; protected set; }
+        public DateTime SubmitDate { get; protected set; }
 
 
     }

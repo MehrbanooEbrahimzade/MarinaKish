@@ -6,11 +6,11 @@ namespace Domain.Models
 {
     public class User
     {
-        public User(string phoneNumber, string fullname, string username, string password, string nationalcode)
+        //Microsoft.AspNet.Identity.Core
+        public User(string phoneNumber, string fullName, string userName, string password, string nationalcode)
         {
             PhoneNumber = phoneNumber;
             VerifyCode = GenerateVerifyCode();
-            IsActive = true;
             SystemUserCode = GenerateUserCode();
             RoleType = enums.RoleType.Buyer;
             Gender = EGender.Other;
@@ -46,12 +46,6 @@ namespace Domain.Models
         /// </summary>
         public string Password { get; private set; }
         
-
-        /// <summary>
-        /// فعال بودن کاربر
-        /// </summary>
-        public bool IsActive { get; private set; }
-
         /// <summary>
         /// کد شناساییه کاربر ، ساخته شده توسط ما
         /// </summary>
@@ -81,17 +75,7 @@ namespace Domain.Models
         /// تاریخ تولد
         /// </summary>
         public DateTime BirthDay { get; set; }
-   
-
-        /// <summary>
-        /// اطلاعات کانتکته کاربر
-        /// </summary>
-        public ContactInfo ContactInfo { get; set; }  //TODO:delete
-
-        /// <summary>
-        /// کیف پول
-        /// </summary>
-        public decimal Wallet { get; set; }  //TODO:delete
+        
 
         /// <summary>
         /// زمان وارد شدن به مارینا

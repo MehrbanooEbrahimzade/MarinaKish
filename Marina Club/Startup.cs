@@ -51,19 +51,19 @@ namespace Marina_Club
             services.AddScoped<ICommentRepository, CommentRepository>();
 
             // AddScoped for File model
-            services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IFileRepository, FileRepository>();
+            //services.AddScoped<IFileService, FileService>();
+            //services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            //services.AddScoped<IMessageRepository, MessageRepository>();
 
             // AddScoped for Conversations model
             services.AddScoped<IConversationService, ConversationService>();
-            services.AddScoped<IConversationRepository, ConversationRepository>();
+            //services.AddScoped<IConversationRepository, ConversationRepository>();
 
             // AddScoped for MarineCoinTransfers model
-            services.AddScoped<IMarineCoinTransferRepository, MarineCoinTransferRepository>();
+            //services.AddScoped<IMarineCoinTransferRepository, MarineCoinTransferRepository>();
             services.AddScoped<IMarineCoinTransferService, MarineCoinTransferService>();
 
             // AddScoped for Sellers model

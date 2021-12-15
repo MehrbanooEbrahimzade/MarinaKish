@@ -5,6 +5,7 @@ using Application.Commands.User;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.Models;
 using Domain.Models.enums;
 using Infrastructure.Repository.interfaces;
 
@@ -45,7 +46,7 @@ namespace Application.Services.classes
             ResultList.Add(user.Id.ToString());
             ResultList.Add(user.VerifyCode);
 
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return ResultList;
         }
 
@@ -106,7 +107,7 @@ namespace Application.Services.classes
 
             user.SetFullName(command.FirstName + " " + command.LastName );
             user.SetPassword(command.Password );
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -124,7 +125,7 @@ namespace Application.Services.classes
                 return false;
             }
             user.SetPassword(command.NewPassword );
-            return await _userRepository.UpdateUserAsync();
+            return await _userRepository.SaveChanges();
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace Application.Services.classes
 
             #endregion
 
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -177,11 +178,11 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<UserDto> PromoteToAdmin(Guid id)
         {
-            var user = await _userRepository.GetNotAdminUserById(id);
-            if (user == null)
+            var user = await _userRepository.GetUserById(id);
+            if (user == null || user.RoleType==RoleType.Admin)
                 return null;
             user.RoleType = RoleType.Admin;
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 
@@ -190,11 +191,15 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<UserDto> PromoteToSeller(Guid id)
         {
-            var user = await _userRepository.GetNotSellerUserById(id);
-            if (user == null)
+            var user = await _userRepository.GetUserById(id);
+
+            if (user == null|| user.RoleType == RoleType.Seller)
                 return null;
+
             user.RoleType = RoleType.Seller;
-            await _userRepository.UpdateUserAsync();
+
+            await _userRepository.SaveChanges();
+
             return user.ToDto();
         }
 
@@ -202,12 +207,12 @@ namespace Application.Services.classes
         /// تنزل رتبه کاربر فروشنده/ادمین به خریدار
         /// </summary>
         public async Task<UserDto> DemoteToUser(Guid id)
-        {
-            var user = await _userRepository.GetAdminOrSellerUserById(id);
-            if (user == null)
+        {//GetAdminOrSellerUserById
+            var user = await _userRepository.GetUserById(id);
+            if (user == null || user.RoleType== RoleType.Buyer)
                 return null;
             user.RoleType = RoleType.Buyer;
-            await _userRepository.UpdateUserAsync();
+            await _userRepository.SaveChanges();
             return user.ToDto();
         }
 

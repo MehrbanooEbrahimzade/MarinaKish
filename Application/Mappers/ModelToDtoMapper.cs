@@ -30,7 +30,6 @@ namespace Application.Mappers
                 BirthDay = user.BirthDay,
                 CardNumber = user.UserCart.CardNumber,
                 ShabaNumber = user.UserCart.ShabaNumber,
-                IsActive = user.IsActive,
                 DateJoinInShamsi = persianJoinTime,
 
                 #endregion
@@ -60,20 +59,7 @@ namespace Application.Mappers
             }).ToList();
         }
 
-        /// <summary>
-        /// تبدیل کردن اطلاعات کاربر به dto اطلاعات کاربر
-        /// </summary>
-        public static ContactInfoDto ToDto(this ContactInfo contactInfo)
-        {
-            if (contactInfo != null)
-            {
-                return new ContactInfoDto()
-                {
-                    Email = contactInfo.Email,
-                };
-            }
-            return null;
-        }
+       
 
         /// <summary>
         /// تبدیل کردن تفریح به dto تفریح
@@ -275,18 +261,14 @@ namespace Application.Mappers
 
             return new CommentDto
             {
-                #region Select
                 Id = comment.Id,
                 Message = comment.Text,
                 Status = comment.Status,
                 Like = comment.Like,
                 DisLike = comment.DisLike,
                 persianSubmitDate = persianSubmitDate,
-                FunType = comment.FunType,
                 FunId = comment.FunId,
                 UserName = comment.UserName,
-                UserId = comment.UserId
-                #endregion
             };
         }
 
@@ -305,10 +287,8 @@ namespace Application.Mappers
                 Like = x.Like,
                 DisLike = x.DisLike,
                 persianSubmitDate = x.ToDto().persianSubmitDate,
-                FunType = x.FunType,
                 FunId = x.FunId,
                 UserName = x.UserName,
-                UserId = x.UserId
 
                 #endregion
             }).ToList();
