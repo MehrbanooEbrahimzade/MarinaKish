@@ -72,7 +72,7 @@ namespace Application.Services.classes
             {
                 UserName = command.UserName,
                 PhoneNumber = command.PhoneNumber,
-                Email = command.Email
+                
             };
             var result = await _userManager.CreateAsync(user, command.Password);
             if (result.Succeeded)
@@ -81,38 +81,14 @@ namespace Application.Services.classes
             }
             return result.ToApplicationResult("", user.Id);
         }
-
-
-
-        public async Task<UserDto> LoginAsync(UserLoginCommand command)
+        public async Task<Result<string>> LoginAsync(string phoneNumber,string password)
         {
-            var user = await _userRepository2.GetUserByPhone(command.CellPhone);
-
-            if (user ==null)
+            var result =  await _SignInManager.PasswordSignInAsync(phoneNumber,password,false,false);
+            if (result.Succeeded)
             {
-                for (int i = 1; i <= 4; i++)
-                {
-                    if (user != null && command.Password == user.Password)
-                    {
-                        return user.ToDto();
-                        break;
-                    }
-                    return throw new Exception("شماره تلفن یا رمز عبور اشتباه است ");
-
-                }
+                return result.ToApplicationResult("", phoneNumber);
             }
-
-        
-
-
-        
-
-            //{
-            //    //break;
-            //}
-
-
-
+            return result.ToApplicationResult("", phoneNumber);
         }
     }
 }
