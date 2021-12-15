@@ -5,7 +5,7 @@ namespace Application.Commands.Fun
 {
     public class AddFunPictureCommand : CommandBase
     {
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         public override bool Validate()
         {

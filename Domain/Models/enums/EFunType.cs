@@ -3,7 +3,7 @@
 
 namespace Domain.Models.enums
 {
-    public enum FunType
+    public enum EFunType
     {
         [Description("پاراسل")] Paracel = 1,
         [Description("اسکی روی آب")] SkiInTheWater = 2,

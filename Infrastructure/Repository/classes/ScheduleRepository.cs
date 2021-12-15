@@ -19,9 +19,9 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// دریافت تفریح با اسم تفریح
         /// </summary>
-        public async Task<Fun> GetFunByFunType(FunType fun)
+        public async Task<Fun> GetFunByFunType(EFunType eFun)
         {
-            return await _context.Funs.FirstOrDefaultAsync(x => x.FunType == fun);
+            return await _context.Funs.FirstOrDefaultAsync(x => x.FunType == eFun);
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن همه سانس ها برای تفریح
         /// </summary>
-        public async Task<List<Schedule>> GetAllSchedulesForFunWithFunType(FunType fun)
+        public async Task<List<Schedule>> GetAllSchedulesForFunWithFunType(EFunType eFun)
         {
             return await _context.Schedules
-                .Where(x => x.FunType == fun && x.IsExist == true)
+                .Where(x => x.EFunType == eFun && x.IsExist == true)
                 .OrderBy(x => x.ExecuteDateTime)
                 .ToListAsync();
         }
@@ -84,9 +84,9 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تاریخ اخرین سانس
         /// </summary>
-        public async Task<DateTime?> GetLastScheduleTimeByFunType(FunType funType) // momeni
+        public async Task<DateTime?> GetLastScheduleTimeByFunType(EFunType eFunType) // momeni
         {
-            var sans = await _context.Schedules.Where(s => s.FunType == funType)
+            var sans = await _context.Schedules.Where(s => s.EFunType == eFunType)
                 .OrderByDescending(x => x.ExecuteDateTime).ToListAsync();
 
             if (sans.Count > 0)

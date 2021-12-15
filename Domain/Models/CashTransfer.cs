@@ -13,6 +13,8 @@ namespace Domain.Models
             UserId = userid; 
         }
 
+        public CashTransfer() { }
+
         /// <summary>
         /// آیدی گردش مالی
         /// </summary>
@@ -49,10 +51,6 @@ namespace Domain.Models
             var second = DateTime.Now.Second.ToString();
             var RandomNum = new Random().Next(1111, 9999);
             return milisecond + RandomNum + "-" + second;
-        }
-        public CashTransfer()
-        {
-
         }
         
     }

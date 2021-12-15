@@ -13,7 +13,7 @@ namespace Application.Dtos
         /// <summary>
         /// تنوع تفریح ها :
         /// </summary> 
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         /// <summary>
         /// زمان سانس : - به شمسی

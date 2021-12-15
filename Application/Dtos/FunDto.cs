@@ -13,7 +13,7 @@ namespace Application.Dtos
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         /// <summary>
         /// قیمت :

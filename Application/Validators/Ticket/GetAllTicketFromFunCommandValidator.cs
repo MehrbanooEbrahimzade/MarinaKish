@@ -7,7 +7,7 @@ namespace Application.Validators.Ticket
     {
         public GetAllTicketFromFunCommandValidator()
         {
-            RuleFor(x => x.FunType)
+            RuleFor(x => x.EFunType)
                 .NotNull().WithMessage("اسم تفریح را وارد کنید");
         }
     }

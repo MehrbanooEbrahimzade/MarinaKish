@@ -8,7 +8,7 @@ namespace Domain.Models
     public class User : IdentityUser
     {
         public User(string phoneNumber, string fullname, string username, string password, string nationalcode
-            ,UserCart userCart,List<Ticket>tickets)
+            ,UserCart userCart)
 
         {
             PhoneNumber = phoneNumber;
@@ -17,7 +17,6 @@ namespace Domain.Models
             Password = password;
             NationalCode = nationalcode;
             UserCart = userCart;
-            Tickets = tickets;
             VerifyCode = GenerateVerifyCode();
             IsActive = true;
             RoleType = enums.RoleType.Buyer;
@@ -25,14 +24,15 @@ namespace Domain.Models
             BirthDay = default;  
             DateJoin = DateTime.Now;
         }
-        
+        public User() { }
+
         /// <summary>
         /// ID
         /// </summary>
-      
+
         public UserCart UserCart { get; private set; }
-        public List<Ticket> Tickets { get;private set; }
-        
+        public CartItem Item { get; private set; }
+
         public string FullName { get; private set; }
 
         /// <summary>
@@ -108,12 +108,12 @@ namespace Domain.Models
         }
 
 
-        public string GenerateUserCode()
-        {
-            var millisecond = DateTime.Now.Millisecond.ToString();
-            var randomGenerate = new Random().Next(10000, 99999).ToString();
-            return randomGenerate + "-" + millisecond;
-        }
+        //public string GenerateUserCode()
+        //{
+        //    var millisecond = DateTime.Now.Millisecond.ToString();
+        //    var randomGenerate = new Random().Next(10000, 99999).ToString();
+        //    return randomGenerate + "-" + millisecond;
+        //}
 
         public string GenerateVerifyCode()
         {
@@ -121,6 +121,5 @@ namespace Domain.Models
             return verifyCode;
         }
 
-        public User() { }
     }
 }

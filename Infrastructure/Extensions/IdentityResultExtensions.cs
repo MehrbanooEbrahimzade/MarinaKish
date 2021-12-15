@@ -15,12 +15,13 @@ namespace Infrastructure.Extensions
                 ? Result<string>.Success(message, data)
                 : Result<string>.Failure(result.Errors.Select(e => e.Description));
         }
-        public static Result<string> ToApplicationResult(this SignInResult result , string message , string data)
-        {
-            return result.Succeeded
-                 ? Result<string>.Success(message, data)
+        //public static Result<string> ToApplicationResult(this SignInResult result , string message , string data)
+        //{
+        //    return result.Succeeded
+        //        ? Result<string>.Success(message, data)
                 
 
-        }
+
+        //}
     }
 }

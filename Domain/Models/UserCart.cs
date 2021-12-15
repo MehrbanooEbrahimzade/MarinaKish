@@ -4,29 +4,24 @@ namespace Domain.Models
 {
     public class UserCart
     {
-        public UserCart(string shabaNumber, string cardNumber)
+        public UserCart(string shabaNumber, string cardNumber, Guid userId)
         {
             Id = Guid.NewGuid();
             ShabaNumber = shabaNumber;
             CardNumber = cardNumber;
+            UserId = userId;
         }
 
-        public User User { get; set; }
-        public Guid UserId { get; set; }
-        /// <summary>
-        /// ID
-        /// </summary>
+        public UserCart(Guid userId)
+        {
+            UserId = userId;
+        }
+
+        public Guid UserId { get;private set; }
+      
         public Guid Id { get;private set; }
-
-        /// <summary>
-        /// شماره شبا
-        /// </summary>
-        public string ShabaNumber { get;  set; }
-
-        /// <summary>
-        /// شماره کارت
-        /// </summary>
-        public string CardNumber { get;  set; }
+        public string ShabaNumber { get;private set; }
+        public string CardNumber { get; private set; }
 
     }
 }

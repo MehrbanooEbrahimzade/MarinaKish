@@ -15,8 +15,9 @@ namespace Domain.Models
             IsActive = true;
             PlaceDate = DateTime.Now;
             
-
         }
+
+        public File() { }
 
         /// <summary>
         /// ID
@@ -62,10 +63,6 @@ namespace Domain.Models
         /// آیدی سانس
         /// </summary>
         public string ScheduleID { get; set; }//TODO:delete
-
-        private File()
-        {
-
-        }
+        
     }
 }

@@ -19,9 +19,9 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// چک کننده وجود داشتن تفریح
         /// </summary>
-        public async Task<bool> CheckFunTypeIsExist(FunType funType)
+        public async Task<bool> CheckFunTypeIsExist(EFunType eFunType)
         {
-            return await _context.Funs.AnyAsync(x => x.FunType == funType && x.IsActive == true);
+            return await _context.Funs.AnyAsync(x => x.FunType == eFunType && x.IsActive == true);
         }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح با نوع تفریح
         /// </summary>
-        public async Task<Fun> GetFunByFunType(FunType funType)
+        public async Task<Fun> GetFunByFunType(EFunType eFunType)
         {
             return await _context.Funs
-                .FirstOrDefaultAsync(x => x.FunType == funType);
+                .FirstOrDefaultAsync(x => x.FunType == eFunType);
         }
 
         /// <summary>
@@ -110,10 +110,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح ها با نوع تفریح
         /// </summary>
-        public async Task<List<Fun>> GetFunsWithFunType(FunType funType)
+        public async Task<List<Fun>> GetFunsWithFunType(EFunType eFunType)
         {
             return await _context.Funs
-                .Where(x => x.FunType == funType && x.IsActive)
+                .Where(x => x.FunType == eFunType && x.IsActive)
                 .ToListAsync();
         }
 

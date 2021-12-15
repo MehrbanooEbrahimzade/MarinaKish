@@ -7,7 +7,7 @@ namespace Application.Validators.Fun
     {
         public AddFunPictureCommandValidator()
         {
-            RuleFor(x => x.FunType)
+            RuleFor(x => x.EFunType)
                 .NotNull().WithMessage("نوع تفریح نمیتواند خالی باشد");
         }
     }

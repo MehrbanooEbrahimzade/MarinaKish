@@ -9,6 +9,6 @@ namespace Application.Services.interfaces
 {
     public interface IIdentityService
     {
-        Task<Result<string>> RegisterAsync(RegisterUserCommand command);
+        //Task<Result<string>> RegisterAsync(RegisterUserCommand command);
     }
 }

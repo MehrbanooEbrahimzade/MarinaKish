@@ -13,6 +13,7 @@ using Application.Services.interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure;
+using Infrastructure.Persist.classes;
 
 namespace Marina_Club
 {

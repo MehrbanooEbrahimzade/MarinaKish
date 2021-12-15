@@ -11,7 +11,7 @@ namespace Infrastructure.Migrations
                 name: "ContactInfos");
 
             migrationBuilder.RenameColumn(
-                name: "CellPhone",
+                name: "PhoneNumber",
                 table: "Users",
                 newName: "PhoneNumber");
         }
@@ -21,7 +21,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.RenameColumn(
                 name: "PhoneNumber",
                 table: "Users",
-                newName: "CellPhone");
+                newName: "PhoneNumber");
 
             migrationBuilder.CreateTable(
                 name: "ContactInfos",

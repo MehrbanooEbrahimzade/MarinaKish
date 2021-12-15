@@ -16,6 +16,8 @@ namespace Domain.Models
 
         }
 
+        public Conversation() { }
+
         /// <summary>
         /// ID
         /// </summary>
@@ -74,11 +76,6 @@ namespace Domain.Models
             this.LastActivity = dateTime;
         }
         
-        private Conversation()
-        {
-
-        }
-
         //internal List<MessageDto> ToDto(List<Text> messages)
         //{
         //    throw new NotImplementedException();

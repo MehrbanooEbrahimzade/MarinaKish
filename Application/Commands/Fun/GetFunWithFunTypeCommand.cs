@@ -8,7 +8,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         /// <summary>
         /// Command Validation
