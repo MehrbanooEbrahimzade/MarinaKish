@@ -70,7 +70,7 @@ namespace Application.Services.classes
             {
                 UserName = command.UserName,
                 PhoneNumber = command.PhoneNumber,
-                Email = command.Email
+                
             };
             var result = await _userManager.CreateAsync(user, command.Password);
             if (result.Succeeded)
@@ -79,14 +79,14 @@ namespace Application.Services.classes
             }
             return result.ToApplicationResult("", user.Id);
         }
-        public async Task<Result<string>> LoginAsync()
+        public async Task<Result<string>> LoginAsync(string phoneNumber,string password)
         {
-            var result = await _SignInManager.PasswordSignInAsync(phoneNumber,userName);
-
+            var result =  await _SignInManager.PasswordSignInAsync(phoneNumber,password,false,false);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return result.ToApplicationResult("", phoneNumber);
             }
+            return result.ToApplicationResult("", phoneNumber);
         }
     }
 }
