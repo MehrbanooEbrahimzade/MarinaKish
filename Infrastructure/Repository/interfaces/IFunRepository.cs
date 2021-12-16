@@ -11,7 +11,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// بررسی وجود داشتن تفریح
         /// </summary>
-        Task<bool> CheckFunTypeIsExist(FunType funType);
+        Task<bool> CheckFunTypeIsExist(EFunType eFunType);
 
         /// <summary>
         /// اضافه کردن تفریح به تِیبل :
@@ -51,12 +51,12 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن تفریح با نوع تفریح
         /// </summary>
-        Task<Fun> GetFunByFunType(FunType funType);
+        Task<Fun> GetFunByFunType(EFunType eFunType);
 
         /// <summary>
         /// گرفتن تفریح ها با نوع تفریح
         /// </summary>
-        Task<List<Fun>> GetFunsWithFunType(FunType funType);
+        Task<List<Fun>> GetFunsWithFunType(EFunType eFunType);
 
         /// <summary>
         /// دریافت فایل با آیدی

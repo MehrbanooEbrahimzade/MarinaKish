@@ -16,6 +16,8 @@ namespace Domain.Models
             SubmitDate = DateTime.Now;
         }
 
+        public Message() { }
+
         /// <summary>
         /// وضعیت پیام
         /// </summary>
@@ -34,10 +36,6 @@ namespace Domain.Models
         /// آیدی کاربر
         /// </summary>
         public Guid UserId { get; private set; }//TODO:DELETE
-
-        public Message()
-        {
-
-        }
+        
     }
 }

@@ -92,12 +92,12 @@ namespace Infrastructure.Repository.classes
 
         /// <summary>
             /// دریافت کاربر با آیدی
-            /// </summary>
-            public async Task<User> GetUserById(Guid id)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id);
-        }
+        //    /// </summary>
+        //    public async Task<User> GetUserById(Guid id)
+        //{
+        //    return await _context.Users
+        //        .FirstOrDefaultAsync(x => x.Id == id);
+        //}
 
         /// <summary>
         /// پیدا کردن کاربر با نام کاربری
@@ -131,12 +131,12 @@ namespace Infrastructure.Repository.classes
         
             /// <summary>
             /// دریافت همه بلیط های خریده شده یا لغو شده کاربر
-            /// </summary>
-        public async Task<List<Ticket>> AllBuyedOrCanceledUserTickets(Guid id)
-        {
-            return await _context.Tickets
-                .Where(x => x.UserId == id && x.Condition != ECondition.InActive)
-                .ToListAsync();
-        }
+        //    /// </summary>
+        //public async Task<List<Ticket>> AllBuyedOrCanceledUserTickets(Guid id)
+        //{
+        //    return await _context.Tickets
+        //        .Where(x => x.UserId == id && x.Condition != ECondition.InActive)
+        //        .ToListAsync();
+        //}
     }
 }

@@ -11,7 +11,7 @@ namespace Application.Commands.Comment
         public Guid FunId { get; set; }
         public Guid UserId { get; set; }
         public string UserName { get; set; }
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
         public string  PhoneNumber { get; set; }
 
 

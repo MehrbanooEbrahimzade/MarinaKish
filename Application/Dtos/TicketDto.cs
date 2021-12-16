@@ -13,7 +13,7 @@ namespace Application.Dtos
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         /// <summary>
         /// شماره تلفن همراه

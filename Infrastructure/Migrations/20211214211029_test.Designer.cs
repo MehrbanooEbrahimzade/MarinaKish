@@ -138,7 +138,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("RealTimeCapacity");
+                    b.Property<int>("RealCapacity");
 
                     b.Property<int>("SansDuration");
 
@@ -212,7 +212,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CellPhone");
+                    b.Property<string>("PhoneNumber");
 
                     b.Property<int>("Condition");
 
@@ -230,7 +230,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("ScheduleId");
 
-                    b.Property<DateTime>("ScheduleMiladiTime");
+                    b.Property<DateTime>("ScheduleTime");
 
                     b.Property<TimeSpan>("StartTime");
 

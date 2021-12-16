@@ -14,24 +14,22 @@ namespace Application.Mappers
     {
         /// <summary>
         /// تبدیل کردن کامند به کاربر
-        /// </summary>
-        public static User ToModeluser(this GetPhoneAndSetVerifyCodeCommand command)
-        {
-            return new User(command.PhoneNumber,command.FullName,command.UserName,command.Password,command.NationalCode)
-            {
-            };
+        ///// </summary>
+        //public static User ToModel(this GetPhoneAndSetVerifyCodeCommand command)
+        //{
+        //    return new User(command.PhoneNumber,command.FullName,command.UserName,command.Password,command.NationalCode);
 
-        }
+        //}
 
-        /// <summary>
-        /// تبدیل کردن کامند به تفریح
-        /// </summary>
-        public static Fun ToModel(this AddFunCommand command)
-        {
-            return new Fun(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
-                TimeSpan.Parse(command.EndTime),
-                command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
-        }
+        ///// <summary>
+        ///// تبدیل کردن کامند به تفریح
+        ///// </summary>
+        //public static Fun ToModel(this AddFunCommand command)
+        //{
+        //    return new Fun(command.EFunType,  TimeSpan.Parse(command.StartTime),
+        //        TimeSpan.Parse(command.EndTime),
+        //        command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
+        //}
 
         /// <summary>
         /// تبدیل کردن کامند به سانس

@@ -11,7 +11,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// دریافت تفریح با اسم تفریح
         /// </summary>
-        Task<Fun> GetFunByFunType(FunType fun);
+        Task<Fun> GetFunByFunType(EFunType eFun);
 
         /// <summary>
         /// دریافت تفریح با ایدی تفریح
@@ -26,7 +26,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         /// </summary>
-        Task<List<Schedule>> GetAllSchedulesForFunWithFunType(FunType fun);
+        Task<List<Schedule>> GetAllSchedulesForFunWithFunType(EFunType eFun);
 
         /// <summary>
         /// گرفتن همه سانس ها برای تفریح با آیدی
@@ -56,7 +56,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن تاریخ اخرین سانس با نوع تفریح
         /// </summary>
-        Task<DateTime?> GetLastScheduleTimeByFunType(FunType funType);
+        Task<DateTime?> GetLastScheduleTimeByFunType(EFunType eFunType);
 
         /// <summary>
         /// گرفتن تاریخ اخرین سانس با ایدی تفریح

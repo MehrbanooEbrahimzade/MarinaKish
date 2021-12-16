@@ -16,7 +16,11 @@ namespace Domain.Models
             Status= EStatus.Waiting;
             SubmitDate = DateTime.Now;
         }
-        
+
+        public Comment() { }
+
+        public Guid FunId { get; private set; }
+
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
@@ -32,11 +36,6 @@ namespace Domain.Models
         /// </summary>
         public int DisLike { get; private set; } 
         
-        /// <summary>
-        /// شناسه مدل تفریح 
-        /// </summary>
-        public Guid FunId { get; private set; }
-
         /// <summary>
         /// شماره تلفن کاربر
         /// </summary>
@@ -77,6 +76,5 @@ namespace Domain.Models
         #endregion
       
 
-        public Comment() {  }
     }
 }

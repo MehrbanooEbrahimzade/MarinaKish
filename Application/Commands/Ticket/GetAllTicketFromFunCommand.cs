@@ -5,7 +5,7 @@ namespace Application.Commands.Ticket
 {
     public class GetAllTicketFromFunCommand : CommandBase
     {
-        public FunType FunType { get; set; }
+        public EFunType EFunType { get; set; }
 
         public override bool Validate()
         {

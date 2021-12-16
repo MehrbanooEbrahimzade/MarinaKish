@@ -7,7 +7,7 @@ namespace Application.Validators.Fun
     {
         public AddFunCommandValidator()
         {
-            RuleFor(x => x.FunType)
+            RuleFor(x => x.EFunType)
                 .NotNull().WithMessage("اسم تفریح را وارد کنید")
                 .IsInEnum().WithMessage("تفریح وارد کرده خود را مجددا بررسی کنید");
 

@@ -13,15 +13,14 @@ namespace Infrastructure.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Ticket>(s =>
-            {
-                s.HasOne<User>()
-                    .WithMany(x => x.Tickets).HasForeignKey(c => c.UserId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-            });
-            modelBuilder.Entity<User>(x => x.HasOne(e => e.UserCart));
+            modelBuilder
+                .Entity<User>(x => x.HasOne(e => e.UserCart))
+                .Entity<User>(x=>x.HasOne(z=>z.Item))
+                .Entity<CartItem>(x => x.HasMany(z => z.Items))
+                .Entity<TicketItem>(x => x.HasOne(z => z.Ticket))
+                .Entity<Fun>(x=>x.HasMany(z=>z.Schedules))
+                .Entity<Fun>(x => x.HasMany(z => z.Comments))
+                .Entity<Schedule>(x => x.HasMany(z => z.Items));
 
 
             base.OnModelCreating(modelBuilder);
