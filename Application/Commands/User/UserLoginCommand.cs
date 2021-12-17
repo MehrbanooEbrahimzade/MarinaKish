@@ -12,7 +12,7 @@ namespace Application.Commands.User
         public string CellPhone { get; set; }
 
         /// <summary>
-        /// کد تایید
+        /// کد تاییدH
         /// </summary>
         public string Password { get; set; }
 
