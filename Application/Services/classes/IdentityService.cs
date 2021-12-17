@@ -15,25 +15,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
-<<<<<<< HEAD
-    //public class IdentityService : IIdentityService
-    //{
-    //    private readonly UserManager<User> _userManager;
-    //    private readonly RoleManager<IdentityRole> _roleManager;
-    //    private readonly SignInManager<User> _SignInManager;
-    //    private readonly IUserRepository _userRepository;
-    //    private readonly IUserRepository2 _userRepository2;
-    //    public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-    //        , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
-    //    {
-    //        _userManager = userManager;
-    //        _roleManager = roleManager;
-    //        _SignInManager = signInManager;
-    //        _userRepository2 = userRepository2;
-    //        _userRepository = userRepository;
-
-    //    }
-=======
     public class IdentityService : IIdentityService
     {
         //private readonly UserManager<User> _userManager;
@@ -51,7 +32,6 @@ namespace Application.Services.classes
         //    _userRepository = userRepository;
 
         //}
->>>>>>> 3fbb7c0b259f04410168da3e97bfea5f0203cb2c
 
 
 
@@ -101,14 +81,15 @@ namespace Application.Services.classes
         //            }
         //            return result.ToApplicationResult("", user.Id);
         //        }
-    //    public async Task<Result<string>> LoginAsync(UserLoginCommand command)
-    //    {
-    //                var result = await _SignInManager.PasswordSignInAsync(command.PhoneNumber, command.Password, false, false);
-    //                if (result.Succeeded)
-    //                {
-    //                    return result.ToApplicationResult("", command.PhoneNumber);
-    //                }
-    //                return result.ToApplicationResult("", phoneNumber);
-    //            }
-    //}
+        //    public async Task<Result<string>> LoginAsync(UserLoginCommand command)
+        //    {
+        //                var result = await _SignInManager.PasswordSignInAsync(command.PhoneNumber, command.Password, false, false);
+        //                if (result.Succeeded)
+        //                {
+        //                    return result.ToApplicationResult("", command.PhoneNumber);
+        //                }
+        //                return result.ToApplicationResult("", phoneNumber);
+        //            }
+        //}
+    }
 }

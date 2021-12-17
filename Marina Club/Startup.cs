@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Application.Services.classes;
-using Infrastructure.Repository;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.interfaces;
 using Application.Services.interfaces;
