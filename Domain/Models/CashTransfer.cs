@@ -7,8 +7,11 @@ namespace Domain.Models
         public CashTransfer(decimal cash, Guid userid)
         {
             Id = Guid.NewGuid();
+           
             TransferDate = DateTime.Now;
+            
             MarineCoin = cash;
+            
             UserId = userid;
         }
 

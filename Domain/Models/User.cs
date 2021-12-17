@@ -10,8 +10,10 @@ namespace Domain.Models
         public User(string phoneNumber) : base(phoneNumber)
         {
             PhoneNumber = phoneNumber;
-            ERoleType =RoleType.None;
-            EGender = Gender.None;
+          
+            RoleType =RoleType.None;
+            
+            Gender = Gender.None;
         }
 
         public void CompleteInformation(string firstName, string lastName, string nationalCode)
@@ -41,7 +43,7 @@ namespace Domain.Models
         /// <summary>
         /// سطح دسترسی
         /// </summary>
-        public RoleType ERoleType { get; private set; }
+        public RoleType RoleType { get; private set; }
 
         /// <summary>
         /// شماره ملی
@@ -51,7 +53,7 @@ namespace Domain.Models
         /// <summary>
         /// جنسیت
         /// </summary>
-        public Gender EGender { get; private set; }
+        public Gender Gender { get; private set; }
 
         /// <summary>
         /// تاریخ تولد

@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ScheduleInformation",
+                name: "ScheduleInfo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -178,7 +178,7 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Funs_ScheduleInformation_ScheduleInformationId",
                         column: x => x.ScheduleInformationId,
-                        principalTable: "ScheduleInformation",
+                        principalTable: "ScheduleInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -342,13 +342,13 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Schedules_ScheduleInformation_ScheduleInformationId",
                         column: x => x.ScheduleInformationId,
-                        principalTable: "ScheduleInformation",
+                        principalTable: "ScheduleInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Schedules_ScheduleInformation_ScheduleInformationId1",
                         column: x => x.ScheduleInformationId1,
-                        principalTable: "ScheduleInformation",
+                        principalTable: "ScheduleInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -532,7 +532,7 @@ namespace Infrastructure.Migrations
                 name: "CreditCard");
 
             migrationBuilder.DropTable(
-                name: "ScheduleInformation");
+                name: "ScheduleInfo");
         }
     }
 }

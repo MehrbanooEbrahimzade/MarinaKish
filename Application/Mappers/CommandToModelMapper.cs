@@ -88,7 +88,7 @@ namespace Application.Mappers
 
         public static Message ToModel(this AddMessageCommand command)
         {
-            return new Message(command.Username, command.Message, command.ConversationID, command.UserID);
+            return new Message(command.Username, command.Message, command.ConversationID);
         }
     }
 }

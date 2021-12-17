@@ -9,8 +9,11 @@ namespace Domain.Models
         public CreditCard(string shabaNumber, string cardNumber, Guid userId)
         {
             Id = Guid.NewGuid();
+          
             ShabaNumber = shabaNumber;
+            
             CardNumber = cardNumber;
+            
             UserId = userId;
         }
 
@@ -19,7 +22,9 @@ namespace Domain.Models
         public Guid UserId { get; private set; }
 
         public Guid Id { get; private set; }
+       
         public string ShabaNumber { get; private set; }
+        
         public string CardNumber { get; private set; }
 
     }

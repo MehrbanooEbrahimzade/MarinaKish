@@ -5,16 +5,25 @@ namespace Domain.Models
 {
     public class Fun
     {
-        public Fun(string name, string about, string icon, string backgroundPicture, string video, List<FunSliderPicture> sliderPictures, ScheduleInformation scheduleInformation)
+        public Fun(string name, string about, string icon, string backgroundPicture,
+            string video, List<FunSliderPicture> sliderPictures, ScheduleInfo scheduleInfo)
         {
             Id = Guid.NewGuid();
+         
             Name = name;
+            
             Icon = icon;
+            
             BackgroundPicture = backgroundPicture;
+            
             Video = video;
+            
             SliderPictures = sliderPictures;
-            ScheduleInformation = scheduleInformation;
+            
+            ScheduleInfo = scheduleInfo;
+            
             About = about;
+            
             IsActive = true;
         }
 
@@ -26,7 +35,7 @@ namespace Domain.Models
 
         public List<FunSliderPicture> SliderPictures { get; private set; }
 
-        public ScheduleInformation ScheduleInformation { get; private set; }
+        public ScheduleInfo ScheduleInfo { get; private set; }
 
         /// <summary>
         /// فعال بودن

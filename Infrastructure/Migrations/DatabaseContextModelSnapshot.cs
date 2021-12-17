@@ -26,7 +26,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("DisLike");
 
-                    b.Property<int>("EStatus");
+                    b.Property<int>("Status");
 
                     b.Property<Guid>("FunId");
 
@@ -163,7 +163,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Schedules");
                 });
 
-            modelBuilder.Entity("Domain.Models.ScheduleInformation", b =>
+            modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ScheduleInformation");
+                    b.ToTable("ScheduleInfo");
                 });
 
             modelBuilder.Entity("Domain.Models.Ticket", b =>
@@ -196,11 +196,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<decimal>("Discount");
 
-                    b.Property<int>("ECondition");
+                    b.Property<int>("Condition");
 
                     b.Property<int>("EFunType");
 
-                    b.Property<int>("EWhereBuy");
+                    b.Property<int>("WhereBuy");
 
                     b.Property<TimeSpan>("EndTime");
 
@@ -269,9 +269,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("CreditCardId");
 
-                    b.Property<int>("EGender");
+                    b.Property<int>("Gender");
 
-                    b.Property<int>("ERoleType");
+                    b.Property<int>("RoleType");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -444,7 +444,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Fun", b =>
                 {
-                    b.HasOne("Domain.Models.ScheduleInformation", "ScheduleInformation")
+                    b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInformationId");
                 });
@@ -463,11 +463,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("FunId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Models.ScheduleInformation")
+                    b.HasOne("Domain.Models.ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInformationId");
 
-                    b.HasOne("Domain.Models.ScheduleInformation")
+                    b.HasOne("Domain.Models.ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInformationId1");
                 });

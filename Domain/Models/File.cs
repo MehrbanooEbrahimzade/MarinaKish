@@ -10,8 +10,11 @@ namespace Domain.Models
         public File(string fileName, string filePath)
         {
             Id = Guid.NewGuid();
+            
             Name = fileName;
+            
             FilePath = filePath;
+            
             PlaceDate = DateTime.Now;
             
         }
@@ -36,7 +39,7 @@ namespace Domain.Models
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { get; set; } //نمیدونم توش چی کار کرده؟؟
+        public string Size { get; set; }
 
         /// <summary>
         /// زمان اضافه شدن

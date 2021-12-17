@@ -9,11 +9,17 @@ namespace Domain.Models
         public Comment(string text, Guid funId , string userPhoneNumber,string userName):base( text, userName)
         {
             Id = Guid.NewGuid(); 
+           
             Text = text;
+            
             FunId = funId;
+            
             UserPhoneNumber = userPhoneNumber;
+            
             UserName = userName;
-            EStatus= Status.Waiting;
+            
+            Status= Status.Waiting;
+            
             SubmitDate = DateTime.Now;
         }
 
@@ -24,7 +30,7 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
-        public Status EStatus { get; private set; } 
+        public Status Status { get; private set; } 
       
         /// <summary>
         /// لایک
@@ -42,20 +48,7 @@ namespace Domain.Models
         public string UserPhoneNumber { get; private set; }
 
 
-        #region SetMethod
-
-        /// <summary>
-        /// آپدیت کردن Status کامنت 
-        /// </summary>
-        public void SetStatus(Status status)
-        {
-            EStatus = status;
-        }
-
-
-        #endregion
-
-        #region Methods
+        #region + -
 
         /// <summary>
         /// افزایش تعداد لایک ها 
@@ -70,7 +63,7 @@ namespace Domain.Models
         /// </summary>
         public void UpdateCommentDislikes()
         {
-            this.Like -= 1;
+            DisLike += 1;
         }
 
         #endregion
