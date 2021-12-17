@@ -1,19 +1,19 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class ScheduleDto
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
         /// تنوع تفریح ها :
         /// </summary> 
-        public EFunType EFunType { get; set; }
+        public FunType FunType { get; set; }
 
         /// <summary>
         /// زمان سانس : - به شمسی

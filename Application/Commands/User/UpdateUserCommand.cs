@@ -1,15 +1,16 @@
 ﻿using Application.Validators;
 using System;
-using Domain.Models.enums;
+using Application.Validators.User;
+using Domain.Enums;
 
 namespace Application.Commands.User
 {
     public class UpdateUserCommand : CommandBase
     {
         /// <summary>
-        /// ID
+        /// Id
         /// </summary>
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// نام
@@ -34,7 +35,7 @@ namespace Application.Commands.User
         /// <summary>
         /// جنسیت
         /// </summary>
-        public EGender Gender { get; set; }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// تاریخ تولد

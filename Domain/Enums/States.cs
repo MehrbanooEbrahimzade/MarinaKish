@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace Domain.Models.enums
+namespace Domain.Enums
 {
-    public enum EStates
+    public enum States
     {
         [Description("باز")]Open = 1,
         [Description("بسته")]Closed = 2

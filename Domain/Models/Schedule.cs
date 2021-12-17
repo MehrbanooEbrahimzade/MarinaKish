@@ -1,17 +1,17 @@
-﻿using Domain.Models.enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Domain.Models
 {
     public class Schedule
     {
         public Schedule
-            (EFunType eFunType, DateTime executeDateTime,
-            decimal availableCapacity, TimeSpan startTime, TimeSpan endTime, Guid funId, DateTime sansDate, int quantityInStock)
+            (FunType funType, DateTime executeDateTime, decimal availableCapacity, TimeSpan startTime
+                , TimeSpan endTime, Guid funId, DateTime sansDate, int quantityInStock)
         {
             Id = Guid.NewGuid();
-            EFunType = eFunType;
+            EFunType = funType;
             ExecuteDateTime = executeDateTime;
             AvailableCapacity = availableCapacity;
             StartTime = startTime;
@@ -22,7 +22,7 @@ namespace Domain.Models
             IsExist = true;
         }
 
-        public Schedule() { }
+        private Schedule() { }
 
         public List<TicketItem> Items { get; set; }
         public Guid FunId { get; private set; }
@@ -63,11 +63,10 @@ namespace Domain.Models
             }
         }
 
-
         /// <summary>
         /// تنوع تفریح ها :
         /// </summary> 
-        public EFunType EFunType { get; private set; }
+        public FunType EFunType { get; private set; }
 
         /// <summary>
         /// زمان سانس : - به میلادی
@@ -78,8 +77,7 @@ namespace Domain.Models
         /// ظرفیت سانس
         /// </summary>
         public int QuantityInStock { get;private set; }
-        
-        
+
         /// <summary>
         /// فضای دردسترس :
         /// </summary>
@@ -90,16 +88,9 @@ namespace Domain.Models
         /// </summary>
         public bool IsExist { get; private set; }
  
-        public void FunTypeSet(EFunType eFunType)
+        public void FunTypeSet(FunType eFunType)
         {
             EFunType = eFunType;
         }
-
-        //private string GenerateScheduleCode()
-        //{
-        //    var millisecond = DateTime.Now.Millisecond.ToString();
-        //    var randomCode = new Random().Next(10000, 99999).ToString();
-        //    return millisecond  + "" + randomCode; 
-        //}
     }
 }

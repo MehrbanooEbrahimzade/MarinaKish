@@ -1,11 +1,11 @@
 ﻿using Application.Validators.Ticket;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Commands.Ticket
 {
     public class GetAllTicketFromFunCommand : CommandBase
     {
-        public EFunType EFunType { get; set; }
+        public FunType EFunType { get; set; }
 
         public override bool Validate()
         {

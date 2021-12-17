@@ -1,30 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using Domain.Models.enums;
+using Domain.Enums;
+
 
 namespace Domain.Models
 {
-    public class Comment: Writing
+    public class Comment: Writ
     {
-        public Comment(string text, Guid funId , string userPhoneNumber,string userName)
+        public Comment(string text, Guid funId , string userPhoneNumber,string userName):base( text, userName)
         {
             Id = Guid.NewGuid(); 
             Text = text;
             FunId = funId;
             UserPhoneNumber = userPhoneNumber;
             UserName = userName;
-            Status= EStatus.Waiting;
+            EStatus= Status.Waiting;
             SubmitDate = DateTime.Now;
         }
 
-        public Comment() { }
+        private Comment() : base() { }
 
         public Guid FunId { get; private set; }
 
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
-        public EStatus Status { get; private set; } 
+        public Status EStatus { get; private set; } 
       
         /// <summary>
         /// لایک
@@ -47,9 +47,9 @@ namespace Domain.Models
         /// <summary>
         /// آپدیت کردن Status کامنت 
         /// </summary>
-        public void SetStatus(EStatus status)
+        public void SetStatus(Status status)
         {
-            this.Status = status;
+            EStatus = status;
         }
 
 

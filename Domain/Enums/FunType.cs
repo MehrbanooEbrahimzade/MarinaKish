@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 
-
-namespace Domain.Models.enums
+namespace Domain.Enums
 {
-    public enum EFunType
+    public enum FunType
     {
         [Description("پاراسل")] Paracel = 1,
         [Description("اسکی روی آب")] SkiInTheWater = 2,

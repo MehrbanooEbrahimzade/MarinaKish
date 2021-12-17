@@ -10,7 +10,6 @@ namespace Domain.Models
             Id = Guid.NewGuid();
             Quantity = quantity;
             Price = price;
-            CartItemId = cartItemId;
             Ticket = ticket;
             QuantityInStock = quantityInStock;
             ScheduleId = scheduleId;
@@ -18,7 +17,7 @@ namespace Domain.Models
             Ticket = ticket;
         }
 
-        public TicketItem() { }
+        private TicketItem() { }
 
         public Guid CartItemId { get; private set; }
         public Guid ScheduleId { get; private set; }

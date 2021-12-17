@@ -1,6 +1,6 @@
 ﻿using Application.Validators.Ticket;
 using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Commands.Ticket
 {
@@ -15,7 +15,7 @@ namespace Application.Commands.Ticket
         /// <summary>
         /// وضعیت
         /// </summary>
-        public ECondition ChangeCondition { get; set; }
+        public Condition ChangeCondition { get; set; }
 
         public override bool Validate()
         {

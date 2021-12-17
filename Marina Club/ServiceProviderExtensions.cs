@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure.Persist;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;

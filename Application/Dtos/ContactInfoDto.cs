@@ -6,7 +6,7 @@ namespace Application.Dtos
     public class ContactInfoDto
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 

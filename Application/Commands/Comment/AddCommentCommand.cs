@@ -1,6 +1,6 @@
 ﻿using System;
 using Application.Validators.Comment;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Commands.Comment
 {
@@ -11,7 +11,7 @@ namespace Application.Commands.Comment
         public Guid FunId { get; set; }
         public Guid UserId { get; set; }
         public string UserName { get; set; }
-        public EFunType EFunType { get; set; }
+        public FunType FunType { get; set; }
         public string  PhoneNumber { get; set; }
 
 

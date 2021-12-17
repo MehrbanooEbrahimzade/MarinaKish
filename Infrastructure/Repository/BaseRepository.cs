@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Repository
+﻿using Infrastructure.Persist;
+
+namespace Infrastructure.Repository
 {
     public class BaseRepository
     {

@@ -1,12 +1,12 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class CommentDto
     { 
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
@@ -18,7 +18,7 @@ namespace Application.Dtos
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
-        public EStatus Status { get; set; }
+        public Status Status { get; set; }
 
         /// <summary>
         /// لایک
@@ -33,12 +33,12 @@ namespace Application.Dtos
         /// <summary>
         /// زمان فرستادن کامنت - به شمسی
         /// </summary>
-        public string persianSubmitDate { get; set; }
+        public string SubmitDate { get; set; }
 
         /// <summary>
         /// نوع تفریح
         /// </summary>
-        public EFunType EFunType { get; set; }
+        public FunType FunType { get; set; }
 
         /// <summary>
         /// شناسه مدل تفریح :

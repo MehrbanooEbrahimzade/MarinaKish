@@ -1,12 +1,12 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class UserDto
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
@@ -54,7 +54,7 @@ namespace Application.Dtos
         /// <summary>
         /// جنسیت
         /// </summary>
-        public EGender Gender { get; set; }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// تاریخ تولد - میلادی

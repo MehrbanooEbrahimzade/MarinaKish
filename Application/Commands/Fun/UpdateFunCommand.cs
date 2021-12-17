@@ -1,6 +1,6 @@
 ﻿using Application.Validators.Fun;
 using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Commands.Fun
 {
@@ -14,7 +14,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public EFunType EFunType { get; set; }
+        public FunType FunType { get; set; }
 
         /// <summary>
         /// قیمت :

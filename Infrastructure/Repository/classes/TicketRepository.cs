@@ -1,7 +1,6 @@
-﻿using Infrastructure.Repository;
-using Infrastructure.Repository.interfaces;
+﻿using Infrastructure.Repository.interfaces;
 
-namespace Infrastructure.Persist.classes
+namespace Infrastructure.Repository.classes
 {
     public class TicketRepository : BaseRepository, ITicketRepository
     {
@@ -31,7 +30,7 @@ namespace Infrastructure.Persist.classes
         //        /// <summary>
         //        /// دریافت تفریح با اسم تفریح
         //        /// </summary>
-        //        public async Task<Fun> GetFunByFunType(EFunType eFun)
+        //        public async Task<Fun> GetFunByFunType(FunType eFun)
         //        {
         //            return await _context.Funs
         //                .FirstOrDefaultAsync(x => x.FunType == eFun);
@@ -62,7 +61,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllScheduleActiveTickets(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.ScheduleId == id && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.ScheduleId == id && x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -81,10 +80,10 @@ namespace Infrastructure.Persist.classes
         //        /// <summary>
         //        /// دریافت تمام بلیط های یک تفریح
         //        /// </summary>
-        //        public async Task<List<Ticket>> GetAllFunTickets(EFunType eFun)
+        //        public async Task<List<Ticket>> GetAllFunTickets(FunType eFun)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.EFunType == eFun && x.Condition == ECondition.Reservation && x.ScheduleTime >= DateTime.Now /* && x.ExecuteDate <= DateTime.Now.AddDays(7)*/)
+        //                .Where(x => x.FunType == eFun && x.Condition == Condition.Reservation && x.ScheduleTime >= DateTime.Now /* && x.ExecuteDate <= DateTime.Now.AddDays(7)*/)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -95,7 +94,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllUserTikcets(string phone)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.PhoneNumber == phone && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.PhoneNumber == phone && x.Condition == Condition.Reservation)
 
         //                .ToListAsync();
         //        }
@@ -106,7 +105,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<Ticket> GetTicketbyTicketNumber(string ticketnumber)
         //        {
         //            return await _context.Tickets
-        //                .FirstOrDefaultAsync(x => x.TicketNumber == ticketnumber && x.Condition == ECondition.Reservation);
+        //                .FirstOrDefaultAsync(x => x.TicketNumber == ticketnumber && x.Condition == Condition.Reservation);
         //        }
 
         //        /// <summary>
@@ -132,7 +131,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> ScheduleTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.ScheduleId == id && x.Condition == ECondition.Reservation);
+        //                .CountAsync(x => x.ScheduleId == id && x.Condition == Condition.Reservation);
         //        }
 
         //        ///// <summary>
@@ -141,7 +140,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<decimal> ScheduleTicketsPrice(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .Where(x => x.ScheduleId == id && x.Condition == ECondition.Reservation)
+        //        //        .Where(x => x.ScheduleId == id && x.Condition == Condition.Reservation)
         //        //        .SumAsync(x => x.Price);
         //        //}
 
@@ -154,7 +153,7 @@ namespace Infrastructure.Persist.classes
         //        {
         //            return await _context.Tickets
         //                .FromSql("Select * from dbo.Tickets as t Where t.SubmitDate Between {0} And {1}", firstDate, secondDate)
-        //                .Where(x => x.Condition == ECondition.Reservation)
+        //                .Where(x => x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -165,7 +164,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> OneDateReservedTicketSearch(DateTime firstDate)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -177,7 +176,7 @@ namespace Infrastructure.Persist.classes
         //        {
         //            return await _context.Tickets
         //            .FromSql("Select * from dbo.Tickets as t Where t.SubmitDate Between {0} And {1}", firstDate, secondDate)
-        //            .Where(x => x.Condition == ECondition.Reservation)
+        //            .Where(x => x.Condition == Condition.Reservation)
         //            .SumAsync(x => x.Price);
         //        }
 
@@ -187,7 +186,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<decimal> OneDateReservedTicketsPriceSearchSum(DateTime firstDate)
         //        {
         //            return await _context.Tickets
-        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == ECondition.Reservation)
+        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == Condition.Reservation)
         //            .SumAsync(x => x.Price);
         //        }
 
@@ -198,7 +197,7 @@ namespace Infrastructure.Persist.classes
         //        {
         //            return await _context.Tickets
         //            .FromSql("Select * from dbo.Tickets as t Where t.SubmitDate Between {0} And {1}", firstDate, secondDate)
-        //            .Where(x => x.Condition == ECondition.InActive)
+        //            .Where(x => x.Condition == Condition.InActive)
         //            .OrderByDescending(x => x.SubmitDate)
         //            .ToListAsync();
         //        }
@@ -210,7 +209,7 @@ namespace Infrastructure.Persist.classes
         //        {
         //            return await _context.Tickets
         //            .FromSql("Select * from dbo.Tickets as t Where t.SubmitDate Between {0} And {1}", firstDate, secondDate)
-        //            .Where(x => x.Condition == ECondition.Cancel)
+        //            .Where(x => x.Condition == Condition.Cancel)
         //            .OrderByDescending(x => x.SubmitDate)
         //            .ToListAsync();
         //        }
@@ -221,7 +220,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> OneDateInActivedTicketSearch(DateTime firstDate)
         //        {
         //            return await _context.Tickets
-        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == ECondition.InActive)
+        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == Condition.InActive)
         //            .OrderByDescending(x => x.SubmitDate)
         //            .ToListAsync();
         //        }
@@ -232,7 +231,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> OneDateCanceledTicketSearch(DateTime firstDate)
         //        {
         //            return await _context.Tickets
-        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == ECondition.Cancel)
+        //            .Where(x => x.SubmitDate.Year == firstDate.Year && x.SubmitDate.Month == firstDate.Month && x.SubmitDate.Day == firstDate.Day && x.Condition == Condition.Cancel)
         //            .OrderByDescending(x => x.SubmitDate)
         //            .ToListAsync();
         //        }
@@ -264,7 +263,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllScheduleCanceledTickets(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.ScheduleId == id && x.Condition == ECondition.Cancel)
+        //                .Where(x => x.ScheduleId == id && x.Condition == Condition.Cancel)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -286,7 +285,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllFunActiveTicketsWithFunID(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.FunId == id && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.FunId == id && x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -297,7 +296,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllFunCanceledTicketsWithFunID(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.FunId == id && x.Condition == ECondition.Cancel)
+        //                .Where(x => x.FunId == id && x.Condition == Condition.Cancel)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -319,7 +318,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<List<Ticket>> GetAllUserActiveTikcetsWithUserID(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .Where(x => x.UserId == id && x.Condition == ECondition.Reservation)
+        //        //        .Where(x => x.UserId == id && x.Condition == Condition.Reservation)
         //        //        .OrderByDescending(x => x.SubmitDate)
         //        //        .ToListAsync();
         //        //}
@@ -330,7 +329,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<List<Ticket>> GetAllUserCanceledTikcetsWithUserID(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .Where(x => x.UserId == id && x.Condition == ECondition.Cancel)
+        //        //        .Where(x => x.UserId == id && x.Condition == Condition.Cancel)
         //        //        .OrderByDescending(x => x.SubmitDate)
         //        //        .ToListAsync();
         //        //}
@@ -341,7 +340,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllPresenceReservationTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.WhereBuy == EWhereBuy.Presence)
+        //                .Where(x => x.WhereBuy == WhereBuy.Presence)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -352,7 +351,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllSiteReservationTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.WhereBuy == EWhereBuy.Site)
+        //                .Where(x => x.WhereBuy == WhereBuy.Site)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -373,7 +372,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllCanceledTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.Condition == ECondition.Cancel)
+        //                .Where(x => x.Condition == Condition.Cancel)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -384,7 +383,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllReservationTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.Condition == ECondition.Reservation)
+        //                .Where(x => x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -404,7 +403,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> AllCanceledTicketsCount()
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.Condition == ECondition.Cancel);
+        //                .CountAsync(x => x.Condition == Condition.Cancel);
         //        }
 
         //        /// <summary>
@@ -413,7 +412,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> AllReservationTicketsCount()
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.Condition == ECondition.Reservation);
+        //                .CountAsync(x => x.Condition == Condition.Reservation);
         //        }
 
         //        /// <summary>
@@ -422,7 +421,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> ReservationScheduleTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.ScheduleId == id && x.Condition == ECondition.Reservation);
+        //                .CountAsync(x => x.ScheduleId == id && x.Condition == Condition.Reservation);
         //        }
         //        /// <summary>
         //        /// دریافت تعداد کل بلیط های لغو شده یک سانس
@@ -430,7 +429,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> CanceledScheduleTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.ScheduleId == id && x.Condition == ECondition.Cancel);
+        //                .CountAsync(x => x.ScheduleId == id && x.Condition == Condition.Cancel);
         //        }
 
         //        /// <summary>
@@ -439,7 +438,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> InActiveScheduleTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.ScheduleId == id && x.Condition == ECondition.InActive);
+        //                .CountAsync(x => x.ScheduleId == id && x.Condition == Condition.InActive);
         //        }
 
         //        /// <summary>
@@ -448,7 +447,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllInActiveScheduleTickets(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.ScheduleId == id && x.Condition == ECondition.InActive)
+        //                .Where(x => x.ScheduleId == id && x.Condition == Condition.InActive)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -459,7 +458,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> ReservationFunTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.FunId == id && x.Condition == ECondition.Reservation);
+        //                .CountAsync(x => x.FunId == id && x.Condition == Condition.Reservation);
         //        }
 
         //        /// <summary>
@@ -478,7 +477,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> AllFunInActiveTickets(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.FunId == id && x.Condition == ECondition.InActive)
+        //                .Where(x => x.FunId == id && x.Condition == Condition.InActive)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -489,7 +488,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> AllFunInActiveTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.FunId == id && x.Condition == ECondition.InActive);
+        //                .CountAsync(x => x.FunId == id && x.Condition == Condition.InActive);
         //        }
 
         //        /// <summary>
@@ -498,7 +497,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> CanceledFunTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.FunId == id && x.Condition == ECondition.Cancel);
+        //                .CountAsync(x => x.FunId == id && x.Condition == Condition.Cancel);
         //        }
 
         //        ///// <summary>
@@ -507,7 +506,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<List<Ticket>> AllUserInActiveTickets(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .Where(x => x.UserId == id && x.Condition == ECondition.InActive)
+        //        //        .Where(x => x.UserId == id && x.Condition == Condition.InActive)
         //        //        .OrderByDescending(x => x.SubmitDate)
         //        //        .ToListAsync();
         //        //}
@@ -518,7 +517,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<int> InActiveUserTicketsCount(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .CountAsync(x => x.UserId == id && x.Condition == ECondition.InActive);
+        //        //        .CountAsync(x => x.UserId == id && x.Condition == Condition.InActive);
         //        //}
 
         //        ///// <summary>
@@ -527,7 +526,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<int> ReservationUserTicketsCount(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .CountAsync(x => x.UserId == id && x.Condition == ECondition.Reservation);
+        //        //        .CountAsync(x => x.UserId == id && x.Condition == Condition.Reservation);
         //        //}
 
         //        ///// <summary>
@@ -536,7 +535,7 @@ namespace Infrastructure.Persist.classes
         //        //public async Task<int> CanceledUserTicketsCount(Guid id)
         //        //{
         //        //    return await _context.Tickets
-        //        //        .CountAsync(x => x.UserId == id && x.Condition == ECondition.Cancel);
+        //        //        .CountAsync(x => x.UserId == id && x.Condition == Condition.Cancel);
         //        //}
 
         //        ///// <summary>
@@ -563,7 +562,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<Ticket> GetNotReservedTicketById(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.Condition != ECondition.Reservation);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.Condition != Condition.Reservation);
         //        }
 
         //        /// <summary>
@@ -572,7 +571,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<Ticket> GetNotCanceledTicketById(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.Condition != ECondition.Cancel);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.Condition != Condition.Cancel);
         //        }
 
         //        /// <summary>
@@ -580,7 +579,7 @@ namespace Infrastructure.Persist.classes
         //        /// </summary>
         //        public async Task<Ticket> GetInActiveTicketById(Guid id)
         //        {
-        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == ECondition.InActive);
+        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
         //        }
 
         //        /// <summary>
@@ -588,7 +587,7 @@ namespace Infrastructure.Persist.classes
         //        /// </summary>
         //        public async Task<Ticket> GetReservedTicketById(Guid id)
         //        {
-        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == ECondition.Reservation);
+        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.Reservation);
         //        }
 
         //        /// <summary>
@@ -597,7 +596,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllPerformedTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.ScheduleTime <= DateTime.Now && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.ScheduleTime <= DateTime.Now && x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.ScheduleTime)
         //                .ToListAsync();
         //        }
@@ -616,7 +615,7 @@ namespace Infrastructure.Persist.classes
         //        /// </summary>
         //        public async Task<Ticket> GetTicketInBasketBuyById(Guid id)
         //        {
-        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == ECondition.InActive);
+        //            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
         //        }
     }
 }

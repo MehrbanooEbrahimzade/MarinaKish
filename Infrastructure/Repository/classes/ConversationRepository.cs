@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
-using Domain.Models.enums;
 using Infrastructure.Repository;
 using Infrastructure.Repository.interfaces;
 
@@ -52,7 +51,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<Conversation> GetOpenConversationById(Guid id)
         //        {
         //            return await _context.Conversations
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == EStates.Open);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == States.Open);
         //        }
 
         //        /// <summary>
@@ -61,7 +60,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<Conversation> GetClosedConversationById(Guid id)
         //        {
         //            return await _context.Conversations
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == EStates.Closed);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == States.Closed);
         //        }
 
         //        /// <summary>
@@ -106,7 +105,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Message>> GetAllConversationMessageById(Guid id)
         //        {
         //            return await _context.Messages
-        //                .Where(x => x.ConversationId == id && x.MessageStatus != EMessageStatus.Deleted)
+        //                .Where(x => x.ConversationId == id && x.MessageStatus != MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -117,7 +116,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Message>> GetAllConversationDeletedMessageById(Guid id)
         //        {
         //            return await _context.Messages
-        //                .Where(x => x.ConversationId == id && x.MessageStatus == EMessageStatus.Deleted)
+        //                .Where(x => x.ConversationId == id && x.MessageStatus == MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -129,7 +128,7 @@ namespace Infrastructure.Repository.classes
         //        {
         //            var messages = await _context.Messages
         //                .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
-        //                .Where(x => x.ConversationId == id && x.MessageStatus != EMessageStatus.Deleted)
+        //                .Where(x => x.ConversationId == id && x.MessageStatus != MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //            if (messages == null)
@@ -143,7 +142,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllOpenLessPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                .Where(x => x.Priority == EPriority.Less && x.State == EStates.Open)
+        //                .Where(x => x.Priority == Priority.Less && x.State == States.Open)
         //                .OrderByDescending(x => x.LastActivity)
         //                .ToListAsync();
         //        }
@@ -154,7 +153,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllClosedLessPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                .Where(x => x.Priority == EPriority.Less && x.State == EStates.Closed)
+        //                .Where(x => x.Priority == Priority.Less && x.State == States.Closed)
         //                .OrderByDescending(x => x.LastActivity)
         //                .ToListAsync();
         //        }
@@ -165,7 +164,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllOpenMediumPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                 .Where(x => x.Priority == EPriority.Medium && x.State == EStates.Open)
+        //                 .Where(x => x.Priority == Priority.Medium && x.State == States.Open)
         //                 .OrderByDescending(x => x.LastActivity)
         //                 .ToListAsync();
         //        }
@@ -176,7 +175,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllClosedMediumPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                 .Where(x => x.Priority == EPriority.Medium && x.State == EStates.Closed)
+        //                 .Where(x => x.Priority == Priority.Medium && x.State == States.Closed)
         //                 .OrderByDescending(x => x.LastActivity)
         //                 .ToListAsync();
         //        }
@@ -187,7 +186,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllOpenHighPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                 .Where(x => x.Priority == EPriority.High && x.State == EStates.Open)
+        //                 .Where(x => x.Priority == Priority.High && x.State == States.Open)
         //                 .OrderByDescending(x => x.LastActivity)
         //                 .ToListAsync();
         //        }
@@ -198,7 +197,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Conversation>> GetAllClosedHighPriorityConversations()
         //        {
         //            return await _context.Conversations
-        //                 .Where(x => x.Priority == EPriority.High && x.State == EStates.Closed)
+        //                 .Where(x => x.Priority == Priority.High && x.State == States.Closed)
         //                 .OrderByDescending(x => x.LastActivity)
         //                 .ToListAsync();
 

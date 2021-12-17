@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
-using Domain.Models.enums;
 
 namespace Infrastructure.Repository.interfaces
 {
@@ -21,7 +20,7 @@ namespace Infrastructure.Repository.interfaces
     //    ///// <summary>
     //    ///// دریافت تفریح با اسم تفریح
     //    ///// </summary>
-    //    //Task<Fun> GetFunByFunType(EFunType eFun);
+    //    //Task<Fun> GetFunByFunType(FunType eFun);
         
     //    /// <summary>
     //    /// دریافت کاربر با شماره تلفن همراه
@@ -46,7 +45,7 @@ namespace Infrastructure.Repository.interfaces
     //    ///// <summary>
     //    ///// گرفتن همه بلیط های یک تفریح
     //    ///// </summary>
-    //    //Task<List<Ticket>> GetAllFunTickets(EFunType eFun);
+    //    //Task<List<Ticket>> GetAllFunTickets(FunType eFun);
 
     //    ///// <summary>
     //    ///// گرفتن همه بلیط های یک کاربر با شماره تلفن

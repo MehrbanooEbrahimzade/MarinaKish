@@ -1,27 +1,27 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Domain.Models
 {
     public class Ticket
     {
-        public Ticket(EFunType eFunType, DateTime scheduleTime, TimeSpan startTime, TimeSpan endTime, decimal discount, Guid itemId, string phoneNumber)
+        public Ticket(FunType funType, DateTime scheduleTime, TimeSpan startTime, TimeSpan endTime, decimal discount, Guid itemId, string phoneNumber)
         {
             Id = Guid.NewGuid();
-            EFunType = eFunType;
+            EFunType = funType;
             ScheduleTime = scheduleTime;
             StartTime = startTime;
             EndTime = endTime;
             Discount = discount;
             ItemId = itemId;
             PhoneNumber = phoneNumber;
-            Condition = ECondition.InActive;
+            ECondition = Condition.InActive;
             TicketNumber = GenerateTicketNumber();
             SubmitDate = DateTime.Now;
-            WhereBuy = EWhereBuy.Site;
+            EWhereBuy = WhereBuy.Site;
         }
 
-        public Ticket() { }
+        private Ticket() { }
 
         public Guid ItemId { get; private set; }
 
@@ -43,7 +43,7 @@ namespace Domain.Models
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public EFunType EFunType { get; private set; }
+        public FunType EFunType { get; private set; }
        
         /// <summary>
         /// زمان برگزاری سانس - به میلادی
@@ -79,10 +79,10 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت
         /// </summary>
-        public ECondition Condition { get; private set; }
-        public void ConditionSet(ECondition eCondition)
+        public Condition ECondition { get; private set; }
+        public void ConditionSet(Condition condition)
         {
-            Condition = eCondition;
+            ECondition = condition;
         }
 
 
@@ -94,10 +94,10 @@ namespace Domain.Models
         /// <summary>
         /// کجا خریداری شده
         /// </summary>
-        public EWhereBuy WhereBuy { get; private set; }
-        public void WhereBuySet(EWhereBuy eWhereBuy)
+        public WhereBuy EWhereBuy { get; private set; }
+        public void WhereBuySet(WhereBuy whereBuy)
         {
-            WhereBuy = eWhereBuy;
+            EWhereBuy = whereBuy;
         }
 
         public string GenerateTicketNumber()

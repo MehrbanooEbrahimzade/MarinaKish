@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
-using Domain.Models.enums;
 using Infrastructure.Repository.interfaces;
 
 namespace Infrastructure.Repository.classes
@@ -41,7 +40,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Message>> GetAllUserMessagesByCellPhone(string cellphone)
         //        {
         //            return await _context.Messages
-        //                .Where(x => x.UserName == cellphone && x.MessageStatus != EMessageStatus.Deleted)
+        //                .Where(x => x.UserName == cellphone && x.MessageStatus != MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -52,7 +51,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<Message> GetMessageById(Guid id)
         //        {
         //            return await _context.Messages
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.MessageStatus != EMessageStatus.Deleted);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.MessageStatus != MessageStatus.Deleted);
         //        }
 
         //        /// <summary>
@@ -71,7 +70,7 @@ namespace Infrastructure.Repository.classes
         //        {
         //            return await _context.Messages
         //                .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
-        //                .Where(x => x.MessageStatus != EMessageStatus.Deleted)
+        //                .Where(x => x.MessageStatus != MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -83,7 +82,7 @@ namespace Infrastructure.Repository.classes
         //        {
         //            return await _context.Messages
         //                .FromSql("Select * from dbo.messages as m where m.message like {0}", $"%{searchBox}%")
-        //                .Where(x => x.UserName == cellphone && x.MessageStatus != EMessageStatus.Deleted)
+        //                .Where(x => x.UserName == cellphone && x.MessageStatus != MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -102,7 +101,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Message>> AllDeletedMessage()
         //        {
         //            return await _context.Messages
-        //                .Where(x => x.MessageStatus == EMessageStatus.Deleted)
+        //                .Where(x => x.MessageStatus == MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -113,7 +112,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<List<Message>> AllUserDeletedMessages(string cellPhone)
         //        {
         //            return await _context.Messages
-        //                .Where(x => x.UserName == cellPhone && x.MessageStatus == EMessageStatus.Deleted)
+        //                .Where(x => x.UserName == cellPhone && x.MessageStatus == MessageStatus.Deleted)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -124,7 +123,7 @@ namespace Infrastructure.Repository.classes
         //        public async Task<Conversation> GetOpenConversationById(Guid id)
         //        {
         //            return await _context.Conversations
-        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == EStates.Open);
+        //                .FirstOrDefaultAsync(x => x.Id == id && x.State == States.Open);
         //        }
     }
 }

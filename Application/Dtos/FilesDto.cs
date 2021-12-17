@@ -5,7 +5,7 @@ namespace Application.Dtos
     public class FilesDto
     {
         /// <summary>
-        /// ID
+        /// Id
         /// </summary>
         public Guid Id { get; set; }
 

@@ -6,7 +6,7 @@ namespace Application.Commands.Schedule
     public class CapacityCommand : CommandBase
     {
         /// <summary>
-        /// schedule ID
+        /// schedule Id
         /// </summary>
         public Guid ScheduleId { get; set; }
 

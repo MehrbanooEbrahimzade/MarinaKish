@@ -6,7 +6,7 @@ namespace Application.Commands.User
     public class UpdateUserWithIdCommand : CommandBase
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 

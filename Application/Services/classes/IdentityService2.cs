@@ -17,90 +17,90 @@ namespace Application.Services.classes
 {
     public class IdentityService2 : IIdentityService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _SignInManager;
-        private readonly IUserRepository _userRepository;
-        private readonly IUserRepository2 _userRepository2;
-        public IdentityService2(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-            , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _SignInManager = signInManager;
-            _userRepository2 = userRepository2;
-            _userRepository = userRepository;
+        //private readonly UserManager<User> _userManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly SignInManager<User> _SignInManager;
+        //private readonly IUserRepository _userRepository;
+        //private readonly IUserRepository2 _userRepository2;
+        //public IdentityService2(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
+        //    , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
+        //{
+        //    _userManager = userManager;
+        //    _roleManager = roleManager;
+        //    _SignInManager = signInManager;
+        //    _userRepository2 = userRepository2;
+        //    _userRepository = userRepository;
 
-        }
-
-
-
-        public async Task<List<string>> GetPhoneAndSetVerifyCode(GetPhoneAndSetVerifyCodeCommand command)
-        {
-            var isPhoneExist = await _userRepository.IsPhoneExist(command.PhoneNumber);
-            List<string> ResultList = new List<string>();
-            if (!isPhoneExist)
-            {
-                var newUser = command.ToModeluser();
-                await _userRepository.UserSignUpAsync(newUser);
-
-                ResultList.Add("Register");
-                ResultList.Add(newUser.Id.ToString());
-                ResultList.Add(newUser.VerifyCode);
-
-                return ResultList;
-            }
-
-            var user = await _userRepository.GetUserByPhone(command.PhoneNumber);
-            var randomVerify = new Random().Next(1000, 9999).ToString();
-            user.SetVerifycode(randomVerify);
-
-            ResultList.Add("Login");
-            ResultList.Add(user.Id.ToString());
-            ResultList.Add(user.VerifyCode);
-
-            await _userRepository.UpdateUserAsync();
-            return ResultList;
-        }
+        //}
 
 
 
-        public async Task<Result<string>> RegisterAsync(RegisterUserCommand command)
-        {
+        //public async Task<List<string>> GetPhoneAndSetVerifyCode(GetPhoneAndSetVerifyCodeCommand command)
+        //{
+        //    var isPhoneExist = await _userRepository.IsPhoneExist(command.PhoneNumber);
+        //    List<string> ResultList = new List<string>();
+        //    if (!isPhoneExist)
+        //    {
+        //        var newUser = command.ToModeluser();
+        //        await _userRepository.UserSignUpAsync(newUser);
 
-            var user = new User
-            {
-                UserName = command.UserName,
-                PhoneNumber = command.PhoneNumber,
-                Email = command.Email
-            };
-            var result = await _userManager.CreateAsync(user, command.Password);
-            if (result.Succeeded)
-            {
-                return result.ToApplicationResult("", user.Id);
-            }
-            return result.ToApplicationResult("", user.Id);
-        }
+        //        ResultList.Add("Register");
+        //        ResultList.Add(newUser.Id.ToString());
+        //        ResultList.Add(newUser.VerifyCode);
+
+        //        return ResultList;
+        //    }
+
+        //    var user = await _userRepository.GetUserByPhone(command.PhoneNumber);
+        //    var randomVerify = new Random().Next(1000, 9999).ToString();
+        //    user.SetVerifycode(randomVerify);
+
+        //    ResultList.Add("Login");
+        //    ResultList.Add(user.Id.ToString());
+        //    ResultList.Add(user.VerifyCode);
+
+        //    await _userRepository.UpdateUserAsync();
+        //    return ResultList;
+        //}
 
 
 
-        public async Task<UserDto> LoginAsync(UserLoginCommand command)
-        {
-            var user = await _userRepository2.GetUserByPhone(command.CellPhone);
+        //public async Task<Result<string>> RegisterAsync(RegisterUserCommand command)
+        //{
 
-            if (user == null)
-            {
-                for (int i = 1; i <= 4; i++)
-                {
-                    if (user != null && command.Password == user.Password)
-                    {
-                        return user.ToDto();
-                        break;
-                    }
-                    return throw new Exception("شماره تلفن یا رمز عبور اشتباه است ");
+        //    var user = new User
+        //    {
+        //        UserName = command.UserName,
+        //        PhoneNumber = command.PhoneNumber,
+        //        Email = command.Email
+        //    };
+        //    var result = await _userManager.CreateAsync(user, command.Password);
+        //    if (result.Succeeded)
+        //    {
+        //        return result.ToApplicationResult("", user.Id);
+        //    }
+        //    return result.ToApplicationResult("", user.Id);
+        //}
 
-                }
-            }
+
+
+        //public async Task<UserDto> LoginAsync(UserLoginCommand command)
+        //{
+        //    var user = await _userRepository2.GetUserByPhone(command.CellPhone);
+
+        //    if (user == null)
+        //    {
+        //        for (int i = 1; i <= 4; i++)
+        //        {
+        //            if (user != null && command.Password == user.Password)
+        //            {
+        //                return user.ToDto();
+        //                break;
+        //            }
+        //            return throw new Exception("شماره تلفن یا رمز عبور اشتباه است ");
+
+        //        }
+        //    }
 
 
 
@@ -113,6 +113,6 @@ namespace Application.Services.classes
 
 
 
-        }
+        //}
     }
 }

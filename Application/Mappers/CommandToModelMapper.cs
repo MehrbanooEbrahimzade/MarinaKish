@@ -26,7 +26,7 @@ namespace Application.Mappers
         ///// </summary>
         //public static Fun ToModel(this AddFunCommand command)
         //{
-        //    return new Fun(command.EFunType,  TimeSpan.Parse(command.StartTime),
+        //    return new Fun(command.FunType,  TimeSpan.Parse(command.StartTime),
         //        TimeSpan.Parse(command.EndTime),
         //        command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
         //}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Conversation;
 using Application.Dtos;
-using Domain.Models.enums;
 
 namespace Application.Services.interfaces
 {
@@ -17,27 +16,27 @@ namespace Application.Services.interfaces
         ///// <summary>
         ///// بستن تالار گفتگو
         ///// </summary>
-        //Task<EStates?> CloseConversation(Guid id);
+        //Task<States?> CloseConversation(Guid id);
 
         ///// <summary>
         ///// دوباره باز کردن تالار گفتگو
         ///// </summary>
-        //Task<EStates?> ReOpenConversation(Guid id);
+        //Task<States?> ReOpenConversation(Guid id);
 
         ///// <summary>
         ///// کم اهمیت کردن تالار گفتگو
         ///// </summary>
-        //Task<EPriority?> ChangeConversationToLessPriority(Guid id);
+        //Task<Priority?> ChangeConversationToLessPriority(Guid id);
 
         ///// <summary>
         ///// تغییر اهمیت تالار گفتگو به سطح متوسط
         ///// </summary>
-        //Task<EPriority?> ChangeConversationToMediumPriority(Guid id);
+        //Task<Priority?> ChangeConversationToMediumPriority(Guid id);
 
         ///// <summary>
         ///// تغییر اهمیت تالار گفتگو به سطح زیاد
         ///// </summary>
-        //Task<EPriority?> ChangeConversationToHighPriority(Guid id);
+        //Task<Priority?> ChangeConversationToHighPriority(Guid id);
 
         ///// <summary>
         ///// دریافت یک تالار گفتگو

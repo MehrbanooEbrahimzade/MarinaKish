@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Application.Validators.Comment;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Commands.Comment
 {
@@ -15,7 +15,7 @@ namespace Application.Commands.Comment
         /// <summary>
         /// وضعیت کامنت
         /// </summary>
-        public EStatus Status { get; set; }
+        public Status Status { get; set; }
 
         public override bool Validate()
         {

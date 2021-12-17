@@ -7,7 +7,6 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -34,7 +33,7 @@ namespace Application.Services.classes
         //            if (command.NumberOfTicket > schedule.AvailableCapacity || schedule == null || user == null)
         //                return null;
 
-        //            var ticketModel = new Ticket(schedule.EFunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
 
 
         //            var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
@@ -87,7 +86,7 @@ namespace Application.Services.classes
 
         //            command.AvailableCapacity -= command.NumberOfTicket;
 
-        //            var ticketModel = new Ticket(schedule.EFunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
 
 
         //            var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
@@ -241,7 +240,7 @@ namespace Application.Services.classes
 
         //            fun.MinusOnlineCapacity(ticket.NumberOfTicket);
 
-        //            ticket.ConditionSet(ECondition.Reservation);
+        //            ticket.ConditionSet(Condition.Reservation);
         //            //schedule.AvailableCapacity -= ticket.NumberOfTicket;
 
         //            var save = await _ticketRepository.SaveChangesAsync();
@@ -269,7 +268,7 @@ namespace Application.Services.classes
         //            }
 
         //            fun.PlusRealCapacity(ticket.NumberOfTicket);
-        //            ticket.ConditionSet(ECondition.Cancel);
+        //            ticket.ConditionSet(Condition.Cancel);
         //            //schedule.AvailableCapacity += ticket.NumberOfTicket;
         //            //user.Wallet += ticket.Price;
 
@@ -525,7 +524,7 @@ namespace Application.Services.classes
 
         //            foreach (var ticket in performedTickets)
         //            {
-        //                ticket.ConditionSet(ECondition.Played);
+        //                ticket.ConditionSet(Condition.Played);
         //            }
 
         //            var save = await _ticketRepository.SaveChangesAsync();
