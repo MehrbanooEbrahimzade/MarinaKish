@@ -1,19 +1,19 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class FunDto
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public EFunType EFunType { get; set; }
+        public FunType EFunType { get; set; }
 
         /// <summary>
         /// قیمت :

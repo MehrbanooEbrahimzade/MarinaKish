@@ -1,13 +1,13 @@
 ﻿using Application.Commands.User;
 using FluentValidation;
 
-namespace Application.Validators
+namespace Application.Validators.User
 {
     public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
         public UpdateUserCommandValidator()
         {
-            RuleFor(x => x.ID)
+            RuleFor(x => x.Id)
                 .NotNull().WithMessage("آیدی نمیتواند خالی باشد");
 
             RuleFor(x => x.FirstName)

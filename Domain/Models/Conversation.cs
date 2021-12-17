@@ -1,5 +1,6 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
+
 
 namespace Domain.Models
 {
@@ -9,14 +10,13 @@ namespace Domain.Models
         {
             Id = Guid.NewGuid();
             Title = title;
-            State = EStates.Open;
-            Priority = EPriority.Less;
+            EState = States.Open;
             CreatedTime = DateTime.Now;
             LastActivity = DateTime.Now;
 
         }
 
-        public Conversation() { }
+        private Conversation() { }
 
         /// <summary>
         /// ID
@@ -31,31 +31,14 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت
         /// </summary>
-        public EStates State { get;private set; }
+        public States EState { get;private set; }
         
         /// <summary>
         ///متد سازی وضعیت  
         /// </summary>
-        public void ForStates(EStates eStates)
+        public void ForStates(States states)
         {
-            this.State = eStates;
-        }
-
-        /// <summary>
-        /// میزان اهمیت
-        /// </summary>
-        public EPriority Priority { get;private set; }//EPriority حذف بشه و
-        //Priority هم حذف بشه
-
-
-
-
-        /// <summary>
-        ///متد سازی میزان اهمیت 
-        /// </summary>
-        public void ForPriority(EPriority ePriority)
-        {
-            this.Priority = ePriority;
+            EState = states;
         }
 
         /// <summary>
@@ -75,10 +58,5 @@ namespace Domain.Models
         {
             this.LastActivity = dateTime;
         }
-        
-        //internal List<MessageDto> ToDto(List<Text> messages)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

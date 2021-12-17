@@ -6,7 +6,6 @@ using Application.Commands.Conversation;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -35,30 +34,30 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// بستن تالار گفتگو
         //        /// </summary>
-        //        public async Task<EStates?> CloseConversation(Guid id)
+        //        public async Task<States?> CloseConversation(Guid id)
         //        {
         //            var conversation = await _conversationRepository.GetOpenConversationById(id);
         //            if (conversation == null)
         //                return null;
-        //              conversation.ForStates(EStates.Closed);
+        //              conversation.ForStates(States.Closed);
 
 
         //            var save = await _conversationRepository.UpdateConversation();
         //            if (!save)
         //                return null;
-        //            conversation.ForStates(EStates.Open);
+        //            conversation.ForStates(States.Open);
         //               return null;
         //        }
 
         //        /// <summary>
         //        /// دوباره باز کردن تالار گفتگو
         //        /// </summary>
-        //        public async Task<EStates?> ReOpenConversation(Guid id)
+        //        public async Task<States?> ReOpenConversation(Guid id)
         //        {
         //            var conversation = await _conversationRepository.GetClosedConversationById(id);
         //            if (conversation == null)
         //                return null;
-        //            conversation.ForStates(EStates.Open);
+        //            conversation.ForStates(States.Open);
 
         //            var save = await _conversationRepository.UpdateConversation();
         //            if (!save)
@@ -69,12 +68,12 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// کم اهمیت کردن تالار گفتگو
         //        /// </summary>
-        //        public async Task<EPriority?> ChangeConversationToLessPriority(Guid id)
+        //        public async Task<Priority?> ChangeConversationToLessPriority(Guid id)
         //        {
         //            var conversation = await _conversationRepository.GetOpenConversationById(id);
         //            if (conversation == null)
         //                return null;
-        //            conversation.ForPriority(EPriority.Less);
+        //            conversation.ForPriority(Priority.Less);
 
         //            var save = await _conversationRepository.UpdateConversation();
         //            if (!save)
@@ -85,12 +84,12 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// تغییر اهمیت تالار گفتگو به سطح متوسط
         //        /// </summary>
-        //        public async Task<EPriority?> ChangeConversationToMediumPriority(Guid id)
+        //        public async Task<Priority?> ChangeConversationToMediumPriority(Guid id)
         //        {
         //            var conversation = await _conversationRepository.GetOpenConversationById(id);
         //            if (conversation == null)
         //                return null;
-        //            conversation.ForPriority(EPriority.Medium);
+        //            conversation.ForPriority(Priority.Medium);
 
         //            var save = await _conversationRepository.UpdateConversation();
         //            if (!save)
@@ -101,12 +100,12 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// تغییر اهمیت تالار گفتگو به سطح زیاد
         //        /// </summary>
-        //        public async Task<EPriority?> ChangeConversationToHighPriority(Guid id)
+        //        public async Task<Priority?> ChangeConversationToHighPriority(Guid id)
         //        {
         //            var conversation = await _conversationRepository.GetOpenConversationById(id);
         //            if (conversation == null)
         //                return null;
-        //            conversation.ForPriority(EPriority.High);
+        //            conversation.ForPriority(Priority.High);
 
         //            var save = await _conversationRepository.UpdateConversation();
         //            if (!save)

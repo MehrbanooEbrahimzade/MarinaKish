@@ -3,7 +3,6 @@ using System;
 using System.Threading.Tasks;
 using Application.Commands.Comment;
 using Application.Services.interfaces;
-using Domain.Models.enums;
 
 namespace Marina_Club.Controllers
 {
@@ -39,7 +38,7 @@ namespace Marina_Club.Controllers
         //[HttpPut("Accepting/{id}")] 
         //public async Task<IActionResult> AcceptingComment(Guid id )
         //{
-        //    var result = await _commentService.ChangeStatusComment(id, EStatus.Accepted);
+        //    var result = await _commentService.ChangeStatusComment(id, Status.Accepted);
         //    if (result == null)
         //        return BadReq(ApiMessage.CommentNotFound, new { Reason = $"1-comment isn't in waiting list, 2-there is a problem when saveChanges.TryAgain!" });
         //    return OkResult(ApiMessage.CommentAccepted, new { Comment = result });
@@ -51,7 +50,7 @@ namespace Marina_Club.Controllers
         //[HttpPut("Declining/{id}")] 
         //public async Task<IActionResult> DecliningComment(Guid id)
         //{
-        //    var result = await _commentService.ChangeStatusComment(id, EStatus.Declined);
+        //    var result = await _commentService.ChangeStatusComment(id, Status.Declined);
         //    if (result == null)
         //        return BadReq(ApiMessage.CommentNotFound, new { Reason = $"1-comment isn't in waiting list, 2-there is a problem when saveChanges.TryAgain!" });
         //    return OkResult(ApiMessage.CommentDeclined, new { Comment = result });
@@ -91,7 +90,7 @@ namespace Marina_Club.Controllers
         //[HttpGet("Fun-Comments-Waiting/{funId}")] // funiD - edit 
         //public async Task<IActionResult> GetAllWaitingCommentsForFun(Guid funId)
         //{
-        //    var result = await _commentService.GetAllCommentsForFunWithStatus(funId,EStatus.Waiting);
+        //    var result = await _commentService.GetAllCommentsForFunWithStatus(funId,Status.Waiting);
         //    if (result == null)
         //        return BadReq(ApiMessage.FunNotHaveAnyAcceptedComment, new { Reasons = $"1-eFun not have waiting comments, 2-check funID and TryAgain!" });
         //    return OkResult(ApiMessage.WaitingFunCommentsGetted, new { LatestComments = result });

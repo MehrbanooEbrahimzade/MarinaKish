@@ -1,19 +1,19 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class TicketDto
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public EFunType EFunType { get; set; }
+        public FunType EFunType { get; set; }
 
         /// <summary>
         /// شماره تلفن همراه
@@ -58,7 +58,7 @@ namespace Application.Dtos
         /// <summary>
         /// وضعیت
         /// </summary>
-        public ECondition Condition { get; set; }
+        public Condition Condition { get; set; }
 
         /// <summary>
         /// آی دیه مدل تفریحات

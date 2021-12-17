@@ -2,18 +2,17 @@
 
 namespace Domain.Models
 {
-    public class CashTransfer//فعلا کاری باهاش نداریم نادیده بگیرینش
+    public class CashTransfer
     {
-        public CashTransfer(decimal cash,Guid userid)
+        public CashTransfer(decimal cash, Guid userid)
         {
             Id = Guid.NewGuid();
             TransferDate = DateTime.Now;
             MarineCoin = cash;
-            TransferNumber = TransferNumberGenerate();
-            UserId = userid; 
+            UserId = userid;
         }
 
-        public CashTransfer() { }
+        private CashTransfer() { }
 
         /// <summary>
         /// آیدی گردش مالی
@@ -44,14 +43,6 @@ namespace Domain.Models
         /// آیدی کاربر
         /// </summary>
         public Guid UserId { get; private set; }
-
-        public string TransferNumberGenerate()
-        {
-            var milisecond = DateTime.Now.Millisecond.ToString();
-            var second = DateTime.Now.Second.ToString();
-            var RandomNum = new Random().Next(1111, 9999);
-            return milisecond + RandomNum + "-" + second;
-        }
         
     }
 }

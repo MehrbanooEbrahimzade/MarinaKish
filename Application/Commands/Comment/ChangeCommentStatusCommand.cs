@@ -1,20 +1,20 @@
-﻿using Domain.Models.enums;
-using System;
+﻿using System;
 using Application.Validators.Comment;
+using Domain.Enums;
 
 namespace Application.Commands.Comment
 {
     public class ChangeCommentStatusCommand : CommandBase
     {
         /// <summary>
-        /// ID 
+        /// Id 
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
         /// تایید شدن
         /// </summary>
-        public EStatus Status { get; set; }
+        public Status Status { get; set; }
 
         /// <summary>
         /// Command Validation

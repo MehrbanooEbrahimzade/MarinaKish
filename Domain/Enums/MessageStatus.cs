@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace Domain.Models.enums
+namespace Domain.Enums
 {
-    public enum EMessageStatus
+    public enum MessageStatus
     {
         [Description("ارسال شده")] Sent = 1,
         [Description("ویرایش شده")] Edited = 2,

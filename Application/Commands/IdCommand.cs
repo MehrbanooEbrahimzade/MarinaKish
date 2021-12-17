@@ -6,7 +6,7 @@ namespace Application.Commands
     public class IdCommand : CommandBase
     {
         /// <summary>
-        /// ID
+        /// Id
         /// </summary>
         public Guid ID { get; set; }
 

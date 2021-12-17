@@ -38,7 +38,7 @@ namespace Application.Services.classes
         //            if (fun == null)
         //                return null;
 
-        //            fun.Update(command.EFunType, command.Price, TimeSpan.Parse(command.StartTime),
+        //            fun.Update(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
         //                TimeSpan.Parse(command.EndTime), command.SansDuration, command.SansTotalCapacity,
         //                command.SansGapTime, command.About);
 
@@ -84,7 +84,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<FunDto>> GetFunsWithFunType(GetFunWithFunTypeCommand command)
         //        {
-        //            var funs = await _funRepository.GetFunsWithFunType(command.EFunType);
+        //            var funs = await _funRepository.GetFunsWithFunType(command.FunType);
         //            if (funs == null)
         //                return null;
         //            return funs.ToDto();

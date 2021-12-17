@@ -1,41 +1,31 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Domain.Models
 {
-    public class Message: Writing
+    public class Message : Writ
     {
-        public Message(string username, string text, Guid conversationId, Guid userId)
+        public Message(string username, string text, Guid conversationId, Guid userId): base( username,  text)
         {
             Id = Guid.NewGuid();
             UserName = username;
             Text = text;
             ConversationId = conversationId;
-            UserId = userId;
-            MessageStatus = EMessageStatus.Sent;
+            EMessageStatus = MessageStatus.Sent;
             SubmitDate = DateTime.Now;
         }
 
-        public Message() { }
+        private Message(){ }
 
         /// <summary>
         /// وضعیت پیام
         /// </summary>
-        public EMessageStatus MessageStatus { get; private set; }
-        public void MessageStatusSet(EMessageStatus eMessageStatus)
-        {
-            this.MessageStatus = eMessageStatus;
-        }
+        public MessageStatus EMessageStatus { get; private set; }
 
         /// <summary>
         /// آیدی تالار گفت و گو
         /// </summary>
         public Guid ConversationId { get; private set; }
-
-        /// <summary>
-        /// آیدی کاربر
-        /// </summary>
-        public Guid UserId { get; private set; }//TODO:DELETE
         
     }
 }

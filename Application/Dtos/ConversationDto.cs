@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
     public class ConversationDto
     {
         /// <summary>
-        /// ID
+        /// Id
         /// </summary>
         public Guid Id { get; set; }
 
@@ -19,12 +19,12 @@ namespace Application.Dtos
         /// <summary>
         /// میزان اهمیت
         /// </summary>
-        public EPriority Priority { get; set; }
+        public Priority Priority { get; set; }
 
         /// <summary>
         /// زمان ساخته شدن - شمسی
         /// </summary>
-        public string ShamsiCreatedTime { get; set; }
+        public string CreatedTime { get; set; }
 
         /// <summary>
         /// اخرین فعالیت - به شمسی

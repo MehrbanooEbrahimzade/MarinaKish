@@ -10,27 +10,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Dtos;
+using Infrastructure.Repository.interfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
     public class IdentityService : IIdentityService
     {
-        //        private readonly UserManager<User> _userManager;
-        //        private readonly RoleManager<IdentityRole> _roleManager;
-        //        private readonly SignInManager<User> _SignInManager;
-        //        private readonly IUserRepository _userRepository;
-        //        private readonly IUserRepository2 _userRepository2;
-        //        public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-        //            ,IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
-        //        {
-        //            _userManager = userManager;
-        //            _roleManager = roleManager;
-        //            _SignInManager = signInManager;
-        //            _userRepository2 = userRepository2;
-        //            _userRepository = userRepository;
+        //private readonly UserManager<User> _userManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly SignInManager<User> _SignInManager;
+        //private readonly IUserRepository _userRepository;
+        //private readonly IUserRepository2 _userRepository2;
+        //public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
+        //    , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
+        //{
+        //    _userManager = userManager;
+        //    _roleManager = roleManager;
+        //    _SignInManager = signInManager;
+        //    _userRepository2 = userRepository2;
+        //    _userRepository = userRepository;
 
-        //        }
+        //}
 
 
 

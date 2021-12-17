@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Comment;
 using Application.Dtos;
-using Domain.Models.enums;
 
 namespace Application.Services.interfaces
 {
@@ -29,7 +28,7 @@ namespace Application.Services.interfaces
         ///// <summary>
         ///// گرفتن همه کامنت های قبول شده برای یک تفریح
         ///// </summary>
-        //Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, EStatus status);
+        //Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, Status status);
     
         ///// <summary>
         ///// افزایش لایک
@@ -45,13 +44,13 @@ namespace Application.Services.interfaces
         ///// <summary>
         ///// تغییر وضعیت دادن یک کامنت با آیدی
         ///// </summary>
-        //Task<CommentDto> ChangeStatusComment(Guid id, EStatus status);
+        //Task<CommentDto> ChangeStatusComment(Guid id, Status status);
 
 
         ///// <summary>
         ///// دریافت کامنت های یک وضعیت خاص یک تفریح با فان آیدی
         ///// </summary>
-        //Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, EStatus status);
+        //Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, Status status);
         
     }
 }

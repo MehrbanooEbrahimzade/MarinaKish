@@ -6,7 +6,6 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -74,7 +73,7 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// گرفتن همه کامنت های قبول شده برای یک تفریح
         //        /// </summary>
-        //        public async Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, EStatus status)
+        //        public async Task<List<CommentDto>> GetAllAcceptedCommentsForFun(Guid funId, Status status)
         //        {
         //            var comments = await _commentRepository.GetFunCommentsByStatus(funId, status);
 
@@ -111,7 +110,7 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// تغییر وضعیت دادن یک کامنت با آیدی
         //        /// </summary>
-        //        public async Task<CommentDto> ChangeStatusComment(Guid id, EStatus status)
+        //        public async Task<CommentDto> ChangeStatusComment(Guid id, Status status)
         //        {
         //            var comment = await _commentRepository.GetById(id);
 
@@ -129,7 +128,7 @@ namespace Application.Services.classes
         //        /// <summary>
         //        /// دریافت کامنت های یک وضعیت خاص یک تفریح با فان آیدی
         //        /// </summary>
-        //        public async Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, EStatus status)
+        //        public async Task<List<CommentDto>> GetAllCommentsForFunWithStatus(Guid funId, Status status)
         //        {
         //            var funComments = await _commentRepository.GetFunCommentsByStatus(funId,status);
 

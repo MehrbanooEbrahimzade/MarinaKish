@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Persist
 {
     public class DatabaseContext : IdentityDbContext<User>
     {
@@ -14,13 +14,13 @@ namespace Infrastructure.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<User>(x => x.HasOne(e => e.UserCart))
-                .Entity<User>(x=>x.HasOne(z=>z.Item))
-                .Entity<CartItem>(x => x.HasMany(z => z.Items))
+                .Entity<User>(x => x.HasOne<User>())
+                .Entity<User>(x => x.HasMany<TicketItem>())
                 .Entity<TicketItem>(x => x.HasOne(z => z.Ticket))
-                .Entity<Fun>(x=>x.HasMany(z=>z.Schedules))
-                .Entity<Fun>(x => x.HasMany(z => z.Comments))
-                .Entity<Schedule>(x => x.HasMany(z => z.Items));
+                .Entity<Fun>(x=>x.HasMany<Schedule>())
+                .Entity<Fun>(x => x.HasMany<Comment>())
+                .Entity<Schedule>(x => x.HasOne<ScheduleInformation>())
+                .Entity<ScheduleInformation>(x => x.HasMany<Schedule>());
 
 
             base.OnModelCreating(modelBuilder);

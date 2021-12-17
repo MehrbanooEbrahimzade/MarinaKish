@@ -6,7 +6,6 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -36,7 +35,7 @@ namespace Application.Services.classes
         //            for (int i = 0; i < command.NumberOfTicket; i++)
         //            {
 
-        //                var ticketModel = new Ticket(schedule.EFunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, 1);
+        //                var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, 1);
 
         //                var addTicket = await _sellerRepository.AddTicketAsync(ticketModel);
         //                if (addTicket)
@@ -149,8 +148,8 @@ namespace Application.Services.classes
         //                    return null;
         //                seller.NationalCode = command.NationalCode;
         //            }
-        //            seller.UserCart.CardNumber = command.CardNumber;
-        //            seller.UserCart.ShabaNumber = command.ShabaNumber;
+        //            seller.CreditCard.CardNumber = command.CardNumber;
+        //            seller.CreditCard.ShabaNumber = command.ShabaNumber;
         //            await _sellerRepository.SaveChanges();
         //            return seller.ToDto();
         //        }

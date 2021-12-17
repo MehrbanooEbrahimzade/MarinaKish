@@ -28,8 +28,8 @@
 //                UserName = user.UserName,
 //                Gender = user.Gender,
 //                BirthDay = user.BirthDay,
-//                CardNumber = user.UserCart.CardNumber,
-//                ShabaNumber = user.UserCart.ShabaNumber,
+//                CardNumber = user.CreditCard.CardNumber,
+//                ShabaNumber = user.CreditCard.ShabaNumber,
 //                DateJoinInShamsi = persianJoinTime,
 
 //                #endregion
@@ -52,8 +52,8 @@
 //                BirthDay = x.BirthDay,
 //                Gender = x.Gender,
 //                NationalCode = x.NationalCode,
-//                CardNumber = x.UserCart.CardNumber,
-//                ShabaNumber = x.UserCart.ShabaNumber,
+//                CardNumber = x.CreditCard.CardNumber,
+//                ShabaNumber = x.CreditCard.ShabaNumber,
 //                DateJoinInShamsi = x.ToDto().DateJoinInShamsi
 //                #endregion
 //            }).ToList();
@@ -71,7 +71,7 @@
 //                #region Select
 
 //                Id = fun.Id,
-//                EFunType = fun.FunType,
+//                FunType = fun.FunType,
 //                StartTime = fun.StartTime,
 //                EndTime = fun.EndTime,
 //                SansDuration = fun.SansDuration,
@@ -100,7 +100,7 @@
 //                #region Select
 
 //                Id = x.Id,
-//                EFunType = x.FunType,
+//                FunType = x.FunType,
 //                StartTime = x.StartTime,
 //                EndTime = x.EndTime,
 //                SansDuration = x.SansDuration,
@@ -137,7 +137,7 @@
 //                AvailableCapacity = schedule.AvailableCapacity,
 //                StartTime = schedule.StartTime,
 //                EndTime = schedule.EndTime,
-//                EFunType = schedule.EFunType,
+//                FunType = schedule.FunType,
 //                FunId = schedule.FunId
 
 //                #endregion
@@ -167,7 +167,7 @@
 //                AvailableCapacity = x.AvailableCapacity,
 //                StartTime = x.StartTime,
 //                EndTime = x.EndTime,
-//                EFunType = x.EFunType,
+//                FunType = x.FunType,
 //                FunId = x.FunId
 
 
@@ -185,7 +185,7 @@
 //            string persianExcuteDate = string.Format("{0}/{1}/{2}",
 //                persianParse.GetYear(ticket.ScheduleTime), persianParse.GetMonth(ticket.ScheduleTime), persianParse.GetDayOfMonth(ticket.ScheduleTime));
 
-//            string persianSubmitDate = string.Format("{0}/{1}/{2} {3}:{4}",
+//            string SubmitDate = string.Format("{0}/{1}/{2} {3}:{4}",
 //                persianParse.GetYear(ticket.SubmitDate), persianParse.GetMonth(ticket.SubmitDate), persianParse.GetDayOfMonth(ticket.SubmitDate),
 //                persianParse.GetHour(ticket.SubmitDate), persianParse.GetMinute(ticket.SubmitDate));
 
@@ -194,14 +194,14 @@
 //                #region Select
 
 //                Id = ticket.Id,
-//                EFunType = ticket.EFunType,
+//                FunType = ticket.FunType,
 //                TicketNumber = ticket.TicketNumber,
 //                ExecutePersianDate = persianExcuteDate,
 //                StartTime = ticket.StartTime,
 //                EndTime = ticket.EndTime,
 //                Condition = ticket.Condition,
 //                TotalPrice = ticket.Price,
-//                SubmitPersianDate = persianSubmitDate,
+//                SubmitPersianDate = SubmitDate,
 //                PhoneNumber = ticket.PhoneNumber,
 //                FullName = ticket.FullName,
 //                FunId = ticket.FunId,
@@ -231,7 +231,7 @@
 //                #region Select
 
 //                Id = x.Id,
-//                EFunType = x.EFunType,
+//                FunType = x.FunType,
 //                TicketNumber = x.TicketNumber,
 //                ExecutePersianDate = x.ToDto().ExecutePersianDate,
 //                StartTime = x.StartTime,
@@ -252,7 +252,7 @@
 //        public static CommentDto ToDto(this Comment comment)
 //        {
 //            PersianCalendar persianParse = new PersianCalendar();
-//            string persianSubmitDate = string.Format("{0}/{1}/{2} {3}:{4}",
+//            string SubmitDate = string.Format("{0}/{1}/{2} {3}:{4}",
 //                 persianParse.GetYear(comment.SubmitDate), persianParse.GetMonth(comment.SubmitDate), persianParse.GetDayOfMonth(comment.SubmitDate),
 //                 persianParse.GetHour(comment.SubmitDate), persianParse.GetMinute(comment.SubmitDate));
 
@@ -263,7 +263,7 @@
 //                Status = comment.Status,
 //                Like = comment.Like,
 //                DisLike = comment.DisLike,
-//                persianSubmitDate = persianSubmitDate,
+//                SubmitDate = SubmitDate,
 //                FunId = comment.FunId,
 //                UserName = comment.UserName,
 //            };
@@ -283,7 +283,7 @@
 //                Status = x.Status,
 //                Like = x.Like,
 //                DisLike = x.DisLike,
-//                persianSubmitDate = x.ToDto().persianSubmitDate,
+//                SubmitDate = x.ToDto().SubmitDate,
 //                FunId = x.FunId,
 //                UserName = x.UserName,
 
@@ -351,7 +351,7 @@
 //                Title = conversation.Title,
 //                Priority = conversation.Priority,
 //                ShamsiLastActivity = shamsiLastActivity,
-//                ShamsiCreatedTime = shamsiCreatedTime
+//                CreatedTime = shamsiCreatedTime
 
 //                #endregion
 //            };
@@ -370,7 +370,7 @@
 //                Title = x.Title,
 //                Priority = x.Priority,
 //                ShamsiLastActivity = x.ToDto().ShamsiLastActivity,
-//                ShamsiCreatedTime = x.ToDto().ShamsiCreatedTime
+//                CreatedTime = x.ToDto().CreatedTime
 
 //                #endregion
 //            }).ToList();

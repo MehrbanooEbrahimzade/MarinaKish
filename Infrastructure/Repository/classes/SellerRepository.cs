@@ -1,7 +1,6 @@
-﻿using Infrastructure.Repository;
-using Infrastructure.Repository.interfaces;
+﻿using Infrastructure.Repository.interfaces;
 
-namespace Infrastructure.Persist.classes
+namespace Infrastructure.Repository.classes
 {
     public class SellerRepository : BaseRepository, ISellerRepository
     {
@@ -61,7 +60,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllRecentlyTickets()
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.Condition != ECondition.InActive)
+        //                .Where(x => x.Condition != Condition.InActive)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -91,7 +90,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<List<Ticket>> GetAllSellerTickets(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .Where(x => x.UserId == id && x.Condition == ECondition.Reservation)
+        //                .Where(x => x.UserId == id && x.Condition == Condition.Reservation)
         //                .OrderByDescending(x => x.SubmitDate)
         //                .ToListAsync();
         //        }
@@ -102,7 +101,7 @@ namespace Infrastructure.Persist.classes
         //        public async Task<int> GetAllSellerTicketsCount(Guid id)
         //        {
         //            return await _context.Tickets
-        //                .CountAsync(x => x.UserId == id && x.Condition == ECondition.Reservation);
+        //                .CountAsync(x => x.UserId == id && x.Condition == Condition.Reservation);
         //        }
 
         //        /// <summary>

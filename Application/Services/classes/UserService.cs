@@ -6,7 +6,6 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -132,7 +131,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<UserDto> UpdateProfileAsync(UpdateUserCommand command)
         //        {
-        //            var user = await _userRepository.GetUserById(command.ID);
+        //            var user = await _userRepository.GetUserById(command.Id);
         //            if (user == null)
         //                return null;
 

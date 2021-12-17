@@ -11,7 +11,7 @@ namespace Application.Services.classes
         //{
         //    if (CartItems.Exists(i => i.Id == item.Id))
         //    {
-        //        CartItems.Find(i => i.Item.Id == item.Id)
+        //        CartItems.Find(i => i.CartItem.Id == item.Id)
         //            .Quantity += 1;
         //    }
         //    else
@@ -23,7 +23,7 @@ namespace Application.Services.classes
         //public void removeItem(int itemId)
         //{
         //    var item = CartItems
-        //        .SingleOrDefault(c => c.Item.Id == itemId);
+        //        .SingleOrDefault(c => c.CartItem.Id == itemId);
         //    if (item?.Quantity <= 1)
         //    {
         //        CartItems.Remove(item);

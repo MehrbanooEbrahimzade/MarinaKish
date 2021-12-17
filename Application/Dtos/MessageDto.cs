@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Models.enums;
+using Domain.Enums;
 
 namespace Application.Dtos
 {
@@ -7,7 +7,7 @@ namespace Application.Dtos
     {
 
         /// <summary>
-        /// ID
+        /// Id
         /// </summary>
         public Guid Id { get; set; }
 
@@ -34,7 +34,7 @@ namespace Application.Dtos
         /// <summary>
         /// وضعیت پیام
         /// </summary>
-        public EMessageStatus MessageStatus { get; set; }
+        public MessageStatus MessageStatus { get; set; }
         
     }
 }

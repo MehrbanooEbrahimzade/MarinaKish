@@ -5,7 +5,6 @@ using Application.Commands.Message;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models.enums;
 
 namespace Application.Services.classes
 {
@@ -92,7 +91,7 @@ namespace Application.Services.classes
         ////    var message = await _messageRepository.GetMessageById(id);
         ////    if (message == null)
         ////        return null;
-        ////    message.MessageStatusSet(EMessageStatus.Deleted);
+        ////    message.MessageStatusSet(MessageStatus.Deleted);
         ////    return await _messageRepository.UpdateMessages();
         ////}
 

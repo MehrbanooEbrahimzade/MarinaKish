@@ -12,12 +12,11 @@ namespace Domain.Models
             Id = Guid.NewGuid();
             Name = fileName;
             FilePath = filePath;
-            IsActive = true;
             PlaceDate = DateTime.Now;
             
         }
 
-        public File() { }
+        private File() { }
 
         /// <summary>
         /// ID
@@ -40,29 +39,9 @@ namespace Domain.Models
         public string Size { get; set; } //نمیدونم توش چی کار کرده؟؟
 
         /// <summary>
-        /// فعال بودن
-        /// </summary>
-        public bool IsActive { get; set; } //TODO:delete
-
-        /// <summary>
         /// زمان اضافه شدن
         /// </summary>
         public DateTime PlaceDate { get; private set; }
 
-        /// <summary>
-        /// آیدی کاربر
-        /// </summary>
-        public string UserID { get; set; } //TODO:delete
-
-        /// <summary>
-        /// آیدی تفریح
-        /// </summary>
-        public string FunID { get; set; } //TODO:delete
-
-        /// <summary>
-        /// آیدی سانس
-        /// </summary>
-        public string ScheduleID { get; set; }//TODO:delete
-        
     }
 }

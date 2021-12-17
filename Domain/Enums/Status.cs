@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace Domain.Models.enums
+namespace Domain.Enums
 {
-    public enum EStatus
+    public enum Status
     {
         //public static Dictionary<string, int> DicStatus = new Dictionary<string, int>()
         //{ {"Waiting", 1}, {"Accepted", 2}, { "Declined", 3} };
