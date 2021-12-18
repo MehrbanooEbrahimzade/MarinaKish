@@ -7,12 +7,18 @@ namespace Domain.Models
         public FunSliderPicture(Guid id, string attachment)
         {
             Id = id;
+          
             Attachment = attachment;
         }
 
         private FunSliderPicture() { }
+       
+        
         public Guid Id { get; private set; }
 
+        /// <summary>
+        /// عکس
+        /// </summary>
         public string Attachment { get; private set; }
     }
 }

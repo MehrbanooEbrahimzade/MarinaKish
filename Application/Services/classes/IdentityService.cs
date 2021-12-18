@@ -15,7 +15,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
-
     //public class IdentityService : IIdentityService
     //{
     //    private readonly UserManager<User> _userManager;

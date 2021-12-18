@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Domain.Enums;
 
 namespace Domain.Models
@@ -7,90 +6,57 @@ namespace Domain.Models
     public class Schedule
     {
         public Schedule
-            (FunType funType, DateTime executeDateTime, decimal availableCapacity, TimeSpan startTime
-                , TimeSpan endTime, Guid funId, DateTime sansDate, int quantityInStock)
+            ( DateTime executeDate, TimeSpan startTime, TimeSpan endTime, Gender gender)
         {
             Id = Guid.NewGuid();
-            EFunType = funType;
-            ExecuteDateTime = executeDateTime;
-            AvailableCapacity = availableCapacity;
+            
+            EGender = gender;
+            
             StartTime = startTime;
+            
             EndTime = endTime;
-            FunId = funId;
-            SansDate = sansDate;
-            QuantityInStock = quantityInStock;
+
+            ExecuteDate = executeDate;
+
+            Discount = default;
+
             IsExist = true;
         }
 
         private Schedule() { }
 
-        public List<TicketItem> Items { get; set; }
-        public Guid FunId { get; private set; }
 
-
-
-        /// <summary>
-        /// ID
-        /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// تاریخ سانس
+        /// جنسیت
         /// </summary>
-        public DateTime SansDate { get; private set; }
+        public Gender EGender { get; private set; }
 
         /// <summary>
-        /// ساعت شروع :
+        /// تخفیف
+        /// </summary>
+        public decimal? Discount { get; private set; } 
+
+        /// <summary>
+        /// ساعت شروع سانس
         /// </summary>
         public TimeSpan StartTime { get; private set; }
 
         /// <summary>
-        /// ساعت پایان :
+        /// ساعت پایان سانس
         /// </summary>
         public TimeSpan EndTime { get; private set; }
 
         /// <summary>
-        /// مدت زمان : 
+        /// تاریخ سانس
         /// </summary>
-        private TimeSpan _sansDuration;
-
-        public TimeSpan SansDuration {
-            get => _sansDuration;
-            private set
-            {
-                value = EndTime - StartTime;
-                _sansDuration = value;
-            }
-        }
+        public DateTime ExecuteDate { get; private set; }
 
         /// <summary>
-        /// تنوع تفریح ها :
-        /// </summary> 
-        public FunType EFunType { get; private set; }
-
-        /// <summary>
-        /// زمان سانس : - به میلادی
-        /// </summary>
-        public DateTime ExecuteDateTime { get; private set; }
-
-        /// <summary>
-        /// ظرفیت سانس
-        /// </summary>
-        public int QuantityInStock { get;private set; }
-
-        /// <summary>
-        /// فضای دردسترس :
-        /// </summary>
-        public decimal AvailableCapacity { get; private set; }
-
-        /// <summary>
-        /// چک کننده ی وجود داشتن سانس 
+        /// وجود داشتن سانس 
         /// </summary>
         public bool IsExist { get; private set; }
- 
-        public void FunTypeSet(FunType eFunType)
-        {
-            EFunType = eFunType;
-        }
+
     }
 }
