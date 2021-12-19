@@ -26,6 +26,12 @@ namespace Marina_Club.Controllers
             await _identity.RegisterAsync(command);
             return Ok("کد تایید با موفقیت ارسال شد");
         }
+        [HttpPut()]
+        public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
+        {
+            await _identity.CompleteProfile(command);
+            return Ok("اطلاعات با موفقیت ذخیره شد ");
+        }
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
 

@@ -10,5 +10,6 @@ namespace Application.Services.interfaces
     public interface IIdentityService
     {
         Task RegisterAsync(RegisterUserCommand command);
+        Task CompleteProfile(CompleteProfileCommand command);
     }
 }
