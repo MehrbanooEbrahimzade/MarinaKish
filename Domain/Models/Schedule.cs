@@ -5,18 +5,22 @@ namespace Domain.Models
     public class Schedule
     {
         public Schedule
-            (DateTime executeDate, TimeSpan startTime, TimeSpan endTime)
+            (DateTime date, TimeSpan start, TimeSpan end, decimal price)
         {
+            Price = price;
             Id = Guid.NewGuid();
-            StartTime = startTime;
-            EndTime = endTime;
-            ExecuteDate = executeDate;
+            Start = AddTimeToDate(start, date);
+            End = AddTimeToDate(end, date);
             Discount = Percent.Empty;
             IsExist = true;
         }
 
         private Schedule() { }
 
+        public DateTime AddTimeToDate(TimeSpan time , DateTime date)
+        {
+            return date.Add(time);
+        }
 
         public Guid Id { get; private set; }
 
@@ -26,19 +30,14 @@ namespace Domain.Models
         public Percent Discount { get; private set; }
 
         /// <summary>
-        /// ساعت شروع سانس
+        ///  شروع سانس
         /// </summary>
-        public TimeSpan StartTime { get; private set; }
+        public DateTime Start { get; private set; }
 
         /// <summary>
-        /// ساعت پایان سانس
+        /// پایان سانس
         /// </summary>
-        public TimeSpan EndTime { get; private set; }
-
-        /// <summary>
-        /// تاریخ سانس
-        /// </summary>
-        public DateTime ExecuteDate { get; private set; }
+        public DateTime End { get; private set; }
 
         /// <summary>
         /// قیمت
@@ -69,7 +68,7 @@ namespace Domain.Models
 
         public void Validate(int value)
         {
-            if (value > 100 || value <= 0)
+            if (value > 100 || value < 0)
                 throw new Exception();
         }
 

@@ -32,8 +32,8 @@ namespace Application.Services.classes
         //            DateTime scheduleExcuteTime = lastScheduleDateTime.Value;
         //            TimeSpan totalSansTime = new TimeSpan(0, fun.SansDuration + fun.SansGapTime, 0);
         //            var totalSansMinuteTime = (int)totalSansTime.TotalMinutes;
-        //            var funEndTimeMin = (int)fun.EndTime.TotalMinutes;
-        //            var funStartTimeMin = (int)fun.StartTime.TotalMinutes;
+        //            var funEndTimeMin = (int)fun.End.TotalMinutes;
+        //            var funStartTimeMin = (int)fun.Start.TotalMinutes;
         //            var sansCount = (funEndTimeMin - funStartTimeMin) / totalSansMinuteTime;
 
         //            List<Schedule> schedules = new List<Schedule>();
@@ -43,8 +43,8 @@ namespace Application.Services.classes
         //            {
         //                for (int j = 0; j < sansCount; j++)
         //                {
-        //                    var startTimes = fun.StartTime.Add(j * totalSansTime);
-        //                    var sansModel = new Schedule(fun.FunType, scheduleExcuteTime, fun.SansTotalCapacity, fun.StartTime, fun.EndTime);
+        //                    var startTimes = fun.Start.Add(j * totalSansTime);
+        //                    var sansModel = new Schedule(fun.FunType, scheduleExcuteTime, fun.SansTotalCapacity, fun.Start, fun.End);
 
         //                    //var sansModel = new Schedule(eFun.SystemFunCode, eFun.FunType, scheduleExcuteTime, eFun.Price, startTimes, startTimes.Add(totalSansTime))
         //                    //{

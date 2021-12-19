@@ -26,8 +26,8 @@ namespace Application.Mappers
         ///// </summary>
         //public static Fun ToModel(this AddFunCommand command)
         //{
-        //    return new Fun(command.FunType,  TimeSpan.Parse(command.StartTime),
-        //        TimeSpan.Parse(command.EndTime),
+        //    return new Fun(command.FunType,  TimeSpan.Parse(command.Start),
+        //        TimeSpan.Parse(command.End),
         //        command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
         //}
 
@@ -37,7 +37,7 @@ namespace Application.Mappers
          //public static Schedule ToModel(this AddScheduleCommand command) 
          //{
          //     return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
-         //         TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
+         //         TimeSpan.Parse(command.Start), TimeSpan.Parse(command.End))
          //     {
          //         AvailableCapacity = command.AvailableCapacity
          //     };
@@ -48,7 +48,7 @@ namespace Application.Mappers
         /// </summary>
         /*public static Ticket ToModel(this AddTicketCommand command)
         {
-            return new Ticket(command.FunType, command.ExecuteDate, command.StartTime, command.EndTime, command.NumberOfTicket)
+            return new Ticket(command.FunType, command.ExecuteDate, command.Start, command.End, command.NumberOfTicket)
             {
                 #region Set
 

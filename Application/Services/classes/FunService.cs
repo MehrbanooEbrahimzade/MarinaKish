@@ -38,8 +38,8 @@ namespace Application.Services.classes
         //            if (fun == null)
         //                return null;
 
-        //            fun.Update(command.FunType, command.Price, TimeSpan.Parse(command.StartTime),
-        //                TimeSpan.Parse(command.EndTime), command.SansDuration, command.SansTotalCapacity,
+        //            fun.Update(command.FunType, command.Price, TimeSpan.Parse(command.Start),
+        //                TimeSpan.Parse(command.End), command.SansDuration, command.SansTotalCapacity,
         //                command.SansGapTime, command.About);
 
         //            var save = await _funRepository.UpdateFunAsync();
