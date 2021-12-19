@@ -13,7 +13,6 @@ namespace Domain.Models
             Name = fileName;
             FilePath = filePath;
             PlaceDate = DateTime.Now;
-            
         }
 
         private File() { }
@@ -36,7 +35,7 @@ namespace Domain.Models
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { get; set; } //نمیدونم توش چی کار کرده؟؟
+        public string Size { get; set; }
 
         /// <summary>
         /// زمان اضافه شدن

@@ -14,19 +14,20 @@ namespace Infrastructure.Persist
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<User>(x => x.HasOne<User>())
-                .Entity<User>(x => x.HasMany<TicketItem>())
-                .Entity<TicketItem>(x => x.HasOne(z => z.Ticket))
-                .Entity<Fun>(x=>x.HasMany<Schedule>())
+                .Entity<User>(x => x.HasOne<CreditCard>())
+                .Entity<User>(x => x.HasMany<Ticket>())
+                .Entity<Fun>(x=>x.HasOne<ScheduleInfo>())
                 .Entity<Fun>(x => x.HasMany<Comment>())
-                .Entity<Schedule>(x => x.HasOne<ScheduleInformation>())
-                .Entity<ScheduleInformation>(x => x.HasMany<Schedule>());
+                .Entity<Schedule>(x => x.HasMany<Ticket>());
 
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Fun> Funs { get; set; }
+        public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<ScheduleInfo> ScheduleInfos { get; set; }
+        public DbSet<FunSliderPicture> FunSliderPictures { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

@@ -5,13 +5,18 @@ namespace Domain.Models
 {
     public class Message : Writ
     {
-        public Message(string username, string text, Guid conversationId, Guid userId): base( username,  text)
+        public Message(string username, string text, Guid conversationId): base( username,  text)
         {
             Id = Guid.NewGuid();
+          
             UserName = username;
+            
             Text = text;
+            
             ConversationId = conversationId;
-            EMessageStatus = MessageStatus.Sent;
+            
+            MessageStatus = MessageStatus.Sent;
+            
             SubmitDate = DateTime.Now;
         }
 
@@ -20,7 +25,7 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت پیام
         /// </summary>
-        public MessageStatus EMessageStatus { get; private set; }
+        public MessageStatus MessageStatus { get; private set; }
 
         /// <summary>
         /// آیدی تالار گفت و گو

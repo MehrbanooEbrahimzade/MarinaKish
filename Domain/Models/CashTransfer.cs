@@ -43,6 +43,6 @@ namespace Domain.Models
         /// آیدی کاربر
         /// </summary>
         public Guid UserId { get; private set; }
-        
+
     }
 }

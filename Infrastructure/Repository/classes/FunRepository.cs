@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Enums;
+using Domain.Models;
 using Infrastructure.Persist;
 using Infrastructure.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,9 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح
         ///// </summary>
-        //public async Task<bool> CheckFunTypeIsExist(FunType funType)
+        //public async Task<bool> CheckFunTypeIsExist(string name)
         //{
-        //    return await _context.Funs.AnyAsync(x => x.FunType == funType && x.IsActive == true);
+        //    return await _context.Funs.AnyAsync(x => x.Name == name && x.IsActive == true);
         //}
 
         ///// <summary>
@@ -40,7 +41,7 @@ namespace Infrastructure.Repository.classes
         //{
         //    return await _context.Funs
         //        .SingleOrDefaultAsync(x => x.Id == id);
-                
+
         //}
 
         ///// <summary>
@@ -54,9 +55,10 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// حذف تفریح 
         ///// </summary>
-        //public async Task<bool> DeleteFunAsync(Fun fun)
+        //public async Task<bool> DeleteFunAsync(Guid id)
         //{
-        //    _context.Funs.Remove(fun);
+        //    var fun = _context.Funs.Where(x => x.Id == id);
+        //    _context.Funs.Remove((Fun)fun);
         //    return await _context.SaveChangesAsync() > 0;
         //}
 
@@ -72,19 +74,19 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// گرفتن تفریح با نوع تفریح
         ///// </summary>
-        //public async Task<Fun> GetFunByFunType(FunType funType)
+        //public async Task<Fun> GetFunByFunType(string name)
         //{
         //    return await _context.Funs
-        //        .FirstOrDefaultAsync(x => x.FunType == funType);
+        //        .FirstOrDefaultAsync(x => x.Name == name);
         //}
 
         ///// <summary>
         ///// دریافت فایل با آیدی
         ///// </summary>
-        //public async Task<File> GetFileById(Guid id)
+        //public async Task<File> GetFileById(Guid fileid)
         //{
         //    return await _context.Files
-        //        .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
+        //        .SingleOrDefaultAsync(x => x.Id == fileid && x.IsActive == true);
         //}
 
         ///// <summary>
@@ -110,19 +112,24 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// گرفتن تفریح ها با نوع تفریح
         ///// </summary>
-        //public async Task<List<Fun>> GetFunsWithFunType(string funType)
+        //public async Task<List<Fun>> GetFunsWithFunType(string name)
         //{
         //    return await _context.Funs
-        //        .Where(x => x.Name == funType && x.IsActive)
+        //        .Where(x => x.Name == name && x.IsActive)
         //        .ToListAsync();
         //}
-
+        ///// <summary>
+        ///// گرفتن تفریح فعال باایدی 
+        ///// </summary>
         //public async Task<Fun> GetActiveFunById(Guid id)
         //{
         //    return await _context.Funs
         //        .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         //}
-
+        ///// <summary>
+        ///// گرفتن تفریح غیر فعال باایدی 
+        ///// </summary>
+        
         //public async Task<Fun> GetDisActiveFunById(Guid id)
         //{
         //    return await _context.Funs
@@ -132,10 +139,10 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// دریافت همه سانس های برگذار نشده فعال یک تفریح با آیدی
         ///// </summary>
-        //public async Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid id)
+        //public async Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid funid)
         //{
         //    return await _context.Schedules
-        //        .Where(x => x.FunId == id && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
+        //        .Where(x => x.FunId == funid && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
         //        .OrderByDescending(x => x.ExecuteDateTime)
         //        .ToListAsync();
         //}

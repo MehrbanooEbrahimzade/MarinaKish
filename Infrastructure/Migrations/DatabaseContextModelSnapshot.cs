@@ -15,7 +15,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -26,11 +26,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("DisLike");
 
-                    b.Property<int>("EStatus");
-
                     b.Property<Guid>("FunId");
 
                     b.Property<int>("Like");
+
+                    b.Property<int>("Status");
 
                     b.Property<DateTime>("SubmitDate");
 
@@ -60,7 +60,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CreditCard");
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("Domain.Models.File", b =>
@@ -96,13 +96,17 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ScheduleInformationId");
+                    b.Property<Guid?>("ScheduleInfoId");
+
+                    b.Property<Guid?>("ScheduleInfoId1");
 
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ScheduleInformationId");
+                    b.HasIndex("ScheduleInfoId");
+
+                    b.HasIndex("ScheduleInfoId1");
 
                     b.ToTable("Funs");
                 });
@@ -120,7 +124,19 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("FunId");
 
-                    b.ToTable("FunSliderPicture");
+                    b.ToTable("FunSliderPictures");
+                });
+
+            modelBuilder.Entity("Domain.Models.Percent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Percent");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
@@ -128,42 +144,26 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("AvailableCapacity");
-
-                    b.Property<int>("EFunType");
+                    b.Property<Guid?>("DiscountId");
 
                     b.Property<TimeSpan>("EndTime");
 
-                    b.Property<DateTime>("ExecuteDateTime");
-
-                    b.Property<Guid>("FunId");
+                    b.Property<DateTime>("ExecuteDate");
 
                     b.Property<bool>("IsExist");
 
-                    b.Property<int>("QuantityInStock");
-
-                    b.Property<DateTime>("SansDate");
-
-                    b.Property<TimeSpan>("SansDuration");
-
-                    b.Property<Guid?>("ScheduleInformationId");
-
-                    b.Property<Guid?>("ScheduleInformationId1");
+                    b.Property<decimal>("Price");
 
                     b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunId");
-
-                    b.HasIndex("ScheduleInformationId");
-
-                    b.HasIndex("ScheduleInformationId1");
+                    b.HasIndex("DiscountId");
 
                     b.ToTable("Schedules");
                 });
 
-            modelBuilder.Entity("Domain.Models.ScheduleInformation", b =>
+            modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ScheduleInformation");
+                    b.ToTable("ScheduleInfos");
                 });
 
             modelBuilder.Entity("Domain.Models.Ticket", b =>
@@ -194,65 +194,35 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Discount");
+                    b.Property<int>("Condition");
 
-                    b.Property<int>("ECondition");
+                    b.Property<string>("FunType");
 
-                    b.Property<int>("EFunType");
+                    b.Property<int>("Gender");
 
-                    b.Property<int>("EWhereBuy");
+                    b.Property<Guid?>("ScheduleId");
 
-                    b.Property<TimeSpan>("EndTime");
-
-                    b.Property<Guid>("FunId");
-
-                    b.Property<Guid>("ItemId");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<Guid>("ScheduleId");
-
-                    b.Property<DateTime>("ScheduleTime");
-
-                    b.Property<TimeSpan>("StartTime");
+                    b.Property<Guid?>("ScheduleId1");
 
                     b.Property<DateTime>("SubmitDate");
 
-                    b.Property<string>("TicketNumber");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("Domain.Models.TicketItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CartItemId");
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<int>("QuantityInStock");
-
-                    b.Property<Guid>("ScheduleId");
-
-                    b.Property<Guid?>("TicketId");
-
                     b.Property<string>("UserId");
+
+                    b.Property<string>("UserId1");
+
+                    b.Property<int>("WhereBuy");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleId");
 
-                    b.HasIndex("TicketId");
+                    b.HasIndex("ScheduleId1");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TicketItem");
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -269,9 +239,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("CreditCardId");
 
-                    b.Property<int>("EGender");
-
-                    b.Property<int>("ERoleType");
+                    b.Property<Guid?>("CreditCardId1");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -279,6 +247,8 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FullName");
+
+                    b.Property<int>("Gender");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -298,11 +268,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int>("RoleType");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserId");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
@@ -311,6 +281,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CreditCardId");
 
+                    b.HasIndex("CreditCardId1");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -318,8 +290,6 @@ namespace Infrastructure.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -444,9 +414,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Fun", b =>
                 {
-                    b.HasOne("Domain.Models.ScheduleInformation", "ScheduleInformation")
+                    b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
                         .WithMany()
-                        .HasForeignKey("ScheduleInformationId");
+                        .HasForeignKey("ScheduleInfoId");
+
+                    b.HasOne("Domain.Models.ScheduleInfo")
+                        .WithMany()
+                        .HasForeignKey("ScheduleInfoId1");
                 });
 
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
@@ -458,34 +432,28 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
-                    b.HasOne("Domain.Models.Fun")
+                    b.HasOne("Domain.Models.Percent", "Discount")
                         .WithMany()
-                        .HasForeignKey("FunId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Domain.Models.ScheduleInformation")
-                        .WithMany()
-                        .HasForeignKey("ScheduleInformationId");
-
-                    b.HasOne("Domain.Models.ScheduleInformation")
-                        .WithMany()
-                        .HasForeignKey("ScheduleInformationId1");
+                        .HasForeignKey("DiscountId");
                 });
 
-            modelBuilder.Entity("Domain.Models.TicketItem", b =>
+            modelBuilder.Entity("Domain.Models.Ticket", b =>
                 {
-                    b.HasOne("Domain.Models.Schedule")
-                        .WithMany("Items")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Domain.Models.Ticket", "Ticket")
+                    b.HasOne("Domain.Models.Schedule", "Schedule")
                         .WithMany()
-                        .HasForeignKey("TicketId");
+                        .HasForeignKey("ScheduleId");
+
+                    b.HasOne("Domain.Models.Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId1");
+
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.HasOne("Domain.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -494,9 +462,9 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreditCardId");
 
-                    b.HasOne("Domain.Models.User")
+                    b.HasOne("Domain.Models.CreditCard")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("CreditCardId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

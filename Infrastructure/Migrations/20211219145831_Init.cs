@@ -23,7 +23,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CreditCard",
+                name: "CreditCards",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CreditCard", x => x.Id);
+                    table.PrimaryKey("PK_CreditCards", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,7 +52,19 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ScheduleInformation",
+                name: "Percent",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Percent", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduleInfos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -67,31 +79,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ScheduleInformation", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tickets",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ItemId = table.Column<Guid>(nullable: false),
-                    Discount = table.Column<decimal>(nullable: false),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    EFunType = table.Column<int>(nullable: false),
-                    ScheduleTime = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<TimeSpan>(nullable: false),
-                    EndTime = table.Column<TimeSpan>(nullable: false),
-                    TicketNumber = table.Column<string>(nullable: true),
-                    FunId = table.Column<Guid>(nullable: false),
-                    ScheduleId = table.Column<Guid>(nullable: false),
-                    ECondition = table.Column<int>(nullable: false),
-                    SubmitDate = table.Column<DateTime>(nullable: false),
-                    EWhereBuy = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.PrimaryKey("PK_ScheduleInfos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,25 +124,48 @@ namespace Infrastructure.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     CreditCardId = table.Column<Guid>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
-                    ERoleType = table.Column<int>(nullable: false),
+                    RoleType = table.Column<int>(nullable: false),
                     NationalCode = table.Column<string>(nullable: true),
-                    EGender = table.Column<int>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
                     BirthDay = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    CreditCardId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_CreditCard_CreditCardId",
+                        name: "FK_AspNetUsers_CreditCards_CreditCardId",
                         column: x => x.CreditCardId,
-                        principalTable: "CreditCard",
+                        principalTable: "CreditCards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_AspNetUsers_CreditCards_CreditCardId1",
+                        column: x => x.CreditCardId1,
+                        principalTable: "CreditCards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    DiscountId = table.Column<Guid>(nullable: true),
+                    StartTime = table.Column<TimeSpan>(nullable: false),
+                    EndTime = table.Column<TimeSpan>(nullable: false),
+                    ExecuteDate = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    IsExist = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Percent_DiscountId",
+                        column: x => x.DiscountId,
+                        principalTable: "Percent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -166,19 +177,26 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Video = table.Column<string>(nullable: true),
-                    ScheduleInformationId = table.Column<Guid>(nullable: true),
+                    ScheduleInfoId = table.Column<Guid>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     About = table.Column<string>(nullable: true),
                     BackgroundPicture = table.Column<string>(nullable: true),
-                    Icon = table.Column<string>(nullable: true)
+                    Icon = table.Column<string>(nullable: true),
+                    ScheduleInfoId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Funs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funs_ScheduleInformation_ScheduleInformationId",
-                        column: x => x.ScheduleInformationId,
-                        principalTable: "ScheduleInformation",
+                        name: "FK_Funs_ScheduleInfos_ScheduleInfoId",
+                        column: x => x.ScheduleInfoId,
+                        principalTable: "ScheduleInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Funs_ScheduleInfos_ScheduleInfoId1",
+                        column: x => x.ScheduleInfoId1,
+                        principalTable: "ScheduleInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -269,6 +287,50 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    ScheduleId = table.Column<Guid>(nullable: true),
+                    FunType = table.Column<string>(nullable: true),
+                    Condition = table.Column<int>(nullable: false),
+                    SubmitDate = table.Column<DateTime>(nullable: false),
+                    WhereBuy = table.Column<int>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    ScheduleId1 = table.Column<Guid>(nullable: true),
+                    UserId1 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Schedules_ScheduleId1",
+                        column: x => x.ScheduleId1,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tickets_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -277,7 +339,7 @@ namespace Infrastructure.Migrations
                     Text = table.Column<string>(nullable: true),
                     SubmitDate = table.Column<DateTime>(nullable: false),
                     FunId = table.Column<Guid>(nullable: false),
-                    EStatus = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     Like = table.Column<int>(nullable: false),
                     DisLike = table.Column<int>(nullable: false),
                     UserPhoneNumber = table.Column<string>(nullable: true)
@@ -294,7 +356,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FunSliderPicture",
+                name: "FunSliderPictures",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -303,88 +365,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FunSliderPicture", x => x.Id);
+                    table.PrimaryKey("PK_FunSliderPictures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FunSliderPicture_Funs_FunId",
+                        name: "FK_FunSliderPictures_Funs_FunId",
                         column: x => x.FunId,
                         principalTable: "Funs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Schedules",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    FunId = table.Column<Guid>(nullable: false),
-                    SansDate = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<TimeSpan>(nullable: false),
-                    EndTime = table.Column<TimeSpan>(nullable: false),
-                    SansDuration = table.Column<TimeSpan>(nullable: false),
-                    EFunType = table.Column<int>(nullable: false),
-                    ExecuteDateTime = table.Column<DateTime>(nullable: false),
-                    QuantityInStock = table.Column<int>(nullable: false),
-                    AvailableCapacity = table.Column<decimal>(nullable: false),
-                    IsExist = table.Column<bool>(nullable: false),
-                    ScheduleInformationId = table.Column<Guid>(nullable: true),
-                    ScheduleInformationId1 = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Funs_FunId",
-                        column: x => x.FunId,
-                        principalTable: "Funs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Schedules_ScheduleInformation_ScheduleInformationId",
-                        column: x => x.ScheduleInformationId,
-                        principalTable: "ScheduleInformation",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Schedules_ScheduleInformation_ScheduleInformationId1",
-                        column: x => x.ScheduleInformationId1,
-                        principalTable: "ScheduleInformation",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TicketItem",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CartItemId = table.Column<Guid>(nullable: false),
-                    ScheduleId = table.Column<Guid>(nullable: false),
-                    TicketId = table.Column<Guid>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    QuantityInStock = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TicketItem", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TicketItem_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TicketItem_Tickets_TicketId",
-                        column: x => x.TicketId,
-                        principalTable: "Tickets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TicketItem_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -422,6 +407,11 @@ namespace Infrastructure.Migrations
                 column: "CreditCardId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CreditCardId1",
+                table: "AspNetUsers",
+                column: "CreditCardId1");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -434,54 +424,49 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserId",
-                table: "AspNetUsers",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comments_FunId",
                 table: "Comments",
                 column: "FunId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funs_ScheduleInformationId",
+                name: "IX_Funs_ScheduleInfoId",
                 table: "Funs",
-                column: "ScheduleInformationId");
+                column: "ScheduleInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FunSliderPicture_FunId",
-                table: "FunSliderPicture",
+                name: "IX_Funs_ScheduleInfoId1",
+                table: "Funs",
+                column: "ScheduleInfoId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunSliderPictures_FunId",
+                table: "FunSliderPictures",
                 column: "FunId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_FunId",
+                name: "IX_Schedules_DiscountId",
                 table: "Schedules",
-                column: "FunId");
+                column: "DiscountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_ScheduleInformationId",
-                table: "Schedules",
-                column: "ScheduleInformationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_ScheduleInformationId1",
-                table: "Schedules",
-                column: "ScheduleInformationId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TicketItem_ScheduleId",
-                table: "TicketItem",
+                name: "IX_Tickets_ScheduleId",
+                table: "Tickets",
                 column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketItem_TicketId",
-                table: "TicketItem",
-                column: "TicketId");
+                name: "IX_Tickets_ScheduleId1",
+                table: "Tickets",
+                column: "ScheduleId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketItem_UserId",
-                table: "TicketItem",
+                name: "IX_Tickets_UserId",
+                table: "Tickets",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_UserId1",
+                table: "Tickets",
+                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -508,31 +493,31 @@ namespace Infrastructure.Migrations
                 name: "Files");
 
             migrationBuilder.DropTable(
-                name: "FunSliderPicture");
-
-            migrationBuilder.DropTable(
-                name: "TicketItem");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "FunSliderPictures");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Funs");
 
             migrationBuilder.DropTable(
-                name: "CreditCard");
+                name: "Schedules");
 
             migrationBuilder.DropTable(
-                name: "ScheduleInformation");
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleInfos");
+
+            migrationBuilder.DropTable(
+                name: "Percent");
+
+            migrationBuilder.DropTable(
+                name: "CreditCards");
         }
     }
 }

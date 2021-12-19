@@ -1,96 +1,84 @@
 ﻿using System;
-using System.Collections.Generic;
-using Domain.Enums;
 
 namespace Domain.Models
 {
     public class Schedule
     {
         public Schedule
-            (FunType funType, DateTime executeDateTime, decimal availableCapacity, TimeSpan startTime
-                , TimeSpan endTime, Guid funId, DateTime sansDate, int quantityInStock)
+            (DateTime executeDate, TimeSpan startTime, TimeSpan endTime)
         {
             Id = Guid.NewGuid();
-            EFunType = funType;
-            ExecuteDateTime = executeDateTime;
-            AvailableCapacity = availableCapacity;
             StartTime = startTime;
             EndTime = endTime;
-            FunId = funId;
-            SansDate = sansDate;
-            QuantityInStock = quantityInStock;
+            ExecuteDate = executeDate;
+            Discount = Percent.Empty;
             IsExist = true;
         }
 
         private Schedule() { }
 
-        public List<TicketItem> Items { get; set; }
-        public Guid FunId { get; private set; }
 
-
-
-        /// <summary>
-        /// ID
-        /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// تاریخ سانس
+        /// تخفیف
         /// </summary>
-        public DateTime SansDate { get; private set; }
+        public Percent Discount { get; private set; }
 
         /// <summary>
-        /// ساعت شروع :
+        /// ساعت شروع سانس
         /// </summary>
         public TimeSpan StartTime { get; private set; }
 
         /// <summary>
-        /// ساعت پایان :
+        /// ساعت پایان سانس
         /// </summary>
         public TimeSpan EndTime { get; private set; }
 
         /// <summary>
-        /// مدت زمان : 
+        /// تاریخ سانس
         /// </summary>
-        private TimeSpan _sansDuration;
-
-        public TimeSpan SansDuration {
-            get => _sansDuration;
-            private set
-            {
-                value = EndTime - StartTime;
-                _sansDuration = value;
-            }
-        }
+        public DateTime ExecuteDate { get; private set; }
 
         /// <summary>
-        /// تنوع تفریح ها :
-        /// </summary> 
-        public FunType EFunType { get; private set; }
-
-        /// <summary>
-        /// زمان سانس : - به میلادی
+        /// قیمت
         /// </summary>
-        public DateTime ExecuteDateTime { get; private set; }
+        public decimal Price { get; private set; }
 
         /// <summary>
-        /// ظرفیت سانس
-        /// </summary>
-        public int QuantityInStock { get;private set; }
-
-        /// <summary>
-        /// فضای دردسترس :
-        /// </summary>
-        public decimal AvailableCapacity { get; private set; }
-
-        /// <summary>
-        /// چک کننده ی وجود داشتن سانس 
+        /// وجود داشتن سانس 
         /// </summary>
         public bool IsExist { get; private set; }
- 
-        public void FunTypeSet(FunType eFunType)
+    }
+
+    public class Percent
+    {
+
+        public static Percent Empty => new Percent(0);
+
+        public Percent(int value)
         {
-            EFunType = eFunType;
+            Validate(value);
+            Value = value;
+            Id=Guid.NewGuid();
         }
+
+        public Guid Id { get; private set; }
+        public int Value { get; private set; }
+
+
+        public void Validate(int value)
+        {
+            if (value > 100 || value <= 0)
+                throw new Exception();
+        }
+
+
+
+        public static Percent operator +(Percent p1, Percent p2)
+        {
+            return new Percent(p1.Value + p2.Value);
+        }
+
     }
 }
