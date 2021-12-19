@@ -5,9 +5,10 @@ namespace Domain.Models
     public class Schedule
     {
         public Schedule
-            (DateTime date, TimeSpan start, TimeSpan end, decimal price)
+            (DateTime date, TimeSpan start, TimeSpan end, decimal price, Guid funId)
         {
             Price = price;
+            FunId = funId;
             Id = Guid.NewGuid();
             Date = date.Add(start);
             StartTime = start;
@@ -16,9 +17,12 @@ namespace Domain.Models
             IsExist = true;
         }
 
-        private Schedule() { }
+        private Schedule(Guid funId)
+        {
+            FunId = funId;
+        }
 
-
+        public Guid FunId { get; private set; }
         public Guid Id { get; private set; }
 
         /// <summary>
