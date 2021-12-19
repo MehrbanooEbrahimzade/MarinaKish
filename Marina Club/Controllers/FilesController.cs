@@ -14,34 +14,34 @@ namespace Marina_Club.Controllers
     [ApiController]
     public class FilesController : ApiController
     {
-        //private readonly IFileService _fileService;
-        //public FilesController(IFileService fileService)
-        //{
-        //    _fileService = fileService;
-        //}
+        private readonly IFileService _fileService;
+        public FilesController(IFileService fileService)
+        {
+            _fileService = fileService;
+        }
 
-        ///// <summary>
-        ///// اپلود کردن فایل
-        ///// </summary>
-        //[HttpPost("Upload")]
-        //public async Task<IActionResult> UploadFileAsync(IFormFile file)
-        //{
-        //    var result = await _fileService.UploadFileAsync(file);
+        /// <summary>
+        /// اپلود کردن فایل
+        /// </summary>
+        [HttpPost("Upload")]
+        public async Task<IActionResult> UploadFileAsync(IFormFile file)
+        {
+            var result = await _fileService.UploadFileAsync(file);
 
-        //    return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult
-        //        (ApiMessage.OkFileAdd, new { Id = $"{result}" });
-        //}
+            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult
+                (ApiMessage.OkFileAdd, new { Id = $"{result}" });
+        }
 
-        ///// <summary>
-        ///// دانلود فایل
-        ///// </summary>
+        /// <summary>
+        /// دانلود فایل
+        /// </summary>
         //[HttpGet("Download/{id}")]
         //public async Task<IActionResult> DownloadFileAsync(Guid id)
         //{
         //    var myFile = await _fileService.GetFileById(id);
 
         //    return myFile == null ? BadReq(ApiMessage.PicNotExist)
-        //        : File(memory, GetContentType(myFile.FilePath), myFile.Name);
+        //        : MyFile(memory, GetContentType(myFile.FilePath), myFile.Name);
         //    return null;
         //}
 

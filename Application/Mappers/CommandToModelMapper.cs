@@ -73,13 +73,7 @@ namespace Application.Mappers
         }
 
 
-        public static File ToModel(this List<string> fileProps)
-        {
-            return new File(fileProps[0], fileProps[1])
-            {
-                Size = fileProps[3]
-            };
-        }
+
 
         public static Conversation ToModel(this AddConversationCommand command)
         {

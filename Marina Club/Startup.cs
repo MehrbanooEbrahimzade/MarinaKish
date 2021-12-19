@@ -62,9 +62,9 @@ namespace Marina_Club
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
-            // AddScoped for File model
-            //services.AddScoped<IFileService, FileService>();
-            //services.AddScoped<IFileRepository, FileRepository>();
+            //AddScoped for MyFile model
+            services.AddScoped<IFileService, FileService>();
+           services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();

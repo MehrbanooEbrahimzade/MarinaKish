@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Application.Commands.Files;
-using Application.Commands.Fun;
-using Application.Dtos;
-using Domain.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.interfaces
 {
     public interface IFileService
     {
-        ///// <summary>
-        ///// اپلود کردن عکس
-        ///// </summary>
-        //Task<Guid?> UploadFileAsync(IFormFile file);
-        
+        /// <summary>
+        /// اپلود کردن عکس
+        /// </summary>
+        Task<Guid?> UploadFileAsync(IFormFile file); 
+
         ///// <summary>
         ///// دریافت عکس با آی دی
         ///// </summary>
-        ////Task<File> GetFileById(Guid id);
+        ////Task<MyFile> GetFileById(Guid id);
         //Task GetFileById(Guid id);
 
         ///// <summary>

@@ -65,7 +65,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("CreditCards");
                 });
 
-            modelBuilder.Entity("Domain.Models.File", b =>
+            modelBuilder.Entity("Domain.Models.MyFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();

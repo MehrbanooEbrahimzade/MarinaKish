@@ -9,18 +9,15 @@ namespace Domain.Models
         {
             Price = price;
             Id = Guid.NewGuid();
-            Start = AddTimeToDate(start, date);
-            End = AddTimeToDate(end, date);
+            Date = date.Add(start);
+            StartTime = start;
+            EndTime = end;
             Discount = Percent.Empty;
             IsExist = true;
         }
 
         private Schedule() { }
 
-        public DateTime AddTimeToDate(TimeSpan time , DateTime date)
-        {
-            return date.Add(time);
-        }
 
         public Guid Id { get; private set; }
 
@@ -28,16 +25,20 @@ namespace Domain.Models
         /// تخفیف
         /// </summary>
         public Percent Discount { get; private set; }
+        /// <summary>
+        ///  ساعت شروع سانس
+        /// </summary>
+        public TimeSpan StartTime { get; private set; }
 
         /// <summary>
-        ///  شروع سانس
+        /// ساعت پایان سانس
         /// </summary>
-        public DateTime Start { get; private set; }
+        public TimeSpan EndTime { get; private set; }
 
         /// <summary>
-        /// پایان سانس
+        ///  تاریخ سانس
         /// </summary>
-        public DateTime End { get; private set; }
+        public DateTime Date { get; private set; }
 
         /// <summary>
         /// قیمت

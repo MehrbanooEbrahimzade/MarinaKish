@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Infrastructure.Persist;
 using Infrastructure.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,10 @@ namespace Infrastructure.Repository.classes
 {
     public class MarineCoinTransferRepository : BaseRepository, IMarineCoinTransferRepository
     {
-        //        public MarineCoinTransferRepository(DatabaseContext context) : base(context)
-        //        {
+        public MarineCoinTransferRepository(DatabaseContext context) : base(context)
+        {
 
-        //        }
+        }
 
         //        /// <summary>
         //        /// اضافه کردن تراکنش سکه دریایی

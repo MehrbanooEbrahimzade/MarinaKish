@@ -1,60 +1,59 @@
 ﻿using System.Threading.Tasks;
 using System.IO;
 using System;
-using System.Collections.Generic;
-using Application.Commands.Files;
-using Application.Commands.Fun;
+using System.Linq;
 using Application.Dtos;
-using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.Models;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
+
 
 namespace Application.Services.classes
 {
     public class FileService : IFileService
     {
-        //private readonly IFileRepository _fileRepository;
-        //public FileService(IFileRepository fileRepository)
-        //{
-        //    _fileRepository = fileRepository;
-        //}
+        private readonly IFileRepository _fileRepository;
+        public FileService(IFileRepository fileRepository)
+        {
+            _fileRepository = fileRepository;
+        }
 
-        ///// <summary>
-        ///// اپلود کردن عکس
-        ///// </summary>
-        //public async Task<Guid?> UploadFileAsync(IFormFile file)
-        //{
-        //    var fileName = NameGenerator(file.FileName);
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+        /// <summary>
+        /// اپلود کردن عکس
+        /// </summary>
+        public async Task<Guid?> UploadFileAsync(IFormFile file)
+        {
+            var fileName= NameGenerator(file.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+            var size = file.Length;
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
 
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
-
-        //   var file = new file()
+            var newFile = new MyFile(filePath, fileName, size);
 
 
-        //    var addedFileResult = await _fileRepository.UploadFileAsync(fileObj);
+             await _fileRepository.UploadFileAsync(newFile);
 
-        //    if (addedFileResult)
-        //        return fileObj.Id;
+            //if (addedFileResult)
+            //    
+            return newFile.Id;
+            //return null;
+        }
 
-        //    return null;
-        //}
+        /// <summary>
+        /// دریافت عکس با آی دی
+        /// </summary>
+        //public async Task<MyFile> GetFileById(Guid id)
 
-        ///// <summary>
-        ///// دریافت عکس با آی دی
-        ///// </summary>
-        ////public async Task<File> GetFileById(Guid id)
-
-        //public async Task GetFileById(Guid id)
+        //public async Task<MyFile> GetFileById(Guid id)
         //{
 
         //    var file = await _fileRepository.GetFileById(id);
 
-        //    //if (file == null || !System.IO.File.Exists(file.FilePath))
+        //    //if (file == null || !System.IO.MyFile.Exists(file.FilePath))
         //    // return null;
 
         //    var memoryStream = new MemoryStream();
@@ -64,26 +63,26 @@ namespace Application.Services.classes
         //        await fileStream.CopyToAsync(memoryStream);
         //    }
         //    memoryStream.Position = 0;
-            //GetContentType()
-            //dto konamesh
+
+
         //}
 
-        //        /// <summary>
-        //        /// دانلود عکس
-        //        /// </summary>
-        //        public async Task DownloadFile(FileStream stream, MemoryStream memory)
-        //        {
-        //            await _fileRepository.DownloadFile(stream, memory);
-        //        }
+        /// <summary>
+        /// دانلود عکس
+        /// </summary>
+        public async Task DownloadFile(FileStream stream, MemoryStream memory)
+        {
+            await _fileRepository.DownloadFile(stream, memory);
+        }
 
-        //        /// <summary>
-        //        /// گرفتن عکس با اسم عکس
-        //        /// </summary>
-        //        public async Task<FilesDto> GetImageByName(string fileName)
-        //        {
-        //            var file = await _fileRepository.GetImageByName(fileName);
-        //            return file.ToDto();
-        //        }
+        /// <summary>
+        /// گرفتن عکس با اسم عکس
+        /// </summary>
+        //public async Task<FilesDto> GetImageByName(Guid fileId)
+        //{
+        //    var file = await _fileRepository.GetFileById(fileId);
+        //    return file.ToDto();
+        //}
 
         //        /// <summary>
         //        /// پاک کردن فایل
@@ -107,7 +106,7 @@ namespace Application.Services.classes
         //                return null;
 
         //            file.UserID = command.UserID.ToString();
-        //            await _fileRepository.UpdateFileAsync();
+        //            await _fileRepository.SaveChanges();
 
         //            List<string> UserPicsList = new List<string>();
         //            var userPics = await _fileRepository.GetAllPicForUser(command.UserID.ToString());
@@ -132,7 +131,7 @@ namespace Application.Services.classes
         //                return null;
 
         //            file.FunID = command.FunId.ToString();
-        //            await _fileRepository.UpdateFileAsync();
+        //            await _fileRepository.SaveChanges();
 
         //            List<string> FunPicsList = new List<string>();
         //            var funPics = await _fileRepository.GetAllPicForFun(command.FunId.ToString());
@@ -155,7 +154,7 @@ namespace Application.Services.classes
         //                return null;
 
         //            file.ScheduleID = command.ScheduleID.ToString();
-        //            await _fileRepository.UpdateFileAsync();
+        //            await _fileRepository.SaveChanges();
 
         //            List<string> SchedulePicsList = new List<string>();
         //            var schedulePics = await _fileRepository.GetAllPicForSchedule(command.ScheduleID.ToString());
@@ -230,7 +229,7 @@ namespace Application.Services.classes
         //            if (pic == null)
         //                return false;
         //            pic.IsActive = false;
-        //            return await _fileRepository.UpdateFileAsync();
+        //            return await _fileRepository.SaveChanges();
         //        }
 
         //        /// <summary>
@@ -242,20 +241,20 @@ namespace Application.Services.classes
         //            if (pic == null)
         //                return false;
         //            pic.IsActive = true;
-        //            return await _fileRepository.UpdateFileAsync();
+        //            return await _fileRepository.SaveChanges();
         //        }
 
-        //        #region Private_Methods
-        //        private string NameGenerator(string filename)
-        //        {
+        #region Private_Methods
+        private string NameGenerator(string filename)
+        {
 
-        //            var fileArray = filename.Split(".");
-        //            var constName = $"{fileArray[0]}MR";
-        //            var randomNumber = new Random().Next(100, 100000).ToString();
+            var fileArray= filename.Split(".").ToList();
+            var constName = $"{fileArray[0]}MR";
+            var randomNumber = new Random().Next(100, 100000).ToString();
 
-        //            return constName + randomNumber + "." + fileArray[1];
-        //        }
+            return constName + randomNumber + "." + fileArray.Last();
+        }
 
-        //#endregion
+        #endregion
     }
 }

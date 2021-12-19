@@ -12,10 +12,10 @@ namespace Infrastructure.Repository.classes
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        //public UserRepository(DatabaseContext context) : base(context)
-        //{
+        public UserRepository(DatabaseContext context) : base(context)
+        {
 
-        //}
+        }
 
         ///// <summary>
         ///// چک کردن unique بودن نام کاربری
@@ -123,13 +123,13 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// گرفتن فایل با آیدی
         ///// </summary>
-        //public async Task<File> GetFileById(Guid id)
+        //public async Task<MyFile> GetFileById(Guid id)
         //{
         //    return await _context.Files
         //        .SingleOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         //}
 
-        
+
         //    /// <summary>
         //    /// دریافت همه بلیط های خریده شده یا لغو شده کاربر
         ////    /// </summary>

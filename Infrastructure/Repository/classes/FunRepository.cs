@@ -12,10 +12,10 @@ namespace Infrastructure.Repository.classes
 {
     public class FunRepository : BaseRepository, IFunRepository
     {
-        //public FunRepository(DatabaseContext context) : base(context)
-        //{
+        public FunRepository(DatabaseContext context) : base(context)
+        {
 
-        //}
+        }
 
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح
@@ -83,7 +83,7 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// دریافت فایل با آیدی
         ///// </summary>
-        //public async Task<File> GetFileById(Guid fileid)
+        //public async Task<MyFile> GetFileById(Guid fileid)
         //{
         //    return await _context.Files
         //        .SingleOrDefaultAsync(x => x.Id == fileid && x.IsActive == true);
@@ -129,7 +129,7 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// گرفتن تفریح غیر فعال باایدی 
         ///// </summary>
-        
+
         //public async Task<Fun> GetDisActiveFunById(Guid id)
         //{
         //    return await _context.Funs

@@ -66,7 +66,7 @@ namespace Infrastructure.Repository.interfaces
         //        /// <summary>
         //        /// گرفتن فایل با آیدی
         //        /// </summary>
-        //        Task<File> GetFileById(Guid id);
+        //        Task<MyFile> GetFileById(Guid id);
 
         //        /// <summary>
         //        /// دریافت همه بلیط های خریده شده یا لغو شده کاربر

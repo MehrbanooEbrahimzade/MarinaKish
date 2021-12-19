@@ -56,7 +56,7 @@ namespace Infrastructure.Repository.interfaces
         ///// <summary>
         ///// دریافت فایل با آیدی
         ///// </summary>
-        //Task<File> GetFileById(Guid fileid);
+        //Task<MyFile> GetFileById(Guid fileid);
 
         ///// <summary>
         ///// دریافت همه تفریح های فعال
