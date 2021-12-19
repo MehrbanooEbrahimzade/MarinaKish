@@ -1,112 +1,72 @@
 ﻿using Application.Commands.User;
-using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Infrastructure.Extensions;
-using Infrastructure.Persist;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Application.Dtos;
 using Infrastructure.Repository.interfaces;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Formatting;
+using System.Net.Http;
 
 namespace Application.Services.classes
 {
-    //public class IdentityService : IIdentityService
-    //{
-    //    private readonly UserManager<User> _userManager;
-    //    private readonly RoleManager<IdentityRole> _roleManager;
-    //    private readonly SignInManager<User> _SignInManager;
-    //    private readonly IUserRepository _userRepository;
-    //    private readonly IUserRepository2 _userRepository2;
-    //    public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-    //        , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
-    //    {
-    //        _userManager = userManager;
-    //        _roleManager = roleManager;
-    //        _SignInManager = signInManager;
-    //        _userRepository2 = userRepository2;
-    //        _userRepository = userRepository;
 
-    //    }
     public class IdentityService : IIdentityService
     {
-        //private readonly UserManager<User> _userManager;
-        //private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly SignInManager<User> _SignInManager;
-        //private readonly IUserRepository _userRepository;
-        //private readonly IUserRepository2 _userRepository2;
-        //public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-        //    , IUserRepository2 userRepository2, IUserRepository userRepository, SignInManager<User> signInManager)
-        //{
-        //    _userManager = userManager;
-        //    _roleManager = roleManager;
-        //    _SignInManager = signInManager;
-        //    _userRepository2 = userRepository2;
-        //    _userRepository = userRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _SignInManager;
+        private readonly IUserRepository _userRepository;
+        private static readonly HttpClient client = new HttpClient();
 
-        //}
+        public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
+            , IUserRepository userRepository, SignInManager<User> signInManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _SignInManager = signInManager;
+            _userRepository = userRepository;
 
+        }
 
+        public async Task RegisterAsync(RegisterUserCommand command)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == command.PhoneNumber);
+            if (user == null)
+            {
+                user = new User(command.PhoneNumber);
+                var result =  _userManager.CreateAsync(user, user.PhoneNumber);
+            }
 
-        //        public async Task<List<string>> GetPhoneAndSetVerifyCode(GetPhoneAndSetVerifyCodeCommand command)
-        //        {
-        //            var isPhoneExist = await _userRepository.IsPhoneExist(command.PhoneNumber);
-        //            List<string> ResultList = new List<string>();
-        //            if (!isPhoneExist)
-        //            {
-        //                var newUser = command.ToModel();
-        //                await _userRepository.UserSignUpAsync(newUser);
+            var code =await  _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
 
-        //                ResultList.Add("Register");
-        //                ResultList.Add(newUser.Id.ToString());
-        //                ResultList.Add(newUser.VerifyCode);
+            await SendSms(user.PhoneNumber, code);
+            return;
+        }
+        private async Task SendSms(string phoneNumber, string code)
+        {
+            try
+            {
 
-        //                return ResultList;
-        //            }
+                var values = new Dictionary<string, string> { { "PhoneNumber", phoneNumber }, { "Text", code } };
 
-        //            var user = await _userRepository.GetUserByPhone(command.PhoneNumber);
-        //            var randomVerify = new Random().Next(1000, 9999).ToString();
-        //            user.SetVerifycode(randomVerify);
+                var response = await client.PostAsync("http://194.36.174.133:5002/api/Notification/add", values, new JsonMediaTypeFormatter());
 
-        //            ResultList.Add("Login");
-        //            ResultList.Add(user.Id.ToString());
-        //            ResultList.Add(user.VerifyCode);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
 
-        //            await _userRepository.SaveChanges();
-        //            return ResultList;
-        //        }
-
-
-
-        //        public async Task<Result<string>> RegisterAsync(RegisterUserCommand command)
-        //        {
-
-        //            var user = new User
-        //            {
-        //                UserName = command.UserName,
-        //                PhoneNumber = command.PhoneNumber,
-
-        //            };
-        //            var result = await _userManager.CreateAsync(user, command.Password);
-        //            if (result.Succeeded)
-        //            {
-        //                return result.ToApplicationResult("", user.Id);
-        //            }
-        //            return result.ToApplicationResult("", user.Id);
-        //        }
-        //    public async Task<Result<string>> LoginAsync(UserLoginCommand command)
-        //    {
-        //                var result = await _SignInManager.PasswordSignInAsync(command.PhoneNumber, command.Password, false, false);
-        //                if (result.Succeeded)
-        //                {
-        //                    return result.ToApplicationResult("", command.PhoneNumber);
-        //                }
-        //                return result.ToApplicationResult("", phoneNumber);
-        //            }
-        //}
+            }
+        }
     }
+
 }
+

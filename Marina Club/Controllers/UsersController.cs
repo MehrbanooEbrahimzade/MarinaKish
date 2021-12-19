@@ -13,6 +13,19 @@ namespace Marina_Club.Controllers
     [ApiController]
     public class UsersController : ApiController
     {
+        private readonly IUserService _userService;
+        private readonly IIdentityService _identity;
+        public UsersController(IUserService userService, IIdentityService identity)
+        {
+            _userService = userService;
+            _identity = identity;
+        }
+        [HttpPost("Register")]
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
+        {
+            await _identity.RegisterAsync(command);
+            return Ok("کد تایید با موفقیت ارسال شد");
+        }
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
 

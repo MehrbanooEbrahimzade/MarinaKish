@@ -31,8 +31,18 @@ namespace Marina_Club
             //from DependencyInjectionPersist
             services.ConfigureApplicationPersistence(Configuration);
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 11;
+                options.Password.RequiredUniqueChars = 0;
+            });
             // AddScoped for users model(table)
+            services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -85,7 +95,7 @@ namespace Marina_Club
                 //app.UseHsts();
             }
 
-            provider.MigrateDatabases();
+            //provider.MigrateDatabases();
             //app.UseHttpsRedirection();
             app.UseMvc();
         }
