@@ -141,10 +141,10 @@ namespace Infrastructure.Repository.classes
         ///// </summary>
         //public async Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid funid)
         //{
-        //    return await _context.Schedules
-        //        .Where(x => x.FunId == funid && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
-        //        .OrderByDescending(x => x.ExecuteDateTime)
-        //        .ToListAsync();
+          //  return await _context.Schedules
+          //      .Where(x => x.FunId == funid && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
+          //     .OrderByDescending(x => x.ExecuteDateTime)
+          //      .ToListAsync();
         //}
 
         ///// <summary>

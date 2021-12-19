@@ -9,21 +9,13 @@ namespace Domain.Models
             string video, List<FunSliderPicture> sliderPictures, ScheduleInfo scheduleInfo)
         {
             Id = Guid.NewGuid();
-         
             Name = name;
-            
             Icon = icon;
-            
             BackgroundPicture = backgroundPicture;
-            
             Video = video;
-            
             SliderPictures = sliderPictures;
-            
             ScheduleInfo = scheduleInfo;
-            
             About = about;
-            
             IsActive = true;
         }
 
