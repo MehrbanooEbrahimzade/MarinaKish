@@ -11,10 +11,10 @@ namespace Infrastructure.Repository.classes
 {
     public class CommentRepository : BaseRepository, ICommentRepository
     {
-        //public CommentRepository(DatabaseContext context) : base(context)
-        //{
+        public CommentRepository(DatabaseContext context) : base(context)
+        {
 
-        //}
+        }
 
         ///// <summary>
         ///// اضافه کردن کامنت به تیبل
@@ -40,7 +40,7 @@ namespace Infrastructure.Repository.classes
         //{
         //    return await _context.SaveChangesAsync() > 0;
         //}
-        
+
         ///// <summary>
         ///// دریافت کامنت با فان آیدی
         ///// </summary>

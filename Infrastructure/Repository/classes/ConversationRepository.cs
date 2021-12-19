@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Infrastructure.Persist;
 using Infrastructure.Repository;
 using Infrastructure.Repository.interfaces;
 
@@ -11,10 +12,10 @@ namespace Infrastructure.Repository.classes
 {
     public class ConversationRepository : BaseRepository, IConversationRepository
     {
-        //        public ConversationRepository(DatabaseContext context) : base(context)
-        //        {
+        public ConversationRepository(DatabaseContext context) : base(context)
+        {
 
-        //        }
+        }
 
         //        /// <summary>
         //        /// اضافه کردن تالار گفتگو

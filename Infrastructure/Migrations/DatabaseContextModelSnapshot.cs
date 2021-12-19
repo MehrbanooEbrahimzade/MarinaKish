@@ -63,7 +63,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("CreditCards");
                 });
 
-            modelBuilder.Entity("Domain.Models.File", b =>
+            modelBuilder.Entity("Domain.Models.MyFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -146,7 +146,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("DiscountId");
 
-                    b.Property<TimeSpan>("EndTime");
+                    b.Property<TimeSpan>("End");
 
                     b.Property<DateTime>("ExecuteDate");
 
@@ -154,7 +154,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<TimeSpan>("StartTime");
+                    b.Property<TimeSpan>("Start");
 
                     b.HasKey("Id");
 
@@ -172,7 +172,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Duration");
 
-                    b.Property<TimeSpan>("EndTime");
+                    b.Property<TimeSpan>("End");
 
                     b.Property<int>("GapTime");
 
@@ -180,7 +180,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("PresenceCapacity");
 
-                    b.Property<TimeSpan>("StartTime");
+                    b.Property<TimeSpan>("Start");
 
                     b.Property<int>("TotalCapacity");
 
