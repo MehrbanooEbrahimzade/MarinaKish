@@ -5,40 +5,27 @@ namespace Domain.Models
 {
     public class Ticket
     {
-        public Ticket(string funType, Guid itemId, string phoneNumber)
+        public Ticket(string funType, string phoneNumber, WhereBuy whereBuy, Gender gender)
         {
             Id = Guid.NewGuid();
-           
             FunType = funType;
-            
-            ItemId = itemId;
-            
-            PhoneNumber = phoneNumber;
-            
-            Condition = Condition.InActive;
-            
+            Condition = Condition.Reservation;
             SubmitDate = DateTime.Now;
-            
-            WhereBuy = WhereBuy.Site;
+            WhereBuy = whereBuy;
+            Gender = gender;
         }
 
         private Ticket() { }
-
-        public Guid ItemId { get; private set; }
-
+        public User User { get; private set; }
+        public Schedule Schedule { get; private set; }
 
         public Guid Id { get; private set; }
-
-        /// <summary>
-        /// شماره تلفن همراه
-        /// </summary>
-        public string PhoneNumber { get; private set; }
 
         /// <summary>
         /// نوع تفریح :
         /// </summary>
         public string FunType { get; private set; }
-     
+
         /// <summary>
         /// وضعیت
         /// </summary>
@@ -53,5 +40,10 @@ namespace Domain.Models
         /// کجا خریداری شده
         /// </summary>
         public WhereBuy WhereBuy { get; private set; }
+
+        /// <summary>
+        /// جنسیت
+        /// </summary>
+        public Gender Gender { get;private set; }
     }
 }

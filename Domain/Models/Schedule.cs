@@ -1,25 +1,17 @@
 ﻿using System;
-using Domain.Enums;
 
 namespace Domain.Models
 {
     public class Schedule
     {
         public Schedule
-            ( DateTime executeDate, TimeSpan startTime, TimeSpan endTime, Gender gender)
+            (DateTime executeDate, TimeSpan startTime, TimeSpan endTime)
         {
             Id = Guid.NewGuid();
-            
-            EGender = gender;
-            
             StartTime = startTime;
-            
             EndTime = endTime;
-
             ExecuteDate = executeDate;
-
-            Discount = default;
-
+            Discount = Percent.Empty;
             IsExist = true;
         }
 
@@ -29,14 +21,9 @@ namespace Domain.Models
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// جنسیت
-        /// </summary>
-        public Gender EGender { get; private set; }
-
-        /// <summary>
         /// تخفیف
         /// </summary>
-        public decimal? Discount { get; private set; } 
+        public Percent Discount { get; private set; }
 
         /// <summary>
         /// ساعت شروع سانس
@@ -54,9 +41,44 @@ namespace Domain.Models
         public DateTime ExecuteDate { get; private set; }
 
         /// <summary>
+        /// قیمت
+        /// </summary>
+        public decimal Price { get; private set; }
+
+        /// <summary>
         /// وجود داشتن سانس 
         /// </summary>
         public bool IsExist { get; private set; }
+    }
+
+    public class Percent
+    {
+
+        public static Percent Empty => new Percent(0);
+
+        public Percent(int value)
+        {
+            Validate(value);
+            Value = value;
+            Id=Guid.NewGuid();
+        }
+
+        public Guid Id { get; private set; }
+        public int Value { get; private set; }
+
+
+        public void Validate(int value)
+        {
+            if (value > 100 || value <= 0)
+                throw new Exception();
+        }
+
+
+
+        public static Percent operator +(Percent p1, Percent p2)
+        {
+            return new Percent(p1.Value + p2.Value);
+        }
 
     }
 }

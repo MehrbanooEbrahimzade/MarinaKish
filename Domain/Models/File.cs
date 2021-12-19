@@ -10,13 +10,9 @@ namespace Domain.Models
         public File(string fileName, string filePath)
         {
             Id = Guid.NewGuid();
-            
             Name = fileName;
-            
             FilePath = filePath;
-            
             PlaceDate = DateTime.Now;
-            
         }
 
         private File() { }

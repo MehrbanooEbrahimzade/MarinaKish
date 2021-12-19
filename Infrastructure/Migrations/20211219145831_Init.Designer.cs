@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211217232051_Init")]
+    [Migration("20211219145831_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,7 +62,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CreditCard");
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("Domain.Models.File", b =>
@@ -100,11 +100,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("ScheduleInfoId");
 
+                    b.Property<Guid?>("ScheduleInfoId1");
+
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleInfoId");
+
+                    b.HasIndex("ScheduleInfoId1");
 
                     b.ToTable("Funs");
                 });
@@ -125,14 +129,24 @@ namespace Infrastructure.Migrations
                     b.ToTable("FunSliderPictures");
                 });
 
+            modelBuilder.Entity("Domain.Models.Percent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Percent");
+                });
+
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal?>("Discount");
-
-                    b.Property<int>("EGender");
+                    b.Property<Guid?>("DiscountId");
 
                     b.Property<TimeSpan>("EndTime");
 
@@ -140,21 +154,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("IsExist");
 
-                    b.Property<Guid?>("ScheduleInfoId");
-
-                    b.Property<Guid?>("ScheduleInfoId1");
+                    b.Property<decimal>("Price");
 
                     b.Property<TimeSpan>("StartTime");
 
-                    b.Property<Guid?>("TicketItemId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ScheduleInfoId");
-
-                    b.HasIndex("ScheduleInfoId1");
-
-                    b.HasIndex("TicketItemId");
+                    b.HasIndex("DiscountId");
 
                     b.ToTable("Schedules");
                 });
@@ -170,8 +176,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<TimeSpan>("EndTime");
 
-                    b.Property<Guid?>("FunId");
-
                     b.Property<int>("GapTime");
 
                     b.Property<int>("OnlineCapacity");
@@ -183,8 +187,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TotalCapacity");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FunId");
 
                     b.ToTable("ScheduleInfos");
                 });
@@ -198,45 +200,31 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("FunType");
 
-                    b.Property<Guid>("ItemId");
+                    b.Property<int>("Gender");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<Guid?>("ScheduleId");
+
+                    b.Property<Guid?>("ScheduleId1");
 
                     b.Property<DateTime>("SubmitDate");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.Property<int>("WhereBuy");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets");
-                });
+                    b.HasIndex("ScheduleId");
 
-            modelBuilder.Entity("Domain.Models.TicketItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<int>("QuantityInStock");
-
-                    b.Property<Guid?>("TicketId");
-
-                    b.Property<Guid?>("TicketId1");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TicketId");
-
-                    b.HasIndex("TicketId1");
+                    b.HasIndex("ScheduleId1");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TicketItems");
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -431,6 +419,10 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInfoId");
+
+                    b.HasOne("Domain.Models.ScheduleInfo")
+                        .WithMany()
+                        .HasForeignKey("ScheduleInfoId1");
                 });
 
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
@@ -442,39 +434,28 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
-                    b.HasOne("Domain.Models.ScheduleInfo")
-                        .WithMany("Schedules")
-                        .HasForeignKey("ScheduleInfoId");
-
-                    b.HasOne("Domain.Models.ScheduleInfo")
+                    b.HasOne("Domain.Models.Percent", "Discount")
                         .WithMany()
-                        .HasForeignKey("ScheduleInfoId1");
-
-                    b.HasOne("Domain.Models.TicketItem")
-                        .WithMany()
-                        .HasForeignKey("TicketItemId");
+                        .HasForeignKey("DiscountId");
                 });
 
-            modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>
+            modelBuilder.Entity("Domain.Models.Ticket", b =>
                 {
-                    b.HasOne("Domain.Models.Fun")
+                    b.HasOne("Domain.Models.Schedule", "Schedule")
                         .WithMany()
-                        .HasForeignKey("FunId");
-                });
+                        .HasForeignKey("ScheduleId");
 
-            modelBuilder.Entity("Domain.Models.TicketItem", b =>
-                {
-                    b.HasOne("Domain.Models.Ticket", "Ticket")
+                    b.HasOne("Domain.Models.Schedule")
                         .WithMany()
-                        .HasForeignKey("TicketId");
+                        .HasForeignKey("ScheduleId1");
 
-                    b.HasOne("Domain.Models.Ticket")
+                    b.HasOne("Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("TicketId1");
+                        .HasForeignKey("UserId");
 
                     b.HasOne("Domain.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>

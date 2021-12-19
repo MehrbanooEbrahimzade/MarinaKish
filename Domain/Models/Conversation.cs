@@ -9,13 +9,13 @@ namespace Domain.Models
         public Conversation(string title)
         {
             Id = Guid.NewGuid();
-           
+
             Title = title;
-            
+
             State = States.Open;
-            
+
             CreatedTime = DateTime.Now;
-            
+
             LastActivity = DateTime.Now;
 
         }
@@ -36,8 +36,8 @@ namespace Domain.Models
         /// <summary>
         /// وضعیت
         /// </summary>
-        public States State { get;private set; }
-       
+        public States State { get; private set; }
+
         /// <summary>
         /// زمان ساخته شدن
         /// </summary>
@@ -46,7 +46,7 @@ namespace Domain.Models
         /// <summary>
         /// آخرین فعالیت
         /// </summary>
-        public DateTime LastActivity { get;private set; }
+        public DateTime LastActivity { get; private set; }
 
     }
 }

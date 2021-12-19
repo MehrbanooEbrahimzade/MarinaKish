@@ -14,64 +14,59 @@ namespace Application.Services.classes
 {
     public class FileService : IFileService
     {
-        //        private readonly IFileRepository _fileRepository;
-        //        public FileService(IFileRepository fileRepository)
-        //        {
-        //            _fileRepository = fileRepository;
-        //        }
+        //private readonly IFileRepository _fileRepository;
+        //public FileService(IFileRepository fileRepository)
+        //{
+        //    _fileRepository = fileRepository;
+        //}
 
-        //        /// <summary>
-        //        /// اپلود کردن عکس
-        //        /// </summary>
-        //        public async Task<Guid?> UploadFileAsync(IFormFile file)
-        //        {
-        //            var fileName = NameGenerator(file.FileName);
-        //            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+        ///// <summary>
+        ///// اپلود کردن عکس
+        ///// </summary>
+        //public async Task<Guid?> UploadFileAsync(IFormFile file)
+        //{
+        //    var fileName = NameGenerator(file.FileName);
+        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
 
-        //            using (var stream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //                await file.CopyToAsync(stream);
-        //            }
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await file.CopyToAsync(stream);
+        //    }
 
-        //            var fileObj = new List<string>
-        //            {
-        //                fileName,
-        //                filePath,
-        //                file.Length.ToString()
-        //            }.ToModel();
+        //   var file = new file()
 
 
-        //            var addedFileResult = await _fileRepository.UploadFileAsync(fileObj);
+        //    var addedFileResult = await _fileRepository.UploadFileAsync(fileObj);
 
-        //            if (addedFileResult)
-        //                return fileObj.Id;
+        //    if (addedFileResult)
+        //        return fileObj.Id;
 
-        //            return null;
-        //        }
+        //    return null;
+        //}
 
-        //        /// <summary>
-        //        /// دریافت عکس با آی دی
-        //        /// </summary>
-        //        //public async Task<File> GetFileById(Guid id)
+        ///// <summary>
+        ///// دریافت عکس با آی دی
+        ///// </summary>
+        ////public async Task<File> GetFileById(Guid id)
 
-        //        public async Task GetFileById(Guid id)
-        //        {
+        //public async Task GetFileById(Guid id)
+        //{
 
-        //            var file = await _fileRepository.GetFileById(id);
+        //    var file = await _fileRepository.GetFileById(id);
 
-        //            //if (file == null || !System.IO.File.Exists(file.FilePath))
-        //               // return null;
+        //    //if (file == null || !System.IO.File.Exists(file.FilePath))
+        //    // return null;
 
-        //            var memoryStream = new MemoryStream();
+        //    var memoryStream = new MemoryStream();
 
-        //            using (var fileStream = new FileStream(file.FilePath, FileMode.Open , FileAccess.Read))
-        //            {
-        //                await fileStream.CopyToAsync(memoryStream);
-        //            }
-        //            memoryStream.Position = 0;
-        //            //GetContentType()
-        //            //dto konamesh
-        //        }
+        //    using (var fileStream = new FileStream(file.FilePath, FileMode.Open, FileAccess.Read))
+        //    {
+        //        await fileStream.CopyToAsync(memoryStream);
+        //    }
+        //    memoryStream.Position = 0;
+            //GetContentType()
+            //dto konamesh
+        //}
 
         //        /// <summary>
         //        /// دانلود عکس

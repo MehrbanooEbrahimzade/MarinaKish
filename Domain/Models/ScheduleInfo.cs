@@ -6,30 +6,19 @@ namespace Domain.Models
     public class ScheduleInfo
     {
 
-        public ScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration, 
+        public ScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
             int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount)
         {
-            Id = new Guid();
-          
+            Id = Guid.NewGuid();
             StartTime = startTime;
-            
             EndTime = endTime;
-            
             GapTime = gapTime;
-            
             Duration = duration;
-            
             TotalCapacity = totalCapacity;
-            
             PresenceCapacity = presenceCapacity;
-            
             OnlineCapacity = onlineCapacity;
-            
             Amount = amount;
         }
-
-
-        public List<Schedule> Schedules { get; private set; }
 
         public Guid Id { get; private set; }
 
@@ -74,7 +63,5 @@ namespace Domain.Models
         public decimal Amount { get; private set; }
 
 
-
-        private ScheduleInfo() { }
     }
 }

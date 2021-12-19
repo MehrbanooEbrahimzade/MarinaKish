@@ -15,20 +15,18 @@ namespace Infrastructure.Persist
         {
             modelBuilder
                 .Entity<User>(x => x.HasOne<CreditCard>())
-                .Entity<User>(x => x.HasMany<TicketItem>())
-                .Entity<TicketItem>(x => x.HasOne<Ticket>())
-                .Entity<Fun>(x=>x.HasMany<ScheduleInfo>())
+                .Entity<User>(x => x.HasMany<Ticket>())
+                .Entity<Fun>(x=>x.HasOne<ScheduleInfo>())
                 .Entity<Fun>(x => x.HasMany<Comment>())
-                .Entity<Schedule>(x => x.HasOne<TicketItem>())
-                .Entity<ScheduleInfo>(x => x.HasMany<Schedule>());
+                .Entity<Schedule>(x => x.HasMany<Ticket>());
 
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Fun> Funs { get; set; }
+        public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<ScheduleInfo> ScheduleInfos { get; set; }
-        public DbSet<TicketItem> TicketItems { get; set; }
         public DbSet<FunSliderPicture> FunSliderPictures { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
