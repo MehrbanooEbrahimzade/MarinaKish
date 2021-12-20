@@ -6,6 +6,7 @@ using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Services.interfaces;
+using Application.Validators.User;
 
 namespace Marina_Club.Controllers
 {
@@ -26,6 +27,25 @@ namespace Marina_Club.Controllers
             await _identity.RegisterAsync(command);
             return Ok("کد تایید با موفقیت ارسال شد");
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        {
+            //if (!command.Validate())
+            //{
+            //    return BadReq(ApiMessage.WrongCellPhone, new { Reason = "1-verify code must have 4 charachter, 2-cellphone must have 11 charachter (example : 09123456789)" });
+            //}
+
+
+            var login = _identity.LoginAsync(command);
+            //if (login == null)
+            //{
+            //    return BadReq(ApiMessage.WrongVerifyCode, new { Reasons = $"1-کد وارد شده صحیح نمی باشد, 2-شماره وارد شده صح" });
+            //}
+
+            return Ok("ورودتان موفقیت آمیز بود");
+        }
+
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
 
