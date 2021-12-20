@@ -80,29 +80,11 @@ namespace Application.Services.classes
                 throw;
             }
         }
-        public async Task<string> LoginAsync(UserLoginCommand command)
+        public async Task<bool> LoginAsync(UserLoginCommand command)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
-            if (result != true)
-            {
-                return "User Not Found ";
-            }
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
-            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
-            var tokenOption = new JwtSecurityToken(
-                issuer: "http://localhost:5005/",
-                claims: new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name,command.PhoneNumber),
-
-                },
-                expires: DateTime.Now.AddMinutes(150),
-                signingCredentials: signInCredintials
-
-                );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-            return (tokenString);
+            return result;
 
 
         }

@@ -8,6 +8,11 @@ using Application.Commands.User;
 using Application.Services.interfaces;
 using Application.Validators.User;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace Marina_Club.Controllers
 {
@@ -15,12 +20,14 @@ namespace Marina_Club.Controllers
     [ApiController]
     public class UsersController : ApiController
     {
+        private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        public UsersController(IUserService userService, IIdentityService identity)
+        public UsersController(IUserService userService, IIdentityService identity,IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
+            Configuration = configuration;
         }
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
@@ -31,8 +38,27 @@ namespace Marina_Club.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
-            await _identity.LoginAsync(command);
-            return OkResult(ApiMessage.UserLoggedIn);
+            var result = await _identity.LoginAsync(command);
+            if (!result)
+            {
+                return BadReq(ApiMessage.WrongVerifyCode);
+            }
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
+            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
+            var tokenOption = new JwtSecurityToken(
+                issuer: "http://localhost:5005/",
+                claims: new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,command.PhoneNumber),
+
+                },
+                expires: DateTime.Now.AddMinutes(150),
+                signingCredentials: signInCredintials
+
+                );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+            return OkResult(ApiMessage.UserLoggedIn, tokenString);
+
         }
         [HttpPut()]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
