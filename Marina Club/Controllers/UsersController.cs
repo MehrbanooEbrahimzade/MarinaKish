@@ -24,13 +24,13 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
             await _identity.RegisterAsync(command);
-            return Ok("کد تایید با موفقیت ارسال شد");
+            return OkResult(ApiMessage.verifyCodeSent);
         }
         [HttpPut()]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
         {
             await _identity.CompleteProfile(command);
-            return Ok("اطلاعات با موفقیت ذخیره شد ");
+            return OkResult(ApiMessage.ProfileUpdated);
         }
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();

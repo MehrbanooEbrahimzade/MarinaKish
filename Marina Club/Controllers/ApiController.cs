@@ -6,7 +6,7 @@ namespace Marina_Club.Controllers
     {
 
         /// <summary>
-        /// 
+        /// نتیجه ی عملیات موفق
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -18,7 +18,7 @@ namespace Marina_Club.Controllers
 
 
         /// <summary>
-        /// 
+        /// نتیجه ی عملیات موفق همراه با محتوا 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="content"></param>
@@ -30,7 +30,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// 
+        /// کد 400 همراه با پیام مورد نظر
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -39,7 +39,12 @@ namespace Marina_Club.Controllers
         {
             return BadRequest(new ResponseMessage(message, null));
         }
-
+        /// <summary>
+        /// کد 400 همراه با پیام و محتوا 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
         [NonAction]
         public IActionResult BadReq(string message, object content)
         {
