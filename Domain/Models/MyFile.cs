@@ -13,7 +13,6 @@ namespace Domain.Models
             Name = fileName;
             FilePath = filePath;
             Size = size;
-            PlaceDate = DateTime.Now;
         }
 
         private MyFile()
@@ -41,10 +40,6 @@ namespace Domain.Models
         /// </summary>
         public long Size { get;private set; }
 
-        /// <summary>
-        /// زمان اضافه شدن
-        /// </summary>
-        public DateTime PlaceDate { get; private set; }
 
     }
 }

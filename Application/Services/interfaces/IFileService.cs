@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Domain.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.interfaces
@@ -10,13 +11,12 @@ namespace Application.Services.interfaces
         /// <summary>
         /// اپلود کردن عکس
         /// </summary>
-        Task<Guid?> UploadFileAsync(IFormFile file); 
+        Task<Guid?> UploadFileAsync(IFormFile file);
 
-        ///// <summary>
-        ///// دریافت عکس با آی دی
-        ///// </summary>
-        ////Task<MyFile> GetFileById(Guid id);
-        //Task GetFileById(Guid id);
+        /// <summary>
+        /// دریافت عکس با آی دی
+        /// </summary>
+        Task<MyFile> GetFileById(Guid id);
 
         ///// <summary>
         ///// دانلود عکس
@@ -28,10 +28,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<FilesDto> GetImageByName(string fileName);
 
-        ///// <summary>
-        ///// پاک کردن فایل
-        ///// </summary>
-        //Task<bool> DeleteFileAsync(Guid id);
+        /// <summary>
+        /// پاک کردن فایل
+        /// </summary>
+        Task<bool> DeleteFileAsync(Guid id);
 
         ///// <summary>
         ///// اضافه کردن عکس پروفایل کاربر
@@ -63,14 +63,5 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<string>> GetAllPicForSchedule(Guid scheduleid);
 
-        ///// <summary>
-        ///// غیرفعال کردن عکس
-        ///// </summary>
-        //Task<bool> DisActivePicById(Guid id);
-
-        ///// <summary>
-        ///// دوباره فعال کردن عکس
-        ///// </summary>
-        //Task<bool> ReActivePicById(Guid id);
     }
 }

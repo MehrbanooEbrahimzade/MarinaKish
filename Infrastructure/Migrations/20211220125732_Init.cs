@@ -43,8 +43,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     FilePath = table.Column<string>(nullable: true),
-                    Size = table.Column<string>(nullable: true),
-                    PlaceDate = table.Column<DateTime>(nullable: false)
+                    Size = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,10 +151,11 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    FunId = table.Column<Guid>(nullable: false),
                     DiscountId = table.Column<Guid>(nullable: true),
                     StartTime = table.Column<TimeSpan>(nullable: false),
                     EndTime = table.Column<TimeSpan>(nullable: false),
-                    ExecuteDate = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     IsExist = table.Column<bool>(nullable: false)
                 },

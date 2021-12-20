@@ -27,53 +27,47 @@ namespace Application.Services.classes
             var fileName= NameGenerator(file.FileName);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
             var size = file.Length;
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-
-            var newFile = new MyFile(filePath, fileName, size);
-
+            var newFile = new MyFile(fileName, filePath, size);
 
              await _fileRepository.UploadFileAsync(newFile);
-
-            //if (addedFileResult)
-            //    
+             await _fileRepository.SaveChanges();
             return newFile.Id;
-            //return null;
         }
 
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        //public async Task<MyFile> GetFileById(Guid id)
-
-        //public async Task<MyFile> GetFileById(Guid id)
-        //{
-
-        //    var file = await _fileRepository.GetFileById(id);
-
-        //    //if (file == null || !System.IO.MyFile.Exists(file.FilePath))
-        //    // return null;
-
-        //    var memoryStream = new MemoryStream();
-
-        //    using (var fileStream = new FileStream(file.FilePath, FileMode.Open, FileAccess.Read))
-        //    {
-        //        await fileStream.CopyToAsync(memoryStream);
-        //    }
-        //    memoryStream.Position = 0;
-
-
-        //}
-
-        /// <summary>
-        /// دانلود عکس
-        /// </summary>
-        public async Task DownloadFile(FileStream stream, MemoryStream memory)
+        public async Task<MyFile> GetFileById(Guid id)
         {
-            await _fileRepository.DownloadFile(stream, memory);
+
+            var file = await _fileRepository.GetFileByIdAsync(id);
+
+            if (file == null )
+                return null;
+
+            var memoryStream = new MemoryStream();
+
+            using (var fileStream = new FileStream(file.FilePath, FileMode.Open))
+            {
+                await fileStream.CopyToAsync(memoryStream);
+            }
+            memoryStream.Position = 0;
+
+            return file;
         }
+        
+        ///// <summary>
+        ///// دانلود عکس
+        ///// </summary>
+        //public async Task DownloadFile(FileStream stream, MemoryStream memory)
+        //{
+        //    await _fileRepository.DownloadFile(stream, memory);
+        //}
 
         /// <summary>
         /// گرفتن عکس با اسم عکس
@@ -84,16 +78,20 @@ namespace Application.Services.classes
         //    return file.ToDto();
         //}
 
-        //        /// <summary>
-        //        /// پاک کردن فایل
-        //        /// </summary>
-        //        public async Task<bool> DeleteFileAsync(Guid id)
-        //        {
-        //            var file = await _fileRepository.GetFileById(id);
-        //            if (file == null)
-        //                return false;
-        //            return await _fileRepository.DeleteFileAsync(file);
-        //        }
+        /// <summary>
+        /// پاک کردن فایل
+        /// </summary>
+        public async Task<bool> DeleteFileAsync(Guid id)
+        {
+            var file = await _fileRepository.GetFileByIdAsync(id);
+            if (file == null)
+            {
+                throw new ArgumentNullException("فایل پیدا نشد");
+            }
+
+            await _fileRepository.DeleteFileAsync(file);
+            return await _fileRepository.SaveChanges();
+        }
 
         //        /// <summary>
         //        /// اضافه کردن عکس پروفایل کاربر
