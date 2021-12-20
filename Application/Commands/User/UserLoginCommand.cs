@@ -9,14 +9,13 @@ namespace Application.Commands.User
         /// <summary>
         /// شماره تلفن
         /// </summary>
-        public string CellPhone { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// کد تاییدH
         /// </summary>
-        public string Password { get; set; }
+        public string VerifyCode { get; set; }
 
-        public GetPhoneAndSetVerifyCodeCommand GetPhoneAndSetVerifyCodeCommand { get; set; }
 
         public override bool Validate()
         {
