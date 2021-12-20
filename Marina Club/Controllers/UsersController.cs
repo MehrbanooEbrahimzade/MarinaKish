@@ -13,6 +13,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
+using Infrastructure.Repository.interfaces;
 
 namespace Marina_Club.Controllers
 {
@@ -68,6 +69,12 @@ namespace Marina_Club.Controllers
         {
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
+        }
+        [HttpGet("User")]
+        public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
+        {
+            var user = await _userService.SearchByPhoneAsync(search);
+            return OkResult(ApiMessage.UserFound, user);
         }
 
         //private readonly IUserService _userService;

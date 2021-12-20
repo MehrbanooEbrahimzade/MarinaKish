@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Dtos;
+using Infrastructure.Repository.interfaces;
 
 namespace Application.Services.interfaces
 {
     public interface IUserService
     {
+        Task<UserDto> SearchByPhoneAsync(QuerySearch search);
         ////IncreaseUserWallet
         ///// <summary>
         ///// ثبت نام کاربر :

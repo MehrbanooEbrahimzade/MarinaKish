@@ -6,11 +6,23 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
+using Infrastructure.Repository.interfaces;
 
 namespace Application.Services.classes
 {
     public class UserService : IUserService
     {
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        public async Task<UserDto> SearchByPhoneAsync(QuerySearch search)
+        {
+            var user = await  _userRepository.SearchAsync(search);
+            return user.ToDto();
+        }
         //        private readonly IUserRepository _userRepository;
         //        public UserService(IUserRepository userRepository)
         //        {
@@ -222,5 +234,6 @@ namespace Application.Services.classes
         //            var userTickets = await _userRepository.AllBuyedOrCanceledUserTickets(id);
         //            return userTickets.Count;
         //        }
+
     }
 }
