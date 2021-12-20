@@ -77,23 +77,13 @@ namespace Application.Services.classes
         }
         public async Task LoginAsync(UserLoginCommand command)
         {
-            var search = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
-            if (search != null)
+            var user  = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
+            var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.Verfiycode, command.PhoneNumber);
+            if (result == true)
             {
-                var Users = new User(command.PhoneNumber);
-
-                var login = await _userManager
-                    .VerifyChangePhoneNumberTokenAsync(Users, command.Verfiycode, Users.PhoneNumber);
-                if (login == true)
-                {
-                    throw new Exception("کد وارد شده صحیح نمیباشد");
-                }
-                
+               
             }
-            else
-            {
-                throw new Exception("شماره تلفن وارد شده صحیح نمیباشد");
-            }
+            var secretkey = new
 
         }
 
