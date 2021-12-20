@@ -83,10 +83,12 @@ namespace Application.Services.classes
         public async Task<bool> LoginAsync(UserLoginCommand command)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
+            if (user == null)
+            {
+                throw new Exception("شماره وارد شده صحیح نمی باشد");}
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
+            if(result==false){throw new Exception("کد وارد شده صحیح نمی باشد ");}
             return result;
-
-
         }
 
         public async Task CompleteProfile(CompleteProfileCommand command)

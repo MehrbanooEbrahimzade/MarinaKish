@@ -39,10 +39,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
             var result = await _identity.LoginAsync(command);
-            if (!result)
-            {
-                return BadReq(ApiMessage.WrongVerifyCode);
-            }
+ 
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
