@@ -12,6 +12,10 @@ namespace Application.Mappers
 {
     public static class CommandToModelMapper
     {
+        public static CreditCard ToModel(this UpdateCreditCard command)
+        {
+            return new CreditCard(command.ShabaNumber, command.CardNumber,command.UserId);
+        }
         /// <summary>
         /// تبدیل کردن کامند به کاربر
         ///// </summary>

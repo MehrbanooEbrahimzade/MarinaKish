@@ -9,6 +9,8 @@ using Infrastructure.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Formatting;
 using System.Net.Http;
+using System.Linq;
+using Application.Mappers;
 
 namespace Application.Services.classes
 {
@@ -45,6 +47,7 @@ namespace Application.Services.classes
             await SendSms(user.PhoneNumber, code);
             return;
         }
+       
         private async Task SendSms(string phoneNumber, string code)
         {
             try
@@ -77,6 +80,17 @@ namespace Application.Services.classes
                 await _userManager.UpdateAsync(user);
             }
             return;
+        }
+
+        public async Task<User> UpdateProfileAsync(UpdateUserCommand command)
+        {
+            var user = _userManager.Users.SingleOrDefault(item => item.Id == command.Id.ToString());
+
+            user.UpdateProfile(command.FirstName, command.FirstName
+                             , command.NationalCode, command.BirthDay, command.CreditCard.ToModel());
+            await _userManager.UpdateAsync(user);
+            return user;
+            
         }
     }
 

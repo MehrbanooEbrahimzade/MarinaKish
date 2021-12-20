@@ -32,6 +32,13 @@ namespace Marina_Club.Controllers
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
+        [HttpPut("UpdateProfile/{id}")]
+        public async Task<IActionResult> UpdateProfile(UpdateUserCommand command)
+        {
+            await _identity.UpdateProfileAsync(command);
+            return OkResult(ApiMessage.ProfileUpdated);
+        }
+
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
 

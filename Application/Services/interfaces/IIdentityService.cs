@@ -1,4 +1,5 @@
 ﻿using Application.Commands.User;
+using Domain.Models;
 using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Application.Services.interfaces
     {
         Task RegisterAsync(RegisterUserCommand command);
         Task CompleteProfile(CompleteProfileCommand command);
+        Task<User> UpdateProfileAsync(UpdateUserCommand command);
     }
 }
