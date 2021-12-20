@@ -18,10 +18,10 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<MyFile> GetFileById(Guid id);
 
-        ///// <summary>
-        ///// دانلود عکس
-        ///// </summary>
-        //Task DownloadFile(FileStream stream, MemoryStream memory);
+        /// <summary>
+        /// دانلود عکس
+        /// </summary>
+        Task<byte[]> DownloadFile(Guid id);
 
         ///// <summary>
         ///// گرفتن عکس با اسم عکس

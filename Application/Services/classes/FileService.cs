@@ -14,9 +14,12 @@ namespace Application.Services.classes
     public class FileService : IFileService
     {
         private readonly IFileRepository _fileRepository;
-        public FileService(IFileRepository fileRepository)
+        private readonly IFunRepository _funRepository;
+
+        public FileService(IFileRepository fileRepository, IFunRepository funRepository)
         {
             _fileRepository = fileRepository;
+            _funRepository = funRepository;
         }
 
         /// <summary>
@@ -24,7 +27,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<Guid?> UploadFileAsync(IFormFile file)
         {
-            var fileName= NameGenerator(file.FileName);
+            var fileName = NameGenerator(file.FileName);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
             var size = file.Length;
 
@@ -34,9 +37,24 @@ namespace Application.Services.classes
             }
             var newFile = new MyFile(fileName, filePath, size);
 
-             await _fileRepository.UploadFileAsync(newFile);
-             await _fileRepository.SaveChanges();
+            await _fileRepository.UploadFileAsync(newFile);
+            await _fileRepository.SaveChanges();
             return newFile.Id;
+        }
+
+        /// <summary>
+        /// دانلود عکس
+        /// </summary>
+        public async Task<byte[]> DownloadFile(Guid id)
+        { 
+            var myFile = await _fileRepository.GetFileByIdAsync(id);
+
+            if (myFile == null)
+                return null;
+
+            var bytes = File.ReadAllBytes(myFile.FilePath);
+
+            return bytes;
         }
 
         /// <summary>
@@ -47,7 +65,7 @@ namespace Application.Services.classes
 
             var file = await _fileRepository.GetFileByIdAsync(id);
 
-            if (file == null )
+            if (file == null)
                 return null;
 
             var memoryStream = new MemoryStream();
@@ -60,23 +78,6 @@ namespace Application.Services.classes
 
             return file;
         }
-        
-        ///// <summary>
-        ///// دانلود عکس
-        ///// </summary>
-        //public async Task DownloadFile(FileStream stream, MemoryStream memory)
-        //{
-        //    await _fileRepository.DownloadFile(stream, memory);
-        //}
-
-        /// <summary>
-        /// گرفتن عکس با اسم عکس
-        /// </summary>
-        //public async Task<FilesDto> GetImageByName(Guid fileId)
-        //{
-        //    var file = await _fileRepository.GetFileById(fileId);
-        //    return file.ToDto();
-        //}
 
         /// <summary>
         /// پاک کردن فایل
@@ -90,8 +91,51 @@ namespace Application.Services.classes
             }
 
             await _fileRepository.DeleteFileAsync(file);
+
+            File.Delete(file.FilePath);
+
             return await _fileRepository.SaveChanges();
         }
+
+
+        /// <summary>
+        /// گرفتن همه عکس ها برای یک تفریح 
+        /// </summary>
+        //public async Task<byte[]> GetAllPicForFun(Guid funid)
+        //{
+
+        //    var myFile = await _fileRepository.GetFileByIdAsync(id);
+
+        //    if (myFile == null)
+        //        return null;
+
+        //    byte[] bytes = File.ReadAllBytes(myFile.FilePath);
+
+        //    return bytes;
+
+        //var pics = await _fileRepository.GetAllPicForFun(funid.ToString());
+        //if (pics == null)
+        //    return null;
+
+        //List<string> PicsResult = new List<string>();
+        //foreach (var pic in pics)
+        //{
+        //    PicsResult.Add(pic.Id.ToString());
+        //}
+
+        //return PicsResult;
+        //}
+
+        /// <summary>
+        /// گرفتن عکس با اسم عکس
+        /// </summary>
+        //public async Task<FilesDto> GetImageByName(Guid fileId)
+        //{
+        //    var file = await _fileRepository.GetFileById(fileId);
+        //    return file.ToDto();
+        //}
+
+
 
         //        /// <summary>
         //        /// اضافه کردن عکس پروفایل کاربر
@@ -164,23 +208,6 @@ namespace Application.Services.classes
         //            return SchedulePicsList;
         //        }
 
-        //        /// <summary>
-        //        /// گرفتن همه عکس ها برای یک تفریح 
-        //        /// </summary>
-        //        public async Task<List<string>> GetAllPicForFun(Guid funid)
-        //        {
-        //            var pics = await _fileRepository.GetAllPicForFun(funid.ToString());
-        //            if (pics == null)
-        //                return null;
-
-        //            List<string> PicsResult = new List<string>();
-        //            foreach (var pic in pics)
-        //            {
-        //                PicsResult.Add(pic.Id.ToString());
-        //            }
-
-        //            return PicsResult;
-        //        }
 
         //        /// <summary>
         //        /// گرفتن همه عکس ها برای یک کاربر
@@ -246,7 +273,7 @@ namespace Application.Services.classes
         private string NameGenerator(string filename)
         {
 
-            var fileArray= filename.Split(".").ToList();
+            var fileArray = filename.Split(".").ToList();
             var constName = $"{fileArray[0]}MR";
             var randomNumber = new Random().Next(100, 100000).ToString();
 
