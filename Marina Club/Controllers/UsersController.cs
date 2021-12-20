@@ -26,26 +26,25 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
             await _identity.RegisterAsync(command);
-            return Ok("کد تایید با موفقیت ارسال شد");
+            return OkResult(ApiMessage.verifyCodeSent);
         }
-
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
-            //if (!command.Validate())
-            //{
-            //    return BadReq(ApiMessage.WrongCellPhone, new { Reason = "1-verify code must have 4 charachter, 2-cellphone must have 11 charachter (example : 09123456789)" });
-            //}
-
-
-            var login = _identity.LoginAsync(command);
-            if (login == null)
-                return BadReq(ApiMessage.WrongCellPhone, new { Reason = "1-verify code must have 4 charachter, 2-cellphone must have 11 charachter (example : 09123456789)" });
-
-            else
-            {
-                return Ok("وروردتان موفقیت آمیز بود");
-            }
+            await _identity.LoginAsync(command);
+            return OkResult(ApiMessage.UserLoggedIn);
+        }
+        [HttpPut()]
+        public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
+        {
+            await _identity.CompleteProfile(command);
+            return OkResult(ApiMessage.ProfileUpdated);
+        }
+        [HttpPut("UpdateProfile/{id}")]
+        public async Task<IActionResult> UpdateProfile(UpdateUserCommand command)
+        {
+            await _identity.UpdateProfileAsync(command);
+            return OkResult(ApiMessage.ProfileUpdated);
         }
 
         //private readonly IUserService _userService;

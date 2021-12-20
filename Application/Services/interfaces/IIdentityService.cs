@@ -1,4 +1,5 @@
 ﻿using Application.Commands.User;
+using Domain.Models;
 using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace Application.Services.interfaces
     public interface IIdentityService 
     {
         Task RegisterAsync(RegisterUserCommand command);
-
-        Task LoginAsync(UserLoginCommand command);
-
+        Task<string> LoginAsync(UserLoginCommand command);
+        Task CompleteProfile(CompleteProfileCommand command);
+        Task<User> UpdateProfileAsync(UpdateUserCommand command);
     }
 }

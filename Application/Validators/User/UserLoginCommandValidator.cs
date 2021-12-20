@@ -12,9 +12,9 @@ namespace Application.Validators.User
                 .MinimumLength(11).WithMessage("شماره تلفن نمیتواند کمتر از 11 حرف باشد")
                 .NotNull().WithMessage("شماره تلفن خود را وارد کنید");
 
-            RuleFor(x => x.Verfiycode)
-                .MaximumLength(4).WithMessage("کد تایید بیشتر از 5 حرف وارد شده است")
-                .MinimumLength(4).WithMessage("کد تایید کمتر از 5 حرف وارد شده است")
+            RuleFor(x => x.VerifyCode)
+                .MaximumLength(6).WithMessage("کد تایید بیشتر از 6 حرف وارد شده است")
+                .MinimumLength(6).WithMessage("کد تایید کمتر از 6 حرف وارد شده است")
                 .NotNull().WithMessage("کد تایید را وارد کنید");
 
         }
