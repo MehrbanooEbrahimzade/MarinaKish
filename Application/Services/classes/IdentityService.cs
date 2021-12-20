@@ -4,16 +4,21 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Threading.Tasks;
 using Infrastructure.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Formatting;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Results;
 using Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
+using BadRequestResult = Microsoft.AspNetCore.Mvc.BadRequestResult;
 
 namespace Application.Services.classes
 {
@@ -68,36 +73,30 @@ namespace Application.Services.classes
             {
                 Console.WriteLine(e);
                 throw;
-
             }
         }
-
-        public async Task<string> LoginAsync(UserLoginCommand command)
+        public async Task LoginAsync(UserLoginCommand command)
         {
             var search = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
-            if (search!=null)
+            if (search != null)
             {
                 var Users = new User(command.PhoneNumber);
 
-                //User Users = new User(command.PhoneNumber);
                 var login = await _userManager
                     .VerifyChangePhoneNumberTokenAsync(Users, command.Verfiycode, Users.PhoneNumber);
                 if (login == true)
                 {
-                    return null;
+                    throw new Exception("کد وارد شده صحیح نمیباشد");
                 }
-                else
-                {
-                    string error = "کد وارد شده صحیح نمی باشد ";
-                    return error;
-                }
+                
             }
             else
             {
-                string error = "شماره وارد شده یافت نشد";
-                return error;
+                throw new Exception("شماره تلفن وارد شده صحیح نمیباشد");
             }
+
         }
+
     }
 
 }

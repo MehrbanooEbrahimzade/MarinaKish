@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Services.interfaces;
 using Application.Validators.User;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Marina_Club.Controllers
 {
@@ -38,12 +39,13 @@ namespace Marina_Club.Controllers
 
 
             var login = _identity.LoginAsync(command);
-            //if (login == null)
-            //{
-            //    return BadReq(ApiMessage.WrongVerifyCode, new { Reasons = $"1-کد وارد شده صحیح نمی باشد, 2-شماره وارد شده صح" });
-            //}
+            if (login == null)
+                return BadReq(ApiMessage.WrongCellPhone, new { Reason = "1-verify code must have 4 charachter, 2-cellphone must have 11 charachter (example : 09123456789)" });
 
-            return Ok("ورودتان موفقیت آمیز بود");
+            else
+            {
+                return Ok("وروردتان موفقیت آمیز بود");
+            }
         }
 
         //private readonly IUserService _userService;
