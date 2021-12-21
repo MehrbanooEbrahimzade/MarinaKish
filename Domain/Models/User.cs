@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading.Tasks;
 using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
@@ -32,8 +34,16 @@ namespace Domain.Models
         {
             FullName = GenerateFullName(firstName, lastName);
             NationalCode = nationalCode;
-            BirthDay = birthDay;
+            BirthDay = ConvertMiladiToShamsi(birthDay);
             CreditCard = creditCard;
+        }
+        public static  DateTime ConvertMiladiToShamsi(DateTime date)
+        {
+            PersianCalendar pc = new PersianCalendar();
+            
+            DateTime birthdate = new DateTime(date.Year,date.Month,date.Day, pc);
+            return birthdate;
+
         }
 
         public CreditCard CreditCard { get; private set; }
