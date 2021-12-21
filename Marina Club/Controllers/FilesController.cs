@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Application.Services.interfaces;
-using Domain.Models;
 using System.Net.Mime;
 
 namespace Marina_Club.Controllers
@@ -21,13 +20,14 @@ namespace Marina_Club.Controllers
 
         /// <summary>
         /// اپلود کردن فایل
+        /// (عکس و فیلم)
         /// </summary>
         [HttpPost("Upload")]
         public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
             var result = await _fileService.UploadFileAsync(file);
 
-            if (result==null)
+            if (result == null)
                 return BadReq(ApiMessage.PicNotAdd);
 
             return OkResult(ApiMessage.OkFileAdd, result);
@@ -48,6 +48,17 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
+        /// دانلود کردن فیلم
+        /// </summary>
+        [HttpGet("downloadMovie/{id}")]
+        public async Task<IActionResult> DownloadMovie(Guid id)//?
+        {
+            var file = await _fileService.GetFileById(id);
+            
+            return File(file.FilePath, "video/mp4");
+        }
+
+        /// <summary>
         /// پاک کردن فایل
         /// </summary>
         [HttpDelete("Delete/{id}")]
@@ -61,6 +72,59 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.FileDeleted);
 
         }
+
+
+        //[HttpGet]
+        //public ActionResult UploadVideo()
+        //{
+        //    List<MyFile> videolist = new List<MyFile>();
+        //    string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //    using (SqlConnection con = new SqlConnection(CS))
+        //    {
+        //        SqlCommand cmd = new SqlCommand("spGetAllVideoFile", con);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        con.Open();
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+
+
+        //        if (rdr.Read())
+        //        {
+        //            MyFile video = new MyFile(
+        //                rdr["Name"].ToString(),
+        //                rdr["FilePath"].ToString(),
+        //                Convert.ToInt64(rdr["FileSize"])
+        //            );
+        //            videolist.Add(video);
+        //        }
+        //    }
+        //    return View(videolist);
+        //}
+        //[HttpPost]
+        //public ActionResult UploadVideo(HttpPostedFileBase fileupload)
+        //{
+        //    if (fileupload != null)
+        //    {
+        //        string fileName = Path.GetFileName(fileupload.FileName);
+        //        int fileSize = fileupload.ContentLength;
+        //        int Size = fileSize / 1000;
+        //        fileupload.SaveAs(Server.MapPath("~/VideoFileUpload/" + fileName));
+
+        //        string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        //        using (SqlConnection con = new SqlConnection(CS))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("spAddNewVideoFile", con);
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            con.Open();
+        //            cmd.Parameters.AddWithValue("@Name", fileName);
+        //            cmd.Parameters.AddWithValue("@FileSize", Size);
+        //            cmd.Parameters.AddWithValue("FilePath", "~/VideoFileUpload/" + fileName);
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //    return RedirectToAction("UploadVideo");
+        //}
+
+
 
         ///// <summary>
         ///// گرفتن اطلاعات فایل
