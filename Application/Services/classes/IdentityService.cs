@@ -107,7 +107,7 @@ namespace Application.Services.classes
         {
             var user = _userManager.Users.SingleOrDefault(item => item.Id == command.Id.ToString());
 
-            user.UpdateProfile(command.FirstName, command.FirstName
+            user.UpdateProfile(command.FirstName, command.LastName
                              , command.NationalCode, command.BirthDay, command.CreditCard.ToModel());
             await _userManager.UpdateAsync(user);
             return user;

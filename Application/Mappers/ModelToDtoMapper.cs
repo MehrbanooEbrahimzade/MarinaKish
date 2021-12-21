@@ -18,6 +18,7 @@ namespace Application.Mappers
 
             return new UserDto
             {
+                Id = user.Id,
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
