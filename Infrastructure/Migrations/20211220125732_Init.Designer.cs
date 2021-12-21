@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211219145831_Init")]
+    [Migration("20211220125732_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,24 +65,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("CreditCards");
                 });
 
-            modelBuilder.Entity("Domain.Models.MyFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FilePath");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime>("PlaceDate");
-
-                    b.Property<string>("Size");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Files");
-                });
-
             modelBuilder.Entity("Domain.Models.Fun", b =>
                 {
                     b.Property<Guid>("Id")
@@ -129,6 +111,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("FunSliderPictures");
                 });
 
+            modelBuilder.Entity("Domain.Models.MyFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<string>("Name");
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Domain.Models.Percent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -146,17 +144,19 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<Guid?>("DiscountId");
 
-                    b.Property<TimeSpan>("End");
+                    b.Property<TimeSpan>("EndTime");
 
-                    b.Property<DateTime>("ExecuteDate");
+                    b.Property<Guid>("FunId");
 
                     b.Property<bool>("IsExist");
 
                     b.Property<decimal>("Price");
 
-                    b.Property<TimeSpan>("Start");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("Id");
 
@@ -174,7 +174,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Duration");
 
-                    b.Property<TimeSpan>("End");
+                    b.Property<TimeSpan>("EndTime");
 
                     b.Property<int>("GapTime");
 
@@ -182,7 +182,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("PresenceCapacity");
 
-                    b.Property<TimeSpan>("Start");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.Property<int>("TotalCapacity");
 
