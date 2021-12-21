@@ -16,6 +16,10 @@ namespace Application.Commands.User
         /// </summary>
         public string VerifyCode { get; set; }
 
+        /// <summary>
+        /// کد تاییدH
+        /// </summary>
+        public string id { get; set; }
 
         public override bool Validate()
         {

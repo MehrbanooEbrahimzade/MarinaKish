@@ -17,5 +17,6 @@ namespace Application.Services.interfaces
         Task<bool> LoginAsync(UserLoginCommand command);
         Task CompleteProfile(CompleteProfileCommand command);
         Task<User> UpdateProfileAsync(UpdateUserCommand command);
+        Task DeleteUser(UserLoginCommand command);
     }
 }
