@@ -4,14 +4,16 @@ using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("14000930114537_formyfile")]
+    partial class formyfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,46 +21,32 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Models.CashTransfer", b =>
+            modelBuilder.Entity("Domain.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<int>("DisLike");
 
-                    b.Property<bool>("IsSuccessful");
+                    b.Property<Guid>("FunId");
 
-                    b.Property<decimal>("MarineCoin");
+                    b.Property<int>("Like");
 
-                    b.Property<DateTime>("TransferDate");
+                    b.Property<int>("Status");
 
-                    b.Property<string>("TransferNumber");
+                    b.Property<DateTime>("SubmitDate");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("Text");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserName");
 
-                    b.ToTable("CashTransfer");
-                });
-
-            modelBuilder.Entity("Domain.Models.Conversation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime>("LastActivity");
-
-                    b.Property<int>("State");
-
-                    b.Property<string>("Title");
+                    b.Property<string>("UserPhoneNumber");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conversation");
+                    b.HasIndex("FunId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Domain.Models.CreditCard", b =>
@@ -67,8 +55,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CardNumber");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("ShabaNumber");
 
@@ -91,8 +77,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Icon");
 
                     b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name");
 
@@ -170,8 +154,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("FunId");
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<bool>("IsExist");
 
                     b.Property<decimal>("Price");
@@ -198,8 +180,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("GapTime");
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<int>("OnlineCapacity");
 
                     b.Property<int>("PresenceCapacity");
@@ -223,8 +203,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FunType");
 
                     b.Property<int>("Gender");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<Guid?>("ScheduleId");
 
@@ -320,29 +298,6 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Domain.Models.Writ", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime>("SubmitDate");
-
-                    b.Property<string>("Text");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Writ");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Writ");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -457,32 +412,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Comment", b =>
                 {
-                    b.HasBaseType("Domain.Models.Writ");
-
-                    b.Property<int>("DisLike");
-
-                    b.Property<Guid>("FunId");
-
-                    b.Property<int>("Like");
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("UserPhoneNumber");
-
-                    b.HasIndex("FunId");
-
-                    b.HasDiscriminator().HasValue("Comment");
-                });
-
-            modelBuilder.Entity("Domain.Models.Message", b =>
-                {
-                    b.HasBaseType("Domain.Models.Writ");
-
-                    b.Property<Guid>("ConversationId");
-
-                    b.Property<int>("MessageStatus");
-
-                    b.HasDiscriminator().HasValue("Message");
+                    b.HasOne("Domain.Models.Fun")
+                        .WithMany()
+                        .HasForeignKey("FunId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Models.Fun", b =>
@@ -582,14 +515,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Domain.Models.Comment", b =>
-                {
-                    b.HasOne("Domain.Models.Fun")
-                        .WithMany()
-                        .HasForeignKey("FunId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

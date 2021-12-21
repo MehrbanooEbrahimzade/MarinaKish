@@ -24,6 +24,17 @@ namespace Infrastructure.Persist
                 .Entity<Schedule>(x => x.HasMany<Ticket>());
 
             modelBuilder.Entity<User>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            modelBuilder.Entity<MyFile>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<CashTransfer>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Comment>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Conversation>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<CreditCard>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Fun>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Message>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Schedule>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<ScheduleInfo>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Ticket>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<Writ>().Property<bool>("IsDeleted");
 
 
             base.OnModelCreating(modelBuilder);
