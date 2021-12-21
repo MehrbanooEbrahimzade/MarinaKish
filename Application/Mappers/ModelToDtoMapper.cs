@@ -1,13 +1,34 @@
-﻿//using System.Collections.Generic;
-//using System.Globalization;
-//using System.Linq;
-//using Application.Dtos;
-//using Domain.Models;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using Application.Dtos;
+using Domain.Models;
+using MD.PersianDateTime.Core;
 
-//namespace Application.Mappers
-//{
-//    public static class ModelToDtoMapper
-//    {
+namespace Application.Mappers
+{
+    public static class ModelToDtoMapper
+    {
+        public static UserDto ToDto(this User user)
+        {
+            PersianCalendar persianParse = new PersianCalendar();
+
+            var persianBirthDate = string.Format("{0}/{1}/{2}",
+            persianParse.GetYear(user.BirthDay), persianParse.GetMonth(user.BirthDay), persianParse.GetDayOfMonth(user.BirthDay));
+
+            return new UserDto
+            {
+                Id = user.Id,
+                PhoneNumber = user.PhoneNumber,
+                FullName = user.FullName,
+                NationalCode = user.NationalCode,
+                BirthDate = persianBirthDate
+            };
+        }
+
+
+    }
+}
 //        /// <summary>
 //        /// تبدیل کردن کاربر به dto کاربر
 //        /// </summary>
@@ -59,7 +80,7 @@
 //            }).ToList();
 //        }
 
-       
+
 
 //        /// <summary>
 //        /// تبدیل کردن تفریح به dto تفریح

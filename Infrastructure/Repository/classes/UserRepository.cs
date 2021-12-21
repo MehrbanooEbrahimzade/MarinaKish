@@ -17,6 +17,11 @@ namespace Infrastructure.Repository.classes
 
         }
 
+        public Task<User> SearchAsync(QuerySearch search)
+        {
+            return _context.Users.FirstOrDefaultAsync(user => user.PhoneNumber == search.PhoneNumber);
+        }
+
         ///// <summary>
         ///// چک کردن unique بودن نام کاربری
         ///// </summary>

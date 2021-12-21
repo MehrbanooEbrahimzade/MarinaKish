@@ -11,28 +11,34 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// اپلود کردن عکس
         /// </summary>
-
-        Task UploadFileAsync(Domain.Models.MyFile pic);
+        Task UploadFileAsync(MyFile pic);
 
         /// <summary>
         /// دریافت عکس با آی دی
         /// </summary>
-        Task<Domain.Models.MyFile> GetFileById(Guid id);
+        Task<MyFile> GetFileByIdAsync(Guid id);
 
         /// <summary>
-        /// دانلود عکس
+        /// پاک کردن فایل
         /// </summary>
-        Task DownloadFile(FileStream stream, MemoryStream memory);
+        Task DeleteFileAsync(MyFile pic);
+
+        /// <summary>
+        /// ذخیره اعمال انجام شده
+        /// </summary>
+        Task<bool> SaveChanges();
+
+
+        ///// <summary>
+        ///// دانلود عکس
+        ///// </summary>
+        //Task DownloadFile(FileStream stream, MemoryStream memory);
 
         ///// <summary>
         ///// گرفتن عکس با اسم عکس
         ///// </summary>
         //Task<Domain.Models.MyFile> GetImageByName(string fileName);
 
-        /// <summary>
-        /// پاک کردن فایل
-        /// </summary>
-        Task<bool> DeleteFileAsync(Domain.Models.MyFile pic);
 
         ///// <summary>
         ///// گرفتن همه عکس ها برای یک تفریح 
@@ -54,9 +60,6 @@ namespace Infrastructure.Repository.interfaces
         ///// </summary>
         //Task<Domain.Models.MyFile> getNotActiveFileById(Guid id);
 
-        /// <summary>
-        /// ذخیره اعمال انجام شده
-        /// </summary>
-        Task<bool> SaveChanges();
+
     }
 }

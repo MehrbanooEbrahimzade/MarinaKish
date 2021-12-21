@@ -46,6 +46,7 @@ namespace Marina_Club
             });
             // AddScoped for users model(table)
             services.AddScoped<IIdentityService, IdentityService>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRepository2, UserRepository2>();

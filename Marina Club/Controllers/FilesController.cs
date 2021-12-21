@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using System.IO;
-using Microsoft.AspNetCore.StaticFiles;
-using Application.Commands.Files;
-using Application.Commands.Fun;
 using Application.Services.interfaces;
+using Domain.Models;
+using System.Net.Mime;
 
 namespace Marina_Club.Controllers
 {
@@ -14,6 +12,7 @@ namespace Marina_Club.Controllers
     [ApiController]
     public class FilesController : ApiController
     {
+
         private readonly IFileService _fileService;
         public FilesController(IFileService fileService)
         {
@@ -28,22 +27,114 @@ namespace Marina_Club.Controllers
         {
             var result = await _fileService.UploadFileAsync(file);
 
-            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult
-                (ApiMessage.OkFileAdd, new { Id = $"{result}" });
+            if (result==null)
+                return BadReq(ApiMessage.PicNotAdd);
+
+            return OkResult(ApiMessage.OkFileAdd, result);
         }
 
         /// <summary>
-        /// دانلود فایل
+        /// دانلود کردن عکس
         /// </summary>
-        //[HttpGet("Download/{id}")]
-        //public async Task<IActionResult> DownloadFileAsync(Guid id)
+        [HttpGet("Download/{id}")]
+        public async Task<IActionResult> DownloadAsync(Guid id)
+        {
+            var bytes = await _fileService.DownloadFile(id);
+
+            if (bytes == null)
+                throw new ArgumentNullException(ApiMessage.BadRequest);
+
+            return File(bytes, MediaTypeNames.Image.Jpeg);
+        }
+
+        /// <summary>
+        /// پاک کردن فایل
+        /// </summary>
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteFileAsync(Guid id)
+        {
+            var result = await _fileService.DeleteFileAsync(id);
+
+            if (!result)
+                return BadReq(ApiMessage.BadRequest);
+
+            return OkResult(ApiMessage.FileDeleted);
+
+        }
+
+        ///// <summary>
+        ///// گرفتن اطلاعات فایل
+        ///// </summary>
+        //[HttpGet("Info/{id}")]
+        //public async Task<MyFile> GetInfoAsync(Guid id)//?
         //{
         //    var myFile = await _fileService.GetFileById(id);
 
-        //    return myFile == null ? BadReq(ApiMessage.PicNotExist)
-        //        : MyFile(memory, GetContentType(myFile.FilePath), myFile.Name);
-        //    return null;
+        //    if (myFile == null)
+        //        throw new ArgumentNullException(ApiMessage.PicNotExist);
+
+        //    return myFile;
         //}
+
+        ///// <summary>
+        ///// گرفتن همه عکس های اسلایدی یک فان
+        ///// </summary>
+        //[HttpGet("AllPic/{id}")]
+        //public async Task<IActionResult> GetAllPic(Fun funId)
+        //{
+
+        //    var result = await _fileService.GetAllPicForUser(funId);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.UserNotHavePic, new { Reason = $"1-user with this id not found, 2-user with this id not have profile picture" });
+        //    return OkResult(ApiMessage.GetAllUserProfiles, new { UserPicturesCount = result.Count });
+        //}
+
+
+
+        ///// <summary>
+        ///// گرفتن همه عکس ها برای یک تفریح 
+        ///// </summary>
+        //[HttpGet("AllPicForFun/{id}")] // funID ( funs model )
+        //public async Task<IActionResult> GetAllPicForFun(Guid id)
+        //{
+        //    var result = await _fileService.GetAllPicForFun(id);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.FunNotHavePic, new { Reason = $"1-Fun with this id not found, 2-Fun with this id not have profile picture" });
+        //    return OkResult(ApiMessage.GetAllFunProfiles, new { FunPictures = result });
+        //}
+
+
+        //public async Task<HttpResponseMessage> GetFile(Guid id)
+        //{
+        //    //if (String.IsNullOrEmpty(id))
+        //    //    return await Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        //    var myFile = await _fileService.GetFileById(id);
+
+        //    string fileName = myFile.Name;
+        //    string localFilePath = myFile.FilePath;
+        //    long fileSize = myFile.Size;
+
+
+
+        //    //localFilePath = getFileFromID(id, out fileName, out fileSize);
+
+        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+        //    {
+        //        Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read))
+        //    };
+
+        //    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+        //    {
+        //        FileName = fileName
+        //    };
+
+        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/jpg");
+
+        //    return response;
+        //}
+
+
 
         ////[HttpGet("MusicDownload/{id}")]
 
@@ -72,17 +163,6 @@ namespace Marina_Club.Controllers
         //}
 
 
-        ///// <summary>
-        ///// پاک کردن فایل
-        ///// </summary>
-        //[HttpDelete("{id}/Delete")]
-        //public async Task<IActionResult> DeleteFileAsync(Guid id)
-        //{
-        //    var result = await _fileService.DeleteFileAsync(id);
-        //    if (!result)
-        //        return BadReq(ApiMessage.PicNotExist);
-        //    return OkResult(ApiMessage.FileDeleted, new { IsFileDeleted = result });
-        //}
 
         //#region UsersOptions
         ///// <summary>
@@ -113,17 +193,6 @@ namespace Marina_Club.Controllers
         //    return OkResult(ApiMessage.GetAllUserProfiles, new { UserPictures = result });
         //}
 
-        ///// <summary>
-        ///// گرفتن همه عکس ها برای یک کاربر
-        ///// </summary>
-        //[HttpGet("AllPicForUser-Count/{id}")] //userID ( users model )
-        //public async Task<IActionResult> GetAllPicForUserCount(Guid id)
-        //{
-        //    var result = await _fileService.GetAllPicForUser(id);
-        //    if (result == null)
-        //        return BadReq(ApiMessage.UserNotHavePic, new { Reason = $"1-user with this id not found, 2-user with this id not have profile picture" });
-        //    return OkResult(ApiMessage.GetAllUserProfiles, new { UserPicturesCount = result.Count });
-        //}
         //#endregion
 
         //#region FunOptions
@@ -141,18 +210,6 @@ namespace Marina_Club.Controllers
         //    if (result == null)
         //        return BadReq(ApiMessage.FunProfileNotAdded, new { Reason = $"1-eFun with this id not found, 2-file with this id not found" });
         //    return OkResult(ApiMessage.FunProfileAdded, new { FunPictures = result });
-        //}
-
-        ///// <summary>
-        ///// گرفتن همه عکس ها برای یک تفریح 
-        ///// </summary>
-        //[HttpGet("AllPicForFun/{id}")] // funID ( funs model )
-        //public async Task<IActionResult> GetAllPicForFun(Guid id)
-        //{
-        //    var result = await _fileService.GetAllPicForFun(id);
-        //    if (result == null)
-        //        return BadReq(ApiMessage.FunNotHavePic, new { Reason = $"1-Fun with this id not found, 2-Fun with this id not have profile picture" });
-        //    return OkResult(ApiMessage.GetAllFunProfiles, new { FunPictures = result });
         //}
 
         ///// <summary>

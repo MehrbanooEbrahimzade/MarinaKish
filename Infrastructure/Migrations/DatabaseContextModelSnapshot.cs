@@ -118,8 +118,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+<<<<<<< HEAD
                     b.Property<DateTime>("PlaceDate");
 
+=======
+>>>>>>> 600b247305fede0d0ab053fd29cebf2a787b1842
                     b.Property<long>("Size");
 
                     b.HasKey("Id");

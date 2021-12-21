@@ -22,7 +22,7 @@ namespace Domain.Models
             NationalCode = nationalCode;
         }
 
-        private static string GenerateFullName(string firstName, string lastName)
+        public static string GenerateFullName(string firstName, string lastName)
         {
             return firstName + " " + lastName;
         }
