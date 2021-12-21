@@ -6,6 +6,7 @@ using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
 using Application.Commands.User;
+using Application.Validators.User;
 using Domain.Models;
 
 namespace Application.Mappers
@@ -88,5 +89,7 @@ namespace Application.Mappers
         {
             return new Message(command.Username, command.Message, command.ConversationID);
         }
+
+   
     }
 }

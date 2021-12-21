@@ -15,7 +15,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -118,6 +118,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+<<<<<<< HEAD
+                    b.Property<DateTime>("PlaceDate");
+
+=======
+>>>>>>> 600b247305fede0d0ab053fd29cebf2a787b1842
                     b.Property<long>("Size");
 
                     b.HasKey("Id");
@@ -249,6 +254,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FullName");
 
                     b.Property<int>("Gender");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("LockoutEnabled");
 

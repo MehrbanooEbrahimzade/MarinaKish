@@ -1,6 +1,9 @@
-﻿using Domain.Models;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Persist
 {
@@ -16,9 +19,11 @@ namespace Infrastructure.Persist
             modelBuilder
                 .Entity<User>(x => x.HasOne<CreditCard>())
                 .Entity<User>(x => x.HasMany<Ticket>())
-                .Entity<Fun>(x=>x.HasOne<ScheduleInfo>())
+                .Entity<Fun>(x => x.HasOne<ScheduleInfo>())
                 .Entity<Fun>(x => x.HasMany<Comment>())
                 .Entity<Schedule>(x => x.HasMany<Ticket>());
+
+            modelBuilder.Entity<User>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
 
 
             base.OnModelCreating(modelBuilder);
@@ -32,5 +37,36 @@ namespace Infrastructure.Persist
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<MyFile> Files { get; set; }
+
+        public override int SaveChanges()
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void UpdateSoftDeleteStatuses()
+        {
+            foreach (EntityEntry entry in ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        break;
+                }
+            }
+        }
+
+
     }
 }

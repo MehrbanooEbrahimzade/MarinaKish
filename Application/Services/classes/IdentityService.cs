@@ -30,18 +30,20 @@ namespace Application.Services.classes
         private readonly SignInManager<User> _SignInManager;
         private readonly IUserRepository _userRepository;
         private IConfiguration Configuration;
+        private readonly IUserRepository2 _iuserRepository2;
 
         private static readonly HttpClient client = new HttpClient();
 
         public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
             , IUserRepository userRepository, SignInManager<User> signInManager
-            , IConfiguration configuration)
+            , IConfiguration configuration,IUserRepository2 iuserRepository2)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _SignInManager = signInManager;
             _userRepository = userRepository;
             Configuration = configuration;
+            _iuserRepository2 = iuserRepository2;
 
         }
 
@@ -85,9 +87,10 @@ namespace Application.Services.classes
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
             if (user == null)
             {
-                throw new Exception("شماره وارد شده صحیح نمی باشد");}
+                throw new Exception("شماره وارد شده صحیح نمی باشد");
+            }
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
-            if(result==false){throw new Exception("کد وارد شده صحیح نمی باشد ");}
+            if (result == false) { throw new Exception("کد وارد شده صحیح نمی باشد "); }
             return result;
         }
 
@@ -107,13 +110,20 @@ namespace Application.Services.classes
         {
             var user = _userManager.Users.SingleOrDefault(item => item.Id == command.Id.ToString());
 
-            user.UpdateProfile(command.FirstName, command.FirstName
+            user.UpdateProfile(command.FirstName, command.LastName
                              , command.NationalCode, command.BirthDay, command.CreditCard.ToModel());
             await _userManager.UpdateAsync(user);
             return user;
 
         }
 
+
+        public async Task DeleteUser(UserLoginCommand command)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==command.id);
+
+            _iuserRepository2.DeleteUser(user);
+        }
     }
 
 }

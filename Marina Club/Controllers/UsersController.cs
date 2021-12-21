@@ -13,6 +13,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
+using Infrastructure.Repository.interfaces;
 
 namespace Marina_Club.Controllers
 {
@@ -23,7 +24,7 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        public UsersController(IUserService userService, IIdentityService identity,IConfiguration configuration)
+        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
@@ -35,11 +36,15 @@ namespace Marina_Club.Controllers
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
+        /// <summary>
+        /// چک کردن رمز ورود و ورود کاربر 
+        /// </summary>
+
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
             var result = await _identity.LoginAsync(command);
- 
+
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
@@ -57,7 +62,7 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.UserLoggedIn, tokenString);
 
         }
-        [HttpPut()]
+        [HttpPut]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
         {
             await _identity.CompleteProfile(command);
@@ -69,6 +74,24 @@ namespace Marina_Club.Controllers
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
+        [HttpGet("Users")]
+        public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
+        {
+            var user = await _userService.SearchByPhoneAsync(search);
+            return OkResult(ApiMessage.UserFound, user);
+        }
+
+        /// <summary>
+        ///  حذف کاربر با آی دی
+        /// </summary>
+        [HttpDelete]
+        public async Task<IActionResult> RemoveUser(UserLoginCommand command)
+        {
+            await _identity.DeleteUser(command);
+            return Ok("کاربر با موفقیت حذف شد");
+        }
+
+
 
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
