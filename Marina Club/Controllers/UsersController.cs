@@ -23,7 +23,7 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        public UsersController(IUserService userService, IIdentityService identity,IConfiguration configuration)
+        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
@@ -35,11 +35,15 @@ namespace Marina_Club.Controllers
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
+        /// <summary>
+        /// چک کردن رمز ورود و ورود کاربر 
+        /// </summary>
+
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
             var result = await _identity.LoginAsync(command);
- 
+
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
@@ -69,6 +73,18 @@ namespace Marina_Club.Controllers
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
+
+        /// <summary>
+        ///  حذف کاربر با آی دی
+        /// </summary>
+        [HttpDelete]
+        public async Task<IActionResult> RemoveUser(UserLoginCommand command)
+        {
+            await _identity.DeleteUser(command);
+            return Ok("کاربر با موفقیت حذف شد");
+        }
+
+
 
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();

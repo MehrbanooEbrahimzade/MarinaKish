@@ -60,6 +60,12 @@ namespace Domain.Models
         /// </summary>
         public DateTime BirthDay { get; private set; }
 
+
+        /// <summary>
+        ///سافت دیلیت 
+        /// </summary>
+        public bool IsDeleted { get; private set; }
+
         private User() { }
 
     }

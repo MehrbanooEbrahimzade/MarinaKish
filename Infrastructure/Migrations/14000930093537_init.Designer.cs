@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211219145831_Init")]
-    partial class Init
+    [Migration("14000930093537_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -63,24 +63,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CreditCards");
-                });
-
-            modelBuilder.Entity("Domain.Models.MyFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FilePath");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime>("PlaceDate");
-
-                    b.Property<string>("Size");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Domain.Models.Fun", b =>
@@ -129,6 +111,24 @@ namespace Infrastructure.Migrations
                     b.ToTable("FunSliderPictures");
                 });
 
+            modelBuilder.Entity("Domain.Models.MyFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime>("PlaceDate");
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Domain.Models.Percent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -146,17 +146,19 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<Guid?>("DiscountId");
 
-                    b.Property<TimeSpan>("End");
+                    b.Property<TimeSpan>("EndTime");
 
-                    b.Property<DateTime>("ExecuteDate");
+                    b.Property<Guid>("FunId");
 
                     b.Property<bool>("IsExist");
 
                     b.Property<decimal>("Price");
 
-                    b.Property<TimeSpan>("Start");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("Id");
 
@@ -174,7 +176,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Duration");
 
-                    b.Property<TimeSpan>("End");
+                    b.Property<TimeSpan>("EndTime");
 
                     b.Property<int>("GapTime");
 
@@ -182,7 +184,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("PresenceCapacity");
 
-                    b.Property<TimeSpan>("Start");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.Property<int>("TotalCapacity");
 
@@ -251,6 +253,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FullName");
 
                     b.Property<int>("Gender");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("LockoutEnabled");
 
