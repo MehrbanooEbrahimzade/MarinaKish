@@ -1,54 +1,57 @@
-﻿using Application.Validators.Fun;
+﻿using Application.Commands.ScheduleInfo;
+using Application.Commands.SliderPictureFun;
+using Application.Validators.Fun;
 using Domain.Enums;
+using Domain.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Application.Commands.Fun
 {
     public class AddFunCommand : CommandBase
     {
-
         /// <summary>
-        /// اسامی تفریح
+        /// آیدی
         /// </summary>
-        public FunType EFunType { get; set; }
-
+        public Guid Id { get; set; }
+        
         /// <summary>
-        /// قیمت :
+        /// اسم تفریج
         /// </summary>
-        public decimal Price { get; set; }
-
+        public string Name { get; set; }
+        
         /// <summary>
-        /// زمان شروع :
+        /// اسلاید تفریحات
         /// </summary>
-        public string StartTime { get; set; }
-
+        public List<AddSliderPictureFunCommand> SliderPicture { get; set; }
+       
         /// <summary>
-        /// زمان پایان :
+        /// اطلاعات سانس
         /// </summary>
-        public string EndTime { get; set; }
-
+        public AddScheduleInfoCommand ScheduleInfo { get; set; }
+        
         /// <summary>
-        /// مدت زمان :
+        /// فیلم تفریح
         /// </summary>
-        public int SansDuration { get; set; }
-
+        public string Video { get; set; }
+        
         /// <summary>
-        /// کل فضای سانس
-        /// </summary>
-        public int SansTotalCapacity { get; set; }
-
-        /// <summary>
-        /// زمان استراحت بین 2 سانس :
-        /// </summary>
-        public int SansGapTime { get; set; }
-
-        /// <summary>
-        /// درباره ی تفریح
+        /// دربار تفریح
         /// </summary>
         public string About { get; set; }
-
+        
         /// <summary>
-        /// Command Validation
+        /// عکس بک گراند
         /// </summary>
+        public string BackgroundPicture { get; set; }
+        
+        /// <summary>
+        /// آیکون تفریح
+        /// </summary>
+        public string Icon { get; private set; }
+
+
+
         public override bool Validate()
         {
             return new AddFunCommandValidator().Validate(this).IsValid;

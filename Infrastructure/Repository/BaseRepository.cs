@@ -6,7 +6,6 @@ namespace Infrastructure.Repository
     {
         public BaseRepository()
         {
-            
         }
         protected readonly DatabaseContext _context;
         protected BaseRepository(DatabaseContext context)

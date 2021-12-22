@@ -1,6 +1,9 @@
 ﻿using Application.Validators.Fun;
 using System;
+using System.Collections.Generic;
+using Application.Commands.ScheduleInfo;
 using Domain.Enums;
+using Domain.Models;
 
 namespace Application.Commands.Fun
 {
@@ -14,40 +17,40 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسامی تفریح
         /// </summary>
-        public FunType FunType { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// قیمت :
+        /// اطلاعات سانس
         /// </summary>
-        public decimal Price { get; set; }
+        public UpdateScheduleInfoCommand ScheduleInfo { get; set; }
 
         /// <summary>
-        /// زمان شروع :
+        /// اسلاید عکس ها
         /// </summary>
-        public string StartTime { get; set; }
+        //public List<FunSliderPicture> PictureSlider { get; set; } ؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟
 
         /// <summary>
-        /// زمان پایان :
+        /// فیلم تفریج
         /// </summary>
-        public string EndTime { get; set; }
+        public string Video { get; set; }
 
         /// <summary>
-        /// 
+        /// فعال بودن
         /// </summary>
-        public int SansDuration { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
-        /// کل فضای سانس
+        /// عکس پس زمینه
         /// </summary>
-        public int SansTotalCapacity { get; set; }
+        public string BackgroundPicture { get; set; }
 
         /// <summary>
-        /// زمان استراحت بین 2 سانس :
+        /// آیکون
         /// </summary>
-        public int SansGapTime { get; set; }
-
+        public string Icon { get; private set; }
+       
         /// <summary>
-        /// درباره ی تفریح
+        /// دربار تفریح
         /// </summary>
         public string About { get; set; }
 
