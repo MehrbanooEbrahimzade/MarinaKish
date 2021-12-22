@@ -118,9 +118,9 @@ namespace Application.Services.classes
         }
 
 
-        public async Task DeleteUser(UserLoginCommand command)
+        public async Task DeleteUser(string id)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==command.id);
+            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
 
             _iuserRepository2.DeleteUser(user);
         }

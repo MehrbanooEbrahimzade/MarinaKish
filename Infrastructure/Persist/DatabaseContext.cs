@@ -35,8 +35,6 @@ namespace Infrastructure.Persist
             modelBuilder.Entity<ScheduleInfo>().Property<bool>("IsDeleted");
             modelBuilder.Entity<Ticket>().Property<bool>("IsDeleted");
             modelBuilder.Entity<Writ>().Property<bool>("IsDeleted");
-
-
             base.OnModelCreating(modelBuilder);
         }
 
