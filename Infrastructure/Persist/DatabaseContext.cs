@@ -45,7 +45,7 @@ namespace Infrastructure.Persist
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<MyFile> Files { get; set; }
+        public DbSet<MyFile> MyFiles { get; set; }
 
         public override int SaveChanges()
         {

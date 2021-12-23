@@ -54,7 +54,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> DownloadMovie(Guid id)//?
         {
             var bytes = await _fileService.DownloadFile(id);
-            
+
             return File(bytes, "video/mp4");
         }
 

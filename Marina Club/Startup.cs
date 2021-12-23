@@ -31,7 +31,6 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //from DependencyInjectionPersist
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
@@ -69,7 +68,7 @@ namespace Marina_Club
 
             //AddScoped for MyFile model
             services.AddScoped<IFileService, FileService>();
-           services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();
@@ -86,8 +85,6 @@ namespace Marina_Club
             // AddScoped for Sellers model
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<ISellerService, SellerService>();
-
-
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -112,15 +109,10 @@ namespace Marina_Club
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                //app.UseHsts();
-            }
 
-            //provider.MigrateDatabases();
-            //app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseMvc();
+            app.UseAuthentication();
+            provider.MigrateDatabases();
         }
     }
 }

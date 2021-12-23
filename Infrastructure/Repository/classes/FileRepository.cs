@@ -18,17 +18,17 @@ namespace Infrastructure.Repository.classes
 
         public async Task UploadFileAsync(MyFile pic)
         {
-              await _context.Files.AddAsync(pic);
+              await _context.MyFiles.AddAsync(pic);
         }
 
         public async Task<MyFile> GetFileByIdAsync(Guid id)
         {
-            return await _context.Files.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.MyFiles.SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task DeleteFileAsync(MyFile pic)
         {
-            _context.Files.Remove(pic);
+            _context.MyFiles.Remove(pic);
         }
 
         public async Task<bool> SaveChanges()
