@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Application.Services.interfaces;
-using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marina_Club.Controllers
 {
@@ -13,6 +13,7 @@ namespace Marina_Club.Controllers
     {
 
         private readonly IFileService _fileService;
+
         public FilesController(IFileService fileService)
         {
             _fileService = fileService;
@@ -27,41 +28,27 @@ namespace Marina_Club.Controllers
         {
             var result = await _fileService.UploadFileAsync(file);
 
-            if (result == null)
-                return BadReq(ApiMessage.PicNotAdd);
-
-            return OkResult(ApiMessage.OkFileAdd, result);
+            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult(ApiMessage.OkFileAdd, result);
         }
 
         /// <summary>
         /// دانلود کردن عکس
         /// </summary>
-        [HttpGet("Downloadpics/{id}")]
+        [HttpGet("{id}/Download")]
         public async Task<IActionResult> DownloadPicsAsync(Guid id)
         {
-            var bytes = await _fileService.DownloadFile(id);
+            var myFile = await _fileService.DownloadFile(id);
 
-            if (bytes == null)
+            if (myFile.Bytes == null)
                 throw new ArgumentNullException(ApiMessage.BadRequest);
 
-            return File(bytes, MediaTypeNames.Image.Jpeg);
-        }
-
-        /// <summary>
-        /// دانلود کردن فیلم
-        /// </summary>
-        [HttpGet("downloadMovie/{id}")]
-        public async Task<IActionResult> DownloadMovie(Guid id)//?
-        {
-            var bytes = await _fileService.DownloadFile(id);
-
-            return File(bytes, "video/mp4");
+            return File(myFile.Bytes, myFile.Type);
         }
 
         /// <summary>
         /// پاک کردن فایل
         /// </summary>
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("{id}/Delete")]
         public async Task<IActionResult> DeleteFileAsync(Guid id)
         {
             var result = await _fileService.DeleteFileAsync(id);

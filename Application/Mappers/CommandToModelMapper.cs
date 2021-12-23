@@ -13,7 +13,7 @@ namespace Application.Mappers
 {
     public static class CommandToModelMapper
     {
-        public static CreditCard ToModel(this UpdateCreditCard command)
+        public static CreditCard ToModel(this UpdateCreditCardCommand command)
         {
             return new CreditCard(command.ShabaNumber, command.CardNumber,command.UserId);
         }

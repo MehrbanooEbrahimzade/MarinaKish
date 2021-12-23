@@ -49,8 +49,8 @@ namespace Application.Mappers
 //                UserName = user.UserName,
 //                Gender = user.Gender,
 //                BirthDay = user.BirthDay,
-//                CardNumber = user.CreditCard.CardNumber,
-//                ShabaNumber = user.CreditCard.ShabaNumber,
+//                CardNumber = user.CreditCardCommand.CardNumber,
+//                ShabaNumber = user.CreditCardCommand.ShabaNumber,
 //                DateJoinInShamsi = persianJoinTime,
 
 //                #endregion
@@ -73,8 +73,8 @@ namespace Application.Mappers
 //                BirthDay = x.BirthDay,
 //                Gender = x.Gender,
 //                NationalCode = x.NationalCode,
-//                CardNumber = x.CreditCard.CardNumber,
-//                ShabaNumber = x.CreditCard.ShabaNumber,
+//                CardNumber = x.CreditCardCommand.CardNumber,
+//                ShabaNumber = x.CreditCardCommand.ShabaNumber,
 //                DateJoinInShamsi = x.ToDto().DateJoinInShamsi
 //                #endregion
 //            }).ToList();
