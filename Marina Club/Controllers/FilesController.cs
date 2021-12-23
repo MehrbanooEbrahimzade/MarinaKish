@@ -36,8 +36,8 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دانلود کردن عکس
         /// </summary>
-        [HttpGet("Download/{id}")]
-        public async Task<IActionResult> DownloadAsync(Guid id)
+        [HttpGet("Downloadpics/{id}")]
+        public async Task<IActionResult> DownloadPicsAsync(Guid id)
         {
             var bytes = await _fileService.DownloadFile(id);
 
@@ -53,9 +53,9 @@ namespace Marina_Club.Controllers
         [HttpGet("downloadMovie/{id}")]
         public async Task<IActionResult> DownloadMovie(Guid id)//?
         {
-            var file = await _fileService.GetFileById(id);
+            var bytes = await _fileService.DownloadFile(id);
             
-            return File(file.FilePath, "video/mp4");
+            return File(bytes, "video/mp4");
         }
 
         /// <summary>
