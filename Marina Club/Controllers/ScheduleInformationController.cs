@@ -1,20 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain.Models;
 using Application.Commands.Comment;
+using System;
+using System.Collections.Generic;
 
 namespace Marina_Club.Controllers
 {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class ScheduleInformationController : ControllerBase
     {
-        public void AddScheduleInfo(ScheduleInfoCommand command)
-        {
-            var scheduleInfo = new ScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration,
-                command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+        //[HttpPost]
+        //public void AddScheduleInfo(ScheduleInfoCommand command)
+        //{
+        //    var result = await _ScheduleInfoService.AddScheduleInfoAsync(command);
 
 
-            //var schedule = new Schedule()
-            //    (DateTime date, TimeSpan start, TimeSpan end, decimal price, Guid funId
-        }
+        //}
+
 
     }
 }
