@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Application.Commands.Files;
-using Application.Commands.Fun;
-using Application.Dtos;
+using Application.Services.classes;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -12,31 +9,30 @@ namespace Application.Services.interfaces
 {
     public interface IFileService
     {
-        ///// <summary>
-        ///// اپلود کردن عکس
-        ///// </summary>
-        //Task<Guid?> UploadFileAsync(IFormFile file);
-        
-        ///// <summary>
-        ///// دریافت عکس با آی دی
-        ///// </summary>
-        ////Task<File> GetFileById(Guid id);
-        //Task GetFileById(Guid id);
+        /// <summary>
+        /// اپلود کردن عکس
+        /// </summary>
+        Task<Guid?> UploadFileAsync(IFormFile file);
 
-        ///// <summary>
-        ///// دانلود عکس
-        ///// </summary>
-        //Task DownloadFile(FileStream stream, MemoryStream memory);
+        /// <summary>
+        /// دریافت عکس با آی دی
+        /// </summary>
+        Task<MyFile> GetFileById(Guid id);
+
+        /// <summary>
+        /// دانلود عکس
+        /// </summary>
+        Task<FileService.MyFileDto> DownloadFile(Guid id);
 
         ///// <summary>
         ///// گرفتن عکس با اسم عکس
         ///// </summary>
         //Task<FilesDto> GetImageByName(string fileName);
 
-        ///// <summary>
-        ///// پاک کردن فایل
-        ///// </summary>
-        //Task<bool> DeleteFileAsync(Guid id);
+        /// <summary>
+        /// پاک کردن فایل
+        /// </summary>
+        Task<bool> DeleteFileAsync(Guid id);
 
         ///// <summary>
         ///// اضافه کردن عکس پروفایل کاربر
@@ -68,14 +64,5 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<string>> GetAllPicForSchedule(Guid scheduleid);
 
-        ///// <summary>
-        ///// غیرفعال کردن عکس
-        ///// </summary>
-        //Task<bool> DisActivePicById(Guid id);
-
-        ///// <summary>
-        ///// دوباره فعال کردن عکس
-        ///// </summary>
-        //Task<bool> ReActivePicById(Guid id);
     }
 }

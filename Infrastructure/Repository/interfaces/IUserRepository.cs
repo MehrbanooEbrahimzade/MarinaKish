@@ -7,6 +7,8 @@ namespace Infrastructure.Repository.interfaces
 {
     public interface IUserRepository
     {
+        Task<User> SearchAsync(QuerySearch search);
+        
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
         //        /// </summary>
@@ -66,11 +68,15 @@ namespace Infrastructure.Repository.interfaces
         //        /// <summary>
         //        /// گرفتن فایل با آیدی
         //        /// </summary>
-        //        Task<File> GetFileById(Guid id);
+        //        Task<MyFile> GetFileById(Guid id);
 
         //        /// <summary>
         //        /// دریافت همه بلیط های خریده شده یا لغو شده کاربر
         //        /// </summary>
         //        Task<List<Ticket>> AllBuyedOrCanceledUserTickets(Guid id);
+    }
+    public class QuerySearch
+    {
+        public string PhoneNumber { get; set; }
     }
 }

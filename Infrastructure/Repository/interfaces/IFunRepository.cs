@@ -57,6 +57,10 @@ namespace Infrastructure.Repository.interfaces
         /// دریافت همه تفریح های فعال
         /// </summary>
         Task<List<Fun>> GetAllActivedFunAsynh();
+        ///// <summary>
+        ///// دریافت فایل با آیدی
+        ///// </summary>
+        //Task<MyFile> GetFileById(Guid fileid);
 
         /// <summary>
         /// دریافت همه تفریح های غیر فعال

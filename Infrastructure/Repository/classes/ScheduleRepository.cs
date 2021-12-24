@@ -11,9 +11,10 @@ namespace Infrastructure.Repository.classes
 {
     public class ScheduleRepository : BaseRepository, IScheduleRepository
     {
-        //public ScheduleRepository(DatabaseContext context) : base(context)
-        //{
-        //}
+        public ScheduleRepository(DatabaseContext context) : base(context)
+        {
+
+        }
 
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح

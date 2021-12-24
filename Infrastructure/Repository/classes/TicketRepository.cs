@@ -1,13 +1,14 @@
-﻿using Infrastructure.Repository.interfaces;
+﻿using Infrastructure.Persist;
+using Infrastructure.Repository.interfaces;
 
 namespace Infrastructure.Repository.classes
 {
     public class TicketRepository : BaseRepository, ITicketRepository
     {
-        //        public TicketRepository(DatabaseContext context) : base(context)
-        //        {
+        public TicketRepository(DatabaseContext context) : base(context)
+        {
 
-        //        }
+        }
 
         //        /// <summary>
         //        /// چک کننده وجود داشتن یوزر

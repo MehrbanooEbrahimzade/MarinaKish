@@ -1,13 +1,14 @@
-﻿using Infrastructure.Repository.interfaces;
+﻿using Infrastructure.Persist;
+using Infrastructure.Repository.interfaces;
 
 namespace Infrastructure.Repository.classes
 {
     public class SellerRepository : BaseRepository, ISellerRepository
     {
-        //        public SellerRepository(DatabaseContext context) : base(context)
-        //        {
+        public SellerRepository(DatabaseContext context) : base(context)
+        {
 
-        //        }
+        }
 
         //        /// <summary>
         //        /// اضافه کردن بلیط

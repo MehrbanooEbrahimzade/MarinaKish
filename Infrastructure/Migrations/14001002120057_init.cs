@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,13 +23,47 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CashTransfer",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    TransferNumber = table.Column<string>(nullable: true),
+                    TransferDate = table.Column<DateTime>(nullable: false),
+                    MarineCoin = table.Column<decimal>(nullable: false),
+                    IsSuccessful = table.Column<bool>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashTransfer", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conversation",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    State = table.Column<int>(nullable: false),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    LastActivity = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conversation", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CreditCards",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     ShabaNumber = table.Column<string>(nullable: true),
-                    CardNumber = table.Column<string>(nullable: true)
+                    CardNumber = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,18 +71,18 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Files",
+                name: "MyFiles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     FilePath = table.Column<string>(nullable: true),
-                    Size = table.Column<string>(nullable: true),
-                    PlaceDate = table.Column<DateTime>(nullable: false)
+                    Size = table.Column<long>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Files", x => x.Id);
+                    table.PrimaryKey("PK_MyFiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +109,8 @@ namespace Infrastructure.Migrations
                     TotalCapacity = table.Column<int>(nullable: false),
                     PresenceCapacity = table.Column<int>(nullable: false),
                     OnlineCapacity = table.Column<int>(nullable: false),
-                    Amount = table.Column<decimal>(nullable: false)
+                    Amount = table.Column<decimal>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,6 +163,7 @@ namespace Infrastructure.Migrations
                     NationalCode = table.Column<string>(nullable: true),
                     Gender = table.Column<int>(nullable: false),
                     BirthDay = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     CreditCardId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -152,12 +188,14 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    FunId = table.Column<Guid>(nullable: false),
                     DiscountId = table.Column<Guid>(nullable: true),
                     StartTime = table.Column<TimeSpan>(nullable: false),
                     EndTime = table.Column<TimeSpan>(nullable: false),
-                    ExecuteDate = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    IsExist = table.Column<bool>(nullable: false)
+                    IsExist = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,6 +220,7 @@ namespace Infrastructure.Migrations
                     About = table.Column<string>(nullable: true),
                     BackgroundPicture = table.Column<string>(nullable: true),
                     Icon = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     ScheduleInfoId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -298,6 +337,7 @@ namespace Infrastructure.Migrations
                     SubmitDate = table.Column<DateTime>(nullable: false),
                     WhereBuy = table.Column<int>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     ScheduleId1 = table.Column<Guid>(nullable: true),
                     UserId1 = table.Column<string>(nullable: true)
                 },
@@ -331,31 +371,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
-                    SubmitDate = table.Column<DateTime>(nullable: false),
-                    FunId = table.Column<Guid>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    Like = table.Column<int>(nullable: false),
-                    DisLike = table.Column<int>(nullable: false),
-                    UserPhoneNumber = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Funs_FunId",
-                        column: x => x.FunId,
-                        principalTable: "Funs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FunSliderPictures",
                 columns: table => new
                 {
@@ -372,6 +387,35 @@ namespace Infrastructure.Migrations
                         principalTable: "Funs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Writ",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    SubmitDate = table.Column<DateTime>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    FunId = table.Column<Guid>(nullable: true),
+                    Status = table.Column<int>(nullable: true),
+                    Like = table.Column<int>(nullable: true),
+                    DisLike = table.Column<int>(nullable: true),
+                    UserPhoneNumber = table.Column<string>(nullable: true),
+                    MessageStatus = table.Column<int>(nullable: true),
+                    ConversationId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Writ", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Writ_Funs_FunId",
+                        column: x => x.FunId,
+                        principalTable: "Funs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -424,11 +468,6 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_FunId",
-                table: "Comments",
-                column: "FunId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Funs_ScheduleInfoId",
                 table: "Funs",
                 column: "ScheduleInfoId");
@@ -467,6 +506,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Tickets_UserId1",
                 table: "Tickets",
                 column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Writ_FunId",
+                table: "Writ",
+                column: "FunId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -487,22 +531,25 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "CashTransfer");
 
             migrationBuilder.DropTable(
-                name: "Files");
+                name: "Conversation");
 
             migrationBuilder.DropTable(
                 name: "FunSliderPictures");
 
             migrationBuilder.DropTable(
+                name: "MyFiles");
+
+            migrationBuilder.DropTable(
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Writ");
 
             migrationBuilder.DropTable(
-                name: "Funs");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Schedules");
@@ -511,13 +558,16 @@ namespace Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "ScheduleInfos");
+                name: "Funs");
 
             migrationBuilder.DropTable(
                 name: "Percent");
 
             migrationBuilder.DropTable(
                 name: "CreditCards");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleInfos");
         }
     }
 }

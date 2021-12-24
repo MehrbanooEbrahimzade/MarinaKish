@@ -35,7 +35,7 @@ namespace Application.Services.classes
         //            for (int i = 0; i < command.NumberOfTicket; i++)
         //            {
 
-        //                var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, 1);
+        //                var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.Start, schedule.End, 1);
 
         //                var addTicket = await _sellerRepository.AddTicketAsync(ticketModel);
         //                if (addTicket)
@@ -148,8 +148,8 @@ namespace Application.Services.classes
         //                    return null;
         //                seller.NationalCode = command.NationalCode;
         //            }
-        //            seller.CreditCard.CardNumber = command.CardNumber;
-        //            seller.CreditCard.ShabaNumber = command.ShabaNumber;
+        //            seller.CreditCardCommand.CardNumber = command.CardNumber;
+        //            seller.CreditCardCommand.ShabaNumber = command.ShabaNumber;
         //            await _sellerRepository.SaveChanges();
         //            return seller.ToDto();
         //        }

@@ -1,31 +1,104 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Services.interfaces;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Infrastructure.Repository.interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class UsersController : ApiController
     {
+        private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        public UsersController(IUserService userService, IIdentityService identity)
+
+        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
+            Configuration = configuration;
         }
+
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
+            command.Validate();
             await _identity.RegisterAsync(command);
-            return Ok("کد تایید با موفقیت ارسال شد");
+            return OkResult(ApiMessage.verifyCodeSent);
         }
+
+        //TODO:Refactor
+        /// <summary>
+        /// چک کردن رمز ورود و ورود کاربر 
+        /// </summary>
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        {
+            await _identity.LoginAsync(command);
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
+            var signInCredintials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var tokenOption = new JwtSecurityToken(
+                issuer: "http://localhost:5005/",
+                claims: new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,command.PhoneNumber),
+                },
+                expires: DateTime.Now.AddMinutes(150),
+                signingCredentials: signInCredintials
+            );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+
+            return OkResult(ApiMessage.UserLoggedIn, tokenString);
+
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
+        {
+            await _identity.CompleteProfile(command);
+            return OkResult(ApiMessage.ProfileUpdated);
+        }
+
+        [HttpPut("{id}/UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile(Guid id, UpdateUserCommand command)
+        {
+            command.Id = id;
+            await _identity.UpdateProfileAsync(command);
+            return OkResult(ApiMessage.ProfileUpdated);
+        }
+
+        //TODO: Get By Id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
+        {
+            var user = await _userService.SearchByPhoneAsync(search);
+            return OkResult(ApiMessage.UserFound, user);
+        }
+
+
+        /// <summary>
+        ///  حذف کاربر با آی دی
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveUser(string id)
+        {
+            await _identity.DeleteUser(id);
+            return Ok("کاربر با موفقیت حذف شد");
+        }
+
+
+
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();
 

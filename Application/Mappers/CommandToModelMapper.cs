@@ -9,12 +9,17 @@ using Application.Commands.Message;
 using Application.Commands.ScheduleInfo;
 using Application.Commands.SliderPictureFun;
 using Application.Commands.User;
+using Application.Validators.User;
 using Domain.Models;
 
 namespace Application.Mappers
 {
     public static class CommandToModelMapper
     {
+        public static CreditCard ToModel(this UpdateCreditCardCommand command)
+        {
+            return new CreditCard(command.ShabaNumber, command.CardNumber,command.UserId);
+        }
         /// <summary>
         /// تبدیل کردن کامند به کاربر
         ///// </summary>
@@ -71,7 +76,7 @@ namespace Application.Mappers
         /// </summary>
         /*public static Ticket ToModel(this AddTicketCommand command)
         {
-            return new Ticket(command.FunType, command.ExecuteDate, command.StartTime, command.EndTime, command.NumberOfTicket)
+            return new Ticket(command.FunType, command.ExecuteDate, command.Start, command.End, command.NumberOfTicket)
             {
                 #region Set
 
@@ -96,13 +101,7 @@ namespace Application.Mappers
         }
 
 
-        public static File ToModel(this List<string> fileProps)
-        {
-            return new File(fileProps[0], fileProps[1])
-            {
-                Size = fileProps[3]
-            };
-        }
+
 
         public static Conversation ToModel(this AddConversationCommand command)
         {
@@ -113,5 +112,7 @@ namespace Application.Mappers
         {
             return new Message(command.Username, command.Message, command.ConversationID);
         }
+
+   
     }
 }

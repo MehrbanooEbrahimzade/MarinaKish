@@ -12,6 +12,9 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure;
 using Infrastructure.Persist;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Marina_Club
 {
@@ -28,7 +31,6 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //from DependencyInjectionPersist
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
@@ -43,8 +45,10 @@ namespace Marina_Club
             });
             // AddScoped for users model(table)
             services.AddScoped<IIdentityService, IdentityService>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository2, UserRepository2>();
 
             // AddScoped for Fun model(table)
             services.AddScoped<IFunService, FunService>();
@@ -62,9 +66,9 @@ namespace Marina_Club
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
-            // AddScoped for File model
-            //services.AddScoped<IFileService, FileService>();
-            //services.AddScoped<IFileRepository, FileRepository>();
+            //AddScoped for MyFile model
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();
@@ -81,6 +85,22 @@ namespace Marina_Club
             // AddScoped for Sellers model
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<ISellerService, SellerService>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,14 +110,10 @@ namespace Marina_Club
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                //app.UseHsts();
-            }
 
-            //provider.MigrateDatabases();
-            //app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseAuthentication();
+            //provider.MigrateDatabases();
         }
     }
 }

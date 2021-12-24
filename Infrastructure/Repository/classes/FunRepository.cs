@@ -108,6 +108,14 @@ namespace Infrastructure.Repository.classes
             return await _context.Funs
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
         }
+        ///// <summary>
+        ///// دریافت فایل با آیدی
+        ///// </summary>
+        //public async Task<MyFile> GetFileById(Guid fileid)
+        //{
+        //    return await _context.Files
+        //        .SingleOrDefaultAsync(x => x.Id == fileid && x.IsActive == true);
+        //}
 
         /// <summary>
         /// گرفتن تفریح غیر فعال باایدی 
@@ -144,6 +152,32 @@ namespace Infrastructure.Repository.classes
                .OrderByDescending(x => x.ScheduleInfo.StartTime)
               .ToListAsync();
         }
+        ///// <summary>
+        ///// گرفتن تفریح ها با نوع تفریح
+        ///// </summary>
+        //public async Task<List<Fun>> GetFunsWithFunType(string name)
+        //{
+        //    return await _context.Funs
+        //        .Where(x => x.Name == name && x.IsActive)
+        //        .ToListAsync();
+        //}
+        ///// <summary>
+        ///// گرفتن تفریح فعال باایدی 
+        ///// </summary>
+        //public async Task<Fun> GetActiveFunById(Guid id)
+        //{
+        //    return await _context.Funs
+        //        .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
+        //}
+        ///// <summary>
+        ///// گرفتن تفریح غیر فعال باایدی 
+        ///// </summary>
+
+        //public async Task<Fun> GetDisActiveFunById(Guid id)
+        //{
+        //    return await _context.Funs
+        //        .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == false);
+        //}
 
 
         public IQueryable<Fun> IncludeFunWithScheduleInfo()

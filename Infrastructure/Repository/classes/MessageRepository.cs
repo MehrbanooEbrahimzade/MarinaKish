@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Infrastructure.Persist;
 using Infrastructure.Repository.interfaces;
 
 namespace Infrastructure.Repository.classes
 {
     public class MessageRepository : BaseRepository, IMessageRepository
     {
-        //        public MessageRepository(DatabaseContext context) : base(context)
-        //        {
+        public MessageRepository(DatabaseContext context) : base(context)
+        {
 
-        //        }
+        }
 
         //        /// <summary>
         //        /// دریافت تالار گفتگو

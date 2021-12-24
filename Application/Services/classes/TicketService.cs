@@ -33,7 +33,7 @@ namespace Application.Services.classes
         //            if (command.NumberOfTicket > schedule.AvailableCapacity || schedule == null || user == null)
         //                return null;
 
-        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.Start, schedule.End, command.NumberOfTicket);
 
 
         //            var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
@@ -86,7 +86,7 @@ namespace Application.Services.classes
 
         //            command.AvailableCapacity -= command.NumberOfTicket;
 
-        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.StartTime, schedule.EndTime, command.NumberOfTicket);
+        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.Start, schedule.End, command.NumberOfTicket);
 
 
         //            var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);

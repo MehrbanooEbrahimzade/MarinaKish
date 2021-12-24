@@ -5,17 +5,20 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class File
+    public class MyFile
     {
-        public File(string fileName, string filePath)
+        public MyFile(string fileName, string filePath, long size)
         {
             Id = Guid.NewGuid();
             Name = fileName;
             FilePath = filePath;
-            PlaceDate = DateTime.Now;
+            Size = size;
         }
 
-        private File() { }
+        private MyFile()
+        {
+
+        }
 
         /// <summary>
         /// ID
@@ -35,12 +38,8 @@ namespace Domain.Models
         /// <summary>
         /// اندازه
         /// </summary>
-        public string Size { get; set; }
+        public long Size { get; private set; }
 
-        /// <summary>
-        /// زمان اضافه شدن
-        /// </summary>
-        public DateTime PlaceDate { get; private set; }
 
     }
 }

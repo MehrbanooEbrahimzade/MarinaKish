@@ -27,10 +27,5 @@ namespace Application.Dtos
         /// </summary>
         public bool IsActive { get; set; }
 
-
-
-
-        
-
     }
 }
