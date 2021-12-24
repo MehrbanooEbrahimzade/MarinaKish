@@ -27,7 +27,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسلاید عکس ها
         /// </summary>
-        //public List<FunSliderPicture> PictureSlider { get; set; } ؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟؟
+        public List<FunSliderPicture> PictureSlider { get; set; } 
 
         /// <summary>
         /// فیلم تفریج

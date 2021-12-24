@@ -11,7 +11,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// بررسی وجود داشتن تفریح
         /// </summary>
-        Task<bool> CheckFunTypeIsExist(string name);
+        Task<bool> CheckFunTypeIsExistAsynch(Guid id);
 
         /// <summary>
         /// اضافه کردن تفریح به تِیبل 
@@ -21,17 +21,17 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن تفریح با آیدی :
         /// </summary>
-        Task<Fun> GetFunById(Guid id);
+        Task<Fun> GetFunByIdAsynch(Guid id);
 
         /// <summary>
         /// گرفتن تفریح فعال با آیدی :
         /// </summary>
-        Task<Fun> GetActiveFunById(Guid id);
+        Task<Fun> GetActiveFunByIdAsynch(Guid id);
 
         /// <summary>
         /// گرفتن تفریح غیرفعال با آیدی :
         /// </summary>
-        Task<Fun> GetDisActiveFunById(Guid id);
+        Task<Fun> GetDisActiveFunByIdAsynch(Guid id);
 
         /// <summary>
         /// ذخیره کردن اعمال انجام شده
@@ -51,31 +51,31 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن تفریح با نوع تفریح
         /// </summary>
-        Task<Fun> GetFunByFunType(string name);
-
-        ///// <summary>
-        ///// دریافت فایل با آیدی
-        ///// </summary>
-        //Task<File> GetFileById(Guid fileid);
+        Task<Fun> GetFunByFunNameAsynch(string name);
 
         /// <summary>
         /// دریافت همه تفریح های فعال
         /// </summary>
-        Task<List<Fun>> GetAllActivedFun();
+        Task<List<Fun>> GetAllActivedFunAsynh();
 
         /// <summary>
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
-        Task<List<Fun>> GetAllDisActivedFun();
+        Task<List<Fun>> GetAllDisActivedFunAsynch();
 
-        ///// <summary>
-        ///// دریافت همه سانس های برگذار نشده فعال یک تفریح با آیدی
-        ///// </summary>
-        //Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid funid);
+        /// <summary>
+        ///  دریافت تفریح فعال با اسم
+        /// </summary>
+        Task<Fun> GetActiveFunWithFunNameAsynch(string name);
 
-        ///// <summary>
-        ///// دریافت همه سانس های برگذار نشده غیرفعال یک تفریح با آیدی
-        ///// </summary>
-        //Task<List<Schedule>> GetAllFunDisActiveSchedulesById(Guid funid);
+        /// <summary>
+        /// دریافت تفریح های فعال با آیدی
+        /// </summary>
+        Task<List<Fun>> GetAllFunActiveSchedulesById(Guid funId);
+
+        /// <summary>
+        /// دریافت همه سانس های برگذار نشده غیرفعال یک تفریح با آیدی
+        /// </summary>
+        Task<List<Fun>> GetAllFunDisActiveSchedulesById(Guid funId);
     }
 }

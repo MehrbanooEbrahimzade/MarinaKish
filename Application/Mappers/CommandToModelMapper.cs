@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Application.Commands.Comment;
 using Application.Commands.ContactInfo;
 using Application.Commands.Conversation;
@@ -29,7 +30,7 @@ namespace Application.Mappers
         public static Fun ToModel(this AddFunCommand command)
         {
             return new Fun
-                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video ,//command.SliderPicture
+                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPicture.ToModel()
                                                                                                       , command.ScheduleInfo.ToModel());
         }
         /// <summary>
@@ -46,9 +47,9 @@ namespace Application.Mappers
         /// </summary>
         public static List<FunSliderPicture> ToModel(this List<AddSliderPictureFunCommand> commands)
         {
-            var result = new FunSliderPicture(commands.Attachment);
-            var funSliderPictures = new List<FunSliderPicture> {result};
-            return funSliderPictures;
+            var funSlider = new List<FunSliderPicture>();
+            commands.ForEach(c => funSlider.Add(new FunSliderPicture(c.Attachment)));
+            return funSlider;
         }
 
 

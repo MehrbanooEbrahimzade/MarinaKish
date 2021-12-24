@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using System;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,5 +33,6 @@ namespace Infrastructure.Persist
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<File> Files { get; set; }
+
     }
 }

@@ -30,7 +30,7 @@ namespace Application.Services.classes
         //        public async Task<CommentDto> AddCommentToFun(AddCommentCommand command)
         //        {
         //            var user = await _userRepository.GetUserById(command.UserId);
-        //            var fun = await _funRepository.GetActiveFunById(command.FunId);
+        //            var fun = await _funRepository.GetActiveFunByIdAsynch(command.FunId);
 
         //            if (user == null || fun == null)
         //                return null;

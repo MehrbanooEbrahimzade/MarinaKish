@@ -32,7 +32,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateFunAsync(UpdateFunCommand command)
         {
-            var fun = await _funRepository.GetFunById(command.FunId);
+            var fun = await _funRepository.GetFunByIdAsynch(command.FunId);
             if (fun == null)
             {
                 {
@@ -40,7 +40,7 @@ namespace Application.Services.classes
                 }
             }
 
-            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video,
+            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video,command.PictureSlider,
                     command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
@@ -57,7 +57,7 @@ namespace Application.Services.classes
         /// </summary>
         public async void DeleteFunAsync(Guid id)
         {
-            var fun = await _funRepository.GetFunById(id);
+            var fun = await _funRepository.GetFunByIdAsynch(id);
             if (fun == null)
             {
                 throw new Exception("Not Null");
@@ -79,117 +79,80 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<FunDto> GetOneFunAsync(Guid id)
         {
-            var fun = await _funRepository.GetFunById(id);
+            var fun = await _funRepository.GetFunByIdAsynch(id);
             return fun?.ToDto();
         }
 
         /// <summary>
         /// گرفتن تفریح ها با نوع تفریح
         /// </summary>
-        public async Task<FunDto> GetFunsWithFunType(string name)
+        public async Task<FunDto> GetFunsWithFunNameAsynch(string name)
         {
-            var fun = await _funRepository.GetFunByFunType(name);
+            var fun = await _funRepository.GetFunByFunNameAsynch(name);
             return fun?.ToDto();
         }
-
-        //        /// <summary>
-        //        /// اضافه کردن عکس پس زمینه تفریح
-        //        /// </summary>
-        //        public async Task<string> AddFunBackgroundPicture(AddFileToFunCommand command)
-        //        {
-        //            var pic = await _funRepository.GetFileById(command.FileId);
-        //            var fun = await _funRepository.GetFunById(command.FunId);
-
-        //            if (pic == null || fun == null)
-        //                return null;
-
-        //            fun.SetBackgroundPicture(pic.Id.ToString()); 
-
-        //            var save = await _funRepository.UpdateFunAsync();
-        //            if (!save)
-        //                return null;
-        //            return fun.BackgroundPicture;
-        //        }
-
-        //        /// <summary>
-        //        /// اضافه کردن آیکون تفریح
-        //        /// </summary>
-        //        public async Task<string> AddFunIcon(AddFileToFunCommand command)
-        //        {
-        //            var pic = await _funRepository.GetFileById(command.FileId);
-        //            var fun = await _funRepository.GetFunById(command.FunId);
-        //            if (pic == null || fun == null)
-        //                return null;
-
-        //            fun.SetIcon(pic.Id.ToString()); 
-
-        //            var save = await _funRepository.UpdateFunAsync();
-        //            if (!save)
-        //                return null;
-        //            return fun.Icon;
-        //        }
 
         /// <summary>
         /// غیرفعال کردن یک تفریح
         /// </summary>
-        //public async Task<bool> DisActiveFunById(Guid id)
-        //{
-        //    //var result = _funRepository.CheckFunTypeIsExist(id);
-        //    //if (await result == false)
-        //    //{
-        //    //    throw new NullReferenceException();
-        //    //}
+        public async Task<bool> DisActiveFunByIdAsynch(Guid id)
+        {
+            var result = _funRepository.CheckFunTypeIsExistAsynch(id);
+            if (await result == false)
+            {
+                throw new NullReferenceException();
+            }
 
-        //    var fun = await _funRepository.GetActiveFunById(id);
-        //    if (fun == null)
-        //        return false;
+            var fun = await _funRepository.GetActiveFunByIdAsynch(id);
+            if (fun == null)
+                return false;
 
-        //    var funActiveSchedules = await _funRepository.GetAllFunActiveSchedulesById(id);
+            var funActiveSchedules = await _funRepository.GetAllFunActiveSchedulesById(id);
 
-        //    foreach (var schedule in funActiveSchedules)
-        //    {
-        //        schedule.IsExist = false;
-        //    }
+            foreach (var schedule in funActiveSchedules)
+            {
+                schedule.SetIsActive(false);
+            }
 
-        //    fun.SetIsActive(false);
-        //    return await _funRepository.UpdateFunAsync();
-        //}
+            fun.SetIsActive(false);
+            return await _funRepository.UpdateFunAsync();
+        }
 
-        //        /// <summary>
-        //        /// دوباره فعال کردن یک تفریح
-        //        /// </summary>
-        //        public async Task<bool> ReActiveFunById(Guid id)
-        //        {
-        //            var fun = await _funRepository.GetDisActiveFunById(id);
-        //            if (fun == null)
-        //                return false;
+        /// <summary>
+        /// دوباره فعال کردن یک تفریح
+        /// </summary>
+        public async Task<bool> ReActiveFunByIdAsynch(Guid id)
+        {
+            var fun = await _funRepository.GetDisActiveFunByIdAsynch(id);
+            if (fun == null)
+                return false;
 
-        //            var funDisActiveSchedules = await _funRepository.GetAllFunDisActiveSchedulesById(id);
+            var funDisActiveSchedules = await _funRepository.GetAllFunDisActiveSchedulesById(id);
 
-        //            foreach (var schedule in funDisActiveSchedules)
-        //            {
-        //                schedule.IsExist = true;
-        //            }
+            foreach (var schedule in funDisActiveSchedules)
+            {
+                schedule.SetIsActive(true);
+            }
 
-        //            fun.SetIsActive(true); 
-        //            return await _funRepository.UpdateFunAsync();
-        //        }
+            fun.SetIsActive(true);
+            return await _funRepository.UpdateFunAsync();
+        }
 
         /// <summary>
         /// دریافت همه تفریح های فعال
         /// </summary>
-        public async Task<List<FunDto>> GetAllActivedFun()
+        public async Task<List<FunDto>> GetAllActivedFunAsynch()
         {
-            var funs = await _funRepository.GetAllActivedFun();
+            var funs = await _funRepository.GetAllActivedFunAsynh();
             return funs.Count == 0 ? null : funs.ToDto();
         }
 
         /// <summary>
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
-        public async Task<List<FunDto>> GetAllDisActivedFun()
+        public async Task<List<FunDto>> GetAllDisActivedFunAsynch()
         {
-            var funs = await _funRepository.GetAllDisActivedFun();
+            var funs = await _funRepository.GetAllDisActivedFunAsynch();
             return funs.Count == 0 ? null : funs.ToDto();
         }
     }

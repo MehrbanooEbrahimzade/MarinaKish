@@ -24,7 +24,7 @@ namespace Application.Services.classes
         //        public async Task<List<TicketDto>> AddSellerTicket(AddSellerTicketCommand command)
         //        {
         //            var schedule = await _sellerRepository.GetActiveScheduleById(command.ScheduleId);
-        //            var fun = await _sellerRepository.GetFunById(schedule.FunId);
+        //            var fun = await _sellerRepository.GetFunByIdAsynch(schedule.FunId);
         //            var user = await _sellerRepository.GetActiveSellerById(command.SellerId);
 
 

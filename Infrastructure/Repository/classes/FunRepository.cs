@@ -14,15 +14,14 @@ namespace Infrastructure.Repository.classes
     {
         public FunRepository(DatabaseContext context) : base(context)
         {
-
         }
 
         /// <summary>
         /// چک کننده وجود داشتن تفریح
         /// </summary>
-        public async Task<bool> CheckFunTypeIsExist(string name)
+        public async Task<bool> CheckFunTypeIsExistAsynch(Guid id)
         {
-            return await IncludeFunWithScheduleInfo().AnyAsync(x => x.Name == name && x.IsActive == true);
+            return await IncludeFunWithScheduleInfo().AnyAsync(x => x.Id == id && x.IsActive == true);
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// دریافت تفریح با آیدی
         /// </summary>
-        public async Task<Fun> GetFunById(Guid id)
+        public async Task<Fun> GetFunByIdAsynch(Guid id)
         {
             return await IncludeFunWithScheduleInfo().
                 FirstOrDefaultAsync(x => x.Id == id);
@@ -73,25 +72,17 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح بااسم تفریح
         /// </summary>
-        public async Task<Fun> GetFunByFunType(string name)
+        public async Task<Fun> GetFunByFunNameAsynch(string name)
         {
             return await IncludeFunWithScheduleInfo()
                 .FirstOrDefaultAsync(f => f.Name == name);
         }
 
-        ///// <summary>
-        ///// دریافت فایل با آیدی
-        ///// </summary>
-        //public async Task<File> GetFileById(Guid fileid)
-        //{
-        //    return await _context.Files
-        //        .SingleOrDefaultAsync(x => x.Id == fileid && x.IsActive == true);
-        //}
 
         /// <summary>
         /// دریافت همه تفریح های فعال
         /// </summary>
-        public async Task<List<Fun>> GetAllActivedFun()
+        public async Task<List<Fun>> GetAllActivedFunAsynh()
         {
             return await IncludeFunWithScheduleInfo()
                 .Where(x => x.IsActive == true)
@@ -101,7 +92,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
-        public async Task<List<Fun>> GetAllDisActivedFun()
+        public async Task<List<Fun>> GetAllDisActivedFunAsynch()
         {
             return await IncludeFunWithScheduleInfo()
                 .Where(x => x.IsActive == false)
@@ -112,7 +103,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح فعال باایدی 
         /// </summary>
-        public async Task<Fun> GetActiveFunById(Guid id)
+        public async Task<Fun> GetActiveFunByIdAsynch(Guid id)
         {
             return await _context.Funs
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
@@ -121,45 +112,40 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح غیر فعال باایدی 
         /// </summary>
-        public async Task<Fun> GetDisActiveFunById(Guid id)
+        public async Task<Fun> GetDisActiveFunByIdAsynch(Guid id)
         {
             return await IncludeFunWithScheduleInfo()
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == false);
         }
 
-        // ???????????????????????
-        /// </summary>
-        /// <returns></returns>
-        ///// <summary>
-        ///// گرفتن تفریح فعال با اسم تفریح
-        ///// </summary>
-        //public async Task<Fun> GetActiveFunWithFunName(string name) 
-        //{
-        //    var fun = IncludeFunWithScheduleInfo().Where(x => x.Name == name && x.IsActive);
-        //    return (Fun)fun;
-        //}
+        /// <summary>
+        ///  دریافت تفریح فعال با اسم
+        /// <summary>
+        public async Task<Fun> GetActiveFunWithFunNameAsynch(string name) 
+        {
+            var fun = IncludeFunWithScheduleInfo().Where(x => x.Name == name && x.IsActive);
+            return (Fun)fun;
+        }
 
-        ///// <summary>
-        ///// دریافت همه سانس های برگذار نشده فعال یک تفریح با آیدی
-        ///// </summary>
-        //public async Task<List<Schedule>> GetAllFunActiveSchedulesById(Guid funid)
-        //{
-        //  return await _context.Schedules
-        //      .Where(x => x.FunId == funid && x.IsExist == true && x.ExecuteDateTime >= DateTime.Now)
-        //     .OrderByDescending(x => x.ExecuteDateTime)
-        //      .ToListAsync();
-        //}
+        public async Task<List<Fun>> GetAllFunActiveSchedulesById(Guid funId)
+        {
+            return  await  _context.Funs.Where(x => x.Id == funId && x.IsActive == true && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
+            .OrderByDescending(x => x.ScheduleInfo.StartTime.Days)
+            .ToListAsync();
+        }
 
         /// <summary>
         /// دریافت همه سانس های برگذار نشده غیرفعال یک تفریح با آیدی
         /// </summary>
-        //public async Task<List<Schedule>> GetAllFunDisActiveSchedulesById(Guid id)
-        //{
-        //   return await _context.Schedules
-        //       .Where(x => x.FunId == id && x.IsExist == false && x.ExecuteDateTime >= DateTime.Now)
-        //       .OrderByDescending(x => x.ExecuteDateTime)
-        //      .ToListAsync();
-        //}
+        public async Task<List<Fun>> GetAllFunDisActiveSchedulesById(Guid funId)
+        {
+           return await _context.Funs
+               .Where(x => x.Id == funId && x.IsActive == false && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
+               .OrderByDescending(x => x.ScheduleInfo.StartTime)
+              .ToListAsync();
+        }
+
+
         public IQueryable<Fun> IncludeFunWithScheduleInfo()
         {
             var funWithScheduleInfo = _context.Funs.Include(f => f.ScheduleInfo);

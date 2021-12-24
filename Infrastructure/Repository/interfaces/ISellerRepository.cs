@@ -45,7 +45,7 @@ namespace Infrastructure.Repository.interfaces
     //    /// <summary>
     //    /// دریافت تفریح
     //    /// </summary>
-    //    Task<Fun> GetFunById(Guid id);
+    //    Task<Fun> GetFunByIdAsynch(Guid id);
 
     //    /// <summary>
     //    /// دریافت فروشنده فعال

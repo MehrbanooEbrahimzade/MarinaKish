@@ -13,13 +13,12 @@ namespace Infrastructure.Repository.classes
     {
         //public ScheduleRepository(DatabaseContext context) : base(context)
         //{
-
         //}
 
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح
         ///// </summary>
-        //public async Task<Fun> GetFunByFunType(Guid id)
+        //public async Task<Fun> GetFunByFunNameAsynch(Guid id)
         //{
         //    return await _context.Funs.FirstOrDefaultAsync(x=>x.Id== id);
         //}
@@ -152,5 +151,7 @@ namespace Infrastructure.Repository.classes
         //    return await _context.Schedules
         //        .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
         //}
+
+      
     }
 }
