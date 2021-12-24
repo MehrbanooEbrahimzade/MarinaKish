@@ -17,7 +17,7 @@ namespace Domain.Models
 
         private MyFile()
         {
-            
+
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Domain.Models
         /// <summary>
         /// اندازه
         /// </summary>
-        public long Size { get;private set; }
+        public long Size { get; private set; }
 
 
     }
