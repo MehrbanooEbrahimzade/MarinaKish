@@ -9,8 +9,6 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// نتیجه ی عملیات موفق
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
         [NonAction]
         public IActionResult OkResult(string message)
         {
@@ -21,9 +19,6 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// نتیجه ی عملیات موفق همراه با محتوا 
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
         [NonAction]
         public IActionResult OkResult(string message, object content)
         {
@@ -33,19 +28,15 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// کد 400 همراه با پیام مورد نظر
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
         [NonAction]
         public IActionResult BadReq(string message)
         {
             return BadRequest(new ResponseMessage(message, null));
         }
+
         /// <summary>
         /// کد 400 همراه با پیام و محتوا 
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
         [NonAction]
         public IActionResult BadReq(string message, object content)
         {
@@ -202,6 +193,7 @@ namespace Marina_Club.Controllers
             #endregion
 
             #region MyFile
+            public const string nullFile = "فایل یافت نشد!";
             public const string OkPicAdd = "عکس مورد نظر با موفقیت اضافه شد";
             public const string OkFileAdd = "فایل مورد نظر با موفقیت اضافه شد";
             public const string PicNotAdd = "اضافه کردن عکس مورد نظر با شکست مواجه شد";

@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Infrastructure.Helper;
 
 namespace Marina_Club.Controllers
 {
@@ -20,7 +21,7 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-
+        private readonly JwtToken jwtToken;
         public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
@@ -46,13 +47,14 @@ namespace Marina_Club.Controllers
         {
             await _identity.LoginAsync(command);
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
-            var signInCredintials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
+            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
                 issuer: "http://localhost:5005/",
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,command.PhoneNumber),
+                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
+
                 },
                 expires: DateTime.Now.AddMinutes(150),
                 signingCredentials: signInCredintials
@@ -62,7 +64,11 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.UserLoggedIn, tokenString);
 
         }
-
+        /// <summary>
+        ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
         {
