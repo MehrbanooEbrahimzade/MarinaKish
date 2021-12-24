@@ -142,7 +142,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Files");
+                    b.ToTable("MyFiles");
                 });
 
             modelBuilder.Entity("Domain.Models.Percent", b =>

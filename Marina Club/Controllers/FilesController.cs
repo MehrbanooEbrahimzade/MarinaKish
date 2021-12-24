@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Application.Services.interfaces;
-using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marina_Club.Controllers
 {
@@ -13,6 +13,7 @@ namespace Marina_Club.Controllers
     {
 
         private readonly IFileService _fileService;
+
         public FilesController(IFileService fileService)
         {
             _fileService = fileService;
@@ -27,41 +28,27 @@ namespace Marina_Club.Controllers
         {
             var result = await _fileService.UploadFileAsync(file);
 
-            if (result == null)
-                return BadReq(ApiMessage.PicNotAdd);
-
-            return OkResult(ApiMessage.OkFileAdd, result);
+            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult(ApiMessage.OkFileAdd, result);
         }
 
         /// <summary>
         /// دانلود کردن عکس
         /// </summary>
-        [HttpGet("Download/{id}")]
-        public async Task<IActionResult> DownloadAsync(Guid id)
+        [HttpGet("{id}/Download")]
+        public async Task<IActionResult> DownloadPicsAsync(Guid id)
         {
-            var bytes = await _fileService.DownloadFile(id);
+            var myFile = await _fileService.DownloadFile(id);
 
-            if (bytes == null)
+            if (myFile.Bytes == null)
                 throw new ArgumentNullException(ApiMessage.BadRequest);
 
-            return File(bytes, MediaTypeNames.Image.Jpeg);
-        }
-
-        /// <summary>
-        /// دانلود کردن فیلم
-        /// </summary>
-        [HttpGet("downloadMovie/{id}")]
-        public async Task<IActionResult> DownloadMovie(Guid id)//?
-        {
-            var file = await _fileService.GetFileById(id);
-            
-            return File(file.FilePath, "video/mp4");
+            return File(myFile.Bytes, myFile.Type);
         }
 
         /// <summary>
         /// پاک کردن فایل
         /// </summary>
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("{id}/Delete")]
         public async Task<IActionResult> DeleteFileAsync(Guid id)
         {
             var result = await _fileService.DeleteFileAsync(id);
@@ -72,58 +59,6 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.FileDeleted);
 
         }
-
-
-        //[HttpGet]
-        //public ActionResult UploadVideo()
-        //{
-        //    List<MyFile> videolist = new List<MyFile>();
-        //    string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-        //    using (SqlConnection con = new SqlConnection(CS))
-        //    {
-        //        SqlCommand cmd = new SqlCommand("spGetAllVideoFile", con);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        con.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-
-
-        //        if (rdr.Read())
-        //        {
-        //            MyFile video = new MyFile(
-        //                rdr["Name"].ToString(),
-        //                rdr["FilePath"].ToString(),
-        //                Convert.ToInt64(rdr["FileSize"])
-        //            );
-        //            videolist.Add(video);
-        //        }
-        //    }
-        //    return View(videolist);
-        //}
-        //[HttpPost]
-        //public ActionResult UploadVideo(HttpPostedFileBase fileupload)
-        //{
-        //    if (fileupload != null)
-        //    {
-        //        string fileName = Path.GetFileName(fileupload.FileName);
-        //        int fileSize = fileupload.ContentLength;
-        //        int Size = fileSize / 1000;
-        //        fileupload.SaveAs(Server.MapPath("~/VideoFileUpload/" + fileName));
-
-        //        string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-        //        using (SqlConnection con = new SqlConnection(CS))
-        //        {
-        //            SqlCommand cmd = new SqlCommand("spAddNewVideoFile", con);
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            con.Open();
-        //            cmd.Parameters.AddWithValue("@Name", fileName);
-        //            cmd.Parameters.AddWithValue("@FileSize", Size);
-        //            cmd.Parameters.AddWithValue("FilePath", "~/VideoFileUpload/" + fileName);
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //    return RedirectToAction("UploadVideo");
-        //}
-
 
 
         ///// <summary>
@@ -197,35 +132,6 @@ namespace Marina_Club.Controllers
 
         //    return response;
         //}
-
-
-
-        ////[HttpGet("MusicDownload/{id}")]
-
-        ///// <summary>
-        ///// غیرفعال کردن عکس
-        ///// </summary>
-        //[HttpPut("DisActive/{id}")]
-        //public async Task<IActionResult> DisActivePicById(Guid id)
-        //{
-        //    var result = await _fileService.DisActivePicById(id);
-        //    if (!result)
-        //        return BadReq(ApiMessage.PicNotExist);
-        //    return OkResult(ApiMessage.FileDisActived, new { IsDisActived = result });
-        //}
-
-        ///// <summary>
-        ///// دوباره فعال کردن عکس
-        ///// </summary>
-        //[HttpPut("ReActive/{id}")]
-        //public async Task<IActionResult> ReActivePicById(Guid id)
-        //{
-        //    var result = await _fileService.ReActivePicById(id);
-        //    if (!result)
-        //        return BadReq(ApiMessage.PicNotExist);
-        //    return OkResult(ApiMessage.FileReActived, new { IsReActived = result });
-        //}
-
 
 
         //#region UsersOptions

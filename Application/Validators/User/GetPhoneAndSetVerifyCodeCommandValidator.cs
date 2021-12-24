@@ -7,7 +7,7 @@ namespace Application.Validators.User
     {
         public GetPhoneAndSetVerifyCodeCommandValidator()
         {
-            RuleFor(x => x.VerifyCode)
+            RuleFor(x => x.PhoneNumber)
                 
                 .MaximumLength(6).WithMessage("شماره تلفن همراه نباید بیشتر از 6 عدد باشد")
                 .MinimumLength(6).WithMessage("شماره تلفن همراه نباید کمتر از 6 عدد باشد");

@@ -4,8 +4,6 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
 using System.Threading.Tasks;
 using Infrastructure.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +11,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http;
 using System.Linq;
 using Application.Mappers;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Net;
 
 namespace Application.Services.classes
 {
@@ -82,16 +75,17 @@ namespace Application.Services.classes
                 throw;
             }
         }
-        public async Task<bool> LoginAsync(UserLoginCommand command)
+        public async Task LoginAsync(UserLoginCommand command)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
+
             if (user == null)
-            {
                 throw new Exception("شماره وارد شده صحیح نمی باشد");
-            }
+
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
-            if (result == false) { throw new Exception("کد وارد شده صحیح نمی باشد "); }
-            return result;
+
+            if (result == false)
+                throw new Exception("کد وارد شده صحیح نمی باشد ");
         }
 
         public async Task CompleteProfile(CompleteProfileCommand command)
@@ -111,16 +105,16 @@ namespace Application.Services.classes
             var user = _userManager.Users.SingleOrDefault(item => item.Id == command.Id.ToString());
 
             user.UpdateProfile(command.FirstName, command.LastName
-                             , command.NationalCode, command.BirthDay, command.CreditCard.ToModel());
+                             , command.NationalCode, command.BirthDay, command.CreditCardCommand.ToModel());
             await _userManager.UpdateAsync(user);
             return user;
 
         }
 
 
-        public async Task DeleteUser(UserLoginCommand command)
+        public async Task DeleteUser(string id)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==command.id);
+            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
 
             _iuserRepository2.DeleteUser(user);
         }

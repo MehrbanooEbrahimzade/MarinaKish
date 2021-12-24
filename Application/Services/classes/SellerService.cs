@@ -148,8 +148,8 @@ namespace Application.Services.classes
         //                    return null;
         //                seller.NationalCode = command.NationalCode;
         //            }
-        //            seller.CreditCard.CardNumber = command.CardNumber;
-        //            seller.CreditCard.ShabaNumber = command.ShabaNumber;
+        //            seller.CreditCardCommand.CardNumber = command.CardNumber;
+        //            seller.CreditCardCommand.ShabaNumber = command.ShabaNumber;
         //            await _sellerRepository.SaveChanges();
         //            return seller.ToDto();
         //        }

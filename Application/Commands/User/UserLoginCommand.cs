@@ -1,6 +1,5 @@
 ﻿using Application.Validators.User;
-using System.Net;
-using System.Web.Http;
+
 
 namespace Application.Commands.User
 {
@@ -15,11 +14,6 @@ namespace Application.Commands.User
         /// کد تاییدH
         /// </summary>
         public string VerifyCode { get; set; }
-
-        /// <summary>
-        /// کد تاییدH
-        /// </summary>
-        public string id { get; set; }
 
         public override bool Validate()
         {

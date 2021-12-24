@@ -1,13 +1,12 @@
-﻿using Application.Validators;
-using System;
+﻿using System;
 using Application.Validators.User;
-using Domain.Enums;
 
 namespace Application.Commands.User
 {
     public class UpdateUserCommand : CommandBase
     {
         public Guid  Id { get; set; }
+
         /// <summary>
         /// نام
         /// </summary>
@@ -27,11 +26,12 @@ namespace Application.Commands.User
         /// کد ملی
         /// </summary>
         public string  NationalCode { get; set; }
+
         /// <summary>
         /// اطلاعات بانکی کاربر 
         /// </summary>
         /// <returns></returns>
-        public UpdateCreditCard CreditCard { get; set;  }
+        public UpdateCreditCardCommand CreditCardCommand { get; set;  }
 
         public override bool Validate()
         {

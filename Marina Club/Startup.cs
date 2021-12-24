@@ -32,7 +32,6 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //from DependencyInjectionPersist
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddOptions();
@@ -72,7 +71,7 @@ namespace Marina_Club
 
             //AddScoped for MyFile model
             services.AddScoped<IFileService, FileService>();
-           services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
 
             // AddScoped for Messages model
             services.AddScoped<IMessageService, MessageService>();
@@ -90,8 +89,6 @@ namespace Marina_Club
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<ISellerService, SellerService>();
 
-
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -106,6 +103,7 @@ namespace Marina_Club
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,15 +113,10 @@ namespace Marina_Club
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                //app.UseHsts();
-            }
 
-            //provider.MigrateDatabases();
-            //app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseMvc();
+            app.UseAuthentication();
+            //provider.MigrateDatabases();
         }
     }
 }

@@ -1,25 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Services.interfaces;
-using Application.Validators.User;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
 
 namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class UsersController : ApiController
     {
         private IConfiguration Configuration;
@@ -32,24 +28,24 @@ namespace Marina_Club.Controllers
             _identity = identity;
             Configuration = configuration;
         }
-        /// <summary>
-        /// ثبت نام کاربر 
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
+            command.Validate();
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
+
+        //TODO:Refactor
         /// <summary>
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
-            var result = await _identity.LoginAsync(command);
+            await _identity.LoginAsync(command);
 
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
@@ -62,9 +58,9 @@ namespace Marina_Club.Controllers
                 },
                 expires: DateTime.Now.AddMinutes(150),
                 signingCredentials: signInCredintials
-
-                );
+            );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+
             return OkResult(ApiMessage.UserLoggedIn, tokenString);
 
         }
@@ -79,36 +75,31 @@ namespace Marina_Club.Controllers
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
-        /// <summary>
-        /// آپدیت کردن پروفایل کاربر 
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        [HttpPut("UpdateProfile/{id}")]
-        public async Task<IActionResult> UpdateProfile(UpdateUserCommand command)
+
+        [HttpPut("{id}/UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile(Guid id, UpdateUserCommand command)
         {
+            command.Id = id;
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
-        /// <summary>
-        /// جستجو کاربر بر اساس شماره تلفن 
-        /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        [HttpGet("Users")]
+
+        //TODO: Get By Id
+        [HttpGet("{id}")]
         public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
         {
             var user = await _userService.SearchByPhoneAsync(search);
             return OkResult(ApiMessage.UserFound, user);
         }
 
+
         /// <summary>
         ///  حذف کاربر با آی دی
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveUser()
+        public async Task<IActionResult> RemoveUser(string id)
         {
-            await _identity.DeleteUser(command);
+            await _identity.DeleteUser(id);
             return Ok("کاربر با موفقیت حذف شد");
         }
 
