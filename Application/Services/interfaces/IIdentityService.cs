@@ -18,5 +18,7 @@ namespace Application.Services.interfaces
         Task CompleteProfile(CompleteProfileCommand command);
         Task<User> UpdateProfileAsync(UpdateUserCommand command);
         Task DeleteUser(UserLoginCommand command);
+        Task ChangePhoneNumberAsync(); 
+
     }
 }

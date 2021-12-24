@@ -15,6 +15,7 @@ using Infrastructure.Persist;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Infrastructure.Helper;
 
 namespace Marina_Club
 {
@@ -34,6 +35,8 @@ namespace Marina_Club
             //from DependencyInjectionPersist
             services.ConfigureApplicationPersistence(Configuration);
 
+            services.AddOptions();
+            services.AppSettingConfiguration(Configuration);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {

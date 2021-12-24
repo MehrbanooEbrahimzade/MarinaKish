@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
+using Infrastructure.Helper;
 
 namespace Marina_Club.Controllers
 {
@@ -24,12 +25,18 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
+        private readonly JwtToken jwtToken;
         public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
             Configuration = configuration;
         }
+        /// <summary>
+        /// ثبت نام کاربر 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
@@ -39,19 +46,18 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
-
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
             var result = await _identity.LoginAsync(command);
 
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
                 issuer: "http://localhost:5005/",
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,command.PhoneNumber),
+                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
 
                 },
                 expires: DateTime.Now.AddMinutes(150),
@@ -62,18 +68,33 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.UserLoggedIn, tokenString);
 
         }
+        /// <summary>
+        ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
         {
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
+        /// <summary>
+        /// آپدیت کردن پروفایل کاربر 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("UpdateProfile/{id}")]
         public async Task<IActionResult> UpdateProfile(UpdateUserCommand command)
         {
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
+        /// <summary>
+        /// جستجو کاربر بر اساس شماره تلفن 
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         [HttpGet("Users")]
         public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
         {
@@ -84,8 +105,8 @@ namespace Marina_Club.Controllers
         /// <summary>
         ///  حذف کاربر با آی دی
         /// </summary>
-        [HttpDelete]
-        public async Task<IActionResult> RemoveUser(UserLoginCommand command)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveUser()
         {
             await _identity.DeleteUser(command);
             return Ok("کاربر با موفقیت حذف شد");

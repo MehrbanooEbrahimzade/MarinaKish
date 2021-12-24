@@ -10,5 +10,12 @@ namespace Application.Dtos
         public string  FullName { get; set; }
         public string  NationalCode { get; set; }
         public string  BirthDate { get; set; }
+        public CreditCardDto CreditCard { get; set;  }
+    }
+    public class CreditCardDto
+    {
+        public Guid Id { get; set;  }
+        public string ShabaNumber { get; set;  }
+        public string  CardNumber { get; set; }
     }
 }

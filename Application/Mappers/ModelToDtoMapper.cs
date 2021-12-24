@@ -22,7 +22,18 @@ namespace Application.Mappers
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
-                BirthDate = persianBirthDate
+                BirthDate = persianBirthDate,
+                CreditCard = user.CreditCard.ToDto()
+                
+            };
+        }
+        public static CreditCardDto ToDto (this CreditCard creditCard)
+        {
+            return new CreditCardDto
+            {
+                Id = creditCard.Id,
+                ShabaNumber = creditCard.ShabaNumber,
+                CardNumber = creditCard.CardNumber
             };
         }
 
