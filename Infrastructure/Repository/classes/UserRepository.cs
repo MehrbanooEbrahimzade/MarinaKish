@@ -19,7 +19,8 @@ namespace Infrastructure.Repository.classes
 
         public Task<User> SearchAsync(QuerySearch search)
         {
-            return _context.Users.FirstOrDefaultAsync(user => user.PhoneNumber == search.PhoneNumber);
+            return _context.Users.Include(c => c.CreditCard)
+                .FirstOrDefaultAsync(user => user.PhoneNumber == search.PhoneNumber);
         }
 
         ///// <summary>
