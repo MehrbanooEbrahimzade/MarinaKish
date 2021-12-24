@@ -28,7 +28,10 @@ namespace Marina_Club.Controllers
         {
             var result = await _fileService.UploadFileAsync(file);
 
-            return result == null ? BadReq(ApiMessage.PicNotAdd) : OkResult(ApiMessage.OkFileAdd, result);
+            if (result == null)
+                BadReq(ApiMessage.PicNotAdd);
+
+            return OkResult(ApiMessage.OkFileAdd, result);
         }
 
         /// <summary>
@@ -40,7 +43,7 @@ namespace Marina_Club.Controllers
             var myFile = await _fileService.DownloadFile(id);
 
             if (myFile.Bytes == null)
-                throw new ArgumentNullException(ApiMessage.BadRequest);
+                BadReq(ApiMessage.BadRequest);
 
             return File(myFile.Bytes, myFile.Type);
         }

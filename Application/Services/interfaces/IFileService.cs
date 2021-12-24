@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Application.Dtos;
 using Application.Services.classes;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// دانلود عکس
         /// </summary>
-        Task<FileService.MyFileDto> DownloadFile(Guid id);
+        Task<MyFileDto> DownloadFile(Guid id);
 
         ///// <summary>
         ///// گرفتن عکس با اسم عکس

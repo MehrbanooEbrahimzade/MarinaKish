@@ -196,6 +196,7 @@ namespace Application.Services.classes
             #endregion
 
             #region MyFile
+            public const string nullFile = "فایل یافت نشد!";
             public const string OkPicAdd = "عکس مورد نظر با موفقیت اضافه شد";
             public const string OkFileAdd = "فایل مورد نظر با موفقیت اضافه شد";
             public const string PicNotAdd = "اضافه کردن عکس مورد نظر با شکست مواجه شد";
