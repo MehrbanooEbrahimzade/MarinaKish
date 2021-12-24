@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Application.Commands.Comment;
 using Application.Commands.ContactInfo;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
+using Application.Commands.ScheduleInfo;
+using Application.Commands.SliderPictureFun;
 using Application.Commands.User;
 using Application.Validators.User;
 using Domain.Models;
@@ -26,27 +29,47 @@ namespace Application.Mappers
 
         //}
 
-        ///// <summary>
-        ///// تبدیل کردن کامند به تفریح
-        ///// </summary>
-        //public static Fun ToModel(this AddFunCommand command)
-        //{
-        //    return new Fun(command.FunType,  TimeSpan.Parse(command.Start),
-        //        TimeSpan.Parse(command.End),
-        //        command.SansDuration, command.SansTotalCapacity, command.SansGapTime, command.About);
-        //}
+        /// <summary>
+        /// تبدیل کردن کامند به تفریح
+        /// </summary>
+        public static Fun ToModel(this AddFunCommand command)
+        {
+            return new Fun
+                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPicture.ToModel()
+                                                                                                      , command.ScheduleInfo.ToModel());
+        }
+        /// <summary>
+        /// تبدیل کردن کامند به اطلاعات سانس
+        /// </summary>
+        public static ScheduleInfo ToModel(this AddScheduleInfoCommand command)
+        {
+            return new ScheduleInfo
+                (command.StartTime, command.EndTime, command.GapTime, command.Duration, command.TotalCapacity,
+                 command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+        }
+        /// <summary>
+        /// تبدیل کردن کامند به سلاید عکس تفریحات
+        /// </summary>
+        public static List<FunSliderPicture> ToModel(this List<AddSliderPictureFunCommand> commands)
+        {
+            var funSlider = new List<FunSliderPicture>();
+            commands.ForEach(c => funSlider.Add(new FunSliderPicture(c.Attachment)));
+            return funSlider;
+        }
+
+
 
         /// <summary>
         /// تبدیل کردن کامند به سانس
         /// </summary>
-         //public static Schedule ToModel(this AddScheduleCommand command) 
-         //{
-         //     return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
-         //         TimeSpan.Parse(command.Start), TimeSpan.Parse(command.End))
-         //     {
-         //         AvailableCapacity = command.AvailableCapacity
-         //     };
-         //}
+        //public static Schedule ToModel(this AddScheduleCommand command) 
+        //{
+        //     return new Schedule(command.SystemFunCode, command.FunType, command.ExecuteDateTime, command.Price,
+        //         TimeSpan.Parse(command.StartTime), TimeSpan.Parse(command.EndTime))
+        //     {
+        //         AvailableCapacity = command.AvailableCapacity
+        //     };
+        //}
 
         /// <summary>
         /// تبدیل کردن کامند به بلیط

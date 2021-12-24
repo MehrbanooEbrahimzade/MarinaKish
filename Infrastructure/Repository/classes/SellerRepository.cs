@@ -108,7 +108,7 @@ namespace Infrastructure.Repository.classes
         //        /// <summary>
         //        /// دریافت تفریح
         //        /// </summary>
-        //        public async Task<Fun> GetFunById(Guid id)
+        //        public async Task<Fun> GetFunByIdAsynch(Guid id)
         //        {
         //            return await _context.Funs
         //                .SingleOrDefaultAsync(x => x.Id == id);

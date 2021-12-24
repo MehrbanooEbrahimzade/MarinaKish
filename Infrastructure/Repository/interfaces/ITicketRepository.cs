@@ -20,7 +20,7 @@ namespace Infrastructure.Repository.interfaces
     //    ///// <summary>
     //    ///// دریافت تفریح با اسم تفریح
     //    ///// </summary>
-    //    //Task<Fun> GetFunByFunType(FunType eFun);
+    //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
         
     //    /// <summary>
     //    /// دریافت کاربر با شماره تلفن همراه
@@ -247,7 +247,7 @@ namespace Infrastructure.Repository.interfaces
     //    /// <summary>
     //    /// دریافت تفریح با آیدی
     //    /// </summary>
-    //    Task<Fun> GetFunById(Guid id);
+    //    Task<Fun> GetFunByIdAsynch(Guid id);
 
     //    /// <summary>
     //    /// دریافت کل بلیط های غیرفعال یک تفریح با آیدی تفریح

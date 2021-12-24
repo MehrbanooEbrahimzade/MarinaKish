@@ -8,64 +8,55 @@ namespace Application.Services.interfaces
 {
     public interface IFunService
     {
-        ///// <summary>
-        ///// اضافه کردن تفریح
-        ///// </summary>
-        //Task<Guid?> AddFunAsync(AddFunCommand command);
+        /// <summary>
+        /// اضافه کردن تفریح
+        /// </summary>
+        void AddFunAsync(AddFunCommand command);
 
-        ///// <summary>
-        ///// ویرایش تفریح
-        ///// </summary>
-        //Task<FunDto> UpdateFunAsync(UpdateFunCommand command);
+        /// <summary>
+        /// ویرایش تفریح
+        /// </summary>
+        Task UpdateFunAsync(UpdateFunCommand command);
 
-        ///// <summary>
-        ///// حذف تفریح
-        ///// </summary>
-        //Task<bool> DeleteFunAsync(Guid id);
+        /// <summary>
+        /// حذف تفریح
+        /// </summary>
+        void DeleteFunAsync(Guid id);
 
-        ///// <summary>
-        ///// دریافت همه تفریح ها
-        ///// </summary>
-        //Task<List<FunDto>> GetAllFunAsync();
+        /// <summary>
+        /// دریافت همه تفریح ها
+        /// </summary>
+        Task<List<FunDto>> GetAllFunAsync();
 
-        ///// <summary>
-        ///// گرفتن یک تفریح
-        ///// </summary>
-        //Task<FunDto> GetOneFunAsync(Guid id);
+        /// <summary>
+        /// گرفتن یک تفریح
+        /// </summary>
+        Task<FunDto> GetOneFunAsync(Guid id);
 
-        ///// <summary>
-        ///// گرفتن تفریح ها با نوع تفریح
-        ///// </summary>
-        //Task<List<FunDto>> GetFunsWithFunType(GetFunWithFunTypeCommand command);
+        /// <summary>
+        /// گرفتن تفریح ها با نوع تفریح
+        /// </summary>
+        Task<FunDto> GetFunsWithFunNameAsynch(string name);
 
-        ///// <summary>
-        ///// اضافه کردن عکس پس زمینه تفریح
-        ///// </summary>
-        //Task<string> AddFunBackgroundPicture(AddFileToFunCommand command);
 
-        ///// <summary>
-        ///// اضافه کردن آیکون تفریح
-        ///// </summary>
-        //Task<string> AddFunIcon(AddFileToFunCommand command);
+        /// <summary>
+        /// غیرفعال کردن یک تفریح
+        /// </summary>
+        Task<bool> DisActiveFunByIdAsynch(Guid id);
 
-        ///// <summary>
-        ///// غیرفعال کردن یک تفریح
-        ///// </summary>
-        //Task<bool> DisActiveFunById(Guid id);
+        /// <summary>
+        /// دوباره فعال کردن یک تفریح
+        /// </summary>
+        Task<bool> ReActiveFunByIdAsynch(Guid id);
 
-        ///// <summary>
-        ///// دوباره فعال کردن یک تفریح
-        ///// </summary>
-        //Task<bool> ReActiveFunById(Guid id);
+        /// <summary>
+        /// دریافت همه تفریح های فعال
+        /// </summary>
+        Task<List<FunDto>> GetAllActivedFunAsynch();
 
-        ///// <summary>
-        ///// دریافت همه تفریح های فعال
-        ///// </summary>
-        //Task<List<FunDto>> GetAllActivedFun();
-
-        ///// <summary>
-        ///// دریافت همه تفریح های غیر فعال
-        ///// </summary>
-        //Task<List<FunDto>> GetAllDisActivedFun();
+        /// <summary>
+        /// دریافت همه تفریح های غیر فعال
+        /// </summary>
+        Task<List<FunDto>> GetAllDisActivedFunAsynch();
     }
 }

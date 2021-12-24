@@ -70,7 +70,7 @@ namespace Application.Services.classes
         //            #region Get Schedule and Fun and User
 
         //            var schedule = await _ticketRepository.GetActiveScheduleById(command.ScheduleId);
-        //            var fun = await _ticketRepository.GetFunById(schedule.FunId);
+        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
         //            var user = await _ticketRepository.GetUserByPhone(command.UserCellPhone);
 
         //            #endregion
@@ -230,7 +230,7 @@ namespace Application.Services.classes
         //            if (schedule == null)
         //                return null;
 
-        //            var fun = await _ticketRepository.GetFunById(schedule.FunId);
+        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
         //            var user = await _ticketRepository.GetUserById(ticket.UserId);
 
         //            if (user.RoleType == RoleType.Seller)
@@ -256,7 +256,7 @@ namespace Application.Services.classes
         //        {
         //            var ticket = await _ticketRepository.GetReservedTicketById(id);
         //            var schedule = await _ticketRepository.GetScheduleByIdAsync(ticket.ScheduleId);
-        //            var fun = await _ticketRepository.GetFunById(schedule.FunId);
+        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
         //            var user = await _ticketRepository.GetUserById(ticket.UserId);
         //            if (ticket == null)
         //                return null;

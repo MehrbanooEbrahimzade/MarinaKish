@@ -40,6 +40,10 @@ namespace Infrastructure.Repository.interfaces
         //Task<Domain.Models.MyFile> GetImageByName(string fileName);
 
 
+        //        /// <summary>
+        //        /// دریافت تفریح
+        //        /// </summary>
+        //        Task<Fun> GetFunByIdAsynch(Guid id);
         ///// <summary>
         ///// گرفتن همه عکس ها برای یک تفریح 
         ///// </summary>
