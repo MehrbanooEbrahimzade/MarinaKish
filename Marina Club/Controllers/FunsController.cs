@@ -66,7 +66,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت همه تفریح ها
         /// </summary>
-        [HttpGet("Get-All")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllFunAsync()
         {
             var result = await _funService.GetAllFunAsync();
@@ -86,16 +86,17 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// گرفتن تفریح ها با نوع تفریح
+        /// گرفتن تفریح ها با اسم تفریح
         /// </summary>
-        [HttpGet("GetAllBy-FunType")]
+        [HttpGet("{name}/GetByName")]
         public async Task<IActionResult> GetFunsWithFunNameAsynch(string name)
         {
-            //if (!name.Validate())
-            // return BadReq(ApiMessage.WrongFunType, new { Reasons = $"1-enter eFunType, 2-eFunType not exist" });
+
             var result = await _funService.GetFunsWithFunNameAsynch(name);
+
             return result == null ?
                 BadReq(ApiMessage.NotExistFunType) :
+
                 OkResult(ApiMessage.FunsByFunTypeGetted, new { Funs = result });
         }
 
@@ -166,6 +167,6 @@ namespace Marina_Club.Controllers
             return result == null ? BadReq(ApiMessage.MarineNotHaveDisActiveFun) :
                 OkResult(ApiMessage.AllDisActiveFunGetted, new { DisActiveFunsCount = result.Count });
         }
-      
+
     }
 }

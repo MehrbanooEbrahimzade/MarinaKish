@@ -20,7 +20,7 @@ namespace Infrastructure.Repository.interfaces
     //    ///// <summary>
     //    ///// دریافت تفریح با اسم تفریح
     //    ///// </summary>
-    //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
+    //    //Task<Fun> GetFunsByFunNameAsynch(FunType eFun);
         
     //    /// <summary>
     //    /// دریافت کاربر با شماره تلفن همراه

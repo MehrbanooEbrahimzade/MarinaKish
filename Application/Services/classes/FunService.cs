@@ -84,11 +84,11 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// گرفتن تفریح ها با نوع تفریح
+        /// گرفتن تفریح ها با اسم تفریح
         /// </summary>
-        public async Task<FunDto> GetFunsWithFunNameAsynch(string name)
+        public async Task<List<FunDto>> GetFunsWithFunNameAsynch(string name)
         {
-            var fun = await _funRepository.GetFunByFunNameAsynch(name);
+            var fun = await _funRepository.GetFunsByFunNameAsynch(name);
             return fun?.ToDto();
         }
 

@@ -72,10 +72,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح بااسم تفریح
         /// </summary>
-        public async Task<Fun> GetFunByFunNameAsynch(string name)
+        public async Task<List<Fun>> GetFunsByFunNameAsynch(string name)
         {
             return await IncludeFunWithScheduleInfo()
-                .FirstOrDefaultAsync(f => f.Name == name);
+                .Where(f => f.Name == name).ToListAsync();
         }
 
 
