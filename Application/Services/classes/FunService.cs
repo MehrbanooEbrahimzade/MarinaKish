@@ -6,6 +6,7 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Infrastructure.Repository.interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
@@ -126,7 +127,6 @@ namespace Application.Services.classes
             var fun = await _funRepository.GetDisActiveFunByIdAsynch(id);
             if (fun == null)
                 return false;
-
             var funDisActiveSchedules = await _funRepository.GetAllFunDisActiveSchedulesById(id);
 
             foreach (var schedule in funDisActiveSchedules)

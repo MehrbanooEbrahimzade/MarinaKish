@@ -104,7 +104,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// غیرفعال کردن یک تفریح
         /// </summary>
-        [HttpPut("DisActive/{id}")]
+        [HttpPut("{id}/DisActive")]
         public async Task<IActionResult> DisActiveFunByIdAsynch(Guid id)
         {
             var result = await _funService.DisActiveFunByIdAsynch(id);
@@ -115,12 +115,13 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دوباره فعال کردن یک تفریح
         /// </summary>
-        [HttpPut("ReActive/{id}")]
+        [HttpPut("{id}/ReActive")]
         public async Task<IActionResult> ReActiveFunByIdAsynch(Guid id)
         {
             var result = await _funService.ReActiveFunByIdAsynch(id);
             if (!result)
-                return BadReq(ApiMessage.FunNotReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" });
+                return BadReq(ApiMessage.FunAllreadyReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" });
+
             return OkResult(ApiMessage.FunReActived, new { ReActived = result });
         }
 

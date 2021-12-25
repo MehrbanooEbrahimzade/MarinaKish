@@ -152,6 +152,7 @@ namespace Marina_Club.Controllers
             public const string FunNotDisActive = "تفریح غیرفعال نشد";
             public const string FunReActived = "تفریح دوباره فعال شد";
             public const string FunNotReActive = "تفریح دوباره فعال نشد";
+            public const string FunAllreadyReActive = "تفریح قبلا قعال شده است";
             public const string ExistFun = "تفریح مورد نظر وجود دارد";
             public const string NotExistFunId = "تفریح مورد نظر با این آیدی وجود ندارد";
             public const string NotExistFunType = "تفریحی با این اسم تفریح وجود ندارد";
