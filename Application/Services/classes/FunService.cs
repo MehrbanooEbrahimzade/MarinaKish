@@ -24,7 +24,7 @@ namespace Application.Services.classes
         public async void AddFunAsync(AddFunCommand command)
         {
             var funObj = command.ToModel();
-            await _funRepository.AddFunAsync(funObj);
+            _funRepository.AddFunAsync(funObj);
         }
 
         /// <summary>

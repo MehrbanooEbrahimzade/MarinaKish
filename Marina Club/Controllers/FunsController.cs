@@ -19,7 +19,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        [HttpPost("Add-Fun")]
+        [HttpPost("Add")]
         public async Task<IActionResult> AddFunAsync(AddFunCommand command)
         {
             if (!command.Validate())
