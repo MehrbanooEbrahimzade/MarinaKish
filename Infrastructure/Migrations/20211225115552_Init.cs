@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,8 +220,7 @@ namespace Infrastructure.Migrations
                     About = table.Column<string>(nullable: true),
                     BackgroundPicture = table.Column<string>(nullable: true),
                     Icon = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ScheduleInfoId1 = table.Column<Guid>(nullable: true)
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,12 +228,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Funs_ScheduleInfos_ScheduleInfoId",
                         column: x => x.ScheduleInfoId,
-                        principalTable: "ScheduleInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Funs_ScheduleInfos_ScheduleInfoId1",
-                        column: x => x.ScheduleInfoId1,
                         principalTable: "ScheduleInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -377,6 +370,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Attachment = table.Column<string>(nullable: true),
                     FunId = table.Column<Guid>(nullable: true),
+                    FunId1 = table.Column<Guid>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -385,6 +379,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_FunSliderPictures_Funs_FunId",
                         column: x => x.FunId,
+                        principalTable: "Funs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FunSliderPictures_Funs_FunId1",
+                        column: x => x.FunId1,
                         principalTable: "Funs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -474,14 +474,14 @@ namespace Infrastructure.Migrations
                 column: "ScheduleInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funs_ScheduleInfoId1",
-                table: "Funs",
-                column: "ScheduleInfoId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_FunSliderPictures_FunId",
                 table: "FunSliderPictures",
                 column: "FunId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunSliderPictures_FunId1",
+                table: "FunSliderPictures",
+                column: "FunId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_DiscountId",

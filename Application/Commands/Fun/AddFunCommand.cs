@@ -48,7 +48,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// آیکون تفریح
         /// </summary>
-        public string Icon { get; private set; }
+        public string Icon { get; set; }
 
 
 

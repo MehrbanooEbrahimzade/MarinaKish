@@ -8,10 +8,10 @@ namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FunController : ApiController
+    public class FunsController : ApiController
     {
         private readonly IFunService _funService;
-        public FunController(IFunService funService)
+        public FunsController(IFunService funService)
         {
             _funService = funService;
 

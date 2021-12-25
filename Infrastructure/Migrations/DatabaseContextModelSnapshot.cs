@@ -15,7 +15,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -98,15 +98,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("ScheduleInfoId");
 
-                    b.Property<Guid?>("ScheduleInfoId1");
-
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleInfoId");
-
-                    b.HasIndex("ScheduleInfoId1");
 
                     b.ToTable("Funs");
                 });
@@ -120,11 +116,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("FunId");
 
+                    b.Property<Guid?>("FunId1");
+
                     b.Property<bool>("IsDeleted");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FunId");
+
+                    b.HasIndex("FunId1");
 
                     b.ToTable("FunSliderPictures");
                 });
@@ -492,10 +492,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInfoId");
-
-                    b.HasOne("Domain.Models.ScheduleInfo")
-                        .WithMany()
-                        .HasForeignKey("ScheduleInfoId1");
                 });
 
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
@@ -503,6 +499,10 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Fun")
                         .WithMany("SliderPictures")
                         .HasForeignKey("FunId");
+
+                    b.HasOne("Domain.Models.Fun")
+                        .WithMany()
+                        .HasForeignKey("FunId1");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
