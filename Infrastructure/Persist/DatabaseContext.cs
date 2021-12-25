@@ -20,7 +20,7 @@ namespace Infrastructure.Persist
             modelBuilder
                 .Entity<User>(x => x.HasOne<CreditCard>())
                 .Entity<User>(x => x.HasMany<Ticket>())
-                .Entity<Fun>(x => x.HasOne<ScheduleInfo>())
+                .Entity<Fun>(x => x.HasMany<FunSliderPicture>())
                 .Entity<Fun>(x => x.HasMany<Comment>())
                 .Entity<Schedule>(x => x.HasMany<Ticket>());
 
