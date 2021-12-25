@@ -36,6 +36,7 @@ namespace Infrastructure.Persist
             modelBuilder.Entity<ScheduleInfo>().Property<bool>("IsDeleted");
             modelBuilder.Entity<Ticket>().Property<bool>("IsDeleted");
             modelBuilder.Entity<Writ>().Property<bool>("IsDeleted");
+            modelBuilder.Entity<FunSliderPicture>().Property<bool>("IsDeleted");
             base.OnModelCreating(modelBuilder);
         }
 
@@ -46,7 +47,6 @@ namespace Infrastructure.Persist
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-       
         public DbSet<MyFile> MyFiles { get; set; }
 
         public override int SaveChanges()

@@ -120,6 +120,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("FunId");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FunId");

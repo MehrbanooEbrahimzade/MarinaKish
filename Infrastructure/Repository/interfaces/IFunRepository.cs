@@ -16,7 +16,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// اضافه کردن تفریح به تِیبل 
         /// </summary>
-        Task<bool> AddFunAsync(Fun fun);
+         void AddFunAsync(Fun fun);
 
         /// <summary>
         /// گرفتن تفریح با آیدی :

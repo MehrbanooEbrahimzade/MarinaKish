@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211225050709_init")]
+    [Migration("14001004110116_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,6 +121,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Attachment");
 
                     b.Property<Guid?>("FunId");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.HasKey("Id");
 
