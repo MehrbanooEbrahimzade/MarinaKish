@@ -14,6 +14,7 @@ namespace Marina_Club.Controllers
         public FunController(IFunService funService)
         {
             _funService = funService;
+
         }
 
         /// <summary>
@@ -27,17 +28,16 @@ namespace Marina_Club.Controllers
                 return BadReq(ApiMessage.WrongFunInformation);
             }
             _funService.AddFunAsync(command);
-            return Ok();
             //var result = await _funService.AddFunAsync(command);
             //if (result == null)
             //return BadReq(ApiMessage.FunNotAdded, new { Reason = $"Make a Problem When Fun Add. TryAgain!" });
-            //return OkResult(ApiMessage.FunAdded, new { FunID = result });
+            return OkResult(ApiMessage.FunAdded);
         }
 
         /// <summary>
         /// ویرایش تفریح
         /// </summary>
-        [HttpPut("Edit-Fun/{id}")]
+        [HttpPut("{id}/Edit")]
         public async Task<IActionResult> EditFunAsync(Guid id, UpdateFunCommand command)
         {
             command.FunId = id;
