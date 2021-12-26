@@ -14,7 +14,6 @@ namespace Marina_Club.Controllers
         public FunsController(IFunService funService)
         {
             _funService = funService;
-
         }
 
         /// <summary>
@@ -25,12 +24,9 @@ namespace Marina_Club.Controllers
         {
             if (!command.Validate())
             {
-                return BadReq(ApiMessage.WrongFunInformation);
+                return BadReq(ApiMessage.WrongFunInformation, new { Reason = $"Make a Problem When Fun Add. TryAgain!" });
             }
             _funService.AddFunAsync(command);
-            //var result = await _funService.AddFunAsync(command);
-            //if (result == null)
-            //return BadReq(ApiMessage.FunNotAdded, new { Reason = $"Make a Problem When Fun Add. TryAgain!" });
             return OkResult(ApiMessage.FunAdded);
         }
 
@@ -45,22 +41,18 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-wrong funID, 2-wrong command information" });
             }
-
             await _funService.UpdateFunAsync(command);
-            //if (result == null)
-            //return BadReq(ApiMessage.NotFunEdited, new { Reasons = $"1-eFun not found, 2-There is a problem when save changes. TryAgain!" });
             return OkResult(ApiMessage.FunEdited);
         }
 
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        [HttpDelete("Delete-Fun/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteFunAsync(Guid id)
         {
             _funService.DeleteFunAsync(id);
             return OkResult(ApiMessage.FunDeleted);
-            //return BadReq(ApiMessage.NotExistFunId, new { Reasons = $"1-Not Exist Fun With This Id, 2-make a problem when eFun deleting. TryAgain!" });
         }
 
         /// <summary>
@@ -93,10 +85,8 @@ namespace Marina_Club.Controllers
         {
 
             var result = await _funService.GetFunsWithFunNameAsynch(name);
-
             return result == null ?
                 BadReq(ApiMessage.NotExistFunType) :
-
                 OkResult(ApiMessage.FunsByFunTypeGetted, new { Funs = result });
         }
 
@@ -104,7 +94,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// غیرفعال کردن یک تفریح
         /// </summary>
-        [HttpPut("DisActive/{id}")]
+        [HttpPut("{id}/DisActive")]
         public async Task<IActionResult> DisActiveFunByIdAsynch(Guid id)
         {
             var result = await _funService.DisActiveFunByIdAsynch(id);
@@ -115,12 +105,13 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دوباره فعال کردن یک تفریح
         /// </summary>
-        [HttpPut("ReActive/{id}")]
+        [HttpPut("{id}/ReActive")]
         public async Task<IActionResult> ReActiveFunByIdAsynch(Guid id)
         {
             var result = await _funService.ReActiveFunByIdAsynch(id);
             if (!result)
-                return BadReq(ApiMessage.FunNotReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" });
+                return BadReq(ApiMessage.FunAllreadyReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" });
+
             return OkResult(ApiMessage.FunReActived, new { ReActived = result });
         }
 
@@ -149,7 +140,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تعداد همه تفریح های فعال
         /// </summary>
-        [HttpGet("GetAllActived-Count")]
+        [HttpGet("GetAllActivedCount")]
         public async Task<IActionResult> GetAllActivedFunCountAsynch()
         {
             var result = await _funService.GetAllActivedFunAsynch();
@@ -160,13 +151,12 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تعداد همه تفریح های غیر فعال
         /// </summary>
-        [HttpGet("GetAllDisActived-Count")]
+        [HttpGet("GetAllDisActivedCount")]
         public async Task<IActionResult> GetAllDisActivedFunCountAsynch()
         {
             var result = await _funService.GetAllDisActivedFunAsynch();
             return result == null ? BadReq(ApiMessage.MarineNotHaveDisActiveFun) :
                 OkResult(ApiMessage.AllDisActiveFunGetted, new { DisActiveFunsCount = result.Count });
         }
-
     }
 }
