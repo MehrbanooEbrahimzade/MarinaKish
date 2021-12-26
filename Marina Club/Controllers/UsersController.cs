@@ -57,10 +57,11 @@ namespace Marina_Club.Controllers
         ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
         /// </summary>
         /// <param name="command"></param>
-        /// <returns></returns>
+        /// <returns></returns>.
+        
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
-        public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
+        public async Task<IActionResult> CompleteProfile([FromBody]CompleteProfileCommand command)
         {
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
