@@ -81,6 +81,8 @@ namespace Marina_Club.Controllers
 
             #region Users
             public const string WrongCellPhone = "شماره تلفن اشتباه وارد شده است";
+            public const string WrongCellPhoneorcode = "شماره تلفن یا کد اشتباه وارد شده است";
+
             public const string verifyCodeSent = "کد تایید ارسال شد";
             public const string userLoggedInAndVerifyCodeSent = "ورود کاربر . کد تایید ارسال شد";
             public const string userRegisterAndVerifyCodeSent = "ورود کاربر جدید . کد تایید ارسال شد";

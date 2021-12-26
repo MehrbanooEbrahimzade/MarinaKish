@@ -13,6 +13,7 @@ using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 
 namespace Marina_Club.Controllers
 {
@@ -22,19 +23,26 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        
-        public UsersController(IUserService userService, IIdentityService identity)
+        private readonly JwtToken jwtToken;
+        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
         {
             _userService = userService;
             _identity = identity;
-            
+            Configuration = configuration;
         }
+
+        /// <summary>
+        /// ثبت نام کاربر و ارسال کد
+        /// </summary>
 
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
-            command.Validate();
+            if (!command.Validate())
+            {
+                return BadReq(ApiMessage.WrongCellPhone, new { Reason = $"مقدار ورودی درست وارد نشده دوباره امتحان کنید!" });
+            }
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
@@ -44,11 +52,23 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
         {
-            var jwtToken = await  _identity.LoginAsync(command);
-            
-           
+            await _identity.LoginAsync(command);
+
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
+            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
+            var tokenOption = new JwtSecurityToken(
+                issuer: "http://localhost:5005/",
+                claims: new List<Claim>
+                {
+                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
+
+                },
+                expires: DateTime.Now.AddMinutes(150),
+                signingCredentials: signInCredintials
+            );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
 
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
