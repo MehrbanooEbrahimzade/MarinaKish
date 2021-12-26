@@ -16,12 +16,14 @@ namespace Infrastructure.Persist
             modelBuilder
                 .Entity<User>(x => x.HasOne<CreditCard>())
                 .Entity<User>(x => x.HasMany<Ticket>())
-                .Entity<Fun>(x => x.HasMany<FunSliderPicture>())
+                .Entity<Fun>(x => x.HasOne<FunSliderPicture>())
                 .Entity<Fun>(x => x.HasMany<Comment>())
+                .Entity<Fun>(x => x.HasOne<ScheduleInfo>())
                 .Entity<Schedule>(x => x.HasMany<Ticket>());
 
 
             base.OnModelCreating(modelBuilder);
+         
         }
 
         public DbSet<Fun> Funs { get; set; }
