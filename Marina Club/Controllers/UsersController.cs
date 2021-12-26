@@ -29,11 +29,18 @@ namespace Marina_Club.Controllers
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// ثبت نام کاربر و ارسال کد
+        /// </summary>
+
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
-            command.Validate();
+            if (!command.Validate())
+            {
+                return BadReq(ApiMessage.WrongCellPhone, new { Reason = $"مقدار ورودی درست وارد نشده دوباره امتحان کنید!" });
+            }
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
@@ -43,8 +50,14 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
         {
+
+            if (!command.Validate())
+            {
+                return BadReq(ApiMessage.WrongCellPhoneorcode, new { Reason = $"مقدار ورودی درست وارد نشده دوباره امتحان کنید!" });
+            }
+
             await _identity.LoginAsync(command);
 
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
