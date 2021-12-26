@@ -39,7 +39,7 @@ namespace Domain.Models
         /// اطلاعات سانس
         /// </summary>
         public ScheduleInfo ScheduleInfo { get; private set; }
-
+        
         /// <summary>
         /// فیلم تفریح
         /// </summary>

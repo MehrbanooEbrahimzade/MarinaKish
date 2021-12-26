@@ -11,7 +11,7 @@ namespace Infrastructure
         {
             services.AddDbContext<DatabaseContext>(x =>
             {
-                x.UseSqlServer(configuration.GetConnectionString("DB"));
+                x.UseSqlServer(configuration.GetConnectionString("Db"));
             });
             return services; 
 

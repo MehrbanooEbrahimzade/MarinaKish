@@ -11,7 +11,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        void AddFunAsync(AddFunCommand command);
+        Task AddFunAsync(AddFunCommand command);
 
         /// <summary>
         /// ویرایش تفریح
@@ -34,9 +34,9 @@ namespace Application.Services.interfaces
         Task<FunDto> GetOneFunAsync(Guid id);
 
         /// <summary>
-        /// گرفتن تفریح ها با نوع تفریح
+        /// گرفتن تفریح ها با اسم تفریح
         /// </summary>
-        Task<FunDto> GetFunsWithFunNameAsynch(string name);
+        Task<List<FunDto>> GetFunsWithFunNameAsynch(string name);
 
 
         /// <summary>

@@ -27,10 +27,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        public async Task<bool> AddFunAsync(Fun fun)
+        public async void AddFunAsync(Fun fun)
         {
-            await _context.Funs.AddAsync(fun);
-            return await _context.SaveChangesAsync() > 0;
+             await _context.Funs.AddAsync(fun);
+            _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن تفریح بااسم تفریح
         /// </summary>
-        public async Task<Fun> GetFunByFunNameAsynch(string name)
+        public async Task<List<Fun>> GetFunsByFunNameAsynch(string name)
         {
             return await IncludeFunWithScheduleInfo()
-                .FirstOrDefaultAsync(f => f.Name == name);
+                .Where(f => f.Name == name).ToListAsync();
         }
 
 
@@ -129,7 +129,7 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         ///  دریافت تفریح فعال با اسم
         /// <summary>
-        public async Task<Fun> GetActiveFunWithFunNameAsynch(string name) 
+        public async Task<Fun> GetActiveFunWithFunNameAsynch(string name)
         {
             var fun = IncludeFunWithScheduleInfo().Where(x => x.Name == name && x.IsActive);
             return (Fun)fun;
@@ -137,7 +137,7 @@ namespace Infrastructure.Repository.classes
 
         public async Task<List<Fun>> GetAllFunActiveSchedulesById(Guid funId)
         {
-            return  await  _context.Funs.Where(x => x.Id == funId && x.IsActive == true && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
+            return await _context.Funs.Where(x => x.Id == funId && x.IsActive == true && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
             .OrderByDescending(x => x.ScheduleInfo.StartTime.Days)
             .ToListAsync();
         }
@@ -147,10 +147,10 @@ namespace Infrastructure.Repository.classes
         /// </summary>
         public async Task<List<Fun>> GetAllFunDisActiveSchedulesById(Guid funId)
         {
-           return await _context.Funs
-               .Where(x => x.Id == funId && x.IsActive == false && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
-               .OrderByDescending(x => x.ScheduleInfo.StartTime)
-              .ToListAsync();
+            return await _context.Funs
+                .Where(x => x.Id == funId && x.IsActive == false && x.ScheduleInfo.StartTime >= DateTime.Now.TimeOfDay)
+                .OrderByDescending(x => x.ScheduleInfo.StartTime)
+               .ToListAsync();
         }
         ///// <summary>
         ///// گرفتن تفریح ها با نوع تفریح

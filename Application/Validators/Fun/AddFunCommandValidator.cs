@@ -16,11 +16,11 @@ namespace Application.Validators.Fun
 
             RuleFor(x => x.ScheduleInfo.Amount)
                 .NotNull().WithMessage("قیمت تفریح نمیتواند خالی باشد")
-                .GreaterThan(0).WithMessage("قیمت تفریح باید بیشتر از 0 باشد")
-                .ScalePrecision(2, 4).WithMessage("برای قیمت تعداد اعشار حداکثر تا 2 و تعداد ارقام حداکثر تا 4 تا باید باشد");
+                .GreaterThan(0).WithMessage("قیمت تفریح باید بیشتر از 0 باشد");
+                //.ScalePrecision(7, 4).WithMessage("برای قیمت تعداد اعشار حداکثر تا 2 و تعداد ارقام حداکثر تا 4 تا باید باشد");
 
 
-                RuleFor(x => x.ScheduleInfo.StartTime)
+            RuleFor(x => x.ScheduleInfo.StartTime)
                     .NotNull().WithMessage("زمان شروع نمیتواند خالی باشد")
                     .NotEmpty().WithMessage("زمان شروع را وارد کنید");
 
