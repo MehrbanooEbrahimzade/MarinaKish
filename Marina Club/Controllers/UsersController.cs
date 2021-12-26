@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
+using Microsoft.Extensions.Options;
 
 namespace Marina_Club.Controllers
 {
@@ -21,12 +22,12 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        private readonly JwtToken jwtToken;
-        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
+        private readonly JwtToken _jwtToken;
+        public UsersController(IUserService userService, IIdentityService identity,IOptions<JwtToken> jwtToken)
         {
             _userService = userService;
             _identity = identity;
-            Configuration = configuration;
+            _jwtToken = jwtToken.Value;
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Marina_Club.Controllers
 
             await _identity.LoginAsync(command);
 
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
             var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             var tokenOption = new JwtSecurityToken(
                 issuer: "http://localhost:5005/",

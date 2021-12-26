@@ -35,7 +35,7 @@ namespace Marina_Club
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddOptions();
-            services.AppSettingConfiguration(Configuration);
+            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {
