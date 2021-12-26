@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Marina_Club.Controllers
 {
@@ -21,12 +22,12 @@ namespace Marina_Club.Controllers
         private IConfiguration Configuration;
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        private readonly JwtToken jwtToken;
-        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
+        
+        public UsersController(IUserService userService, IIdentityService identity)
         {
             _userService = userService;
             _identity = identity;
-            Configuration = configuration;
+            
         }
 
         [AllowAnonymous]
@@ -43,25 +44,13 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
         {
-            await _identity.LoginAsync(command);
+            var jwtToken = await  _identity.LoginAsync(command);
+            
+           
 
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
-            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
-            var tokenOption = new JwtSecurityToken(
-                issuer: "http://localhost:5005/",
-                claims: new List<Claim>
-                {
-                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
-
-                },
-                expires: DateTime.Now.AddMinutes(150),
-                signingCredentials: signInCredintials
-            );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-
-            return OkResult(ApiMessage.UserLoggedIn, tokenString);
+            return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
         }
         /// <summary>
@@ -69,6 +58,7 @@ namespace Marina_Club.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
         {
