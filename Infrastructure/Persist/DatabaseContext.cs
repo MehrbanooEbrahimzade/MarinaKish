@@ -1,10 +1,6 @@
-﻿using System;
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Domain.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Persist
 {
