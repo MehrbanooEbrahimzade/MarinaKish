@@ -13,15 +13,15 @@ namespace Infrastructure.Repository.interfaces
         /// </summary>
         Task<bool> AddTicketAsync(Ticket ticket);
 
-        /// <summary>
-        /// دریافت همه بلیط های یک سانس
-        /// </summary>
-        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
-
-        /// <summary>
-        /// گرفتن همه بلیط های فعال یک سانس
-        /// </summary>
-        Task<List<Ticket>> GetAllScheduleActiveTickets(Guid schedulid);
+    //    ///// <summary>
+    //    ///// دریافت تفریح با اسم تفریح
+    //    ///// </summary>
+    //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
+        
+    //    /// <summary>
+    //    /// دریافت کاربر با شماره تلفن همراه
+    //    /// </summary>
+    //    Task<User> GetUserByPhone(string phone);
 
         ///// <summary>
         ///// گرفتن همه بلیط های یک تفریح

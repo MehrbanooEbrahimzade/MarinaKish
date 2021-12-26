@@ -6,6 +6,7 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Infrastructure.Repository.interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Application.Services.classes
 {
@@ -21,10 +22,10 @@ namespace Application.Services.classes
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        public async void AddFunAsync(AddFunCommand command)
+        public async Task AddFunAsync(AddFunCommand command)
         {
-            var funObj = command.ToModel();
-            await _funRepository.AddFunAsync(funObj);
+            var funObj =  command.ToModel();
+             _funRepository.AddFunAsync(funObj);
         }
 
         /// <summary>
@@ -84,11 +85,11 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// گرفتن تفریح ها با نوع تفریح
+        /// گرفتن تفریح ها با اسم تفریح
         /// </summary>
-        public async Task<FunDto> GetFunsWithFunNameAsynch(string name)
+        public async Task<List<FunDto>> GetFunsWithFunNameAsynch(string name)
         {
-            var fun = await _funRepository.GetFunByFunNameAsynch(name);
+            var fun = await _funRepository.GetFunsByFunNameAsynch(name);
             return fun?.ToDto();
         }
 
@@ -126,7 +127,6 @@ namespace Application.Services.classes
             var fun = await _funRepository.GetDisActiveFunByIdAsynch(id);
             if (fun == null)
                 return false;
-
             var funDisActiveSchedules = await _funRepository.GetAllFunDisActiveSchedulesById(id);
 
             foreach (var schedule in funDisActiveSchedules)
