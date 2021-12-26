@@ -10,7 +10,7 @@ namespace Infrastructure.Helper
     {
         public static void AppSettingConfiguration(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
+            services.Configure<JwtToken>(Configuration.GetSection(nameof(JwtToken)));
 
         }
     }

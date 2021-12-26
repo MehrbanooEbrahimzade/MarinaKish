@@ -93,7 +93,7 @@ namespace Application.Services.classes
 
             if (result == false)
                 throw new Exception("کد وارد شده صحیح نمی باشد ");
-            var token =  await GenerateToken(command);
+            var token =  await GenerateToken(user.Id,command);
             return token; 
 
         }
@@ -128,7 +128,7 @@ namespace Application.Services.classes
 
             _iuserRepository2.DeleteUser(user);
         }
-        private async Task<string> GenerateToken(UserLoginCommand command)
+        private async Task<string> GenerateToken(string id , UserLoginCommand command)
         {
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
             var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
@@ -136,8 +136,8 @@ namespace Application.Services.classes
                 issuer: _jwtToken.Issuer,
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber)
-
+                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
+                    new Claim("id",id)
                 },
                 expires: DateTime.Now.AddDays(15),
                 signingCredentials: credentials

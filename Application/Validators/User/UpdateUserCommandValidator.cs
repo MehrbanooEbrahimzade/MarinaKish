@@ -13,7 +13,7 @@ namespace Application.Validators.User
 
 
             RuleFor(x => x.CreditCardCommand.ShabaNumber)
-                  .MaximumLength(70).WithMessage("شماره شبا نباید بیشتر 24  رقم باشد")
+                  .MaximumLength(24).WithMessage("شماره شبا نباید بیشتر 24  رقم باشد")
                   .NotNull().WithMessage("شماره شبا نمیتواند خالی باشد");
         }
     }

@@ -19,22 +19,23 @@ namespace Marina_Club.Controllers
     [Route("api/[controller]")]
     public class UsersController : ApiController
     {
-        private IConfiguration Configuration;
+        
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        
-        public UsersController(IUserService userService, IIdentityService identity)
+
+        public UsersController(IUserService userService, IIdentityService identity): base()
         {
             _userService = userService;
             _identity = identity;
             
         }
-
+        
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
             command.Validate();
+            
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
@@ -47,9 +48,6 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
         {
             var jwtToken = await  _identity.LoginAsync(command);
-            
-           
-
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
         }
@@ -63,14 +61,15 @@ namespace Marina_Club.Controllers
         [HttpPut]
         public async Task<IActionResult> CompleteProfile([FromBody]CompleteProfileCommand command)
         {
+            command.PhoneNumber = CurrentUser.PhoneNumber;
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("{id}/UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile(Guid id, UpdateUserCommand command)
+        public async Task<IActionResult> UpdateProfile(Guid id,[FromBody] UpdateUserCommand command)
         {
-            command.Id = id;
+            command.Id = CurrentUser.Id;
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }

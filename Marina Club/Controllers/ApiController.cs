@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Infrastructure.Helper;
+using Marina_Club.Activator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Marina_Club.Controllers
 {
     public class ApiController : ControllerBase
     {
+        protected ApiController() { }
+        
+        protected UserInfo CurrentUser => (User.Identity as ClaimsIdentity).GetUserClaim();
 
         /// <summary>
         /// نتیجه ی عملیات موفق
