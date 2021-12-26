@@ -63,7 +63,7 @@ namespace Marina_Club
 
             // AddScoped for Tickets model
             services.AddScoped<ITicketService, TicketService>();
-            services.AddScoped<ITicketRepository, TicketRepository>();
+            //services.AddScoped<ITicketRepository, TicketRepository>();
 
             // AddScoped for Comments model
             services.AddScoped<ICommentService, CommentService>();
