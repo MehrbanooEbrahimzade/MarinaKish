@@ -28,7 +28,7 @@ namespace Marina_Club.Controllers
         {
             _userService = userService;
             _identity = identity;
-            Configuration = configuration;
+           
         }
         
         [AllowAnonymous]
@@ -46,7 +46,7 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
         {
             var jwtToken = await  _identity.LoginAsync(command);
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
