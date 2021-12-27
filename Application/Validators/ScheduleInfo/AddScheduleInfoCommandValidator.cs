@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Validators.ScheduleInfo
 {
-    public class AddScheduleInfoCommandValidator : AbstractValidator<ScheduleInfoCommand>
+    public class AddScheduleInfoCommandValidator : AbstractValidator<AddScheduleInfoCommand>
     {
         public AddScheduleInfoCommandValidator()
         {
