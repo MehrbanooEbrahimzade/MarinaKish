@@ -670,7 +670,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
         /// </summary>
-        [HttpPost("Add-Ticket-Basket/{id}")] // be sabade kharid ezaf mishe -user id-
+        [HttpPost("{id}/AddTicketBasket")]  
         public async Task<IActionResult> AddTicketForBasket( AddTicketToBasketCommand command)
         {
             if (!command.Validate())

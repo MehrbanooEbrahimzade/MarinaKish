@@ -19,9 +19,8 @@ namespace Infrastructure.Repository.classes
 
         public async Task<User> GetUserById(string id)
         {
-            var user =_context.Users.Include(x=>x.CreditCard).SingleOrDefault(x=>x.Id == id);        //in ba tavajoh be mosh yani in ke credit cart on user ro ba khode user biar ke id mosavi in id 
+            var user =_context.Users.Include(x=>x.CreditCard).SingleOrDefault(x=>x.Id == id);        
             return  user;
-
         }
 
         public Task<User> SearchAsync(QuerySearch search)

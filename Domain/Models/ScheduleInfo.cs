@@ -77,5 +77,18 @@ namespace Domain.Models
         private ScheduleInfo()
         {
         }
+
+
+        public void MinusOnlineCapacity(int numberoftickets)
+        {
+            this.OnlineCapacity -= numberoftickets;
+        }
+
+        public void MinusTotalCapacity(int numberofticket)
+        {
+            this.TotalCapacity = numberofticket;
+        }
+
+
     }
 }

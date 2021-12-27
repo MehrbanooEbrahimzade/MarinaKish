@@ -24,7 +24,7 @@ namespace Application.Services.classes
             return user.ToDto();
         }
 
-        public async Task<UserDto> SearchUserById(string id)   //chera age async va await nabashe ToDto anjam nemishe ??????????
+        public async Task<UserDto> SearchUserById(string id) 
         {
             var user =await  _userRepository.GetUserById(id);
             if (user==null)

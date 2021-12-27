@@ -8,6 +8,7 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
+using Domain.Enums;
 
 namespace Application.Services.classes
 {
@@ -16,11 +17,13 @@ namespace Application.Services.classes
         private readonly ITicketRepository _ticketRepository;
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IUserRepository _userRepository;
-        public TicketService(ITicketRepository ticketRepository,IScheduleRepository _scheduleRepository,IUserRepository userRepository)
+        private readonly IFunRepository _funRepository;
+        public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)
         {
             this._ticketRepository = ticketRepository;
             this._scheduleRepository = _scheduleRepository;
-            _userRepository = userRepository;
+            this._userRepository = userRepository;
+            this._funRepository = funRepository;
 
         }
 
@@ -35,9 +38,8 @@ namespace Application.Services.classes
             if (schedule == null)
                 throw new ArgumentNullException("");
 
+            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule); 
 
-            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule); //isnt this wrong that we make an instance from a ticket here
-            //var Ticket = command.ToModel();
             var addAndSave = await _ticketRepository.AddTicketAsync(ticket);
             if (!addAndSave)
                 return null;
@@ -64,38 +66,33 @@ namespace Application.Services.classes
         //            return NotDeleted;
         //        }
 
-        //        /// <summary>
-        //        /// اضافه کردن بلیط خریده شده بصورت حضوری
-        //        /// </summary>
-        //        public async Task<TicketDto> AddTicketFromPresence(AddTicketFromPresenceCommand command)
-        //        {
-        //            #region Get Schedule and Fun and User
+        /// <summary>
+        /// اضافه کردن بلیط خریده شده بصورت حضوری
+        /// </summary>
+        //public async Task<TicketDto> AddTicketFromPresence(AddTicketFromPresenceCommand command)
+        //{
+        //    #region Get Schedule and Fun and User
 
-        //            var schedule = await _ticketRepository.GetActiveScheduleById(command.ScheduleId);
-        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
-        //            var user = await _ticketRepository.GetUserByPhone(command.UserCellPhone);
+        //    var schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
+        //    var fun = await _funRepository.GetFunByIdAsynch(command.FunId);
+        //    var user = await _userRepository.GetUserById(command.UserId);
 
-        //            #endregion
+        //    #endregion
+        //    if (command.NumberOfTicket > fun.ScheduleInfo.TotalCapacity || schedule == null || user == null)
+        //        return null;
 
-        //            if (command.NumberOfTicket > schedule.AvailableCapacity || schedule == null || user == null)
-        //                return null;
+        //    fun.ScheduleInfo.MinusOnlineCapacity(command.NumberOfTicket);  
+        //    fun.PlusSellerCapacity(command.NumberOfTicket);
+        //    command.AvailableCapacity -= command.NumberOfTicket;
 
-        //            if (user.RoleType == RoleType.Seller)
-        //            {
-        //                fun.MinusOnlineCapacity(command.NumberOfTicket);
-        //                fun.PlusSellerCapacity(command.NumberOfTicket);
-        //            }
-
-        //            command.AvailableCapacity -= command.NumberOfTicket;
-
-        //            var ticketModel = new Ticket(schedule.FunType, schedule.ExecuteDateTime, schedule.Start, schedule.End, command.NumberOfTicket);
+        //    var ticketModel = new Ticket(fun.Name, WhereBuy.Presence, command.gender, user, schedule);
 
 
-        //            var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
-        //            if (!addAndSave)
-        //                return null;
-        //            return ticketModel.ToDto();
-        //        }
+        //    var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
+        //    if (!addAndSave)
+        //        return null;
+        //    return ticketModel.ToDto();
+        //}
 
         //        /// <summary>
         //        /// گرفتن یک بلیط
@@ -146,13 +143,13 @@ namespace Application.Services.classes
         //            return twoDateTickets.ToDto();
         //        }
 
-        //        /// <summary>
-        //        ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
-        //        /// </summary>
-        //        public async Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse)
-        //        {
-        //            return await _ticketRepository.OneDateReservedTicketsPriceSearchSum(firstMiadiParse);
-        //        }
+        /// <summary>
+        ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
+        /// </summary>
+        public async Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse)
+        {
+            return await _ticketRepository.OneDateReservedTicketsPriceSearchSum(firstMiadiParse);
+        }
 
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال

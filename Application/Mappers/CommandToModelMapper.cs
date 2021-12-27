@@ -75,11 +75,11 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به بلیط
         /// </summary>
-        public static Ticket ToModel(this AddTicketToBasketCommand command)
-        {
-            return new Ticket(command.FunName, command.BoughtPlace, command.Gender, command.UserCommand.ToModel(),command.SchedulComand.ToModel());
+        //public static Ticket ToModel(this AddTicketToBasketCommand command)   
+        //{
+        //    return new Ticket(command.FunName, command.BoughtPlace, command.Gender, command.UserCommand.ToModel(),command.SchedulComand.ToModel());
         
-        }
+        //}
         public static Schedule ToModel(this AddSchedulToTicketCommand schedulCommand)
         {
             return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime, schedulCommand.Price, schedulCommand.FunId);
