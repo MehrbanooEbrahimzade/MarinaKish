@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Application.Commands.ScheduleInfo;
 using Application.Services.interfaces;
-using Infrastructure.Repository.interfaces;
+using Domain.RepositoryInterfaces;
 
 namespace Application.Services.classes
 {

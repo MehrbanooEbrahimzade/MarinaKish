@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Application.Services.classes;
-using Infrastructure.Repository.classes;
-using Infrastructure.Repository.interfaces;
 using Application.Services.interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +13,9 @@ using Infrastructure.Persist;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Domain.RepositoryInterfaces;
 using Infrastructure.Helper;
+using Infrastructure.Repository.RepositoryImplementation;
 
 namespace Marina_Club
 {

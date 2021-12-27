@@ -1,7 +1,7 @@
-﻿using Infrastructure.Persist;
-using Infrastructure.Repository.interfaces;
+﻿using Domain.RepositoryInterfaces;
+using Infrastructure.Persist;
 
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.Repository.RepositoryImplementation
 {
     public class SellerRepository : BaseRepository, ISellerRepository
     {

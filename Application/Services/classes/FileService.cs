@@ -4,10 +4,10 @@ using System;
 using System.Linq;
 using Application.Services.interfaces;
 using Domain.Models;
-using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Http;
 using Infrastructure.Helper;
 using Application.Dtos;
+using Domain.RepositoryInterfaces;
 using static Application.Services.classes.ApiControllers;
 
 namespace Application.Services.classes

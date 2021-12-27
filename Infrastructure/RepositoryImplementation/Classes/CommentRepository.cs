@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain.Models;
+﻿using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
-using Infrastructure.Repository.interfaces;
-using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.Repository.RepositoryImplementation
 {
     public class CommentRepository : BaseRepository, ICommentRepository
     {

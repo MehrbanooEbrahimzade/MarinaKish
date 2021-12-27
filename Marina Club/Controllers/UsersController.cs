@@ -8,8 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.RepositoryInterfaces;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
 

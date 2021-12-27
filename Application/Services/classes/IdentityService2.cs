@@ -4,7 +4,6 @@ using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Extensions;
 using Infrastructure.Repository;
-using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

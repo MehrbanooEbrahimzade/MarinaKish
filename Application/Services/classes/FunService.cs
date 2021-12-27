@@ -5,7 +5,7 @@ using Application.Commands.Fun;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Infrastructure.Repository.interfaces;
+using Domain.RepositoryInterfaces;
 
 namespace Application.Services.classes
 {

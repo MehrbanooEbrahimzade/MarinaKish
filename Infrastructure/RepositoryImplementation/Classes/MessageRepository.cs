@@ -1,13 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain.Models;
+﻿using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
-using Infrastructure.Repository.interfaces;
 
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.Repository.RepositoryImplementation
 {
     public class MessageRepository : BaseRepository, IMessageRepository
     {

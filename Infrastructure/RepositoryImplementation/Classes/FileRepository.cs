@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.IO;
+﻿using System;
+using System.Threading.Tasks;
 using Domain.Models;
+using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Repository.interfaces;
 
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.Repository.RepositoryImplementation
 {
     public class FileRepository : BaseRepository, IFileRepository
     {
