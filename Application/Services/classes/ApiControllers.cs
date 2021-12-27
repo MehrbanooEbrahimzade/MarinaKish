@@ -163,7 +163,7 @@ namespace Application.Services.classes
             public const string MarineNotHaveDisActiveFun = "مارینا تفریح غیرفعالی ندارد";
             #endregion
 
-            #region Schedules
+            #region ScheduleMaker
             public const string SchedulesCreated = "سانس ها اضافه شدند";
             public const string SchedulesNotExist = "سانس در دسترس نیست";
             public const string CancelOrReExistScheduleOk = "سانس لغو شد/برگشت";

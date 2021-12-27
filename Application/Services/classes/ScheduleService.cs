@@ -38,7 +38,7 @@ namespace Application.Services.classes
 
         //            List<Schedule> schedules = new List<Schedule>();
 
-        //            #region Create Schedules 
+        //            #region Create ScheduleMaker 
         //            for (int i = 0; i < command.NumberOfDays; i++)
         //            {
         //                for (int j = 0; j < sansCount; j++)

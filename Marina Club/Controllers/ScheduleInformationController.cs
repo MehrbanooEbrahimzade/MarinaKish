@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Domain.Models;
-using Application.Commands.Comment;
-using System;
-using System.Collections.Generic;
+﻿using Application.Commands.ScheduleInfo;
+using Application.Services.interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Marina_Club.Controllers
 {
@@ -11,13 +10,19 @@ namespace Marina_Club.Controllers
     [Route("api/[controller]")]
     public class ScheduleInformationController : ControllerBase
     {
-        //[HttpPost]
-        //public void AddScheduleInfo(ScheduleInfoCommand command)
-        //{
-        //    var result = await _ScheduleInfoService.AddScheduleInfoAsync(command);
+        private readonly IScheduleInfoService _scheduleInfoService;
+        public ScheduleInformationController(IScheduleInfoService scheduleInfoService)
+        {
+            _scheduleInfoService = scheduleInfoService;
+        }
+
+        [HttpPost]
+        public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        {
+            var result = await _scheduleInfoService.AddScheduleInfoAsync(command);
 
 
-        //}
+        }
 
 
     }
