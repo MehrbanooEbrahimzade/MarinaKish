@@ -61,7 +61,7 @@ namespace Domain.Models
         /// <summary>
         /// قیمت
         /// </summary>
-        public decimal Amount { get; private set; }
+        public decimal Amount { get;private set; }
 
 
         public void UpdateScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
@@ -76,6 +76,21 @@ namespace Domain.Models
             this.OnlineCapacity = onlineCapacity;
             this.Amount = amount;
         }
-        private ScheduleInfo() { }
+        private ScheduleInfo()
+        {
+        }
+
+
+        public void MinusOnlineCapacity(int numberoftickets)
+        {
+            this.OnlineCapacity -= numberoftickets;
+        }
+
+        public void MinusTotalCapacity(int numberofticket)
+        {
+            this.TotalCapacity = numberofticket;
+        }
+
+
     }
 }

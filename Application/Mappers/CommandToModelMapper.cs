@@ -6,8 +6,10 @@ using Application.Commands.ContactInfo;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
+using Application.Commands.Schedule;
 using Application.Commands.ScheduleInfo;
 using Application.Commands.SliderPictureFun;
+using Application.Commands.Ticket;
 using Application.Commands.User;
 using Application.Validators.User;
 using Domain.Models;
@@ -74,21 +76,22 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به بلیط
         /// </summary>
-        /*public static Ticket ToModel(this AddTicketCommand command)
+        //public static Ticket ToModel(this AddTicketToBasketCommand command)
+        //{
+        //    return new Ticket(command.FunName, command.BoughtPlace, command.Gender, command.UserCommand.ToModel(),command.SchedulComand.ToModel());
+        
+        //}
+        public static Schedule ToModel(this AddSchedulToTicketCommand schedulCommand)
         {
-            return new Ticket(command.FunType, command.ExecuteDate, command.Start, command.End, command.NumberOfTicket)
-            {
-                #region Set
+            return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime,schedulCommand.Price, schedulCommand.FunId);
+        }
 
-                FunId = command.FunId,
-                ScheduleId = command.ScheduleId,
-                Price = command.Price, 
-                PhoneNumber = command.PhoneNumber,
-                FullName = command.FullName
+        public static User ToModel(this AddUserToTicketcommand findUserCommand)
+        {
+            return new User(findUserCommand.PhoneNumber);
+        }
 
-                #endregion
-            };
-        }*/
+
 
         /// <summary>
         /// تبدیل کردن کامند به کامنت
@@ -113,6 +116,22 @@ namespace Application.Mappers
             return new Message(command.Username, command.Message, command.ConversationID);
         }
 
-   
+        /// <summary>
+        /// تبدیل کردن پینشنهاد ویژه 
+        /// </summary>
+        public static Schedule ToModel(this AddSpecialOfferCommand command)
+        {
+            return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price,command.FunId,command.AddPercent.ToModel());
+
+        }
+        /// <summary>
+        /// تبدیل کردن قدار تخفیف
+        /// </summary>
+        public static Percent ToModel(this AddPercentCommand command)
+        {
+            return new Percent(command.Value);
+
+        }
+
     }
 }

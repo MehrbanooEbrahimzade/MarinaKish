@@ -46,10 +46,10 @@ namespace Domain.RepositoryInterfaces
         //    /// </summary>
         //    Task<Schedule> GetScheduleByIdAsync(Guid id);
 
-        //    /// <summary>
-        //    /// دریافت سانس فعال با آیدی
-        //    /// </summary>
-        //    Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         //    /// <summary>
         //    /// گرفتن تاریخ اخرین سانس با نوع تفریح

@@ -5,6 +5,7 @@ using System.Globalization;
 using Application.Commands;
 using Application.Commands.Schedule;
 using Application.Services.interfaces;
+using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 
 namespace Marina_Club.Controllers
 {
@@ -12,11 +13,31 @@ namespace Marina_Club.Controllers
     [ApiController]
     public class SchedulesController : ApiController
     {
-        //private readonly IScheduleService _scheduleService;
-        //public SchedulesController(IScheduleService scheduleService)
-        //{
-        //    _scheduleService = scheduleService;
-        //}
+        private readonly IScheduleService _scheduleService;
+        public SchedulesController(IScheduleService scheduleService)
+        {
+            _scheduleService = scheduleService;
+        }
+
+        /// <summary>
+        /// ساخت پیشنهاد های ویژه
+        /// </summary>
+        [HttpPost("AddSpecialOffer")]
+        public async Task<IActionResult> AddSpecialOffer(AddSpecialOfferCommand command)
+        {
+            if (!command.Validate())
+                return BadReq(ApiMessage.BadRequest,
+                    new { Request = "1-مقدار تخفیف درست وارد نشده 2-ای دی تفریح وارد نشده" });
+
+            var result = _scheduleService.AddSpecialOffer(command);
+            if (result == null)
+                return BadReq(ApiMessage.BadRequest);
+
+            return OkResult("تخفیف با موفقیت اضافه شد");
+
+        }
+
+
 
         ///// <summary>
         ///// ساختن سانس
@@ -110,7 +131,7 @@ namespace Marina_Club.Controllers
         //public async Task<IActionResult> DiscountPercentListSchedules(DiscountPercentListSchedulesCommand command)
         //{
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-you must enter least 1 scheduleID, 2-Discount percent must between 0 and 100" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-you must enter least 1 scheduleID, 2-Percent Percent must between 0 and 100" });
 
         //    var result = await _scheduleService.DiscountPercentListSchedules(command);
         //    if (result == null)
@@ -125,7 +146,7 @@ namespace Marina_Club.Controllers
         //public async Task<IActionResult> DiscountPriceListSchedules(DiscountPriceListSchedulesCommand command)
         //{
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-you must enter least 1 scheduleID, 2-Discount price must between 1.00 and 9999.99" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-you must enter least 1 scheduleID, 2-Percent price must between 1.00 and 9999.99" });
 
         //    var result = await _scheduleService.DiscountPriceListSchedules(command);
         //    if (result == null)
@@ -141,7 +162,7 @@ namespace Marina_Club.Controllers
         //{
         //    command.FunId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-pls enter eFun id, 2-Discount percent must between 0 and 100" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-pls enter eFun id, 2-Percent Percent must between 0 and 100" });
 
         //    var result = await _scheduleService.DiscountPercentAllFunSchedules(command);
         //    if (result == null)
@@ -157,7 +178,7 @@ namespace Marina_Club.Controllers
         //{
         //    command.FunId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-pls enter eFun id, 2-Discount price must between 1.00 and 9999.99" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-pls enter eFun id, 2-Percent price must between 1.00 and 9999.99" });
 
         //    var result = await _scheduleService.DiscountPriceAllFunSchedules(command);
         //    if (result == null)
@@ -176,7 +197,7 @@ namespace Marina_Club.Controllers
         //public async Task<IActionResult> IncreaseListSchedulePricePercent(IncreaseListSchedulePricePercentCommand command)
         //{
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reason = $"1-you must enter least 1 scheduleID, 2-IncreasePrice percent must between 0 and 200" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reason = $"1-you must enter least 1 scheduleID, 2-IncreasePrice Percent must between 0 and 200" });
 
         //    var result = await _scheduleService.IncreaseListSchedulePricePercent(command);
         //    if (result == null)
@@ -192,7 +213,7 @@ namespace Marina_Club.Controllers
         //{
         //    command.FunId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reason = $"1-pls enter funID, 2-IncreasePrice percent must between 0 and 200" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reason = $"1-pls enter funID, 2-IncreasePrice Percent must between 0 and 200" });
 
         //    var result = await _scheduleService.IncreaseFunSchedulesPricePercent(command);
         //    if (result == null)

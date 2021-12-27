@@ -13,6 +13,12 @@ namespace Infrastructure.RepositoryImplementation.Classes
 
         }
 
+        public async Task<User> GetUserById(string id)
+        {
+            var user =_context.Users.Include(x=>x.CreditCard).SingleOrDefault(x=>x.Id == id);        
+            return  user;
+        }
+
         public Task<User> SearchAsync(QuerySearch search)
         {
             return _context.Users.Include(c => c.CreditCard)

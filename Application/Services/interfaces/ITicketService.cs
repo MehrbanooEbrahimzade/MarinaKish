@@ -9,10 +9,10 @@ namespace Application.Services.interfaces
 {
     public interface ITicketService
     {
-        ///// <summary>
-        ///// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
-        ///// </summary>
-        //Task<Guid?> AddTicketForBasket(AddTicketToBasketCommand command);
+        /// <summary>
+        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
+        /// </summary>
+        Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
 
         ///// <summary>
         ///// گرفتن همه بلیط های یک سانس

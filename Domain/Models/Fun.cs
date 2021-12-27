@@ -91,5 +91,6 @@ namespace Domain.Models
         private Fun()
         {
         }
+
     }
 }

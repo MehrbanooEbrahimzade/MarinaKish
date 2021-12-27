@@ -4,18 +4,20 @@ using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("14001006174124_initforaddspecialoffer")]
+    partial class initforaddspecialoffer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -78,9 +80,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<Guid?>("ScheduleInfoId");
+
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ScheduleInfoId");
 
                     b.ToTable("Funs");
                 });
@@ -148,14 +154,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("IsExist");
 
-                    b.Property<Guid?>("PercentId");
-
                     b.Property<decimal>("Price");
 
                     b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DiscountId");
 
                     b.ToTable("Schedules");
                 });
@@ -171,8 +176,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<TimeSpan>("EndTime");
 
-                    b.Property<Guid>("FunId");
-
                     b.Property<int>("GapTime");
 
                     b.Property<int>("OnlineCapacity");
@@ -184,9 +187,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TotalCapacity");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FunId")
-                        .IsUnique();
 
                     b.ToTable("ScheduleInfos");
                 });
@@ -416,6 +416,13 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Domain.Models.Fun", b =>
+                {
+                    b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
+                        .WithMany()
+                        .HasForeignKey("ScheduleInfoId");
+                });
+
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
                 {
                     b.HasOne("Domain.Models.Fun")
@@ -429,15 +436,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
+                    b.HasOne("Domain.Models.Percent", "Percent")
                         .WithMany()
-                });
-
-            modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>
-                {
-                    b.HasOne("Domain.Models.Fun")
-                        .WithOne("ScheduleInfo")
-                        .HasForeignKey("Domain.Models.ScheduleInfo", "FunId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DiscountId");
                 });
 
             modelBuilder.Entity("Domain.Models.Ticket", b =>

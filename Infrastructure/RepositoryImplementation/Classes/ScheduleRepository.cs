@@ -153,6 +153,6 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //        .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
         //}
 
-
+      
     }
 }
