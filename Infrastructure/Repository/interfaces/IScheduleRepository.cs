@@ -7,6 +7,17 @@ namespace Infrastructure.Repository.interfaces
 {
     public interface IScheduleRepository
     {
+        /// <summary>
+        /// دریافت تفریح با اسم تفریح
+        /// </summary>
+        Task<Fun> SeachNameRecreationAsync(Guid id, string name);
+
+        /// <summary>
+        /// اضافه کردن سانس به تیبل
+        /// </summary>
+        Task AddScheduleAsync(Schedule schedule);
+
+
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>
@@ -17,10 +28,7 @@ namespace Infrastructure.Repository.interfaces
         //    /// </summary>
         //    Task<Fun> GetFunByFunId(Guid id);
 
-        //    /// <summary>
-        //    /// اضافه کردن سانس به تیبل
-        //    /// </summary>
-        //    Task<bool> AddScheduleAsync(Schedule schedule);
+
 
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح

@@ -8,6 +8,12 @@ namespace Application.Services.interfaces
 {
     public interface IScheduleService
     {
+        /// <summary>
+        /// ساخت پیشنهاد ویژه 
+        /// </summary>
+        Task AddSpecialOffer(AddSpecialOfferCommand command);
+
+
         //    /// <summary>
         //    /// ساختن سانس
         //    /// </summary>

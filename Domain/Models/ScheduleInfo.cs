@@ -59,7 +59,7 @@ namespace Domain.Models
         /// <summary>
         /// قیمت
         /// </summary>
-        public decimal Amount { get; private set; }
+        public decimal Amount { get;private set; }
 
 
         public void UpdateScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,

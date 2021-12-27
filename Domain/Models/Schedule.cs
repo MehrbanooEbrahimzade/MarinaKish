@@ -4,6 +4,20 @@ namespace Domain.Models
 {
     public class Schedule
     {
+
+        public Schedule
+            (DateTime date, TimeSpan start, TimeSpan end, decimal price, Guid funId, Percent percent)
+        {
+            Price = price;
+            FunId = funId;
+            Id = Guid.NewGuid();
+            Date = date.Add(start);
+            StartTime = start;
+            EndTime = end;
+            Percent = percent;
+            IsExist = true;
+        }
+
         public Schedule
             (DateTime date, TimeSpan start, TimeSpan end, decimal price, Guid funId)
         {
@@ -13,7 +27,6 @@ namespace Domain.Models
             Date = date.Add(start);
             StartTime = start;
             EndTime = end;
-            Discount = Percent.Empty;
             IsExist = true;
         }
 
@@ -28,7 +41,7 @@ namespace Domain.Models
         /// <summary>
         /// تخفیف
         /// </summary>
-        public Percent Discount { get; private set; }
+        public Percent Percent { get; private set; }
         /// <summary>
         ///  ساعت شروع سانس
         /// </summary>
@@ -64,7 +77,7 @@ namespace Domain.Models
         {
             Validate(value);
             Value = value;
-            Id=Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         public Guid Id { get; private set; }

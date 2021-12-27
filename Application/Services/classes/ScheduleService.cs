@@ -6,16 +6,39 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
+using Infrastructure.Repository.interfaces;
 
 namespace Application.Services.classes
 {
     public class ScheduleService : IScheduleService
     {
-        //        private readonly IScheduleRepository _scheduleRepository;
-        //        public ScheduleService(IScheduleRepository scheduleRepository)
-        //        {
-        //            _scheduleRepository = scheduleRepository;
-        //        }
+
+        private readonly IScheduleRepository _scheduleRepository;
+        public ScheduleService(IScheduleRepository scheduleRepository)
+        {
+            _scheduleRepository = scheduleRepository;
+        }
+
+        public async Task AddSpecialOffer(AddSpecialOfferCommand command)
+        {
+            var searchnameRecreation = _scheduleRepository.SeachNameRecreationAsync(command.FunId,command.Name);
+            if (searchnameRecreation == null)
+                throw new Exception("چنین تفریحی وجود ندرد");
+
+            
+
+            decimal number = command.AddPercent.Value;
+            decimal resultnumber = number / 100;
+            decimal resultAmount = searchnameRecreation.Result.ScheduleInfo.Amount;
+            command.Price = resultnumber * resultAmount;
+
+            var addinformation = command.ToModel();
+
+            await _scheduleRepository.AddScheduleAsync(addinformation);
+
+        }
+
+
 
         //        /// <summary>
         //        /// ساختن سانس
@@ -330,5 +353,6 @@ namespace Application.Services.classes
         //                return 404;
         //            return (int)schedule.AvailableCapacity;
         //        }
+
     }
 }
