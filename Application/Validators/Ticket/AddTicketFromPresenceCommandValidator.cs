@@ -15,11 +15,11 @@ namespace Application.Validators.Ticket
                 .GreaterThanOrEqualTo(1).WithMessage("تعداد بلیط درخواست شده باید 1 یا بیشتر باشد")
                 .LessThanOrEqualTo(10).WithMessage("تعداد بلیط درخواست شده حداکثر میتواند 10 تا باشد");
 
-            RuleFor(x => x.UserCellPhone)
-                .NotNull().WithMessage("شماره تلفن کاربر را وارد کنید")
-                .NotEmpty().WithMessage("شماره تلفن کاربر نمیتواند خالی باشد")
-                .MaximumLength(11).WithMessage("شماره تلفن کاربر باید 11 رقم باشد")
-                .MinimumLength(11).WithMessage("شماره تلفن کاربر باید 11 رقم باشد");
+            //RuleFor(x => x.UserCellPhone)
+            //    .NotNull().WithMessage("شماره تلفن کاربر را وارد کنید")
+            //    .NotEmpty().WithMessage("شماره تلفن کاربر نمیتواند خالی باشد")
+            //    .MaximumLength(11).WithMessage("شماره تلفن کاربر باید 11 رقم باشد")
+            //    .MinimumLength(11).WithMessage("شماره تلفن کاربر باید 11 رقم باشد");
         }
     }
 }
