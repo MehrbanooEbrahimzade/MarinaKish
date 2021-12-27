@@ -15,7 +15,7 @@ namespace Domain.RepositoryInterfaces
         /// <summary>
         /// اضافه کردن تفریح به تِیبل 
         /// </summary>
-        Task<bool> AddFunAsync(Fun fun);
+        void AddFunAsync(Fun fun);
 
         /// <summary>
         /// گرفتن تفریح با آیدی :
@@ -48,9 +48,9 @@ namespace Domain.RepositoryInterfaces
         Task<List<Fun>> GetAllFunAsync();
 
         /// <summary>
-        /// گرفتن تفریح با نوع تفریح
+        ///گرفتن تفریح  با اسم تفریح
         /// </summary>
-        Task<Fun> GetFunByFunNameAsynch(string name);
+        Task<List<Fun>> GetFunsByFunNameAsynch(string name);
 
         /// <summary>
         /// دریافت همه تفریح های فعال

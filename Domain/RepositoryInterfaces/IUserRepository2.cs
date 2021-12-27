@@ -18,10 +18,6 @@ namespace Domain.RepositoryInterfaces
         /// </summary>
         void DeleteUser(User user);
 
-        /// <summary>
-        ///  حذف کاربر با سافت دیلیت 
-        /// </summary>
-        Task SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

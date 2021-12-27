@@ -13,7 +13,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح
         ///// </summary>
-        //public async Task<Fun> GetFunByFunNameAsynch(Guid id)
+        //public async Task<Fun> GetFunsByFunNameAsynch(Guid id)
         //{
         //    return await _context.Funs.FirstOrDefaultAsync(x=>x.Id== id);
         //}

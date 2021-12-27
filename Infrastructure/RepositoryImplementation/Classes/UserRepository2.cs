@@ -31,9 +31,5 @@ namespace Infrastructure.RepositoryImplementation.Classes
             _context.SaveChanges();
         }
 
-        public async Task SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        {
-            await _context.SaveChangesAsync();
-        }
     }
 }

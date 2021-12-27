@@ -5,7 +5,7 @@
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>
-        //    Task<Fun> GetFunByFunNameAsynch(FunType fun);
+        //    Task<Fun> GetFunsByFunNameAsynch(FunType fun);
 
         //    /// <summary>
         //    /// دریافت تفریح با ایدی تفریح
