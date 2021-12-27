@@ -1,6 +1,6 @@
 ﻿namespace Domain.RepositoryInterfaces
 {
-    public class IScheduleInfoRepository
+    public interface IScheduleInfoRepository
     {
 
     }

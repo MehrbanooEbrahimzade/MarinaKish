@@ -4,7 +4,7 @@ using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repository.RepositoryImplementation
+namespace Infrastructure.RepositoryImplementation.Classes
 {
     public class UserRepository : BaseRepository, IUserRepository
     {

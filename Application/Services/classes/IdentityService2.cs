@@ -3,7 +3,6 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Extensions;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

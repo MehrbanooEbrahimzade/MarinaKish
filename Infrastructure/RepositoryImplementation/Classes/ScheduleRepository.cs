@@ -1,7 +1,7 @@
 ﻿using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
 
-namespace Infrastructure.Repository.RepositoryImplementation
+namespace Infrastructure.RepositoryImplementation.Classes
 {
     public class ScheduleRepository : BaseRepository, IScheduleRepository
     {

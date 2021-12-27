@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.RepositoryImplementation
 {
 
     public class Result<T>
