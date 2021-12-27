@@ -5,14 +5,16 @@ namespace Domain.Models
 {
     public class Ticket
     {
-        public Ticket(string funType, string phoneNumber, WhereBuy whereBuy, Gender gender)
+        public Ticket(string funType/*, string phoneNumber(ino dig nemigirim chon hamon userid ke az front migirm to service getuserbyid mikonim va user ro miare ono midim be vorodi ticket , on user khodesh phone number ham dare dig nemikhaym        ba in rah ticket kamel mishe pas include vase keye ??           ya pas age mikhastim id bezarim chetor mishod )*/, WhereBuy whereBuy, Gender gender, User user, Schedule schedule)
         {
-            Id = Guid.NewGuid();
-            FunType = funType;
-            Condition = Condition.Reservation;
-            SubmitDate = DateTime.Now;
-            WhereBuy = whereBuy;
-            Gender = gender;
+            this.Id = Guid.NewGuid();
+            this.FunType = funType;
+            this.Condition = Condition.Reservation;
+            this.SubmitDate = DateTime.Now;
+            this.WhereBuy = whereBuy;
+            this.Gender = gender;
+            this.User = user;
+            this.Schedule = schedule;
         }
 
         private Ticket() { }

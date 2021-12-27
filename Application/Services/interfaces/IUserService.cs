@@ -10,6 +10,11 @@ namespace Application.Services.interfaces
     public interface IUserService
     {
         Task<UserDto> SearchByPhoneAsync(QuerySearch search);
+        /// <summary>
+        /// دریافت کاربر با ایدی
+        /// </summary>
+        Task<UserDto> SearchUserById(string id);
+        
         ////IncreaseUserWallet
         ///// <summary>
         ///// ثبت نام کاربر :

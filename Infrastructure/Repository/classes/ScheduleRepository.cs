@@ -144,15 +144,15 @@ namespace Infrastructure.Repository.classes
         //        .ToListAsync();
         //}
 
-        ///// <summary>
-        ///// دریافت سانس فعال با آیدی
-        ///// </summary>
-        //public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
-        //}
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
+        {
+            return await _context.Schedules
+                .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
+        }
 
-      
+
     }
 }

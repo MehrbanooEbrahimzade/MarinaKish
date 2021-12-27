@@ -24,11 +24,11 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// اضافه کردن بلیط
         /// </summary>
-        //public async Task<bool> AddTicketAsync(Ticket ticket)
-        //{
-        //    await _context.Tickets.AddAsync(ticket);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        public async Task<bool> Addticketasync(Ticket ticket)
+        {
+            await _context.Tickets.AddAsync(ticket);
+            return await _context.SaveChangesAsync() > 0;
+        }
 
 
         /// /// <summary>

@@ -8,7 +8,7 @@ namespace Infrastructure.Repository.interfaces
     public interface IUserRepository
     {
         Task<User> SearchAsync(QuerySearch search);
-        
+
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
         //        /// </summary>
@@ -49,10 +49,10 @@ namespace Infrastructure.Repository.interfaces
         //        /// </summary>
         //        Task<User> GetUserByVerifyCode(string verifyCode);
 
-        //        /// <summary>
-        //        /// دریافت کاربر با آیدی
-        //        /// </summary>
-        //        Task<User> GetUserById(Guid id);
+        /// <summary>
+        /// دریافت کاربر با آیدی
+        /// </summary>
+         Task<User> GetUserById(string id);
 
 
         //        /// <summary>

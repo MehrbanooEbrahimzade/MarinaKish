@@ -23,6 +23,16 @@ namespace Application.Services.classes
             var user = await  _userRepository.SearchAsync(search);
             return user.ToDto();
         }
+
+        public async Task<UserDto> SearchUserById(string id)   //chera age async va await nabashe ToDto anjam nemishe ??????????
+        {
+            var user =await  _userRepository.GetUserById(id);
+            if (user==null)
+                throw new ArgumentNullException();
+
+            return user.ToDto();
+            
+        }
         //        private readonly IUserRepository _userRepository;
         //        public UserService(IUserRepository userRepository)
         //        {
