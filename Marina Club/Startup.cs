@@ -61,6 +61,10 @@ namespace Marina_Club
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
+            // AddScoped for scheduleInformation model(table)
+            services.AddScoped<IScheduleInfoService, ScheduleInfoService>();
+            services.AddScoped<IScheduleInfoRepository, ScheduleInfoRepository>();
+
             // AddScoped for Tickets model
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketRepository, TicketRepository>();

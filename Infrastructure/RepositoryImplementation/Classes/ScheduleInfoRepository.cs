@@ -19,6 +19,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
         public async Task AddScheduleInfoAsync(ScheduleInfo scheduleInfo)
         {
              _context.ScheduleInfos.Add(scheduleInfo);
+             await _context.SaveChangesAsync();
         }
 
         ///// <summary>

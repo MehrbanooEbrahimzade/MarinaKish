@@ -46,38 +46,7 @@ namespace Infrastructure.Persist
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-       
+
         public DbSet<MyFile> MyFiles { get; set; }
-
-        public override int SaveChanges()
-        {
-            UpdateSoftDeleteStatuses();
-            return base.SaveChanges();
-        }
-
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            UpdateSoftDeleteStatuses();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        private void UpdateSoftDeleteStatuses()
-        {
-            foreach (EntityEntry entry in ChangeTracker.Entries())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
-                        break;
-                }
-            }
-        }
-
-
     }
 }
