@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Application.Commands.Comment;
 using Application.Commands.ContactInfo;
+using Application.Commands.ContactUs;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
@@ -18,7 +19,7 @@ namespace Application.Mappers
     {
         public static CreditCard ToModel(this UpdateCreditCardCommand command)
         {
-            return new CreditCard(command.ShabaNumber, command.CardNumber,command.UserId);
+            return new CreditCard(command.ShabaNumber, command.CardNumber, command.UserId);
         }
         /// <summary>
         /// تبدیل کردن کامند به کاربر
@@ -113,6 +114,13 @@ namespace Application.Mappers
             return new Message(command.Username, command.Message, command.ConversationID);
         }
 
-   
+        /// <summary>
+        /// تبدیل کامند پشتیبانی به مدل
+        /// </summary>
+        public static ContactUs ToModel(this AddContactUsCommand command)
+        {
+            return new ContactUs
+                (command.AboutMariana, command.Rules, command.Rules, command.PhoneNumber, command.UrlLinkedin, command.UrlInstagram);
+        }
     }
 }
