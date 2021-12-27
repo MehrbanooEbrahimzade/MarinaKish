@@ -59,10 +59,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> SearchReservedTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse);
 
-        ///// <summary>
-        /////  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
-        ///// </summary>
-        //Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse);
+        /// <summary>
+        ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
+        /// </summary>
+        Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse);
 
         ///// <summary>
         /////  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
