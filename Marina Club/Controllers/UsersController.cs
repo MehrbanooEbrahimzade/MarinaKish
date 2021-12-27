@@ -12,28 +12,31 @@ using Microsoft.Extensions.Configuration;
 using Infrastructure.Repository.interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Helper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 
 namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
     public class UsersController : ApiController
     {
-        private IConfiguration Configuration;
+        
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
-        private readonly JwtToken jwtToken;
-        public UsersController(IUserService userService, IIdentityService identity, IConfiguration configuration)
+
+        public UsersController(IUserService userService, IIdentityService identity): base()
         {
             _userService = userService;
             _identity = identity;
-            Configuration = configuration;
+           
         }
-
+        
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
             command.Validate();
+            
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
@@ -43,43 +46,31 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync(UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
         {
-            await _identity.LoginAsync(command);
-
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtToken.Issuer));
-            var signInCredintials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
-            var tokenOption = new JwtSecurityToken(
-                issuer: "http://localhost:5005/",
-                claims: new List<Claim>
-                {
-                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
-
-                },
-                expires: DateTime.Now.AddMinutes(150),
-                signingCredentials: signInCredintials
-            );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-
-            return OkResult(ApiMessage.UserLoggedIn, tokenString);
+            var jwtToken = await  _identity.LoginAsync(command);
+            return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
         }
         /// <summary>
         ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
         /// </summary>
         /// <param name="command"></param>
-        /// <returns></returns>
+        /// <returns></returns>.
+        
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
-        public async Task<IActionResult> CompleteProfile(CompleteProfileCommand command)
+        public async Task<IActionResult> CompleteProfile([FromBody]CompleteProfileCommand command)
         {
+            command.PhoneNumber = CurrentUser.PhoneNumber;
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("{id}/UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile(Guid id, UpdateUserCommand command)
+        public async Task<IActionResult> UpdateProfile(Guid id,[FromBody] UpdateUserCommand command)
         {
-            command.Id = id;
+            command.Id = CurrentUser.Id;
             await _identity.UpdateProfileAsync(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }

@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Infrastructure.Helper;
+using Marina_Club.Activator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Marina_Club.Controllers
 {
     public class ApiController : ControllerBase
     {
+        protected ApiController() { }
+        
+        protected UserInfo CurrentUser => (User.Identity as ClaimsIdentity).GetUserClaim();
 
         /// <summary>
         /// نتیجه ی عملیات موفق
@@ -81,6 +87,8 @@ namespace Marina_Club.Controllers
 
             #region Users
             public const string WrongCellPhone = "شماره تلفن اشتباه وارد شده است";
+            public const string WrongCellPhoneorcode = "شماره تلفن یا کد اشتباه وارد شده است";
+
             public const string verifyCodeSent = "کد تایید ارسال شد";
             public const string userLoggedInAndVerifyCodeSent = "ورود کاربر . کد تایید ارسال شد";
             public const string userRegisterAndVerifyCodeSent = "ورود کاربر جدید . کد تایید ارسال شد";

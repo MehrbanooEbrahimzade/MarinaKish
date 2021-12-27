@@ -12,6 +12,12 @@ using System.Net.Http;
 using System.Linq;
 using Application.Mappers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Infrastructure.Helper;
+using Microsoft.Extensions.Options;
 
 namespace Application.Services.classes
 {
@@ -22,20 +28,21 @@ namespace Application.Services.classes
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<User> _SignInManager;
         private readonly IUserRepository _userRepository;
-        private IConfiguration Configuration;
+        private readonly JwtToken _jwtToken;
         private readonly IUserRepository2 _iuserRepository2;
 
         private static readonly HttpClient client = new HttpClient();
 
         public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
             , IUserRepository userRepository, SignInManager<User> signInManager
-            , IConfiguration configuration,IUserRepository2 iuserRepository2)
+            , IConfiguration configuration,IUserRepository2 iuserRepository2
+            , IOptions<JwtToken> jwtToken)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _SignInManager = signInManager;
             _userRepository = userRepository;
-            Configuration = configuration;
+            _jwtToken = jwtToken.Value;
             _iuserRepository2 = iuserRepository2;
 
         }
@@ -75,7 +82,7 @@ namespace Application.Services.classes
                 throw;
             }
         }
-        public async Task LoginAsync(UserLoginCommand command)
+        public async Task<string> LoginAsync(UserLoginCommand command)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
 
@@ -86,6 +93,9 @@ namespace Application.Services.classes
 
             if (result == false)
                 throw new Exception("کد وارد شده صحیح نمی باشد ");
+            var token =  await GenerateToken(user.Id,command);
+            return token; 
+
         }
 
         public async Task CompleteProfile(CompleteProfileCommand command)
@@ -117,6 +127,23 @@ namespace Application.Services.classes
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
 
             _iuserRepository2.DeleteUser(user);
+        }
+        private async Task<string> GenerateToken(string id , UserLoginCommand command)
+        {
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
+            var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
+            var tokenOption = new JwtSecurityToken(
+                issuer: _jwtToken.Issuer,
+                claims: new List<Claim>
+                {
+                    new Claim(ClaimTypes.MobilePhone,command.PhoneNumber),
+                    new Claim("id",id)
+                },
+                expires: DateTime.Now.AddDays(15),
+                signingCredentials: credentials
+            );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
+            return  tokenString; 
         }
     }
 
