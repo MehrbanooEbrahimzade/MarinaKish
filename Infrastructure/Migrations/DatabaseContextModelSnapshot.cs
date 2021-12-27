@@ -250,8 +250,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Gender");
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");

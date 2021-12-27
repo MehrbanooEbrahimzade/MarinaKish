@@ -17,7 +17,11 @@ namespace Application.Commands.User
     {
         public RegisterUserCommandValidator()
         {
-            RuleFor(x => x.PhoneNumber).MaximumLength(11).WithMessage("شماره تلفن وارد شده معتبر نمی باشد");
+            RuleFor(x => x.PhoneNumber)
+                .MaximumLength(11).WithMessage("شماره تلفن وارد شده باید حداکثر از 11 عدد باشد")
+                .MinimumLength(11).WithMessage("شماره تلفن وارد شده باید  حداقل از 11 عدد باشد")
+                .NotNull().WithMessage("زمان شروع نمیتواند خالی باشد");
+
         }
     }
 }
