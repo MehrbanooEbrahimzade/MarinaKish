@@ -45,7 +45,7 @@ namespace Application.Mappers
         {
             return new ScheduleInfo
                 (command.StartTime, command.EndTime, command.GapTime, command.Duration, command.TotalCapacity,
-                 command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+                 command.PresenceCapacity, command.OnlineCapacity, command.Amount, command.FunId);
         }
         /// <summary>
         /// تبدیل کردن کامند به سلاید عکس تفریحات

@@ -1,51 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Validators.ScheduleInfo;
+using Application.Validators.User;
+using FluentValidation;
 
 namespace Application.Commands.ScheduleInfo
 {
-    public class AddScheduleInfoCommand
+    public class AddScheduleInfoCommand: CommandBase
     {
-        public Guid Id { get; set; }
+        public Guid FunId { get; set; }
 
-        /// <summary>
-        /// ساعت شروع سانس ها
-        /// </summary>
         public TimeSpan StartTime { get; set; }
 
-        /// <summary>
-        /// ساعت پایان سانس ها
-        /// </summary>
         public TimeSpan EndTime { get; set; }
 
-        /// <summary>
-        /// زمان استراحت هر سانس
-        /// </summary>
-        public int GapTime { get; set; }
+        public DateTime StartDate { get; set; }
 
-        /// <summary>
-        /// مدت زمان هر سانس 
-        /// </summary>
+        public DateTime EndDate { get; set; }
+
+        public int GapTime { get; set; }
+        
         public int Duration { get; set; }
 
-        /// <summary>
-        /// ظرفیت کل 
-        /// </summary>
         public int TotalCapacity { get; set; }
 
-        /// <summary>
-        /// ظرفیت فروش حضوری
-        /// </summary>
+        
         public int PresenceCapacity { get; set; }
 
-        /// <summary>
-        /// ظرفیت فروش مجازی
-        /// </summary>
+        
         public int OnlineCapacity { get; set; }
 
-        /// <summary>
-        /// قیمت
-        /// </summary>
+        
         public decimal Amount { get; set; }
+
+        public override bool Validate()
+        {
+            return new AddScheduleInfoCommandValidator().Validate(this).IsValid;
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Marina_Club.Controllers
         ///// <summary>
         ///// گرفتن همه سانس ها برای یک تفریح
         ///// </summary>
-        //[HttpGet("All-Fun-Schedules/{id}")]
+        //[HttpGet("All-Fun-ScheduleMaker/{id}")]
         //public async Task<IActionResult> GetAllSchedulesForFun(Guid id)// eFun id
         //{
         //    var result = await _scheduleService.GetAllSchedulesForFun(id);
@@ -49,7 +49,7 @@ namespace Marina_Club.Controllers
         ///// <summary>
         ///// گرفتن تعداد همه سانس ها برای یک تفریح
         ///// </summary>
-        //[HttpGet("All-Fun-Schedules-Count/{id}")]
+        //[HttpGet("All-Fun-ScheduleMaker-Count/{id}")]
         //public async Task<IActionResult> GetAllSchedulesForFunCount(Guid id)// eFun id
         //{
         //    var result = await _scheduleService.GetAllSchedulesForFun(id);
@@ -223,7 +223,7 @@ namespace Marina_Club.Controllers
         ///// <summary>
         ///// گرفتن همه سانس ها برای یک تفریح - با تاریخ
         ///// </summary>
-        //[HttpGet("All-Fun-Schedules-Search/{id}")] // eFun id
+        //[HttpGet("All-Fun-ScheduleMaker-Search/{id}")] // eFun id
         //public async Task<IActionResult> SearchInAllSchedulesForFun(Guid id, OneDateSearchCommand command)
         //{
         //    if (!command.PersianDate.Validate())
@@ -279,7 +279,7 @@ namespace Marina_Club.Controllers
         ///// <summary>
         ///// گرفتن تعداد همه سانس ها برای یک تفریح - با تاریخ
         ///// </summary>
-        //[HttpGet("All-Fun-Schedules-Search-Count/{id}")] // eFun id
+        //[HttpGet("All-Fun-ScheduleMaker-Search-Count/{id}")] // eFun id
         //public async Task<IActionResult> SearchInAllSchedulesForFunCount(Guid id, OneDateSearchCommand command)
         //{
         //    if (!command.PersianDate.Validate())
