@@ -48,7 +48,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("{id}/Delete")]
         public async Task<IActionResult> DeleteFunAsync(Guid id)
         {
             _funService.DeleteFunAsync(id);
@@ -68,13 +68,12 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// گرفتن یک تفریح
         /// </summary>
-        [HttpGet("GetOne/{id}")]
+        [HttpGet("{id}/GetOne")]
         public async Task<IActionResult> GetOneFunByIdAsync(Guid id)
         {
             var result = await _funService.GetOneFunAsync(id);
-            if (result == null)
-                return BadReq(ApiMessage.NotExistFunId, new { Reason = $"Fun not exist with this id. TryAgain!" });
-            return OkResult(ApiMessage.FunGetted, new { FunInfo = result });
+            return result == null ? BadReq(ApiMessage.NotExistFunId, new { Reason = $"Fun not exist with this id. TryAgain!" })
+                : OkResult(ApiMessage.FunGetted, new { FunInfo = result });
         }
 
         /// <summary>
@@ -109,10 +108,8 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> ReActiveFunByIdAsynch(Guid id)
         {
             var result = await _funService.ReActiveFunByIdAsynch(id);
-            if (!result)
-                return BadReq(ApiMessage.FunAllreadyReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" });
-
-            return OkResult(ApiMessage.FunReActived, new { ReActived = result });
+            return !result ? BadReq(ApiMessage.FunAllreadyReActive, new { Reasons = $"1-eFun already Actived, 2-wrong eFun id" })
+                : OkResult(ApiMessage.FunReActived, new { ReActived = result });
         }
 
         /// <summary>
