@@ -18,6 +18,23 @@ namespace Marina_Club.Controllers
             _ticketService = ticketService;
         }
 
+        /// <summary>
+        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
+        /// </summary>
+        [HttpPost("AddTicketBasket")] // be sabade kharid ezaf mishe -user id-
+        public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
+        {
+            if (!command.Validate())
+                return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-enter schedule id, 2-enter user id, 3-number of ticket must at least 1 and max 10" });
+
+            var result = await _ticketService.AddTicketToSite(command);
+            if (result == null)
+                return BadReq(ApiMessage.TicketNotAddToBasketBuy, new { Reasons = $"1-number of ticket greater than schedule available ticket, 2-schedule is not active, 3-user is blocked, 4-schedule not found, 5-user not found" });
+            return OkResult(ApiMessage.TicketAddedToBasketBuy, new { TicketID = result.Value });
+        }
+
+
+
         //        #region Schedule Options
 
         //        /// <summary>
@@ -667,20 +684,6 @@ namespace Marina_Club.Controllers
         //        }
         //        #endregion
 
-        /// <summary>
-        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
-        /// </summary>
-        [HttpPost("Add-Ticket-Basket/{id}")] // be sabade kharid ezaf mishe -user id-
-        public async Task<IActionResult> AddTicketForBasket( AddTicketToBasketCommand command)
-        {
-            if (!command.Validate())
-                return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-enter schedule id, 2-enter user id, 3-number of ticket must at least 1 and max 10" });
-
-            var result = await _ticketService.AddTicketToSite(command);
-            if (result == null)
-                return BadReq(ApiMessage.TicketNotAddToBasketBuy, new { Reasons = $"1-number of ticket greater than schedule available ticket, 2-schedule is not active, 3-user is blocked, 4-schedule not found, 5-user not found" });
-            return OkResult(ApiMessage.TicketAddedToBasketBuy, new { TicketID = result.Value });
-        }
 
         //        /// <summary>
         //        /// حذف بلیط از سبد خرید

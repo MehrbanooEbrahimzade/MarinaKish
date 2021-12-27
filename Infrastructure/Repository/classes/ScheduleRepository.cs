@@ -19,19 +19,30 @@ namespace Infrastructure.Repository.classes
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح
         ///// </summary>
+        public async Task<Fun> SeachNameRecreationAsync(Guid id, string name)
+        {
+            return await _context.Funs.Include(f => f.ScheduleInfo)
+                .FirstOrDefaultAsync(f => f.Name == name && f.Id == id);
+        }
+
+        /// <summary>
+        /// اضافه کردن سانس به تیبل
+        /// </summary>
+        public async Task AddScheduleAsync(Schedule schedule)
+        {
+            await _context.Schedules.AddAsync(schedule);
+            await _context.SaveChangesAsync();
+        }
+
+        ///// <summary>
+        ///// دریافت تفریح با اسم تفریح
+        ///// </summary>
         //public async Task<Fun> GetFunsByFunNameAsynch(Guid id)
         //{
         //    return await _context.Funs.FirstOrDefaultAsync(x=>x.Id== id);
         //}
 
-        ///// <summary>
-        ///// اضافه کردن سانس به تیبل
-        ///// </summary>
-        //public async Task<bool> AddScheduleAsync(Schedule schedule)
-        //{
-        //    await _context.Schedules.AddAsync(schedule);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح
