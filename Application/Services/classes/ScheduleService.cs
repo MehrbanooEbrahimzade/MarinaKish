@@ -21,19 +21,17 @@ namespace Application.Services.classes
 
         public async Task AddSpecialOffer(AddSpecialOfferCommand command)
         {
-            var searchnameRecreation = _scheduleRepository.SeachNameRecreationAsync(command.FunId,command.Name);
+            var searchnameRecreation = _scheduleRepository.SeachNameRecreationAsync(command.FunId, command.Name);
             if (searchnameRecreation == null)
                 throw new Exception("چنین تفریحی وجود ندرد");
 
-            
+            // command.Price -= (command.AddPercent.Value *  searchnameRecreation.Result.ScheduleInfo.Amount) / 100;
 
-            decimal number = command.AddPercent.Value;
-            decimal resultnumber = number / 100;
+            decimal DiscountNumber = command.AddPercent.Value;
+            decimal Discount = DiscountNumber / 100;
             decimal resultAmount = searchnameRecreation.Result.ScheduleInfo.Amount;
-            command.Price = resultnumber * resultAmount;
-
+            command.Price = Discount * resultAmount;
             var addinformation = command.ToModel();
-
             await _scheduleRepository.AddScheduleAsync(addinformation);
 
         }
