@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using Application.Commands.ScheduleInfo;
 
 namespace Application.Services.interfaces
 {
-    public class IScheduleInfoService
+    public interface IScheduleInfoService
     {
-        //private readonly IScheduleInfoRepository _ScheduleInfoRepository;
-
-        //public ScheduleInfoService(IScheduleInfoRepository ScheduleInfoRepository)
-        //{
-        //    _ScheduleInfoRepository = ScheduleInfoRepository;
-        //}
-
-        ///// <summary>
-        /////اضافه کردن  
-        ///// </summary>
-        //public async Task<Guid?> AddScheduleInfoAsync(ScheduleInfoCommand command)
-        //{
-        //    var ScheduleInfo = command.ToModel();
-        //    var addScheduleInfoResult = await _ScheduleInfoRepository.AddFunAsync(ScheduleInfo);
-        //    if (!ScheduleInfo)
-        //        return null;
-        //    return ScheduleInfo.Id;
-        //}
+        /// <summary>
+        ///اضافه کردن  
+        /// </summary>
+        Task AddScheduleInfoAsync(AddScheduleInfoCommand command);
 
 
     }

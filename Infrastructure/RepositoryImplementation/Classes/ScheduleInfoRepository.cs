@@ -16,6 +16,10 @@ namespace Infrastructure.RepositoryImplementation.Classes
         {
         }
 
+        public async Task AddScheduleInfoAsync(ScheduleInfo scheduleInfo)
+        {
+             _context.ScheduleInfos.Add(scheduleInfo);
+        }
 
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح

@@ -19,7 +19,7 @@ namespace Marina_Club.Controllers
         [HttpPost]
         public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
-            var result = await _scheduleInfoService.AddScheduleInfoAsync(command);
+            await _scheduleInfoService.AddScheduleInfoAsync(command);
 
 
         }
