@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
 
@@ -6,6 +7,11 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IScheduleRepository
     {
+        /// <summary>
+        /// اضافه کردن یک سانس
+        /// </summary>
+        Task<bool> AddScheduleAsync(List<Schedule> schedules);
+
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>
@@ -16,11 +22,12 @@ namespace Domain.RepositoryInterfaces
         //    /// </summary>
         //    Task<Fun> GetFunByFunId(Guid id);
 
-        //    /// <summary>
-        //    /// اضافه کردن سانس به تیبل
-        //    /// </summary>
-        //    Task<bool> AddScheduleAsync(Schedule schedule);
-        Task<bool> AddScheduleAsync(List<Schedule> schedules);
+        /// <summary>
+        /// اضافه کردن سانس به تیبل
+        /// </summary>
+        Task AddScheduleAsync(Schedule schedule);
+
+        Task<Fun> SeachNameRecreationAsync(Guid id, string name);
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         //    /// </summary>

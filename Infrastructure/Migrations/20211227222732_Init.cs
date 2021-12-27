@@ -63,25 +63,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ScheduleInfos",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    StartTime = table.Column<TimeSpan>(nullable: false),
-                    EndTime = table.Column<TimeSpan>(nullable: false),
-                    GapTime = table.Column<int>(nullable: false),
-                    Duration = table.Column<int>(nullable: false),
-                    TotalCapacity = table.Column<int>(nullable: false),
-                    PresenceCapacity = table.Column<int>(nullable: false),
-                    OnlineCapacity = table.Column<int>(nullable: false),
-                    Amount = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ScheduleInfos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -127,7 +108,6 @@ namespace Infrastructure.Migrations
                     NationalCode = table.Column<string>(nullable: true),
                     Gender = table.Column<int>(nullable: false),
                     BirthDay = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     CreditCardId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -153,7 +133,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     FunId = table.Column<Guid>(nullable: false),
-                    DiscountId = table.Column<Guid>(nullable: true),
+                    PercentId = table.Column<Guid>(nullable: true),
                     StartTime = table.Column<TimeSpan>(nullable: false),
                     EndTime = table.Column<TimeSpan>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
@@ -164,33 +144,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_Percent_DiscountId",
-                        column: x => x.DiscountId,
+                        name: "FK_Schedules_Percent_PercentId",
+                        column: x => x.PercentId,
                         principalTable: "Percent",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Funs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    ScheduleInfoId = table.Column<Guid>(nullable: true),
-                    Video = table.Column<string>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    About = table.Column<string>(nullable: true),
-                    BackgroundPicture = table.Column<string>(nullable: true),
-                    Icon = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Funs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Funs_ScheduleInfos_ScheduleInfoId",
-                        column: x => x.ScheduleInfoId,
-                        principalTable: "ScheduleInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -341,12 +297,6 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Funs_FunId",
-                        column: x => x.FunId,
-                        principalTable: "Funs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -355,22 +305,60 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Attachment = table.Column<string>(nullable: true),
-                    FunId = table.Column<Guid>(nullable: true),
-                    FunId1 = table.Column<Guid>(nullable: true)
+                    FunId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FunSliderPictures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduleInfos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FunId = table.Column<Guid>(nullable: false),
+                    StartTime = table.Column<TimeSpan>(nullable: false),
+                    EndTime = table.Column<TimeSpan>(nullable: false),
+                    GapTime = table.Column<int>(nullable: false),
+                    Duration = table.Column<int>(nullable: false),
+                    TotalCapacity = table.Column<int>(nullable: false),
+                    PresenceCapacity = table.Column<int>(nullable: false),
+                    OnlineCapacity = table.Column<int>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleInfos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Funs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Video = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    About = table.Column<string>(nullable: true),
+                    BackgroundPicture = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
+                    FunSliderPictureId = table.Column<Guid>(nullable: true),
+                    ScheduleInfoId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FunSliderPictures_Funs_FunId",
-                        column: x => x.FunId,
-                        principalTable: "Funs",
+                        name: "FK_Funs_FunSliderPictures_FunSliderPictureId",
+                        column: x => x.FunSliderPictureId,
+                        principalTable: "FunSliderPictures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_FunSliderPictures_Funs_FunId1",
-                        column: x => x.FunId1,
-                        principalTable: "Funs",
+                        name: "FK_Funs_ScheduleInfos_ScheduleInfoId",
+                        column: x => x.ScheduleInfoId,
+                        principalTable: "ScheduleInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -430,6 +418,11 @@ namespace Infrastructure.Migrations
                 column: "FunId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Funs_FunSliderPictureId",
+                table: "Funs",
+                column: "FunSliderPictureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Funs_ScheduleInfoId",
                 table: "Funs",
                 column: "ScheduleInfoId");
@@ -440,14 +433,15 @@ namespace Infrastructure.Migrations
                 column: "FunId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FunSliderPictures_FunId1",
-                table: "FunSliderPictures",
-                column: "FunId1");
+                name: "IX_ScheduleInfos_FunId",
+                table: "ScheduleInfos",
+                column: "FunId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_DiscountId",
+                name: "IX_Schedules_PercentId",
                 table: "Schedules",
-                column: "DiscountId");
+                column: "PercentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_ScheduleId",
@@ -468,10 +462,42 @@ namespace Infrastructure.Migrations
                 name: "IX_Tickets_UserId1",
                 table: "Tickets",
                 column: "UserId1");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comments_Funs_FunId",
+                table: "Comments",
+                column: "FunId",
+                principalTable: "Funs",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_FunSliderPictures_Funs_FunId",
+                table: "FunSliderPictures",
+                column: "FunId",
+                principalTable: "Funs",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ScheduleInfos_Funs_FunId",
+                table: "ScheduleInfos",
+                column: "FunId",
+                principalTable: "Funs",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_FunSliderPictures_Funs_FunId",
+                table: "FunSliderPictures");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_ScheduleInfos_Funs_FunId",
+                table: "ScheduleInfos");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -491,9 +517,6 @@ namespace Infrastructure.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "FunSliderPictures");
-
-            migrationBuilder.DropTable(
                 name: "MyFiles");
 
             migrationBuilder.DropTable(
@@ -503,22 +526,25 @@ namespace Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Funs");
-
-            migrationBuilder.DropTable(
                 name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "ScheduleInfos");
-
-            migrationBuilder.DropTable(
                 name: "Percent");
 
             migrationBuilder.DropTable(
                 name: "CreditCards");
+
+            migrationBuilder.DropTable(
+                name: "Funs");
+
+            migrationBuilder.DropTable(
+                name: "FunSliderPictures");
+
+            migrationBuilder.DropTable(
+                name: "ScheduleInfos");
         }
     }
 }

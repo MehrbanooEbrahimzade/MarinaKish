@@ -1,7 +1,12 @@
-﻿using Infrastructure.Persist;
-using Infrastructure.RepositoryImplementation;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Domain.Enums;
+using Domain.Models;
+using Infrastructure.Persist;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.RepositoryImplementation.Classes
 {
     public class TicketRepository : BaseRepository/*,ITicketRepository*/
     {

@@ -72,15 +72,23 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BackgroundPicture");
 
+                    b.Property<Guid?>("FunSliderPictureId");
+
                     b.Property<string>("Icon");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("Name");
 
+                    b.Property<Guid?>("ScheduleInfoId");
+
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FunSliderPictureId");
+
+                    b.HasIndex("ScheduleInfoId");
 
                     b.ToTable("Funs");
                 });
@@ -94,13 +102,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("FunId");
 
-                    b.Property<Guid?>("FunId1");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FunId");
-
-                    b.HasIndex("FunId1");
 
                     b.ToTable("FunSliderPictures");
                 });
@@ -140,8 +144,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<Guid?>("DiscountId");
-
                     b.Property<TimeSpan>("EndTime");
 
                     b.Property<Guid>("FunId");
@@ -156,6 +158,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PercentId");
 
                     b.ToTable("Schedules");
                 });
@@ -251,8 +254,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FullName");
 
                     b.Property<int>("Gender");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -416,20 +417,29 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Domain.Models.Fun", b =>
+                {
+                    b.HasOne("Domain.Models.FunSliderPicture")
+                        .WithMany()
+                        .HasForeignKey("FunSliderPictureId");
+
+                    b.HasOne("Domain.Models.ScheduleInfo")
+                        .WithMany()
+                        .HasForeignKey("ScheduleInfoId");
+                });
+
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
                 {
                     b.HasOne("Domain.Models.Fun")
                         .WithMany("SliderPictures")
                         .HasForeignKey("FunId");
-
-                    b.HasOne("Domain.Models.Fun")
-                        .WithMany()
-                        .HasForeignKey("FunId1");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
+                    b.HasOne("Domain.Models.Percent", "Percent")
                         .WithMany()
+                        .HasForeignKey("PercentId");
                 });
 
             modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>

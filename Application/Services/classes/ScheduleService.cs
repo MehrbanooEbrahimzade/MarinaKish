@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Schedule;
-using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models;
-using Infrastructure.Repository.interfaces;
+using Domain.RepositoryInterfaces;
 
 namespace Application.Services.classes
 {
