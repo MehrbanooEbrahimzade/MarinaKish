@@ -29,7 +29,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
         public async void AddFunAsync(Fun fun)
         {
              await _context.Funs.AddAsync(fun);
-            _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
         }
 
         /// <summary>

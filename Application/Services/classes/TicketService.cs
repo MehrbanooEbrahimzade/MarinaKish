@@ -1,13 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Application.Commands;
-using Application.Commands.Ticket;
-using Application.Dtos;
-using Application.Mappers;
-using Application.Services.interfaces;
-using Domain.Models;
-using Infrastructure.Repository.interfaces;
+﻿using Application.Services.interfaces;
 
 namespace Application.Services.classes
 {

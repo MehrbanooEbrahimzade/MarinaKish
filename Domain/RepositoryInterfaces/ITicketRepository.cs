@@ -1,4 +1,9 @@
-﻿namespace Domain.RepositoryInterfaces
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Models;
+
+namespace Domain.RepositoryInterfaces
 {
     public interface ITicketRepository
     {

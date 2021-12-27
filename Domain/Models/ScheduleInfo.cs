@@ -6,7 +6,7 @@ namespace Domain.Models
     public class ScheduleInfo
     {
         public ScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
-            int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount)
+            int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount, Guid funId)
         {
             Id = Guid.NewGuid();
             StartTime = startTime;
@@ -17,9 +17,11 @@ namespace Domain.Models
             PresenceCapacity = presenceCapacity;
             OnlineCapacity = onlineCapacity;
             Amount = amount;
+            FunId = funId;
         }
 
         public Guid Id { get; private set; }
+        public Guid FunId { get; private set; }//?
 
         /// <summary>
         /// ساعت شروع سانس ها
@@ -74,8 +76,6 @@ namespace Domain.Models
             this.OnlineCapacity = onlineCapacity;
             this.Amount = amount;
         }
-        private ScheduleInfo()
-        {
-        }
+        private ScheduleInfo() { }
     }
 }

@@ -1,27 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Application.Commands.ScheduleInfo;
+using Domain.Models;
 
 namespace Application.Helper
 {
-    public class ScheduleMaker
+    public static class ScheduleMaker
     {
-        public List<SchedulesTime> MakeSchedule(TimeSpan startTime, TimeSpan endTime, int duration, int gapTime)
+        public static List<Schedule> MakeSchedule(AddScheduleInfoCommand command)
         {
-            TimeSpan scheduleStartTime = startTime;
-            TimeSpan scheduleEndTime = default;
-            var schedulesTime = new List<SchedulesTime>();
+            DateTime date = command.StartDate;
+            
+            var schedules = new List<Schedule>();
 
-            for (var i = 0; scheduleEndTime <= endTime; i++)
+
+            for (; date <= command.EndDate;date= date.AddDays(1))
             {
-                scheduleEndTime = scheduleStartTime + TimeSpan.FromMinutes(duration);
+                TimeSpan scheduleStartTime = command.StartTime;
+                TimeSpan scheduleEndTime = default;
 
-                schedulesTime.Add(new SchedulesTime(scheduleStartTime, scheduleEndTime));
+                for (;scheduleEndTime <= command.EndTime;)
+                {
+                    scheduleEndTime = scheduleStartTime + TimeSpan.FromMinutes(command.Duration);
 
-                scheduleStartTime += TimeSpan.FromMinutes(duration + gapTime);
+                    schedules.Add(new Schedule(date, scheduleStartTime, scheduleEndTime, command.Amount,
+                        command.FunId));
+
+                    scheduleStartTime += TimeSpan.FromMinutes(command.Duration + command.GapTime);
+                }
             }
 
-            return schedulesTime;
+            return schedules;
         }
-   
     }
 }

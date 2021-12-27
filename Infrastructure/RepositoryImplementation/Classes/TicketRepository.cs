@@ -1,6 +1,5 @@
-﻿using Domain.RepositoryInterfaces;
-using Infrastructure.Persist;
-using Infrastructure.Repository.interfaces;
+﻿using Infrastructure.Persist;
+using Infrastructure.RepositoryImplementation;
 
 namespace Infrastructure.Repository.classes
 {

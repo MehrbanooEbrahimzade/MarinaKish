@@ -1,4 +1,8 @@
-﻿namespace Domain.RepositoryInterfaces
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Models;
+
+namespace Domain.RepositoryInterfaces
 {
     public interface IScheduleRepository
     {
@@ -16,7 +20,7 @@
         //    /// اضافه کردن سانس به تیبل
         //    /// </summary>
         //    Task<bool> AddScheduleAsync(Schedule schedule);
-
+        Task<bool> AddScheduleAsync(List<Schedule> schedules);
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         //    /// </summary>

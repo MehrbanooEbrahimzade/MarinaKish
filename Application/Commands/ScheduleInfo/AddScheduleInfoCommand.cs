@@ -9,6 +9,8 @@ namespace Application.Commands.ScheduleInfo
 {
     public class AddScheduleInfoCommand: CommandBase
     {
+        public Guid FunId { get; set; }
+
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }

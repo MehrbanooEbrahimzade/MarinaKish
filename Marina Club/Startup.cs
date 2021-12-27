@@ -129,7 +129,7 @@ namespace Marina_Club
             app.UseMvc();    
             app.UseAuthentication();
             
-            provider.MigrateDatabases();
+            //provider.MigrateDatabases();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Domain.RepositoryInterfaces;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Models;
+using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
 
 namespace Infrastructure.RepositoryImplementation.Classes
@@ -18,14 +21,17 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //    return await _context.Funs.FirstOrDefaultAsync(x=>x.Id== id);
         //}
 
-        ///// <summary>
-        ///// اضافه کردن سانس به تیبل
-        ///// </summary>
-        //public async Task<bool> AddScheduleAsync(Schedule schedule)
-        //{
-        //    await _context.Schedules.AddAsync(schedule);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        /// <summary>
+        /// اضافه کردن سانس به تیبل
+        /// </summary>
+        public async Task<bool> AddScheduleAsync(List<Schedule> schedules)
+        {
+            foreach (var x in schedules)
+            {
+                await _context.Schedules.AddAsync(x);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح
@@ -147,6 +153,6 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //        .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
         //}
 
-      
+
     }
 }
