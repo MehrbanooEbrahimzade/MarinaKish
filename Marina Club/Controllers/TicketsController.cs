@@ -684,19 +684,19 @@ namespace Marina_Club.Controllers
         //        }
         //        #endregion
 
-        /// <summary>
-        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
-        /// </summary>
-        [HttpPost("{id}/AddTicketBasket")]
-        public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
-        {
-            if (!command.Validate())
-                return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
-            var result = await _ticketService.DeleteTicketsFromBasketBuy(command);
-            if (result != null)
-                return BadReq(ApiMessage.AllInActiveTicketsDeletedFaild, new { NotDeletedTickets = result });
-            return OkResult(ApiMessage.AllInActiveTicketsDeletedSuccessfully, new { DeletedTicketCount = command.IDs.Count });
-        }
+        ///// <summary>
+        ///// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
+        ///// </summary>
+        //[HttpPost("{id}/AddTicketBasket")]
+        //public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
+        //{
+        //    if (!command.Validate())
+        //        return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
+        //    var result = await _ticketService.DeleteTicketsFromBasketBuy(command);
+        //    if (result != null)
+        //        return BadReq(ApiMessage.AllInActiveTicketsDeletedFaild, new { NotDeletedTickets = result });
+        //    return OkResult(ApiMessage.AllInActiveTicketsDeletedSuccessfully, new { DeletedTicketCount = command.IDs.Count });
+        //}
 
         //        /// <summary>
         //        /// اضافه کردن بلیط خریده شده بصورت حضوری

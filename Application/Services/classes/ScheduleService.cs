@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.Commands.Schedule;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.RepositoryInterfaces;
+using Infrastructure.Repository.Interfaces;
 
 namespace Application.Services.classes
 {
