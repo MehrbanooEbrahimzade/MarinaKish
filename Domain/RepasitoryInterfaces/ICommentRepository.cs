@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Repository.Interfaces
+﻿namespace Domain.RepasitoryInterfaces
 {
     public interface ICommentRepository
     {

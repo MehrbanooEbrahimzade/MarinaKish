@@ -15,9 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
 using Microsoft.Extensions.Options;
-using Infrastructure.Repository.Interfaces;
 
 namespace Application.Services.classes
 {

@@ -4,11 +4,10 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-
-using Infrastructure.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.classes
 {

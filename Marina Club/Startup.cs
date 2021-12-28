@@ -13,9 +13,9 @@ using Infrastructure.Persist;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
 using Infrastructure.Repository.Classes;
-using Infrastructure.Repository.Interfaces;
 
 namespace Marina_Club
 {

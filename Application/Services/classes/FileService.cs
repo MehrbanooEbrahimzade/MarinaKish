@@ -7,9 +7,8 @@ using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Infrastructure.Helper;
 using Application.Dtos;
-
+using Domain.RepasitoryInterfaces;
 using static Application.Services.classes.ApiControllers;
-using Infrastructure.Repository.Interfaces;
 
 namespace Application.Services.classes
 {

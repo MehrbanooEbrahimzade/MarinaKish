@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
-using Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes

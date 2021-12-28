@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Infrastructure.Repository.Interfaces
+namespace Domain.RepasitoryInterfaces
 {
     public interface IScheduleInfoRepository
     {
