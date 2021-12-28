@@ -7,7 +7,8 @@ using Application.Helper;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
+
+using Infrastructure.Repository.Interfaces;
 
 namespace Application.Services.classes
 {

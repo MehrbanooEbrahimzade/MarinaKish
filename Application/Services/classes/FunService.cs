@@ -5,8 +5,9 @@ using Application.Commands.Fun;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.RepositoryInterfaces;
+
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Infrastructure.Repository.Interfaces;
 
 namespace Application.Services.classes
 {
