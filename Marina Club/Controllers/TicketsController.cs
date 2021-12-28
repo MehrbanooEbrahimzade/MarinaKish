@@ -490,40 +490,40 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.TicketReservedSearchedDateCountGetted, new { ReservedTicketsCount = result.Count });
         //        }
 
-        //        /// <summary>
-        //        ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
-        //        /// </summary>
-        //        [HttpGet("SearchReservedTicketsPrice-oneDate-Sum")]
-        //        public async Task<IActionResult> SearchReservedTicketsPriceByOneDateSum(OneDateSearchCommand command)
-        //        {
-        //            if (!command.PersianDate.Validate())
-        //                return BadReq(ApiMessage.WrongDate, new { Reason = $"Year between 1368 and 1411, Month 1 to 12, Day 1 to 31" });
+        /// <summary>
+        ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
+        /// </summary>
+        [HttpGet("SearchReservedTicketsPriceoneDateSum")]
+        public async Task<IActionResult> SearchReservedTicketsPriceByOneDateSum(OneDateSearchCommand command)
+        {
+            if (!command.PersianDate.Validate())
+                return BadReq(ApiMessage.WrongDate, new { Reason = $"Year between 1368 and 1411, Month 1 to 12, Day 1 to 31" });
 
-        //            PersianCalendar persianCalendar = new PersianCalendar();
-        //            DateTime firstMiadiParse = new DateTime(command.PersianDate.Year, command.PersianDate.Month, command.PersianDate.Day, persianCalendar);
-        //            var result = await _ticketService.SearchReservedTicketsPriceByDateSum(firstMiadiParse);
-        //            if (result == 0)
-        //                return OkResult(ApiMessage.NotHaveActiveTicketsAtThisTime, new { ReservedTicketsPriceSum = result });
-        //            return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
-        //        }
+            PersianCalendar persianCalendar = new PersianCalendar();
+            DateTime firstMiadiParse = new DateTime(command.PersianDate.Year, command.PersianDate.Month, command.PersianDate.Day, persianCalendar);
+            var result = await _ticketService.SearchReservedTicketsPriceByDateSum(firstMiadiParse);
+            if (result == 0)
+                return OkResult(ApiMessage.NotHaveActiveTicketsAtThisTime, new { ReservedTicketsPriceSum = result });
+            return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
+        }
 
-        //        /// <summary>
-        //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
-        //        /// </summary>
-        //        [HttpGet("SearchReservedTicketsPrice-twoDate-Sum")]
-        //        public async Task<IActionResult> SearchReservedTicketsPriceByTwoDateSum(TwoDateSearchCommand command)
-        //        {
-        //            if (!command.FirstPersianDate.Validate() || !command.SecondPersianDate.Validate())
-        //                return BadReq(ApiMessage.WrongDate, new { Reason = $"Year between 1368 and 1411, Month 1 to 12, Day 1 to 31" });
+        /// <summary>
+        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
+        /// </summary>
+        //[HttpGet("SearchReservedTicketsPrice-twoDate-Sum")]
+        //public async Task<IActionResult> SearchReservedTicketsPriceByTwoDateSum(TwoDateSearchCommand command)
+        //{
+        //    if (!command.FirstPersianDate.Validate() || !command.SecondPersianDate.Validate())
+        //        return BadReq(ApiMessage.WrongDate, new { Reason = $"Year between 1368 and 1411, Month 1 to 12, Day 1 to 31" });
 
-        //            PersianCalendar persianCalendar = new PersianCalendar();
-        //            DateTime firstMiadiParse = new DateTime(command.FirstPersianDate.Year, command.FirstPersianDate.Month, command.FirstPersianDate.Day, persianCalendar);
-        //            DateTime secondMiladiParse = new DateTime(command.SecondPersianDate.Year, command.SecondPersianDate.Month, command.SecondPersianDate.Day, persianCalendar);
-        //            var result = await _ticketService.SearchReservedTicketsPriceByDateSum(firstMiadiParse, secondMiladiParse);
-        //            if (result == 0)
-        //                return OkResult(ApiMessage.NotHaveActiveTicketsAtThisTime, new { ReservedTicketsPriceSum = result });
-        //            return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
-        //        }
+        //    PersianCalendar persianCalendar = new PersianCalendar();
+        //    DateTime firstMiadiParse = new DateTime(command.FirstPersianDate.Year, command.FirstPersianDate.Month, command.FirstPersianDate.Day, persianCalendar);
+        //    DateTime secondMiladiParse = new DateTime(command.SecondPersianDate.Year, command.SecondPersianDate.Month, command.SecondPersianDate.Day, persianCalendar);
+        //    var result = await _ticketService.SearchReservedTicketsPriceByDateSum(firstMiadiParse, secondMiladiParse);
+        //    if (result == 0)
+        //        return OkResult(ApiMessage.NotHaveActiveTicketsAtThisTime, new { ReservedTicketsPriceSum = result });
+        //    return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
+        //}
 
         //        /// <summary>
         //        /// جست و جوی بلیط غیرفعال با یک تاریخ
@@ -687,23 +687,8 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
         /// </summary>
-        //[HttpPost("{id}/AddTicketBasket")]  
-        //public async Task<IActionResult> AddTicketForBasket( AddTicketToBasketCommand command)
-        //{
-        //    if (!command.Validate())
-        //        return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-enter schedule id, 2-enter user id, 3-number of ticket must at least 1 and max 10" });
-
-        //    var result = await _ticketService.AddTicketToSite(command);
-        //    if (result == null)
-        //        return BadReq(ApiMessage.TicketNotAddToBasketBuy, new { Reasons = $"1-number of ticket greater than schedule available ticket, 2-schedule is not active, 3-user is blocked, 4-schedule not found, 5-user not found" });
-        //    return OkResult(ApiMessage.TicketAddedToBasketBuy, new { TicketID = result.Value });
-        //}
-
-        /// <summary>
-        /// حذف بلیط از سبد خرید
-        /// </summary>
-        [HttpDelete("DeleteFrom-BasketBuy")]
-        public async Task<IActionResult> DeleteTicketsFromBasketBuy(IdListCommand command)
+        [HttpPost("{id}/AddTicketBasket")]
+        public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
         {
             if (!command.Validate())
                 return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
