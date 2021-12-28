@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
     public interface IUserRepository
     {
-        Task<User> SearchAsync(QuerySearch search);
+        Task<User> SearchAsync(Guid id);
 
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
