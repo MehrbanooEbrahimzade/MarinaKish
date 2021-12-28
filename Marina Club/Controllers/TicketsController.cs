@@ -682,19 +682,19 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.TicketAddedToBasketBuy, new { TicketID = result.Value });
         }
 
-        //        /// <summary>
-        //        /// حذف بلیط از سبد خرید
-        //        /// </summary>
-        //        [HttpDelete("DeleteFrom-BasketBuy")]
-        //        public async Task<IActionResult> DeleteTicketsFromBasketBuy(IdListCommand command)
-        //        {
-        //            if (!command.Validate())
-        //                return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
-        //            var result = await _ticketService.DeleteTicketsFromBasketBuy(command);
-        //            if (result != null)
-        //                return BadReq(ApiMessage.AllInActiveTicketsDeletedFaild, new { NotDeletedTickets = result });
-        //            return OkResult(ApiMessage.AllInActiveTicketsDeletedSuccessfully, new { DeletedTicketCount = command.IDs.Count });
-        //        }
+        /// <summary>
+        /// حذف بلیط از سبد خرید
+        /// </summary>
+        [HttpDelete("DeleteFrom-BasketBuy")]
+        public async Task<IActionResult> DeleteTicketsFromBasketBuy(IdListCommand command)
+        {
+            if (!command.Validate())
+                return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
+            var result = await _ticketService.DeleteTicketsFromBasketBuy(command);
+            if (result != null)
+                return BadReq(ApiMessage.AllInActiveTicketsDeletedFaild, new { NotDeletedTickets = result });
+            return OkResult(ApiMessage.AllInActiveTicketsDeletedSuccessfully, new { DeletedTicketCount = command.IDs.Count });
+        }
 
         //        /// <summary>
         //        /// اضافه کردن بلیط خریده شده بصورت حضوری
@@ -737,33 +737,33 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.TicketCanceled, new { ScheduleAvailableCapacity = result.Value });
         //        }
 
-        //        /// <summary>
-        //        /// عوض کزدن وضعیت یک بلیط
-        //        /// </summary>
-        //        [HttpPut("ChangeCondition/{id}")]
-        //        public async Task<IActionResult> ChangeTicketCondition(Guid id, EditTicketConditionCommand command)
-        //        {
-        //            command.TicketId = id;
-        //            if (!command.Validate())
-        //                return BadReq(ApiMessage.WrongTicketID, new { Reason = $"1-enter ticketID, 2-ChangeCondition must in = 1: inactive, 2: active, 3: canceled" });
+        /// <summary>
+        /// عوض کزدن وضعیت یک بلیط
+        /// </summary>
+        [HttpPut("ChangeCondition/{id}")]
+        public async Task<IActionResult> ChangeTicketCondition(Guid id, EditTicketConditionCommand command)
+        {
+            command.TicketId = id;
+            if (!command.Validate())
+                return BadReq(ApiMessage.WrongTicketID, new { Reason = $"1-enter ticketID, 2-ChangeCondition must in = 1: inactive, 2: active, 3: canceled" });
 
-        //            var result = await _ticketService.ChangeTicketCondition(command);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.TicketNotChangedCondition, new { Reason = $"ticket not found" });
-        //            return OkResult(ApiMessage.TicketChangedCondition, new { TicketCondition = $"{result} 1: inactive, 2: active, 3: canceled" });
-        //        }
+            var result = await _ticketService.ChangeTicketCondition(command);
+            if (result == null)
+                return BadReq(ApiMessage.TicketNotChangedCondition, new { Reason = $"ticket not found" });
+            return OkResult(ApiMessage.TicketChangedCondition, new { TicketCondition = $"{result} 1: inactive, 2: active, 3: canceled" });
+        }
 
-        //        /// <summary>
-        //        /// گرفتن یک بلیط
-        //        /// </summary>
-        //        [HttpGet("{id}/Get-One")]
-        //        public async Task<IActionResult> GetOneTicket(Guid id)
-        //        {
-        //            var result = await _ticketService.GetOneTicket(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.TicketNotGetted, new { Reason = $"ticket not found, check the id and TryAgain!" });
-        //            return OkResult(ApiMessage.TicketGetted, new { TicketInfo = result });
-        //        }
+        /// <summary>
+        /// گرفتن یک بلیط
+        /// </summary>
+        [HttpGet("{id}/Get-One")]
+        public async Task<IActionResult> GetOneTicket(Guid id)
+        {
+            var result = await _ticketService.GetOneTicket(id);
+            if (result == null)
+                return BadReq(ApiMessage.TicketNotGetted, new { Reason = $"ticket not found, check the id and TryAgain!" });
+            return OkResult(ApiMessage.TicketGetted, new { TicketInfo = result });
+        }
 
         //        /// <summary>
         //        /// پاک کردن بلیط - از سبد خرید

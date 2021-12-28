@@ -24,15 +24,15 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> GetAllScheduleActiveTickets(Guid id);
 
-        ///// <summary>
-        ///// گرفتن یک بلیط با شماره بلیط
-        ///// </summary>
-        //Task<TicketDto> GetOneTicket(Guid id);
-
-        ///// <summary>
-        ///// عوض کزدن وضعیت یک بلیط
-        ///// </summary>
-        //Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
+        /// <summary>
+        /// گرفتن یک بلیط با شماره بلیط
+        /// </summary>
+        Task<TicketDto> GetOneTicket(Guid id);
+        
+        /// <summary>
+        /// عوض کزدن وضعیت یک بلیط
+        /// </summary>
+        Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
 
         ///// <summary>
         ///// ثبت خرید و فعال کردن(رزرو) بلیط
@@ -179,9 +179,9 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<int> SetPerformedTicketsToPlayed();
 
-        ///// <summary>
-        ///// حذف بلیط از سبد خرید
-        ///// </summary>
-        //Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command);
+       /// <summary>
+       /// حذف بلیط از سبد خرید
+       /// </summary>
+       Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command);
     }
 }

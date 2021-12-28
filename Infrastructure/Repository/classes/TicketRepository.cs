@@ -86,19 +86,19 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// گرفتن بلیط با آیدی
         /// </summary>
-        //public async Task<Ticket> GetTicketById(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .FirstOrDefaultAsync(x => x.Id == id);
-        //}
+        public async Task<Ticket> GetTicketById(Guid id)
+        {
+            return await _context.Tickets.Include(x => x.Schedule).Include(x =>x.User)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         /// <summary>
         /// ثبت تغییرات
         /// </summary>
-        //public async Task<bool> Update()
-        //{
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        public async Task<bool> Update()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         /// <summary>
         /// دریافت تعداد بلیط های فروخته شده برای یک تفریح
@@ -543,18 +543,18 @@ namespace Infrastructure.Repository.classes
         /// <summary>
         /// حذف بلیط از سبد خرید
         /// </summary>
-        //public async Task<bool> DeleteTicketsFromBasketBuy(Ticket ticket)
-        //{
-        //    _context.Tickets.Remove(ticket);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        public async Task<bool> DeleteTicketsFromBasketBuy(Ticket ticket)
+        {
+            _context.Tickets.Remove(ticket);
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         /// <summary>
         /// دریافت بلیط در سبد خرید با آیدی
         /// </summary>
-        //public async Task<Ticket> GetTicketInBasketBuyById(Guid id)
-        //{
-        //    return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
-        //}
+        public async Task<Ticket> GetTicketInBasketBuyById(Guid id)
+        {
+            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
+        }
     }
 }

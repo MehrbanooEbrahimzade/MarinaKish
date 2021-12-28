@@ -84,12 +84,32 @@ namespace Application.Mappers
                 ScheduleInfo = f.ScheduleInfo.ToDto()
             }).ToList();
         }
+        public static TicketDto ToDto(this Ticket ticket)
+        {
+            return new TicketDto
+            {
+                Id = ticket.Id,
+                FullName = ticket.User.FullName,
+                CellPhone = ticket.User.PhoneNumber,
+                EFunType = ticket.FunType,
+                ScheduleId = ticket.Schedule.Id,
+                FunId = ticket.Schedule.FunId,
+                TotalPrice = ticket.Schedule.Price,
+                SubmitPersianDate = ticket.SubmitDate.ToString(),
+                ExecutePersianDate = ticket.Schedule.Date.ToString(),
+                UserId = ticket.User.Id,
+                Condition = ticket.Condition,
+                EndTime = ticket.Schedule.EndTime,
+                StartTime = ticket.Schedule.StartTime
+                
+            };
+        }
 
     }
 
-    //        /// <summary>
-    //        /// تبدیل کردن کاربر به dto کاربر
-    //        /// </summary>
+    /// <summary>
+    /// تبدیل کردن کاربر به dto کاربر
+    /// </summary>
     //        public static UserDto ToDto(this User user)
     //        {
     //            PersianCalendar persianParse = new PersianCalendar();

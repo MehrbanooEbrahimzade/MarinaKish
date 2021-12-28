@@ -16,6 +16,10 @@ namespace Domain.Models
             this.User = user;
             this.Schedule = schedule;
         }
+        public void SetCondition(Condition condition)
+        {
+            this.Condition = condition;
+        }
 
         private Ticket() { }
         public User User { get; private set; }

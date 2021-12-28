@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Application.Commands;
+﻿using Application.Commands;
 using Application.Commands.Ticket;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
-using Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Application.Services.classes
 {
@@ -38,7 +37,7 @@ namespace Application.Services.classes
             if (schedule == null)
                 throw new ArgumentNullException("");
 
-            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule); 
+            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule);
 
             var addAndSave = await _ticketRepository.AddTicketAsync(ticket);
             if (!addAndSave)
@@ -47,24 +46,24 @@ namespace Application.Services.classes
 
         }
 
-        //        /// <summary>
-        //        /// حذف بلیط از سبد خرید
-        //        /// </summary>
-        //        public async Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command)
-        //        {
-        //            List<Guid?> NotDeleted = new List<Guid?>();
-        //            foreach (var id in command.IDs)
-        //            {
-        //                var ticket = await _ticketRepository.GetTicketInBasketBuyById(id);
-        //                if (ticket == null)
-        //                    NotDeleted.Add(id);
-        //                else
-        //                    await _ticketRepository.DeleteTicketsFromBasketBuy(ticket);
-        //            }
-        //            if (NotDeleted.Count == 0)
-        //                return null;
-        //            return NotDeleted;
-        //        }
+        /// <summary>
+        /// حذف بلیط از سبد خرید
+        /// </summary>
+        public async Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command)
+        {
+            List<Guid?> NotDeleted = new List<Guid?>();
+            foreach (var id in command.IDs)
+            {
+                var ticket = await _ticketRepository.GetTicketInBasketBuyById(id);
+                if (ticket == null)
+                    NotDeleted.Add(id);
+                else
+                    await _ticketRepository.DeleteTicketsFromBasketBuy(ticket);
+            }
+            if (NotDeleted.Count == 0)
+                return null;
+            return NotDeleted;
+        }
 
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
@@ -94,31 +93,31 @@ namespace Application.Services.classes
         //    return ticketModel.ToDto();
         //}
 
-        //        /// <summary>
-        //        /// گرفتن یک بلیط
-        //        /// </summary>
-        //        public async Task<TicketDto> GetOneTicket(Guid id)
-        //        {
-        //            var ticket = await _ticketRepository.GetTicketById(id);
-        //            if (ticket == null)
-        //                return null;
-        //            return ticket.ToDto();
-        //        }
+        /// <summary>
+        /// گرفتن یک بلیط
+        /// </summary>
+        public async Task<TicketDto> GetOneTicket(Guid id)
+        {
+            var ticket = await _ticketRepository.GetTicketById(id);
+            if (ticket == null)
+                return null;
+            return ticket.ToDto();
+        }
 
-        //        /// <summary>
-        //        /// عوض کردن وضعیت یک بلیط
-        //        /// </summary>
-        //        public async Task<string> ChangeTicketCondition(EditTicketConditionCommand command)
-        //        {
-        //            var ticket = await _ticketRepository.GetTicketById(command.TicketId);
-        //            if (ticket == null)
-        //                return null;
-        //            ticket.ConditionSet(command.ChangeCondition);
-        //            var save = await _ticketRepository.SaveChangesAsync();
-        //            if (!save)
-        //                return null;
-        //            return ticket.Condition.ToString();
-        //        }
+        /// <summary>
+        /// عوض کردن وضعیت یک بلیط
+        /// </summary>
+        public async Task<string> ChangeTicketCondition(EditTicketConditionCommand command)
+        {
+            var ticket = await _ticketRepository.GetTicketById(command.TicketId);
+            if (ticket == null)
+                return null;
+            ticket.SetCondition(command.ChangeCondition);
+            var save = await _ticketRepository.Update();
+            if (!save)
+                return null;
+            return ticket.Condition.ToString();
+        }
 
         //        #region Search Options
         //        /// <summary>

@@ -13,7 +13,7 @@ namespace Application.Dtos
         /// <summary>
         /// نوع تفریح :
         /// </summary>
-        public FunType EFunType { get; set; }
+        public string EFunType { get; set; }
 
         /// <summary>
         /// شماره تلفن همراه
@@ -50,10 +50,6 @@ namespace Application.Dtos
         /// </summary>
         public string SubmitPersianDate { get; set; }
 
-        /// <summary>
-        /// شماره بلیط
-        /// </summary>
-        public string TicketNumber { get; set; }
 
         /// <summary>
         /// وضعیت
@@ -73,6 +69,6 @@ namespace Application.Dtos
         /// <summary>
         /// آیدی کاربر
         /// </summary>
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }
