@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
@@ -20,10 +21,10 @@ namespace Infrastructure.Repository.Classes
             return  user;
         }
 
-        public Task<User> SearchAsync(QuerySearch search)
+        public Task<User> SearchAsync(Guid id)
         {
             return _context.Users.Include(c => c.CreditCard)
-                .FirstOrDefaultAsync(user => user.PhoneNumber == search.PhoneNumber);
+                .FirstOrDefaultAsync(user => user.Id == id.ToString());
         }
 
         ///// <summary>

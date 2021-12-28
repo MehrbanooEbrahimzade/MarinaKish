@@ -9,7 +9,7 @@ namespace Application.Services.interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> SearchByPhoneAsync(QuerySearch search);
+        Task<UserDto> SearchByPhoneAsync(Guid id);
         /// <summary>
         /// دریافت کاربر با ایدی
         /// </summary>
