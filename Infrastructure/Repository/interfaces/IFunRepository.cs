@@ -21,7 +21,7 @@ namespace Infrastructure.Repository.interfaces
         /// <summary>
         /// گرفتن تفریح با آیدی :
         /// </summary>
-        Task<Fun> GetFunByIdAsynch(Guid id);
+        Task<Fun> GetFunByIdAsynch(Guid id); 
 
         /// <summary>
         /// گرفتن تفریح فعال با آیدی :
