@@ -16,7 +16,7 @@ namespace Marina_Club.Controllers
         public TicketsController(ITicketService ticketService)
         {
             _ticketService = ticketService;
-        }
+        } 
 
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید

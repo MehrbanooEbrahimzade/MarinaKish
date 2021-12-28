@@ -18,7 +18,7 @@ namespace Application.Services.classes
         private readonly IUserRepository _userRepository;
         private readonly IFunRepository _funRepository;
         public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)
-        {
+        { 
             this._ticketRepository = ticketRepository;
             this._scheduleRepository = _scheduleRepository;
             this._userRepository = userRepository;

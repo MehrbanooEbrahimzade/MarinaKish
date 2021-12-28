@@ -10,7 +10,7 @@ namespace Domain.RepasitoryInterfaces
         
         /// <summary>
         /// اضافه کردن بلیط 
-        /// </summary>
+        /// </summary> 
         Task<bool> AddTicketAsync(Ticket ticket);
 
     //    ///// <summary>

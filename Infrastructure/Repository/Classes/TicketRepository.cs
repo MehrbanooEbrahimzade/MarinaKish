@@ -21,7 +21,7 @@ namespace Infrastructure.Repository.Classes
 
         /// <summary>
         /// اضافه کردن بلیط
-        /// </summary>
+        /// </summary> 
         public async Task<bool> Addticketasync(Ticket ticket)
         {
             await _context.Tickets.AddAsync(ticket);

@@ -12,7 +12,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
         /// </summary>
-        Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
+        Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command); 
 
         ///// <summary>
         ///// گرفتن همه بلیط های یک سانس
