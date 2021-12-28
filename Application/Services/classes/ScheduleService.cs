@@ -34,7 +34,7 @@ namespace Application.Services.classes
 
             var addinformation = command.ToModel();
 
-            await _scheduleRepository.AddScheduleAsync(addinformation);
+            await _scheduleRepository.AddScheduleAsync(addinformation);   
 
         }
 
