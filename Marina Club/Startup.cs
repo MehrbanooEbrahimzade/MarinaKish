@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Domain.RepositoryInterfaces;
 using Infrastructure.Helper;
-using Infrastructure.RepositoryImplementation.Classes;
+using Infrastructure.Repository.Classes;
 
 namespace Marina_Club
 {

@@ -1,7 +1,8 @@
-﻿using Domain.RepositoryInterfaces;
-using Infrastructure.Persist;
+﻿using Infrastructure.Persist;
+using Infrastructure.Repository.Interfaces;
+using Infrastructure.RepositoryImplementation;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class CommentRepository : BaseRepository, ICommentRepository
     {

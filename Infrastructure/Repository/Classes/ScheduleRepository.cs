@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
+using Infrastructure.Repository.Interfaces;
+using Infrastructure.RepositoryImplementation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class ScheduleRepository : BaseRepository, IScheduleRepository
     {

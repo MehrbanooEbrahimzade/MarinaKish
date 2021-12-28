@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repository.Interfaces;
+using Infrastructure.RepositoryImplementation;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class ScheduleInfoRepository : BaseRepository, IScheduleInfoRepository
     {

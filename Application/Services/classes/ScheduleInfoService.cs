@@ -8,7 +8,6 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Domain.RepositoryInterfaces;
-using Infrastructure.RepositoryImplementation.Classes;
 
 namespace Application.Services.classes
 {

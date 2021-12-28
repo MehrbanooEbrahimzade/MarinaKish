@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Domain.Enums;
 using Domain.Models;
 using Infrastructure.Persist;
+using Infrastructure.RepositoryImplementation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class TicketRepository : BaseRepository/*,ITicketRepository*/
     {

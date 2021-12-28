@@ -1,11 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
+using Infrastructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class UserRepository2: IUserRepository2
     {
