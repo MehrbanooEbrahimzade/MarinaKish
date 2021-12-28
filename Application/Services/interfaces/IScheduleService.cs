@@ -16,7 +16,7 @@ namespace Application.Services.interfaces
 
         //    /// <summary>
         //    /// ساختن سانس
-        //    /// </summary>
+        //    /// </summary> 
         //    Task<List<ScheduleDto>> CreateSchedule(AddScheduleCommand command);
 
         //    /// <summary>
