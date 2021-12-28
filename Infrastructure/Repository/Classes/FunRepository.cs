@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Infrastructure.Persist;
 using Infrastructure.Repository.Interfaces;
-using Infrastructure.RepositoryImplementation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes

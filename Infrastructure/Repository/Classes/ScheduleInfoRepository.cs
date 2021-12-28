@@ -2,7 +2,6 @@
 using Domain.Models;
 using Infrastructure.Persist;
 using Infrastructure.Repository.Interfaces;
-using Infrastructure.RepositoryImplementation;
 
 namespace Infrastructure.Repository.Classes
 {

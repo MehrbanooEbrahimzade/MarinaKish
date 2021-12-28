@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Persist;
 
-namespace Infrastructure.RepositoryImplementation
+namespace Infrastructure.Repository
 {
     public class BaseRepository
     {

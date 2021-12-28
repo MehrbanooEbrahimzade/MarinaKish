@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Domain.Enums;
 using Domain.Models;
 using Infrastructure.Persist;
-using Infrastructure.RepositoryImplementation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
