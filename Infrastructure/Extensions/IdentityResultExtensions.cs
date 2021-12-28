@@ -1,9 +1,9 @@
-﻿using Infrastructure.Repository;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infrastructure.RepositoryImplementation;
 
 namespace Infrastructure.Extensions
 {

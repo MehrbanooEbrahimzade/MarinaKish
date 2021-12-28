@@ -1,20 +1,21 @@
-﻿using Application.Commands;
+﻿using System;
+using System.Threading.Tasks;
+using Application.Commands;
 using Application.Commands.Ticket;
-using Application.Dtos;
-using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Infrastructure.Repository.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.RepositoryInterfaces;
 
 namespace Application.Services.classes
 {
     public class TicketService : ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
-        private readonly IScheduleRepository _scheduleRepository;
+        private readonly Domain.RepositoryInterfaces.IScheduleRepository _scheduleRepository;
         private readonly IUserRepository _userRepository;
         private readonly IFunRepository _funRepository;
         public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)

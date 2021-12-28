@@ -6,6 +6,7 @@ using Application.Commands.ContactInfo;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
+using Application.Commands.Schedule;
 using Application.Commands.ScheduleInfo;
 using Application.Commands.SliderPictureFun;
 using Application.Commands.Ticket;
@@ -46,7 +47,7 @@ namespace Application.Mappers
         {
             return new ScheduleInfo
                 (command.StartTime, command.EndTime, command.GapTime, command.Duration, command.TotalCapacity,
-                 command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+                 command.PresenceCapacity, command.OnlineCapacity, command.Amount, command.FunId);
         }
         /// <summary>
         /// تبدیل کردن کامند به سلاید عکس تفریحات
@@ -75,14 +76,14 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن کامند به بلیط
         /// </summary>
-        //public static Ticket ToModel(this AddTicketToBasketCommand command)   
+        //public static Ticket ToModel(this AddTicketToBasketCommand command)
         //{
         //    return new Ticket(command.FunName, command.BoughtPlace, command.Gender, command.UserCommand.ToModel(),command.SchedulComand.ToModel());
         
         //}
         public static Schedule ToModel(this AddSchedulToTicketCommand schedulCommand)
         {
-            return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime, schedulCommand.Price, schedulCommand.FunId);
+            return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime,schedulCommand.Price, schedulCommand.FunId);
         }
 
         public static User ToModel(this AddUserToTicketcommand findUserCommand)
@@ -115,6 +116,22 @@ namespace Application.Mappers
             return new Message(command.Username, command.Message, command.ConversationID);
         }
 
-   
+        /// <summary>
+        /// تبدیل کردن پینشنهاد ویژه 
+        /// </summary>
+        public static Schedule ToModel(this AddSpecialOfferCommand command)
+        {
+            return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price,command.FunId,command.AddPercent.ToModel());
+
+        }
+        /// <summary>
+        /// تبدیل کردن قدار تخفیف
+        /// </summary>
+        public static Percent ToModel(this AddPercentCommand command)
+        {
+            return new Percent(command.Value);
+
+        }
+
     }
 }

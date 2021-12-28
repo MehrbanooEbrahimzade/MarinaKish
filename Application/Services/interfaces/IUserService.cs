@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Dtos;
-using Infrastructure.Repository.interfaces;
+using Domain.RepositoryInterfaces;
 
 namespace Application.Services.interfaces
 {

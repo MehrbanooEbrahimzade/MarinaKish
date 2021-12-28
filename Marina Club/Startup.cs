@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Application.Services.classes;
-using Infrastructure.Repository.classes;
-using Infrastructure.Repository.interfaces;
 using Application.Services.interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +13,9 @@ using Infrastructure.Persist;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Domain.RepositoryInterfaces;
 using Infrastructure.Helper;
+using Infrastructure.RepositoryImplementation.Classes;
 
 namespace Marina_Club
 {
@@ -82,6 +82,10 @@ namespace Marina_Club
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
+            // AddScoped for scheduleInformation model(table)
+            services.AddScoped<IScheduleInfoService, ScheduleInfoService>();
+            services.AddScoped<IScheduleInfoRepository, ScheduleInfoRepository>();
+
             // AddScoped for Tickets model
             services.AddScoped<ITicketService, TicketService>();
             //services.AddScoped<ITicketRepository, TicketRepository>();
@@ -125,7 +129,7 @@ namespace Marina_Club
             app.UseMvc();    
             app.UseAuthentication();
             
-            provider.MigrateDatabases();
+            //provider.MigrateDatabases();
         }
     }
 }

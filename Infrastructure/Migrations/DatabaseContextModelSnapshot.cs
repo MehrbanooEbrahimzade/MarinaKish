@@ -72,6 +72,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BackgroundPicture");
 
+                    b.Property<Guid?>("FunSliderPictureId");
+
                     b.Property<string>("Icon");
 
                     b.Property<bool>("IsActive");
@@ -83,6 +85,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FunSliderPictureId");
 
                     b.HasIndex("ScheduleInfoId");
 
@@ -98,13 +102,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("FunId");
 
-                    b.Property<Guid?>("FunId1");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FunId");
-
-                    b.HasIndex("FunId1");
 
                     b.ToTable("FunSliderPictures");
                 });
@@ -144,13 +144,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<Guid?>("DiscountId");
-
                     b.Property<TimeSpan>("EndTime");
 
                     b.Property<Guid>("FunId");
 
                     b.Property<bool>("IsExist");
+
+                    b.Property<Guid?>("PercentId");
 
                     b.Property<decimal>("Price");
 
@@ -158,7 +158,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscountId");
+                    b.HasIndex("PercentId");
 
                     b.ToTable("Schedules");
                 });
@@ -174,6 +174,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<TimeSpan>("EndTime");
 
+                    b.Property<Guid>("FunId");
+
                     b.Property<int>("GapTime");
 
                     b.Property<int>("OnlineCapacity");
@@ -185,6 +187,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TotalCapacity");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FunId")
+                        .IsUnique();
 
                     b.ToTable("ScheduleInfos");
                 });
@@ -414,7 +419,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Fun", b =>
                 {
-                    b.HasOne("Domain.Models.ScheduleInfo", "ScheduleInfo")
+                    b.HasOne("Domain.Models.FunSliderPicture")
+                        .WithMany()
+                        .HasForeignKey("FunSliderPictureId");
+
+                    b.HasOne("Domain.Models.ScheduleInfo")
                         .WithMany()
                         .HasForeignKey("ScheduleInfoId");
                 });
@@ -424,17 +433,21 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Fun")
                         .WithMany("SliderPictures")
                         .HasForeignKey("FunId");
-
-                    b.HasOne("Domain.Models.Fun")
-                        .WithMany()
-                        .HasForeignKey("FunId1");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
-                    b.HasOne("Domain.Models.Percent", "Discount")
+                    b.HasOne("Domain.Models.Percent", "Percent")
                         .WithMany()
-                        .HasForeignKey("DiscountId");
+                        .HasForeignKey("PercentId");
+                });
+
+            modelBuilder.Entity("Domain.Models.ScheduleInfo", b =>
+                {
+                    b.HasOne("Domain.Models.Fun")
+                        .WithOne("ScheduleInfo")
+                        .HasForeignKey("Domain.Models.ScheduleInfo", "FunId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Models.Ticket", b =>
