@@ -3,26 +3,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Enums;
 using Domain.Models;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class TicketRepository : BaseRepository/*,ITicketRepository*/
+    public class TicketRepository : BaseRepository, ITicketRepository
     {
         public TicketRepository(DatabaseContext context) : base(context)
         {
 
         }
-
-
-
-
+        
 
         /// <summary>
         /// اضافه کردن بلیط
         /// </summary> 
-        public async Task<bool> Addticketasync(Ticket ticket)
+        public async Task<bool> AddTicketAsync(Ticket ticket)
         {
             await _context.Tickets.AddAsync(ticket);
             return await _context.SaveChangesAsync() > 0;
@@ -72,9 +70,9 @@ namespace Infrastructure.Repository.Classes
         //        .ToListAsync();
         //}
 
-        /// <summary>
-        /// گرفتن بلیط با شماره بلیط
-        /// </summary>
+        ///// <summary>
+        ///// گرفتن بلیط با شماره بلیط
+        ///// </summary>
         //public async Task<Ticket> GetTicketbyTicketNumber(string ticketnumber)
         //{
         //    return await _context.Tickets

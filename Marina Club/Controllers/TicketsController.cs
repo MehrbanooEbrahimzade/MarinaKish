@@ -507,9 +507,9 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
         }
 
-        /// <summary>
-        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
-        /// </summary>
+        ///// <summary>
+        /////  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
+        ///// </summary>
         //[HttpGet("SearchReservedTicketsPrice-twoDate-Sum")]
         //public async Task<IActionResult> SearchReservedTicketsPriceByTwoDateSum(TwoDateSearchCommand command)
         //{
@@ -742,7 +742,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// عوض کزدن وضعیت یک بلیط
         /// </summary>
-        [HttpPut("ChangeCondition/{id}")]
+        [HttpPut("{id}/ChangeCondition")]
         public async Task<IActionResult> ChangeTicketCondition(Guid id, EditTicketConditionCommand command)
         {
             command.TicketId = id;
@@ -758,7 +758,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// گرفتن یک بلیط
         /// </summary>
-        [HttpGet("{id}/Get-One")]
+        [HttpGet("{id}/GetOne")]
         public async Task<IActionResult> GetOneTicket(Guid id)
         {
             var result = await _ticketService.GetOneTicket(id);
