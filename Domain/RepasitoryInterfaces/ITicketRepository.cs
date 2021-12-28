@@ -43,6 +43,12 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<Ticket> GetTicketInBasketBuyById(Guid id);
 
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        Task<bool> DeleteTicket(Ticket ticket);
+
         //    ///// <summary>
         //    ///// دریافت تفریح با اسم تفریح
         //    ///// </summary>
@@ -127,10 +133,6 @@ namespace Domain.RepasitoryInterfaces
         //Task<List<Ticket>> OneDateCanceledTicketSearch(DateTime firstDate);
 
 
-        ///// <summary>
-        ///// پاک کردن بلیط
-        ///// </summary>
-        //Task<bool> DeleteTicket(Ticket ticket);
 
         ///// <summary>
         ///// دریافت همه بلیط های لغو شده یک سانس
@@ -260,10 +262,10 @@ namespace Domain.RepasitoryInterfaces
         //Task<int> CanceledUserTicketsCount(Guid id);
 
 
-        ///// <summary>
-        ///// دریافت بلیط غیرفعال با آیدی
-        ///// </summary>
-        //Task<Ticket> GetInActiveTicketById(Guid id);
+        /// <summary>
+        /// دریافت بلیط غیرفعال با آیدی
+        /// </summary>
+        Task<Ticket> GetInActiveTicketById(Guid id);
 
         ///// <summary>
         ///// دریافت بلیط فعال با آیدی

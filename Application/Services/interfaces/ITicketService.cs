@@ -12,7 +12,13 @@ namespace Application.Services.interfaces
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
         /// </summary>
-        Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command); 
+        Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        Task<bool> DeleteTicket(Guid id);
+
 
         ///// <summary>
         ///// گرفتن همه بلیط های یک سانس
@@ -89,10 +95,6 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> SearchCanceledTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse);
 
-        ///// <summary>
-        ///// پاک کردن بلیط
-        ///// </summary>
-        //Task<bool> DeleteTicket(Guid id);
 
         ///// <summary>
         ///// اضافه کردن بلیط خریده شده بصورت حضوری

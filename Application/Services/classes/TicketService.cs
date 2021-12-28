@@ -65,6 +65,18 @@ namespace Application.Services.classes
             return NotDeleted;
         }
 
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        public async Task<bool> DeleteTicket(Guid id)
+        {
+            var ticket = await _ticketRepository.GetInActiveTicketById(id);
+            if (ticket == null)
+                return false;
+            return await _ticketRepository.DeleteTicket(ticket);
+        }
+
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
         /// </summary>
@@ -204,16 +216,6 @@ namespace Application.Services.classes
 
         //        #endregion
 
-        //        /// <summary>
-        //        /// پاک کردن بلیط
-        //        /// </summary>
-        //        public async Task<bool> DeleteTicket(Guid id)
-        //        {
-        //            var ticket = await _ticketRepository.GetInActiveTicketById(id);
-        //            if (ticket == null)
-        //                return false;
-        //            return await _ticketRepository.DeleteTicket(ticket);
-        //        }
 
         //        /// <summary>
         //        /// ثبت خرید و فعال کردن بلیط

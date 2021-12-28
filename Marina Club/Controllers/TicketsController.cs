@@ -767,17 +767,17 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.TicketGetted, new { TicketInfo = result });
         }
 
-        //        /// <summary>
-        //        /// پاک کردن بلیط - از سبد خرید
-        //        /// </summary>
-        //        [HttpDelete("{id}/Delete")]
-        //        public async Task<IActionResult> DeleteTicket(Guid id)
-        //        {
-        //            var result = await _ticketService.DeleteTicket(id);
-        //            if (result)
-        //                return OkResult(ApiMessage.TicketDeleted, new { IsDeleted = result });
-        //            return BadReq(ApiMessage.TicketNotDeleted, new { Reason = $"1-ticket not found, check the id, 2-ticket isn't inActive" });
-        //        }
+        /// <summary>
+        /// پاک کردن بلیط - از سبد خرید
+        /// </summary>
+        [HttpDelete("{id}/Delete")]
+        public async Task<IActionResult> DeleteTicket(Guid id)
+        {
+            var result = await _ticketService.DeleteTicket(id);
+            if (result)
+                return OkResult(ApiMessage.TicketDeleted, new { IsDeleted = result });
+            return BadReq(ApiMessage.TicketNotDeleted, new { Reason = $"1-ticket not found, check the id, 2-ticket isn't inActive" });
+        }
 
 
 

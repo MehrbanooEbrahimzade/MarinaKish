@@ -26,6 +26,22 @@ namespace Infrastructure.Repository.Classes
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// دریافت بلیط غیرفعال با آیدی
+        /// </summary>
+        public async Task<Ticket> GetInActiveTicketById(Guid id)
+        {
+            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
+        }
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        public async Task<bool> DeleteTicket(Ticket ticket)
+        {
+            _context.Tickets.Remove(ticket);
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         /// /// <summary>
         /// گرفتن همه بلیط های فعال یک سانس
@@ -209,14 +225,7 @@ namespace Infrastructure.Repository.Classes
 
         //#endregion
 
-        /// <summary>
-        /// پاک کردن بلیط
-        /// </summary>
-        //public async Task<bool> DeleteTicket(Ticket ticket)
-        //{
-        //    _context.Tickets.Remove(ticket);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+
 
 
         /// <summary>
@@ -509,13 +518,6 @@ namespace Infrastructure.Repository.Classes
         //        .FirstOrDefaultAsync(x => x.Id == id && x.Condition != Condition.Cancel);
         //}
 
-        /// <summary>
-        /// دریافت بلیط غیرفعال با آیدی
-        /// </summary>
-        //public async Task<Ticket> GetInActiveTicketById(Guid id)
-        //{
-        //    return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
-        //}
 
         /// <summary>
         /// دریافت بلیط فعال با آیدی
