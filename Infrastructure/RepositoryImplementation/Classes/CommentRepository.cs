@@ -14,7 +14,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
         ///// اضافه کردن کامنت به تیبل
         ///// </summary>
         //public async Task<bool> AddAsync(Comment comment)
-        //{
+        //{ 
         //    await _context.Comments.AddAsync(comment);
         //    return await _context.SaveChangesAsync() > 0;
         //}
