@@ -22,7 +22,8 @@ namespace Infrastructure.Repository.Classes
 
         public async Task<ScheduleInfo> GetByIdAsync(Guid id)
         {
-            return await _context.ScheduleInfos.SingleOrDefaultAsync(x=>x.Id==id);
+            var scheduleInfo= await _context.ScheduleInfos.SingleOrDefaultAsync(x=>x.Id==id);
+            return scheduleInfo;
         }
 
         ///// <summary>

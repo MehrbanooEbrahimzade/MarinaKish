@@ -29,8 +29,7 @@ namespace Application.Services.classes
         public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
             var scheduleInfo = command.ToModel();
-            var schedules=  ScheduleMaker.MakeSchedule(command);
-            await _scheduleRepository.AddScheduleAsync(schedules);
+            await CreateAndAddSchedule(command);
             await _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
         }
 
@@ -44,8 +43,14 @@ namespace Application.Services.classes
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
 
             await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
-            await AddScheduleInfoAsync(command);
+            await CreateAndAddSchedule(command);
+        }
 
+
+        public async Task CreateAndAddSchedule(AddScheduleInfoCommand command)
+        {
+            var schedules = ScheduleMaker.MakeSchedule(command);
+             _scheduleRepository.AddScheduleAsync(schedules);
         }
     }
 }

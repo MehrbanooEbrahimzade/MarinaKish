@@ -16,6 +16,7 @@ namespace Domain.Models
             EndTime = end;
             Percent = percent;
             IsExist = true;
+            
         }
 
         public Schedule

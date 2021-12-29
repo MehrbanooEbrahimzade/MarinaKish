@@ -11,7 +11,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        Task AddFunAsync(AddFunCommand command);
+        Task<Guid> AddFunAsync(AddFunCommand command);
 
         /// <summary>
         /// ویرایش تفریح

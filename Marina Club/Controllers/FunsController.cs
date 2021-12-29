@@ -19,7 +19,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// اضافه کردن تفریح
+        /// اضافه کردن تفریح و اطلاعات سانس و ساختن سانس
         /// </summary>
         [HttpPost("Add")]
         public async Task<IActionResult> AddFunAsync(AddFunCommand command)
@@ -28,7 +28,8 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongFunInformation, new { Reason = $"Make a Problem When Fun Add. TryAgain!" });
             }
-            await _funService.AddFunAsync(command);
+            command.ScheduleInfo.FunId = await _funService.AddFunAsync(command);
+             _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
             return OkResult(ApiMessage.FunAdded);
         }
 
@@ -41,9 +42,12 @@ namespace Marina_Club.Controllers
             command.FunId = id;
             if (!command.Validate())
             {
-                return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-wrong funID, 2-wrong command information" });
+                return BadReq(ApiMessage.WrongFunID);
             }
             await _funService.UpdateFunAsync(command);
+
+            _scheduleInfoService.UpdateScheduleInfoAsync(command.ScheduleInfo);
+
             return OkResult(ApiMessage.FunEdited);
         }
 

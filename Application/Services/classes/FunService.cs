@@ -22,10 +22,11 @@ namespace Application.Services.classes
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        public async Task AddFunAsync(AddFunCommand command)
+        public async Task<Guid> AddFunAsync(AddFunCommand command)
         {
             var funObj =  command.ToModel();
-             _funRepository.AddFunAsync(funObj);
+            _funRepository.AddFunAsync(funObj);
+             return  funObj.Id;
         }
 
         /// <summary>
