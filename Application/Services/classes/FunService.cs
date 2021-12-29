@@ -42,7 +42,7 @@ namespace Application.Services.classes
                 }
             }
 
-            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video,command.PictureSlider,
+            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video,command.SliderPictures.ToModel(),
                     command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,

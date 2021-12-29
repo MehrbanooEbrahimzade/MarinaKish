@@ -12,7 +12,7 @@ namespace Application.Validators.Schedule
 
             RuleFor(x => x.IncreasePrice)
                 .GreaterThan(0).WithMessage("قیمت افزایشی باید بیشتر از 0 باشد")
-                .ScalePrecision(2, 4).WithMessage("تعداد اعشار افزایش قیمت حداکثر 2 و تعداد ارقام افزایش قیمت حداکثر 4")
+                .ScalePrecision(2, 7).WithMessage("تعداد اعشار افزایش قیمت حداکثر 2 و تعداد ارقام افزایش قیمت حداکثر 4")
                 .NotNull().WithMessage("قیمت افزایشی نمیتواند خالی باشد");
         }
     }

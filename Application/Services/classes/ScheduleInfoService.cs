@@ -38,12 +38,11 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
         {
-            var scheduleInfo=await _scheduleInfoRepository.GetByIdAsync(command.Id);
+             _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
+             await CreateAndAddSchedule(command);
+            var scheduleInfo = await _scheduleInfoRepository.GetByIdAsync(command.Id);
             scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
-
-            await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
-            await CreateAndAddSchedule(command);
         }
 
 

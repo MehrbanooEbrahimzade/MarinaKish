@@ -23,7 +23,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسلاید تفریحات
         /// </summary>
-        public List<AddSliderPictureFunCommand> SliderPicture { get; set; }
+        public List<AddSliderPictureFunCommand> PictureSlider { get; set; }
        
         /// <summary>
         /// اطلاعات سانس

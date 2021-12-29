@@ -33,7 +33,7 @@ namespace Application.Mappers
         public static Fun ToModel(this AddFunCommand command)
         {
             return new Fun
-                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPicture.ToModel()
+                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.PictureSlider.ToModel()
                                                                                                       , command.ScheduleInfo.ToModel());
         }
         /// <summary>

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Application.Validators.ScheduleInfo;
-using Application.Validators.User;
-using FluentValidation;
 
 namespace Application.Commands.ScheduleInfo
 {

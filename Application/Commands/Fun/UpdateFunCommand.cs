@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Application.Commands.ScheduleInfo;
+using Application.Commands.SliderPictureFun;
 using Domain.Enums;
 using Domain.Models;
 
@@ -27,17 +28,12 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسلاید عکس ها
         /// </summary>
-        public List<FunSliderPicture> PictureSlider { get; set; } 
+        public List<AddSliderPictureFunCommand> SliderPictures { get; set; } 
 
         /// <summary>
         /// فیلم تفریج
         /// </summary>
         public string Video { get; set; }
-
-        /// <summary>
-        /// فعال بودن
-        /// </summary>
-        public bool IsActive { get; set; }
 
         /// <summary>
         /// عکس پس زمینه
@@ -47,7 +43,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// آیکون
         /// </summary>
-        public string Icon { get; private set; }
+        public string Icon { get; set; }
        
         /// <summary>
         /// دربار تفریح
