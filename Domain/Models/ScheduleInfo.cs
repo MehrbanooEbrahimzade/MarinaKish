@@ -20,6 +20,20 @@ namespace Domain.Models
             FunId = funId;
         }
 
+        public void UpdateScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
+            int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount)
+        {
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.GapTime = gapTime;
+            this.Duration = duration;
+            this.TotalCapacity = totalCapacity;
+            this.PresenceCapacity = presenceCapacity;
+            this.OnlineCapacity = onlineCapacity;
+            this.Amount = amount;
+        }
+      
+
         public Guid Id { get; private set; }
         public Guid FunId { get; private set; }//?
 
@@ -64,18 +78,6 @@ namespace Domain.Models
         public decimal Amount { get;private set; }
 
 
-        public void UpdateScheduleInfo(TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
-             int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount)
-        {
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.GapTime = gapTime;
-            this.Duration = duration;
-            this.TotalCapacity = totalCapacity;
-            this.PresenceCapacity = presenceCapacity;
-            this.OnlineCapacity = onlineCapacity;
-            this.Amount = amount;
-        }
         private ScheduleInfo()
         {
         }

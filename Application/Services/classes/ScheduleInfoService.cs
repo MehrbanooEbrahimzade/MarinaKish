@@ -34,11 +34,18 @@ namespace Application.Services.classes
             await _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
         }
 
-        ///// <summary>
-        /////اضافه کردن سانس
-        ///// </summary>
-        //public async Task AddScheduleAsync(ScheduleInfo scheduleInfo)
-        //{
-        //}
+        /// <summary>
+        /// ادیت کردن اطلاعات سانس
+        /// </summary>
+        public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
+        {
+            var scheduleInfo=await _scheduleInfoRepository.GetByIdAsync(command.Id);
+            scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration
+                , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+
+            await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
+            await AddScheduleInfoAsync(command);
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
@@ -45,6 +46,15 @@ namespace Infrastructure.Repository.Classes
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// پاک کردن همه سانس های یک تفریح
+        /// </summary>
+        public async Task DeleteAllSchedulesOfaFun(Guid funId)
+        {
+             _context.RemoveRange(_context.Schedules.Where(sc => sc.FunId == funId));
+             await _context.SaveChangesAsync();
+
+        }
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح

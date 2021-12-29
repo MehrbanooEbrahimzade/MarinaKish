@@ -10,6 +10,9 @@ namespace Application.Services.interfaces
         /// </summary>
         Task AddScheduleInfoAsync(AddScheduleInfoCommand command);
 
-
+        /// <summary>
+        ///ادیت کردن  
+        /// </summary>
+        Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command);
     }
 }

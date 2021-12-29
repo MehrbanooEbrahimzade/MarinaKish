@@ -12,6 +12,11 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<bool> AddScheduleAsync(List<Schedule> schedules);
 
+        /// <summary>
+        /// پاک کردن همه سانس های یک تفریح
+        /// </summary>
+        Task DeleteAllSchedulesOfaFun(Guid funId);
+
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>

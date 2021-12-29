@@ -29,11 +29,9 @@ namespace Domain.Models
             EndTime = end;
             IsExist = true;
         }
+       
+        private Schedule() { }
 
-        private Schedule(Guid funId)
-        {
-            FunId = funId;
-        }
         public void SetPersianDate(DateTime date)
         {
             this.Date = date;

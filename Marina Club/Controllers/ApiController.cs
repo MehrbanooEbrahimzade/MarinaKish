@@ -82,7 +82,7 @@ namespace Marina_Club.Controllers
             public const string WrongMessageID = "آیدی پیام وارد شده اشتباه است";
             public const string WrongFileID = "آیدی فایل/عکس وارد شده اشتباه است";
             public const string WrongDate = "تاریخ وارد شده تاریخ اشتباهی است";
-            public const string WrongInformation = "مشخصات وارد شده اشتباه است";
+            public const string WrongInformation = "اطلاعات نامعتبراست";
             public const string WrongFunInformation = "مشخصات تفریح را کامل وارد کنید";
 
             #region Users

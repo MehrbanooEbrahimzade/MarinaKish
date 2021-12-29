@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
@@ -16,6 +18,11 @@ namespace Infrastructure.Repository.Classes
         {
              _context.ScheduleInfos.Add(scheduleInfo);
              await _context.SaveChangesAsync();
+        }
+
+        public async Task<ScheduleInfo> GetByIdAsync(Guid id)
+        {
+            return await _context.ScheduleInfos.SingleOrDefaultAsync(x=>x.Id==id);
         }
 
         ///// <summary>
