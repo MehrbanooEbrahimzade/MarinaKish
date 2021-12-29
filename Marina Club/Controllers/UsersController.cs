@@ -71,7 +71,7 @@ namespace Marina_Club.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> SearchByPhoneAsync(Guid id)
         {
-            var user = await _userService.SearchByPhoneAsync(id);
+            var user = await _userService.SearchUserById(id);
             return OkResult(ApiMessage.UserFound, user);
         }
 
