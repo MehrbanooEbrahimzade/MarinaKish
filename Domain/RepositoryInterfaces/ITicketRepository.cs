@@ -125,9 +125,9 @@ namespace Domain.RepositoryInterfaces
         Task<List<Ticket>> GetAllFunTicketsWithFunID(Guid id);
 
         /// <summary>
-        /// دریافت همه بلیط های فعال یک تفریح با آیدی تفریح
+        /// دریافت همه بلیط های فعال یک تفریح با نام تفریح
         /// </summary>
-        Task<List<Ticket>> GetAllFunActiveTicketsWithFunID(Guid id);
+        Task<List<Ticket>> GetAllFunActiveTicketsWithFunName(string funName);
 
         /// <summary>
         /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Enums;
 using Domain.Models;
+using Domain.RepositoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +16,6 @@ namespace Infrastructure.RepositoryImplementation.Classes
         {
 
         }
-
-
-
-
 
         /// <summary>
         /// اضافه کردن بلیط
@@ -244,15 +242,15 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //}
 
         /// <summary>
-        /// دریافت همه بلیط های رزرو شده یک تفریح با آیدی تفریح
+        /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
         /// </summary>
-        //public async Task<List<Ticket>> GetAllFunActiveTicketsWithFunID(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .Where(x => x.FunId == id && x.Condition == Condition.Reservation)
-        //        .OrderByDescending(x => x.SubmitDate)
-        //        .ToListAsync();
-        //}
+        public async Task<List<Ticket>> GetAllFunActiveTicketsWithFunName(string funName)
+        {
+            return await _context.Tickets
+                .Where(x => x.FunType ==funName && x.Condition == Condition.Reservation)
+                .OrderByDescending(x => x.SubmitDate)
+                .ToListAsync();
+        }
 
         /// <summary>
         /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح

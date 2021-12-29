@@ -346,16 +346,16 @@ namespace Application.Services.classes
         //            return tickets.ToDto();
         //        }
 
-        //        /// <summary>
-        //        /// دریافت همه بلیط های رزرو شده یک تفریح با آیدی تفریح
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> GetAllFunActiveTicketsWithFunID(Guid id)
-        //        {
-        //            var tickets = await _ticketRepository.GetAllFunActiveTicketsWithFunID(id);
-        //            if (tickets == null)
-        //                return null;
-        //            return tickets.ToDto();
-        //        }
+        /// <summary>
+        /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
+        /// </summary>
+        public async Task<List<TicketDto>> GetAllFunActiveTicketsWithFunName(string funName)
+        {
+            var tickets = await _ticketRepository.GetAllFunActiveTicketsWithFunName(funName);
+            if (tickets == null)
+                return null;
+            return  tickets.ToDto();
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح
