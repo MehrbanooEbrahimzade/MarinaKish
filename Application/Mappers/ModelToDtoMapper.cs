@@ -85,6 +85,23 @@ namespace Application.Mappers
             }).ToList();
         }
 
+        /// <summary>
+        /// تبدیل مدل اطلاعات پشتیبانی به dto
+        /// </summary>
+        public static ContactUsDto ToDto(this ContactUs contactUs)
+        {
+            return new ContactUsDto()
+            {
+                Email = contactUs.Email,
+                AboutMariana = contactUs.AboutMariana,
+                Id = contactUs.Id,
+                PhoneNumber = contactUs.PhoneNumber,
+                Rules = contactUs.Rules,
+                UrlLinkedin = contactUs.UrlLinkedin,
+                UrlInstagram = contactUs.UrlInstagram
+            };
+        }
+
     }
 
     //        /// <summary>

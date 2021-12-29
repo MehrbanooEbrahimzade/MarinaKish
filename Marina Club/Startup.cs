@@ -110,6 +110,9 @@ namespace Marina_Club
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<ISellerService, SellerService>();
 
+            // AddScoped for ContactUs model
+            services.AddScoped<IContactUsRepository, ContactUsRepository>();
+            services.AddScoped<IContactUsService, ContactUsService>();
 
         }
 

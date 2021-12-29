@@ -1,9 +1,8 @@
 ﻿using System;
-using Application.Validators.ContactUs;
 
-namespace Application.Commands.ContactUs
+namespace Application.Dtos
 {
-    public class AddContactUsCommand : CommandBase
+    public class ContactUsDto
     {
         /// <summary>
         /// آیدی 
@@ -39,11 +38,5 @@ namespace Application.Commands.ContactUs
         /// آدرس اینستاگرام
         /// </summary>
         public string UrlInstagram { get; set; }
-
-
-        public override bool Validate()
-        {
-            return new AddContactUsCommandValidator().Validate(this).IsValid;
-        }
     }
 }

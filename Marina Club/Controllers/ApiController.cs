@@ -1,4 +1,5 @@
-﻿using Infrastructure.Helper;
+﻿using System;
+using Infrastructure.Helper;
 using Marina_Club.Activator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Marina_Club.Controllers
     public class ApiController : ControllerBase
     {
         protected ApiController() { }
-        
+
         protected UserInfo CurrentUser => (User.Identity as ClaimsIdentity).GetUserClaim();
 
         /// <summary>
@@ -405,6 +406,19 @@ namespace Marina_Club.Controllers
             public const string AcceptedFunCommentsGetted = "کامنت های قبول شده تفریح مورد نظر دریافت شد";
             public const string DeclinedFunCommentsGetted = "کامنت های رد شده تفریح مورد نظر دریافت شد";
             public const string BlockedFunCommentsGetted = "کامنت های بلاک شده تفریح مورد نظر دریافت شد";
+            #endregion
+
+            #region ContactUs
+            public const string ContactUsAdded = "اضافه شد";
+            public const string ContactUsWrongInformation = " اطلاعات وارد شده درست می باشد";
+            public const string ContactUsNotExisted = "یافت نشد";
+            public const string ContactUsGet = "مشخصلت دریافت شذ";
+            public const string ContactUsAboutMarianaUpdated = "با موفقیت ویرایش شد";
+            public const string ContactUsRulesUpdated = "قوانین با موفقیت ویرایش شد";
+            public const string ContactUsEmailUpdated = "ایمیل با موفقیت ویرایش شد";
+            public const string ContactUsPhoneNumberUpdated = "شماره تلفن با موفقیت ویرایش شد";
+            public const string ContactUsUrlLinkedinUpdated = "آدرس لیندین با موفقیت ویرایش شد";
+            public const string ContactUsUrlInstagramUpdated = "آدرس اینستگرام با موفقیت ویرایش شد";
             #endregion
         }
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Domain.Models
 {
@@ -52,5 +49,40 @@ namespace Domain.Models
         /// آدرس اینستاگرام
         /// </summary>
         public string  UrlInstagram { get; private set; }
+
+
+        public void UpdateAboutMariana(string aboutMariana)
+        {
+            this.AboutMariana = aboutMariana;
+        }
+
+        public void UpdateRules(string rules)
+        {
+            this.Rules = rules;
+        }
+
+        public void UpdateEmail(string email)
+        {
+            this.Email = email;
+        }
+
+        public void UpdatePhoneNumber(string phoneNumber)
+        {
+            this.PhoneNumber = phoneNumber;
+        }
+
+        public void UpdateUrlLinkedin(string urlLinkedin)
+        {
+            this.UrlLinkedin = urlLinkedin;
+        }
+
+        public void UpdateUrlInstagram(string urlInstagram)
+        {
+            this.UrlInstagram = urlInstagram;
+        }
+
+        private ContactUs()
+        {
+        }
     }
 }

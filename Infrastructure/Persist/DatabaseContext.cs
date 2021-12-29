@@ -32,6 +32,6 @@ namespace Infrastructure.Persist
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<MyFile> MyFiles { get; set; }
-        public DbSet<ContactUs> ContactUses { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
     }
 }

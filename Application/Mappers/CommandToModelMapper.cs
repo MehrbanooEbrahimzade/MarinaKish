@@ -119,8 +119,9 @@ namespace Application.Mappers
         /// </summary>
         public static ContactUs ToModel(this AddContactUsCommand command)
         {
-            return new ContactUs
-                (command.AboutMariana, command.Rules, command.Rules, command.PhoneNumber, command.UrlLinkedin, command.UrlInstagram);
+            return new ContactUs(
+                command.AboutMariana, command.Rules, command.Email,
+                command.PhoneNumber, command.UrlLinkedin, command.UrlInstagram);
         }
     }
 }
