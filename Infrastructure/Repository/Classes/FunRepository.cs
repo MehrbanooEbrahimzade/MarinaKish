@@ -20,7 +20,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<bool> CheckFunTypeIsExistAsynch(Guid id)
         {
-            return await IncludeFunWithScheduleInfo().AnyAsync(x => x.Id == id && x.IsActive == true);
+            return await FunIncludes().AnyAsync(x => x.Id == id && x.IsActive);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<Fun> GetFunByIdAsynch(Guid id)
         {
-            return await IncludeFunWithScheduleInfo().
+            return await FunIncludes().
                 FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -54,7 +54,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task DeleteFunAsync(Guid id)
         {
-             var fun =await _context.Funs.SingleOrDefaultAsync(f => f.Id == id);
+             var fun =await FunIncludes().SingleOrDefaultAsync(f => f.Id == id);
              _context.Funs.Remove(fun);
              await _context.SaveChangesAsync();
         }
@@ -64,7 +64,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<List<Fun>> GetAllFunAsync()
         {
-            return await IncludeFunWithScheduleInfo()
+            return await FunIncludes()
                 .ToListAsync();
         }
 
@@ -73,7 +73,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<List<Fun>> GetFunsByFunNameAsynch(string name)
         {
-            return await IncludeFunWithScheduleInfo()
+            return await FunIncludes()
                 .Where(f => f.Name == name).ToListAsync();
         }
 
@@ -83,7 +83,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<List<Fun>> GetAllActivedFunAsynh()
         {
-            return await IncludeFunWithScheduleInfo()
+            return await FunIncludes()
                 .Where(x => x.IsActive == true)
                 .ToListAsync();
         }
@@ -93,7 +93,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<List<Fun>> GetAllDisActivedFunAsynch()
         {
-            return await IncludeFunWithScheduleInfo()
+            return await FunIncludes()
                 .Where(x => x.IsActive == false)
                 .ToListAsync();
         }
@@ -121,7 +121,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<Fun> GetDisActiveFunByIdAsynch(Guid id)
         {
-            return await IncludeFunWithScheduleInfo()
+            return await FunIncludes()
                 .FirstOrDefaultAsync(x => x.Id == id && x.IsActive == false);
         }
 
@@ -130,7 +130,7 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         public async Task<Fun> GetActiveFunWithFunNameAsynch(string name)
         {
-            var fun = IncludeFunWithScheduleInfo().Where(x => x.Name == name && x.IsActive);
+            var fun = FunIncludes().Where(x => x.Name == name && x.IsActive);
             return (Fun)fun;
         }
 
@@ -179,10 +179,11 @@ namespace Infrastructure.Repository.Classes
         //}
 
 
-        public IQueryable<Fun> IncludeFunWithScheduleInfo()
+        public IQueryable<Fun> FunIncludes()
         {
-            var funWithScheduleInfo = _context.Funs.Include(f => f.ScheduleInfo);
-            return funWithScheduleInfo;
+            return _context.Funs
+                .Include(f => f.ScheduleInfo)
+                .Include(s => s.SliderPictures);
         }
     }
 }

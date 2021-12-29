@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211227222732_Init")]
+    [Migration("20211229190249_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,8 +44,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunId");
-
                     b.ToTable("Comments");
                 });
 
@@ -74,23 +72,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BackgroundPicture");
 
-                    b.Property<Guid?>("FunSliderPictureId");
-
                     b.Property<string>("Icon");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ScheduleInfoId");
-
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FunSliderPictureId");
-
-                    b.HasIndex("ScheduleInfoId");
 
                     b.ToTable("Funs");
                 });
@@ -209,13 +199,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("ScheduleId");
 
-                    b.Property<Guid?>("ScheduleId1");
-
                     b.Property<DateTime>("SubmitDate");
 
                     b.Property<string>("UserId");
-
-                    b.Property<string>("UserId1");
 
                     b.Property<int>("WhereBuy");
 
@@ -223,11 +209,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.HasIndex("ScheduleId1");
-
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Tickets");
                 });
@@ -245,8 +227,6 @@ namespace Infrastructure.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<Guid?>("CreditCardId");
-
-                    b.Property<Guid?>("CreditCardId1");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -287,8 +267,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreditCardId");
-
-                    b.HasIndex("CreditCardId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -411,25 +389,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Domain.Models.Comment", b =>
-                {
-                    b.HasOne("Domain.Models.Fun")
-                        .WithMany()
-                        .HasForeignKey("FunId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Domain.Models.Fun", b =>
-                {
-                    b.HasOne("Domain.Models.FunSliderPicture")
-                        .WithMany()
-                        .HasForeignKey("FunSliderPictureId");
-
-                    b.HasOne("Domain.Models.ScheduleInfo")
-                        .WithMany()
-                        .HasForeignKey("ScheduleInfoId");
-                });
-
             modelBuilder.Entity("Domain.Models.FunSliderPicture", b =>
                 {
                     b.HasOne("Domain.Models.Fun")
@@ -458,17 +417,9 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ScheduleId");
 
-                    b.HasOne("Domain.Models.Schedule")
-                        .WithMany()
-                        .HasForeignKey("ScheduleId1");
-
                     b.HasOne("Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.HasOne("Domain.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -476,10 +427,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.CreditCard", "CreditCard")
                         .WithMany()
                         .HasForeignKey("CreditCardId");
-
-                    b.HasOne("Domain.Models.CreditCard")
-                        .WithMany()
-                        .HasForeignKey("CreditCardId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

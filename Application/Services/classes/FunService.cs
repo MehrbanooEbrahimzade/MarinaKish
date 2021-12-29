@@ -60,7 +60,6 @@ namespace Application.Services.classes
         public async Task DeleteFunAsync(Guid id)
         {
               await _funRepository.DeleteFunAsync(id);
-
         }
 
         /// <summary>

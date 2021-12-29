@@ -8,6 +8,7 @@ namespace Domain.RepasitoryInterfaces
     {
         Task AddScheduleInfoAsync(ScheduleInfo scheduleInfo);
         Task<ScheduleInfo> GetByIdAsync(Guid id);
+        Task DeleteScheduleInfoAsync(Guid id);
 
     }
 }

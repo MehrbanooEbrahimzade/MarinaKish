@@ -26,6 +26,13 @@ namespace Infrastructure.Repository.Classes
             return scheduleInfo;
         }
 
+        public async Task DeleteScheduleInfoAsync(Guid funId)
+        {
+            var scheduleInfo = await _context.ScheduleInfos.SingleOrDefaultAsync(x => x.FunId== funId);
+            if(scheduleInfo==null)
+                throw new ArgumentNullException("اطلاعات سانس مورد نظر پیدا نشد!");
+            _context.ScheduleInfos.Remove(scheduleInfo);
+        }
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح
         ///// </summary>
