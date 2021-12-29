@@ -14,10 +14,16 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
 
-        ///// <summary>
-        ///// گرفتن همه بلیط های یک سانس
-        ///// </summary>
-        //Task<List<TicketDto>> GetAllScheduleTickets(Guid id);
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        Task<bool> DeleteTicket(Guid id);
+
+
+        /// <summary>
+        /// گرفتن همه بلیط های یک سانس
+        /// </summary>
+        Task<List<TicketDto>> GetAllScheduleTickets(Guid id);
 
         ///// <summary>
         ///// گرفتن همه بلیط های فعال یک سانس
@@ -89,10 +95,6 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> SearchCanceledTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse);
 
-        ///// <summary>
-        ///// پاک کردن بلیط
-        ///// </summary>
-        //Task<bool> DeleteTicket(Guid id);
 
         ///// <summary>
         ///// اضافه کردن بلیط خریده شده بصورت حضوری
@@ -159,10 +161,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> AllReservationTickets();
 
-        ///// <summary>
-        ///// دریافت کل بلیط های غیرفعال یک سانس
-        ///// </summary>
-        //Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id);
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id);
 
         ///// <summary>
         ///// دریافت کل بلیط های غیرفعال یک تفریح با آیدی تفریح

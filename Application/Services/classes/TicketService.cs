@@ -4,21 +4,21 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.classes
 {
     public class TicketService : ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
-        private readonly Domain.RepositoryInterfaces.IScheduleRepository _scheduleRepository;
+        private readonly IScheduleRepository _scheduleRepository;
         private readonly IUserRepository _userRepository;
         private readonly IFunRepository _funRepository;
         public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)
-        {
+        { 
             this._ticketRepository = ticketRepository;
             this._scheduleRepository = _scheduleRepository;
             this._userRepository = userRepository;
@@ -63,6 +63,18 @@ namespace Application.Services.classes
             if (NotDeleted.Count == 0)
                 return null;
             return NotDeleted;
+        }
+
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        public async Task<bool> DeleteTicket(Guid id)
+        {
+            var ticket = await _ticketRepository.GetInActiveTicketById(id);
+            if (ticket == null)
+                return false;
+            return await _ticketRepository.DeleteTicket(ticket);
         }
 
         /// <summary>
@@ -204,16 +216,6 @@ namespace Application.Services.classes
 
         //        #endregion
 
-        //        /// <summary>
-        //        /// پاک کردن بلیط
-        //        /// </summary>
-        //        public async Task<bool> DeleteTicket(Guid id)
-        //        {
-        //            var ticket = await _ticketRepository.GetInActiveTicketById(id);
-        //            if (ticket == null)
-        //                return false;
-        //            return await _ticketRepository.DeleteTicket(ticket);
-        //        }
 
         //        /// <summary>
         //        /// ثبت خرید و فعال کردن بلیط
@@ -279,16 +281,16 @@ namespace Application.Services.classes
 
         //        #region ScheduleOptions
 
-        //        /// <summary>
-        //        /// گرفتن همه بلیط های یک سانس
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
-        //        {
-        //            var tickets = await _ticketRepository.GetAllScheduleTickets(id);
-        //            if (tickets == null)
-        //                return null;
-        //            return tickets.ToDto();
-        //        }
+        /// <summary>
+        /// گرفتن همه بلیط های یک سانس
+        /// </summary>
+        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
+        {
+            var tickets = await _ticketRepository.GetAllScheduleTickets(id);
+            if (tickets == null)
+                return null;
+            return tickets.ToDto();
+        }
 
         //        /// <summary>
         //        /// گرفتن همه بلیط های فعال یک سانس
@@ -301,16 +303,16 @@ namespace Application.Services.classes
         //            return tickets.ToDto();
         //        }
 
-        //        /// <summary>
-        //        /// دریافت کل بلیط های غیرفعال یک سانس
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id)
-        //        {
-        //            var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
-        //            if (tickets == null)
-        //                return null;
-        //            return tickets.ToDto();
-        //        }
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        public async Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id)
+        {
+            var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
+            if (tickets == null)
+                return null;
+            return tickets.ToDto();
+        }
 
         //        /// <summary>
         //        /// دریافت مقدار پول کل بلیط های فروخته شده

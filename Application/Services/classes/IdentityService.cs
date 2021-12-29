@@ -10,12 +10,12 @@ using System.Net.Http.Formatting;
 using System.Net.Http;
 using System.Linq;
 using Application.Mappers;
-using Domain.RepositoryInterfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
 using Microsoft.Extensions.Options;
 

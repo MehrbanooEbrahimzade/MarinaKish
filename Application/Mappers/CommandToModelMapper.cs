@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Application.Commands.Comment;
-using Application.Commands.ContactInfo;
+﻿using Application.Commands.Comment;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
@@ -11,8 +7,8 @@ using Application.Commands.ScheduleInfo;
 using Application.Commands.SliderPictureFun;
 using Application.Commands.Ticket;
 using Application.Commands.User;
-using Application.Validators.User;
 using Domain.Models;
+using System.Collections.Generic;
 
 namespace Application.Mappers
 {
@@ -20,7 +16,7 @@ namespace Application.Mappers
     {
         public static CreditCard ToModel(this UpdateCreditCardCommand command)
         {
-            return new CreditCard(command.ShabaNumber, command.CardNumber,command.UserId);
+            return new CreditCard(command.ShabaNumber, command.CardNumber, command.UserId);
         }
         /// <summary>
         /// تبدیل کردن کامند به کاربر
@@ -79,11 +75,11 @@ namespace Application.Mappers
         //public static Ticket ToModel(this AddTicketToBasketCommand command)
         //{
         //    return new Ticket(command.FunName, command.BoughtPlace, command.Gender, command.UserCommand.ToModel(),command.SchedulComand.ToModel());
-        
+
         //}
         public static Schedule ToModel(this AddSchedulToTicketCommand schedulCommand)
         {
-            return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime,schedulCommand.Price, schedulCommand.FunId);
+            return new Schedule(schedulCommand.Date, schedulCommand.StartTime, schedulCommand.EndTime, schedulCommand.Price, schedulCommand.FunId);
         }
 
         public static User ToModel(this AddUserToTicketcommand findUserCommand)
@@ -121,7 +117,7 @@ namespace Application.Mappers
         /// </summary>
         public static Schedule ToModel(this AddSpecialOfferCommand command)
         {
-            return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price,command.FunId,command.AddPercent.ToModel());
+            return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price, command.FunId, command.AddPercent.ToModel());
 
         }
         /// <summary>

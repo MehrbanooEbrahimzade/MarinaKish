@@ -24,11 +24,7 @@ namespace Application.Commands.Ticket
         /// محل خرید بلیط
         /// </summary>
         public WhereBuy BoughtPlace { get; set; }
-
-        /// <summary>
-        /// شماره تلفن خریدار
-        /// </summary>
-        public string PhoneNumber { get; set; }
+        
 
         /// <summary>
         /// اسم تفریح

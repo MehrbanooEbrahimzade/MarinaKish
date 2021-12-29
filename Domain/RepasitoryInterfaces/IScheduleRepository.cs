@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Domain.RepositoryInterfaces
+namespace Domain.RepasitoryInterfaces
 {
     public interface IScheduleRepository
     {

@@ -13,9 +13,9 @@ using Infrastructure.Persist;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Domain.RepositoryInterfaces;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
-using Infrastructure.RepositoryImplementation.Classes;
+using Infrastructure.Repository.Classes;
 
 namespace Marina_Club
 {
@@ -88,7 +88,7 @@ namespace Marina_Club
 
             // AddScoped for Tickets model
             services.AddScoped<ITicketService, TicketService>();
-            //services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
 
             // AddScoped for Comments model
             services.AddScoped<ICommentService, CommentService>();

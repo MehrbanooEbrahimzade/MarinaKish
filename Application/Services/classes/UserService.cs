@@ -6,7 +6,7 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
+using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.classes
 {

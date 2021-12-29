@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.User;
 using Application.Dtos;
-using Domain.RepositoryInterfaces;
+using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> SearchByPhoneAsync(QuerySearch search);
+        Task<UserDto> SearchByPhoneAsync(Guid id);
         /// <summary>
         /// دریافت کاربر با ایدی
         /// </summary>

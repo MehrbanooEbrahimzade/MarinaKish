@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Domain.Enums;
+using Domain.Models;
+using Domain.RepasitoryInterfaces;
+using Infrastructure.Persist;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.Enums;
-using Domain.Models;
-using Domain.RepositoryInterfaces;
-using Infrastructure.Persist;
-using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class TicketRepository : BaseRepository/*,ITicketRepository*/
     {
@@ -17,15 +17,32 @@ namespace Infrastructure.RepositoryImplementation.Classes
 
         }
 
+
         /// <summary>
         /// اضافه کردن بلیط
-        /// </summary>
-        public async Task<bool> Addticketasync(Ticket ticket)
+        /// </summary> 
+        public async Task<bool> AddTicketAsync(Ticket ticket)
         {
             await _context.Tickets.AddAsync(ticket);
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// دریافت بلیط غیرفعال با آیدی
+        /// </summary>
+        public async Task<Ticket> GetInActiveTicketById(Guid id)
+        {
+            return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
+        }
+
+        /// <summary>
+        /// پاک کردن بلیط
+        /// </summary>
+        public async Task<bool> DeleteTicket(Ticket ticket)
+        {
+            _context.Tickets.Remove(ticket);
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         /// /// <summary>
         /// گرفتن همه بلیط های فعال یک سانس
@@ -40,13 +57,15 @@ namespace Infrastructure.RepositoryImplementation.Classes
         /// <summary>
         /// دریافت همه بلیط های یک سانس
         /// </summary>
-        //public async Task<List<Ticket>> GetAllScheduleTickets(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .Where(x => x.ScheduleId == id)
-        //        .OrderByDescending(x => x.SubmitDate)
-        //        .ToListAsync();
-        //}
+        public async Task<List<Ticket>> GetAllScheduleTickets(Guid id)
+        {
+            return await _context.Tickets
+                .Include(x => x.User)
+                .Include(x => x.Schedule)
+                .Where(x => x.Schedule.Id == id)
+                .OrderByDescending(x => x.SubmitDate)
+                .ToListAsync();
+        }
 
         /// <summary>
         /// دریافت تمام بلیط های یک تفریح
@@ -70,9 +89,9 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //        .ToListAsync();
         //}
 
-        /// <summary>
-        /// گرفتن بلیط با شماره بلیط
-        /// </summary>
+        ///// <summary>
+        ///// گرفتن بلیط با شماره بلیط
+        ///// </summary>
         //public async Task<Ticket> GetTicketbyTicketNumber(string ticketnumber)
         //{
         //    return await _context.Tickets
@@ -84,7 +103,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
         /// </summary>
         public async Task<Ticket> GetTicketById(Guid id)
         {
-            return await _context.Tickets.Include(x => x.Schedule).Include(x =>x.User)
+            return await _context.Tickets.Include(x => x.Schedule).Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -209,14 +228,7 @@ namespace Infrastructure.RepositoryImplementation.Classes
 
         //#endregion
 
-        /// <summary>
-        /// پاک کردن بلیط
-        /// </summary>
-        //public async Task<bool> DeleteTicket(Ticket ticket)
-        //{
-        //    _context.Tickets.Remove(ticket);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+
 
 
         /// <summary>
@@ -406,13 +418,15 @@ namespace Infrastructure.RepositoryImplementation.Classes
         /// <summary>
         /// دریافت کل بلیط های غیرفعال یک سانس
         /// </summary>
-        //public async Task<List<Ticket>> AllInActiveScheduleTickets(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .Where(x => x.ScheduleId == id && x.Condition == Condition.InActive)
-        //        .OrderByDescending(x => x.SubmitDate)
-        //        .ToListAsync();
-        //}
+        public async Task<List<Ticket>> AllInActiveScheduleTickets(Guid id)
+        {
+            return await _context.Tickets
+                
+                .Include(x=>x.User)
+                .Where(x => x.Schedule.Id == id && x.Condition == Condition.InActive)
+                .OrderByDescending(x => x.SubmitDate)
+                .ToListAsync();
+        }
 
         /// <summary>
         /// دریافت تعداد کل بلیط های رزرو شده یک تفریح
@@ -509,13 +523,6 @@ namespace Infrastructure.RepositoryImplementation.Classes
         //        .FirstOrDefaultAsync(x => x.Id == id && x.Condition != Condition.Cancel);
         //}
 
-        /// <summary>
-        /// دریافت بلیط غیرفعال با آیدی
-        /// </summary>
-        //public async Task<Ticket> GetInActiveTicketById(Guid id)
-        //{
-        //    return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
-        //}
 
         /// <summary>
         /// دریافت بلیط فعال با آیدی

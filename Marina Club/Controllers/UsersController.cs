@@ -1,42 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Commands.User;
+﻿using Application.Commands.User;
 using Application.Services.interfaces;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Domain.RepositoryInterfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
-using Infrastructure.Helper;
+using Domain.RepasitoryInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
     public class UsersController : ApiController
     {
-        
+
         private readonly IUserService _userService;
         private readonly IIdentityService _identity;
 
-        public UsersController(IUserService userService, IIdentityService identity): base()
+        public UsersController(IUserService userService, IIdentityService identity) : base()
         {
             _userService = userService;
             _identity = identity;
-           
+
         }
-        
+
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserCommand command)
         {
             command.Validate();
-            
+
             await _identity.RegisterAsync(command);
             return OkResult(ApiMessage.verifyCodeSent);
         }
@@ -46,9 +38,9 @@ namespace Marina_Club.Controllers
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync([FromBody]UserLoginCommand command)
+        public async Task<IActionResult> LoginAsync([FromBody] UserLoginCommand command)
         {
-            var jwtToken = await  _identity.LoginAsync(command);
+            var jwtToken = await _identity.LoginAsync(command);
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
         }
@@ -57,10 +49,10 @@ namespace Marina_Club.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>.
-        
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
-        public async Task<IActionResult> CompleteProfile([FromBody]CompleteProfileCommand command)
+        public async Task<IActionResult> CompleteProfile([FromBody] CompleteProfileCommand command)
         {
             command.PhoneNumber = CurrentUser.PhoneNumber;
             await _identity.CompleteProfile(command);
@@ -68,7 +60,7 @@ namespace Marina_Club.Controllers
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("{id}/UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile(Guid id,[FromBody] UpdateUserCommand command)
+        public async Task<IActionResult> UpdateProfile(Guid id, [FromBody] UpdateUserCommand command)
         {
             command.Id = CurrentUser.Id;
             await _identity.UpdateProfileAsync(command);
@@ -77,9 +69,9 @@ namespace Marina_Club.Controllers
 
         //TODO: Get By Id
         [HttpGet("{id}")]
-        public async Task<IActionResult> SearchByPhoneAsync(QuerySearch search)
+        public async Task<IActionResult> SearchByPhoneAsync(Guid id)
         {
-            var user = await _userService.SearchByPhoneAsync(search);
+            var user = await _userService.SearchByPhoneAsync(id);
             return OkResult(ApiMessage.UserFound, user);
         }
 

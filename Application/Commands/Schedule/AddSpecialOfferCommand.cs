@@ -17,7 +17,7 @@ namespace Application.Commands.Schedule
         /// <summary>
         /// آی دیه تفریح
         /// </summary>
-        public Guid FunId { get; set; }
+        public Guid FunId { get; set; } 
         /// <summary>
         /// ساعت شروع سانس
         /// </summary>
@@ -31,7 +31,7 @@ namespace Application.Commands.Schedule
         /// <summary>
         ///  تاریخ سانس
         /// </summary>
-        public DateTime Date { get; set; }//اینو وارد نکن خودش وارد میشه
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// قیمت با تخفیف موجود

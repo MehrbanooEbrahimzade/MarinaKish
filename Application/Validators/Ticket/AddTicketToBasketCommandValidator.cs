@@ -9,20 +9,14 @@ namespace Application.Validators.Ticket
         {
 
             RuleFor(x => x.FunName)
-                .NotNull().WithMessage("");
+                .NotNull().WithMessage("اسم تفریخ نباید خالی باشد");
 
             RuleFor(x => x.Gender)
-                .NotNull().WithMessage("");
+                .NotNull().WithMessage("جنسیت نباید خالی باشد");
 
             RuleFor(x => x.BoughtPlace)
-                .NotNull().WithMessage("");
-
-            RuleFor(x => x.PhoneNumber)
-                .NotNull().WithMessage("")
-                .Length(11);
+                .NotNull().WithMessage("محل خرید نباید خالی باشد ");
             
-
-
             RuleFor(x => x.ScheduleId)
                 .NotNull().WithMessage("شناسه سانس مورد نظر برای تهیه بلیط را وارد کنید");
 

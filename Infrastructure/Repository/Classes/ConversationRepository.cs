@@ -1,7 +1,7 @@
-﻿using Domain.RepositoryInterfaces;
+﻿using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class ConversationRepository : BaseRepository, IConversationRepository
     {

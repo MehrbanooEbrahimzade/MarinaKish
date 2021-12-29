@@ -1,4 +1,4 @@
-﻿namespace Domain.RepositoryInterfaces
+﻿namespace Domain.RepasitoryInterfaces
 {
     public interface ISellerRepository
     {

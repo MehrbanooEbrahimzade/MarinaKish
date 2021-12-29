@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
-using Domain.RepositoryInterfaces;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RepositoryImplementation.Classes
+namespace Infrastructure.Repository.Classes
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
@@ -20,10 +21,10 @@ namespace Infrastructure.RepositoryImplementation.Classes
             return  user;
         }
 
-        public Task<User> SearchAsync(QuerySearch search)
+        public Task<User> SearchAsync(Guid id)
         {
             return _context.Users.Include(c => c.CreditCard)
-                .FirstOrDefaultAsync(user => user.PhoneNumber == search.PhoneNumber);
+                .FirstOrDefaultAsync(user => user.Id == id.ToString());
         }
 
         ///// <summary>

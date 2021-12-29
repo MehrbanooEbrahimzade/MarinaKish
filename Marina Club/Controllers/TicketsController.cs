@@ -16,7 +16,7 @@ namespace Marina_Club.Controllers
         public TicketsController(ITicketService ticketService)
         {
             _ticketService = ticketService;
-        }
+        } 
 
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
@@ -35,31 +35,31 @@ namespace Marina_Club.Controllers
 
 
 
-        //        #region Schedule Options
+        #region Schedule Options
 
-        //        /// <summary>
-        //        /// دریافت تمام بلیط های یک سانس
-        //        /// </summary>
-        //        [HttpGet("GetAll-ScheduleTickets-ScheduleID/{id}")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
-        //        {
-        //            var result = await _ticketService.GetAllScheduleTickets(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
-        //            return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
-        //        }
+        /// <summary>
+        /// دریافت تمام بلیط های یک سانس
+        /// </summary>
+        [HttpGet("{id}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
+        {
+            var result = await _ticketService.GetAllScheduleTickets(id);
+            if (result == null)
+                return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
+            return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
+        }
 
-        //        /// <summary>
-        //        /// دریافت کل بلیط های غیرفعال یک سانس
-        //        /// </summary>
-        //        [HttpGet("GetAll-ScheduleInActiveTickets-ScheduleID/{id}")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
-        //        {
-        //            var result = await _ticketService.AllInActiveScheduleTickets(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
-        //            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
-        //        }
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        [HttpGet("{id}/AllInActiveScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
+        {
+            var result = await _ticketService.AllInActiveScheduleTickets(id);
+            if (result == null)
+                return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
+            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های فعال یک سانس با آیدی سانس
@@ -232,7 +232,8 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllFunCanceledTicketsCountGetted, new { CanceledFunTicketsCount = result.Count });
         //        }
 
-        //        #endregion
+       #endregion
+
 
         //        #region User Options
 
@@ -507,9 +508,9 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.ActiveTicketsPriceDateSumGetted, new { ReservedTicketsPriceSum = result });
         }
 
-        /// <summary>
-        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
-        /// </summary>
+        ///// <summary>
+        /////  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
+        ///// </summary>
         //[HttpGet("SearchReservedTicketsPrice-twoDate-Sum")]
         //public async Task<IActionResult> SearchReservedTicketsPriceByTwoDateSum(TwoDateSearchCommand command)
         //{
@@ -684,6 +685,19 @@ namespace Marina_Club.Controllers
         //        }
         //        #endregion
 
+        ///// <summary>
+        ///// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
+        ///// </summary>
+        //[HttpPost("{id}/AddTicketBasket")]
+        //public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
+        //{
+        //    if (!command.Validate())
+        //        return BadReq(ApiMessage.WrongID, new { Reason = $"you must enter at least 1 id" });
+        //    var result = await _ticketService.DeleteTicketsFromBasketBuy(command);
+        //    if (result != null)
+        //        return BadReq(ApiMessage.AllInActiveTicketsDeletedFaild, new { NotDeletedTickets = result });
+        //    return OkResult(ApiMessage.AllInActiveTicketsDeletedSuccessfully, new { DeletedTicketCount = command.IDs.Count });
+        //}
 
         //        /// <summary>
         //        /// اضافه کردن بلیط خریده شده بصورت حضوری
@@ -729,7 +743,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// عوض کزدن وضعیت یک بلیط
         /// </summary>
-        [HttpPut("ChangeCondition/{id}")]
+        [HttpPut("{id}/ChangeCondition")]
         public async Task<IActionResult> ChangeTicketCondition(Guid id, EditTicketConditionCommand command)
         {
             command.TicketId = id;
@@ -745,7 +759,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// گرفتن یک بلیط
         /// </summary>
-        [HttpGet("{id}/Get-One")]
+        [HttpGet("{id}/GetOne")]
         public async Task<IActionResult> GetOneTicket(Guid id)
         {
             var result = await _ticketService.GetOneTicket(id);
@@ -754,17 +768,17 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.TicketGetted, new { TicketInfo = result });
         }
 
-        //        /// <summary>
-        //        /// پاک کردن بلیط - از سبد خرید
-        //        /// </summary>
-        //        [HttpDelete("{id}/Delete")]
-        //        public async Task<IActionResult> DeleteTicket(Guid id)
-        //        {
-        //            var result = await _ticketService.DeleteTicket(id);
-        //            if (result)
-        //                return OkResult(ApiMessage.TicketDeleted, new { IsDeleted = result });
-        //            return BadReq(ApiMessage.TicketNotDeleted, new { Reason = $"1-ticket not found, check the id, 2-ticket isn't inActive" });
-        //        }
+        /// <summary>
+        /// پاک کردن بلیط - از سبد خرید
+        /// </summary>
+        [HttpDelete("{id}/Delete")]
+        public async Task<IActionResult> DeleteTicket(Guid id)
+        {
+            var result = await _ticketService.DeleteTicket(id);
+            if (result)
+                return OkResult(ApiMessage.TicketDeleted, new { IsDeleted = result });
+            return BadReq(ApiMessage.TicketNotDeleted, new { Reason = $"1-ticket not found, check the id, 2-ticket isn't inActive" });
+        }
 
 
 

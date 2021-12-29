@@ -34,7 +34,10 @@ namespace Domain.Models
         {
             FunId = funId;
         }
-
+        public void SetPersianDate(DateTime date)
+        {
+            this.Date = date;
+        }
         public Guid FunId { get; private set; }
         public Guid Id { get; private set; }
 
