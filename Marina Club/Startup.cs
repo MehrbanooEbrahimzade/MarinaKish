@@ -15,7 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
+using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
+using Infrastructure.Repository.interfaces;
 
 namespace Marina_Club
 {
@@ -114,6 +116,9 @@ namespace Marina_Club
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<ISellerService, SellerService>();
 
+            // AddScoped for ContactUs model
+            services.AddScoped<IContactUsRepository, ContactUsRepository>();
+            services.AddScoped<IContactUsService, ContactUsService>();
 
         }
 

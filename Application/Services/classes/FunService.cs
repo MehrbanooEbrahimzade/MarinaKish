@@ -7,6 +7,7 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.RepasitoryInterfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Infrastructure.Repository.interfaces;
 
 namespace Application.Services.classes
 {

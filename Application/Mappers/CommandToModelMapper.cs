@@ -1,4 +1,6 @@
 ﻿using Application.Commands.Comment;
+using Application.Commands.ContactInfo;
+using Application.Commands.ContactUs;
 using Application.Commands.Conversation;
 using Application.Commands.Fun;
 using Application.Commands.Message;
@@ -87,7 +89,15 @@ namespace Application.Mappers
             return new User(findUserCommand.PhoneNumber);
         }
 
+            //    FunId = command.FunId,
+            //    ScheduleId = command.ScheduleId,
+            //    Price = command.Price, 
+            //    PhoneNumber = command.PhoneNumber,
+            //    FullName = command.FullName
 
+            //    #endregion
+            //};
+        
 
         /// <summary>
         /// تبدیل کردن کامند به کامنت
@@ -120,14 +130,23 @@ namespace Application.Mappers
             return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price, command.FunId, command.AddPercent.ToModel());
 
         }
+
         /// <summary>
         /// تبدیل کردن قدار تخفیف
         /// </summary>
         public static Percent ToModel(this AddPercentCommand command)
         {
             return new Percent(command.Value);
-
         }
 
+        /// <summary>
+        /// تبدیل کامند پشتیبانی به مدل
+        /// </summary>
+        public static ContactUs ToModel(this AddContactUsCommand command)
+        {
+            return new ContactUs(
+                command.AboutMariana, command.Rules, command.Email,
+                command.PhoneNumber, command.UrlLinkedin, command.UrlInstagram);
+        }
     }
 }
