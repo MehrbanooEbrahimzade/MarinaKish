@@ -35,31 +35,31 @@ namespace Marina_Club.Controllers
 
 
 
-        //        #region Schedule Options
+        #region Schedule Options
 
-        //        /// <summary>
-        //        /// دریافت تمام بلیط های یک سانس
-        //        /// </summary>
-        //        [HttpGet("GetAll-ScheduleTickets-ScheduleID/{id}")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
-        //        {
-        //            var result = await _ticketService.GetAllScheduleTickets(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
-        //            return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
-        //        }
+        /// <summary>
+        /// دریافت تمام بلیط های یک سانس
+        /// </summary>
+        [HttpGet("{id}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
+        {
+            var result = await _ticketService.GetAllScheduleTickets(id);
+            if (result == null)
+                return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
+            return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
+        }
 
-        //        /// <summary>
-        //        /// دریافت کل بلیط های غیرفعال یک سانس
-        //        /// </summary>
-        //        [HttpGet("GetAll-ScheduleInActiveTickets-ScheduleID/{id}")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
-        //        {
-        //            var result = await _ticketService.AllInActiveScheduleTickets(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
-        //            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
-        //        }
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        [HttpGet("{id}/AllInActiveScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
+        {
+            var result = await _ticketService.AllInActiveScheduleTickets(id);
+            if (result == null)
+                return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
+            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های فعال یک سانس با آیدی سانس
@@ -232,7 +232,8 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllFunCanceledTicketsCountGetted, new { CanceledFunTicketsCount = result.Count });
         //        }
 
-        //        #endregion
+       #endregion
+
 
         //        #region User Options
 

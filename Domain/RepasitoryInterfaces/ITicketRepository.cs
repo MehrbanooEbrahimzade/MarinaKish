@@ -49,6 +49,9 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<bool> DeleteTicket(Ticket ticket);
 
+
+        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
+
         //    ///// <summary>
         //    ///// دریافت تفریح با اسم تفریح
         //    ///// </summary>
@@ -215,10 +218,10 @@ namespace Domain.RepasitoryInterfaces
         ///// </summary>
         //Task<int> InActiveScheduleTicketsCount(Guid id);
 
-        ///// <summary>
-        ///// دریافت کل بلیط های غیرفعال یک سانس
-        ///// </summary>
-        //Task<List<Ticket>> AllInActiveScheduleTickets(Guid id);
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        Task<List<Ticket>> AllInActiveScheduleTickets(Guid id);
 
         ///// <summary>
         ///// دریافت تعداد کل بلیط های رزرو شده یک تفریح

@@ -20,6 +20,7 @@ namespace Domain.Models
         {
             this.Condition = condition;
         }
+        
 
         private Ticket() { }
         public User User { get; private set; }

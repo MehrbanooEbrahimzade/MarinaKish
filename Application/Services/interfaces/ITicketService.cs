@@ -20,10 +20,10 @@ namespace Application.Services.interfaces
         Task<bool> DeleteTicket(Guid id);
 
 
-        ///// <summary>
-        ///// گرفتن همه بلیط های یک سانس
-        ///// </summary>
-        //Task<List<TicketDto>> GetAllScheduleTickets(Guid id);
+        /// <summary>
+        /// گرفتن همه بلیط های یک سانس
+        /// </summary>
+        Task<List<TicketDto>> GetAllScheduleTickets(Guid id);
 
         ///// <summary>
         ///// گرفتن همه بلیط های فعال یک سانس
@@ -161,10 +161,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> AllReservationTickets();
 
-        ///// <summary>
-        ///// دریافت کل بلیط های غیرفعال یک سانس
-        ///// </summary>
-        //Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id);
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id);
 
         ///// <summary>
         ///// دریافت کل بلیط های غیرفعال یک تفریح با آیدی تفریح

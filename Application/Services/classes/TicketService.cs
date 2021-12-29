@@ -281,16 +281,16 @@ namespace Application.Services.classes
 
         //        #region ScheduleOptions
 
-        //        /// <summary>
-        //        /// گرفتن همه بلیط های یک سانس
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
-        //        {
-        //            var tickets = await _ticketRepository.GetAllScheduleTickets(id);
-        //            if (tickets == null)
-        //                return null;
-        //            return tickets.ToDto();
-        //        }
+        /// <summary>
+        /// گرفتن همه بلیط های یک سانس
+        /// </summary>
+        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
+        {
+            var tickets = await _ticketRepository.GetAllScheduleTickets(id);
+            if (tickets == null)
+                return null;
+            return tickets.ToDto();
+        }
 
         //        /// <summary>
         //        /// گرفتن همه بلیط های فعال یک سانس
@@ -303,16 +303,16 @@ namespace Application.Services.classes
         //            return tickets.ToDto();
         //        }
 
-        //        /// <summary>
-        //        /// دریافت کل بلیط های غیرفعال یک سانس
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id)
-        //        {
-        //            var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
-        //            if (tickets == null)
-        //                return null;
-        //            return tickets.ToDto();
-        //        }
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        public async Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id)
+        {
+            var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
+            if (tickets == null)
+                return null;
+            return tickets.ToDto();
+        }
 
         //        /// <summary>
         //        /// دریافت مقدار پول کل بلیط های فروخته شده
