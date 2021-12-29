@@ -1,5 +1,6 @@
 ﻿using System;
 using Domain.Enums;
+using Domain.Models;
 
 namespace Application.Dtos
 {
@@ -11,24 +12,14 @@ namespace Application.Dtos
         public Guid Id { get; set; }
 
         /// <summary>
-        /// تنوع تفریح ها :
-        /// </summary> 
-        public FunType FunType { get; set; }
-
-        /// <summary>
-        /// زمان سانس : - به شمسی
+        /// تاریخ سانس 
         /// </summary>
-        public string ExcutePersianDateTime { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// قیمت تفریح :
         /// </summary>
         public decimal Price { get; set; }
-
-        /// <summary>
-        /// فضای دردسترس :
-        /// </summary>
-        public decimal AvailableCapacity { get; set; }
 
         /// <summary>
         /// ساعت شروع :
@@ -44,5 +35,12 @@ namespace Application.Dtos
         /// آیدی تفریح
         /// </summary>
         public Guid FunId { get; set; }
+
+        /// <summary>
+        /// تخفیف
+        /// </summary>
+        public Percent Discount{ get; set; }
+
+
     }
 }

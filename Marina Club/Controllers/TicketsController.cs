@@ -172,17 +172,17 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllFunInActiveTicketsGetted, new { AllFunInActiveTickets = result });
         //        }
 
-        //        /// <summary>
-        //        /// دریافت همه بلیط های رزرو شده یک تفریح با آیدی تفریح
-        //        /// </summary>
-        //        [HttpGet("GetAll-FunActiveTickets-FunID/{id}")] // FunId ( funs model )
-        //        public async Task<IActionResult> GetAllFunActiveTicketsWithFunID(Guid id)
-        //        {
-        //            var result = await _ticketService.GetAllFunActiveTicketsWithFunID(id);
-        //            if (result == null)
-        //                return BadReq(ApiMessage.FunNotHaveActiveTickets, new { Reasons = $"1-eFun not have any reserved ticket, 2-eFun id is wrong" });
-        //            return OkResult(ApiMessage.AllFunReservedTicketsGetted, new { FunTickets = result });
-        //        }
+        /// <summary>
+        /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
+        /// </summary>
+        [HttpGet("GetAll-FunActiveTickets-FunID/{id}")] 
+        public async Task<IActionResult> GetAllFunActiveTicketsWithFunName(string funName)
+        {
+            var result = await _ticketService.GetAllFunActiveTicketsWithFunName(funName);
+            if (result == null)
+                return BadReq(ApiMessage.FunNotHaveActiveTickets, new { Reasons = $"1-eFun not have any reserved ticket, 2-eFun id is wrong" });
+            return OkResult(ApiMessage.AllFunReservedTicketsGetted, new { FunTickets = result });
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح

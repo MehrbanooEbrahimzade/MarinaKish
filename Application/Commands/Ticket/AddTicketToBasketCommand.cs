@@ -15,11 +15,6 @@ namespace Application.Commands.Ticket
         /// </summary>
         public Guid ScheduleId { get; set; }
         
-        //public AddSchedulToTicketCommand SchedulComand { get; set; }  
-
-        //public AddUserToTicketcommand UserCommand { get; set; } //postman ke nabayad kole user ro be ma bede balke id ye user ro mide ma peyda mikonim to service va midim be ticket ke ctor an kamel shavad 
-
-
         /// <summary>
         /// جنسیت خریدار
         /// </summary>

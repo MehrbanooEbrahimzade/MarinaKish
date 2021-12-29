@@ -111,10 +111,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<List<TicketDto>> GetAllFunTicketsWithFunID(Guid id);
 
-        ///// <summary>
-        ///// دریافت همه بلیط های رزرو شده یک تفریح با آیدی تفریح
-        ///// </summary>
-        //Task<List<TicketDto>> GetAllFunActiveTicketsWithFunID(Guid id);
+        /// <summary>
+        /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
+        /// </summary>
+        Task<List<TicketDto>> GetAllFunActiveTicketsWithFunName(string funName);
 
         ///// <summary>
         ///// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح
@@ -181,9 +181,9 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<int> SetPerformedTicketsToPlayed();
 
-       /// <summary>
-       /// حذف بلیط از سبد خرید
-       /// </summary>
-       Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command);
+        /// <summary>
+        /// حذف بلیط از سبد خرید
+        /// </summary>
+        Task<List<Guid?>> DeleteTicketsFromBasketBuy(IdListCommand command);
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class TicketRepository : BaseRepository, ITicketRepository
+    public class TicketRepository : BaseRepository,ITicketRepository
     {
         public TicketRepository(DatabaseContext context) : base(context)
         {
@@ -254,15 +254,15 @@ namespace Infrastructure.Repository.Classes
         //}
 
         /// <summary>
-        /// دریافت همه بلیط های رزرو شده یک تفریح با آیدی تفریح
+        /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
         /// </summary>
-        //public async Task<List<Ticket>> GetAllFunActiveTicketsWithFunID(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .Where(x => x.FunId == id && x.Condition == Condition.Reservation)
-        //        .OrderByDescending(x => x.SubmitDate)
-        //        .ToListAsync();
-        //}
+        public async Task<List<Ticket>> GetAllFunActiveTicketsWithFunName(string funName)
+        {
+            return await _context.Tickets
+                .Where(x => x.FunType ==funName && x.Condition == Condition.Reservation)
+                .OrderByDescending(x => x.SubmitDate)
+                .ToListAsync();
+        }
 
         /// <summary>
         /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح

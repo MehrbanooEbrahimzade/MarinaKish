@@ -18,15 +18,11 @@ namespace Application.Services.classes
             _userRepository = userRepository;
         }
 
-        public async Task<UserDto> SearchByPhoneAsync(QuerySearch search)
-        {
-            var user = await  _userRepository.SearchAsync(search);
-            return user.ToDto();
-        }
+       
 
-        public async Task<UserDto> SearchUserById(string id) 
+        public async Task<UserDto> SearchUserById(Guid id) 
         {
-            var user =await  _userRepository.GetUserById(id);
+            var user =await  _userRepository.GetUserById(id.ToString());
             if (user==null)
                 throw new ArgumentNullException();
 

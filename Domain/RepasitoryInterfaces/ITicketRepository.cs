@@ -142,10 +142,10 @@ namespace Domain.RepasitoryInterfaces
         ///// </summary>
         //Task<List<Ticket>> GetAllScheduleCanceledTickets(Guid id);
 
-        ///// <summary>
-        ///// دریافت همه بلیط های یک تفریح با آیدی تفریح
-        ///// </summary>
-        //Task<List<Ticket>> GetAllFunTicketsWithFunID(Guid id);
+        /// <summary>
+        /// دریافت همه بلیط های فعال یک تفریح با نام تفریح
+        /// </summary>
+        Task<List<Ticket>> GetAllFunActiveTicketsWithFunName(string funName);
 
 
         ///// <summary>
