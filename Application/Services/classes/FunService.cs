@@ -57,14 +57,10 @@ namespace Application.Services.classes
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        public async void DeleteFunAsync(Guid id)
+        public async Task DeleteFunAsync(Guid id)
         {
-            var fun = await _funRepository.GetFunByIdAsynch(id);
-            if (fun == null)
-            {
-                throw new Exception("Not Null");
-            }
-            await _funRepository.DeleteFunAsync(fun.Id);
+              await _funRepository.DeleteFunAsync(id);
+
         }
 
         /// <summary>

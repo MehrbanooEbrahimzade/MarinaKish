@@ -21,8 +21,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        void DeleteFunAsync(Guid id);
-
+        Task DeleteFunAsync(Guid id);
         /// <summary>
         /// دریافت همه تفریح ها
         /// </summary>

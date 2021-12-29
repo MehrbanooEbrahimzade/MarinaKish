@@ -45,7 +45,10 @@ namespace Application.Services.classes
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
         }
 
+        public async Task deleteScheduleInfoAsync(Guid funId)
+        {
 
+        }
         public async Task CreateAndAddSchedule(AddScheduleInfoCommand command)
         {
             var schedules = ScheduleMaker.MakeSchedule(command);

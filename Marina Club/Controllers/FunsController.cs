@@ -55,7 +55,7 @@ namespace Marina_Club.Controllers
         [HttpDelete("{id}/Delete")]
         public async Task<IActionResult> DeleteFunAsync(Guid id)
         {
-            _funService.DeleteFunAsync(id);
+            await _funService.DeleteFunAsync(id);
             return OkResult(ApiMessage.FunDeleted);
         }
 

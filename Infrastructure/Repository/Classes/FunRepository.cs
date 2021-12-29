@@ -52,11 +52,11 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// حذف تفریح 
         /// </summary>
-        public async Task<bool> DeleteFunAsync(Guid id)
+        public async Task DeleteFunAsync(Guid id)
         {
-            var fun = IncludeFunWithScheduleInfo().Where(f => f.Id == id);
-            _context.Funs.Remove((Fun)fun);
-            return await _context.SaveChangesAsync() > 0;
+             var fun =await _context.Funs.SingleOrDefaultAsync(f => f.Id == id);
+             _context.Funs.Remove(fun);
+             await _context.SaveChangesAsync();
         }
 
         /// <summary>

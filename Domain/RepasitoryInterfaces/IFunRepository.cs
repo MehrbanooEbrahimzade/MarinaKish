@@ -40,7 +40,7 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        Task<bool> DeleteFunAsync(Guid id);
+        Task DeleteFunAsync(Guid id);
 
         /// <summary>
         /// گرفتن همه تفریح ها
