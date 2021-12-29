@@ -11,8 +11,7 @@ namespace Application.Validators.Fun
                 .NotNull().WithMessage("آیدی تفریح نمیتواند خالی باشد");
 
             RuleFor(x => x.Name)
-                .NotNull().WithMessage("اسم تفریح را وارد کنید")
-                .IsInEnum().WithMessage("تفریح وارد کرده خود را مجددا بررسی کنید");
+                .NotNull().WithMessage("اسم تفریح را وارد کنید");
 
             RuleFor(x => x.ScheduleInfo.Amount)
                 .NotNull().WithMessage("قیمت تفریح نمیتواند خالی باشد")

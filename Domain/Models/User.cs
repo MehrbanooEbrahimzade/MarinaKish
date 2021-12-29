@@ -70,6 +70,10 @@ namespace Domain.Models
         /// </summary>
         public DateTime BirthDay { get; private set; }
 
+        /// <summary>
+        /// پشتیبانی
+        /// </summary>
+
         private User() { }
 
     }

@@ -7,6 +7,7 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.RepasitoryInterfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Infrastructure.Repository.interfaces;
 
 namespace Application.Services.classes
 {
@@ -56,7 +57,7 @@ namespace Application.Services.classes
         /// <summary>
         /// حذف تفریح
         /// </summary>
-        public async void DeleteFunAsync(Guid id)
+        public async Task DeleteFunAsync(Guid id)
         {
             var fun = await _funRepository.GetFunByIdAsynch(id);
             if (fun == null)
