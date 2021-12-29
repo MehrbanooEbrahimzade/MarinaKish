@@ -11,9 +11,11 @@ namespace Marina_Club.Controllers
     public class FunsController : ApiController
     {
         private readonly IFunService _funService;
-        public FunsController(IFunService funService)
+        private readonly IScheduleInfoService _scheduleInfoService;
+        public FunsController(IFunService funService, IScheduleInfoService scheduleInfoService)
         {
             _funService = funService;
+            _scheduleInfoService = scheduleInfoService;
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongFunInformation, new { Reason = $"Make a Problem When Fun Add. TryAgain!" });
             }
-            _funService.AddFunAsync(command);
+            await _funService.AddFunAsync(command);
             return OkResult(ApiMessage.FunAdded);
         }
 
