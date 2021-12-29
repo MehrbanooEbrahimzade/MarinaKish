@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class TicketRepository : BaseRepository/*,ITicketRepository*/
+    public class TicketRepository : BaseRepository,ITicketRepository
     {
         public TicketRepository(DatabaseContext context) : base(context)
         {
