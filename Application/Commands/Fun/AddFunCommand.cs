@@ -10,10 +10,6 @@ namespace Application.Commands.Fun
 {
     public class AddFunCommand : CommandBase
     {
-        /// <summary>
-        /// آیدی
-        /// </summary>
-        public Guid Id { get; set; }
         
         /// <summary>
         /// اسم تفریج
@@ -23,8 +19,8 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسلاید تفریحات
         /// </summary>
-        public List<AddSliderPictureFunCommand> PictureSlider { get; set; }
-       
+        public List<AddSliderPictureFunCommand> SliderPicture { get; set; }
+    
         /// <summary>
         /// اطلاعات سانس
         /// </summary>
