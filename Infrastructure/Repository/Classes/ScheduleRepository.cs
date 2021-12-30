@@ -28,6 +28,7 @@ namespace Infrastructure.Repository.Classes
                  _context.SaveChangesAsync();
             }
         }
+
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح
         ///// </summary>

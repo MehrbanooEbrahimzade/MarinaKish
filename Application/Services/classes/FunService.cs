@@ -25,9 +25,9 @@ namespace Application.Services.classes
         /// </summary>
         public Guid AddFunAsync(AddFunCommand command)
         {
-            var funObj =  command.ToModel();
-            _funRepository.AddFunAsync(funObj);
-             return  funObj.Id;
+            var fun = command.ToModel();
+            _funRepository.AddFunAsync(fun);
+            return fun.Id;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Application.Services.classes
                 }
             }
 
-            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video,command.SliderPictures.ToModel(),
+            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPictures.ToModel(),
                     command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
@@ -62,7 +62,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task DeleteFunAsync(Guid id)
         {
-              await _funRepository.DeleteFunAsync(id);
+            await _funRepository.DeleteFunAsync(id);
         }
 
         /// <summary>

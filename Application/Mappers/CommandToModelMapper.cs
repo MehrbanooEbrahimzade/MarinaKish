@@ -20,6 +20,7 @@ namespace Application.Mappers
         {
             return new CreditCard(command.ShabaNumber, command.CardNumber, command.UserId);
         }
+
         /// <summary>
         /// تبدیل کردن کامند به کاربر
         ///// </summary>
@@ -34,10 +35,12 @@ namespace Application.Mappers
         /// </summary>
         public static Fun ToModel(this AddFunCommand command)
         {
-            return new Fun
-                (command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPicture.ToModel()
-                                                                                                      , command.ScheduleInfo.ToModel());
+            return new Fun(
+                command.Name, command.About, command.Icon,
+                command.BackgroundPicture, command.Video,
+                command.SliderPicture.ToModel(), command.ScheduleInfo.ToModel());
         }
+
         /// <summary>
         /// تبدیل کردن کامند به اطلاعات سانس
         /// </summary>
@@ -89,15 +92,15 @@ namespace Application.Mappers
             return new User(findUserCommand.PhoneNumber);
         }
 
-            //    FunId = command.FunId,
-            //    ScheduleId = command.ScheduleId,
-            //    Price = command.Price, 
-            //    PhoneNumber = command.PhoneNumber,
-            //    FullName = command.FullName
+        //    FunId = command.FunId,
+        //    ScheduleId = command.ScheduleId,
+        //    Price = command.Price, 
+        //    PhoneNumber = command.PhoneNumber,
+        //    FullName = command.FullName
 
-            //    #endregion
-            //};
-        
+        //    #endregion
+        //};
+
 
         /// <summary>
         /// تبدیل کردن کامند به کامنت

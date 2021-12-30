@@ -12,6 +12,7 @@ namespace Marina_Club.Controllers
     {
         private readonly IFunService _funService;
         private readonly IScheduleInfoService _scheduleInfoService;
+
         public FunsController(IFunService funService, IScheduleInfoService scheduleInfoService)
         {
             _funService = funService;
@@ -24,12 +25,8 @@ namespace Marina_Club.Controllers
         [HttpPost("Add")]
         public IActionResult AddFunAsync(AddFunCommand command)
         {
-            //if (!command.Validate())
-            //{
-            //    return BadReq(ApiMessage.WrongFunInformation);
-            //}
             command.ScheduleInfo.FunId = _funService.AddFunAsync(command);
-             _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
+            _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
             return OkResult(ApiMessage.FunAdded);
         }
 
@@ -62,7 +59,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت همه تفریح ها
         /// </summary>
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<IActionResult> GetAllFunAsync()
         {
             var result = await _funService.GetAllFunAsync();
@@ -72,7 +69,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// گرفتن یک تفریح
         /// </summary>
-        [HttpGet("{id}/GetOne")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetOneFunByIdAsync(Guid id)
         {
             var result = await _funService.GetOneFunAsync(id);
@@ -119,7 +116,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت همه تفریح های فعال
         /// </summary>
-        [HttpGet("GetAllActived")]
+        [HttpGet("GetAllActivated")]
         public async Task<IActionResult> GetAllActivedFunAsynch()
         {
             var result = await _funService.GetAllActivedFunAsynch();
@@ -130,7 +127,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
-        [HttpGet("GetAllDisActived")]
+        [HttpGet("GetAllDisActivated")]
         public async Task<IActionResult> GetAllDisActivedFunAsynch()
         {
             var result = await _funService.GetAllDisActivedFunAsynch();
@@ -141,7 +138,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تعداد همه تفریح های فعال
         /// </summary>
-        [HttpGet("GetAllActivedCount")]
+        [HttpGet("GetAllActivatedCount")]
         public async Task<IActionResult> GetAllActivedFunCountAsynch()
         {
             var result = await _funService.GetAllActivedFunAsynch();
@@ -152,7 +149,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تعداد همه تفریح های غیر فعال
         /// </summary>
-        [HttpGet("GetAllDisActivedCount")]
+        [HttpGet("GetAllDisActivatedCount")]
         public async Task<IActionResult> GetAllDisActivedFunCountAsynch()
         {
             var result = await _funService.GetAllDisActivedFunAsynch();

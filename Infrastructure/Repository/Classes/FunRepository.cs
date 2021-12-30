@@ -26,10 +26,10 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        public async void AddFunAsync(Fun fun)
+        public void AddFunAsync(Fun fun)
         {
-             await _context.Funs.AddAsync(fun);
-              _context.SaveChangesAsync();
+            _context.Funs.Add(fun);
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task DeleteFunAsync(Guid id)
         {
-             var fun =await FunIncludes().SingleOrDefaultAsync(f => f.Id == id);
-             _context.Funs.Remove(fun);
-             await _context.SaveChangesAsync();
+            var fun = await FunIncludes().SingleOrDefaultAsync(f => f.Id == id);
+            _context.Funs.Remove(fun);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>

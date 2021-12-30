@@ -28,7 +28,7 @@ namespace Application.Commands.Fun
         /// <summary>
         /// اسلاید عکس ها
         /// </summary>
-        public List<AddSliderPictureFunCommand> SliderPictures { get; set; } 
+        public List<AddSliderPictureFunCommand> SliderPictures { get; set; }
 
         /// <summary>
         /// فیلم تفریج
@@ -44,7 +44,7 @@ namespace Application.Commands.Fun
         /// آیکون
         /// </summary>
         public string Icon { get; set; }
-       
+
         /// <summary>
         /// دربار تفریح
         /// </summary>

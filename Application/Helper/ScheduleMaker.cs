@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Application.Commands.ScheduleInfo;
 using Domain.Models;
 
@@ -11,16 +10,15 @@ namespace Application.Helper
         public static List<Schedule> MakeSchedule(AddScheduleInfoCommand command)
         {
             DateTime date = command.StartDate;
-            
+
             var schedules = new List<Schedule>();
 
-
-            for (; date <= command.EndDate;date= date.AddDays(1))
+            for (; date <= command.EndDate; date = date.AddDays(1))
             {
                 TimeSpan scheduleStartTime = command.StartTime;
                 TimeSpan scheduleEndTime = default;
 
-                for (;scheduleEndTime <= command.EndTime;)
+                for (; scheduleEndTime <= command.EndTime;)
                 {
                     scheduleEndTime = scheduleStartTime + TimeSpan.FromMinutes(command.Duration);
 

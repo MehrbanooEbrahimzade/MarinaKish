@@ -39,7 +39,7 @@ namespace Domain.Models
         /// اطلاعات سانس
         /// </summary>
         public ScheduleInfo ScheduleInfo { get; private set; }
-        
+
         /// <summary>
         /// فیلم تفریح
         /// </summary>
@@ -80,8 +80,7 @@ namespace Domain.Models
             this.BackgroundPicture = backgroundPicture;
             this.Video = video;
             this.SliderPictures = sliderPictures;
-            this.ScheduleInfo.UpdateScheduleInfo
-                (startTime, endTime, gapTime, duration, totalCapacity, presenceCapacity, onlineCapacity, amount);
+            this.ScheduleInfo.UpdateScheduleInfo(startTime, endTime, gapTime, duration, totalCapacity, presenceCapacity, onlineCapacity, amount);
         }
 
         public void SetIsActive(bool isActive)

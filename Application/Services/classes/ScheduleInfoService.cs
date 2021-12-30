@@ -11,7 +11,7 @@ using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.classes
 {
-    public class ScheduleInfoService: IScheduleInfoService
+    public class ScheduleInfoService : IScheduleInfoService
     {
         private readonly IScheduleInfoRepository _scheduleInfoRepository;
         private readonly IScheduleRepository _scheduleRepository;
@@ -29,7 +29,7 @@ namespace Application.Services.classes
         public void AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
             var scheduleInfo = command.ToModel();
-              CreateAndAddSchedule(command);
+            CreateAndAddSchedule(command);
             _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
         }
 
@@ -38,8 +38,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
         {
-             await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
-              CreateAndAddSchedule(command);
+            await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
+            CreateAndAddSchedule(command);
             var scheduleInfo = await _scheduleInfoRepository.GetByIdAsync(command.Id);
             scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
@@ -48,7 +48,7 @@ namespace Application.Services.classes
         public void CreateAndAddSchedule(AddScheduleInfoCommand command)
         {
             var schedules = ScheduleMaker.MakeSchedule(command);
-             _scheduleRepository.AddScheduleAsync(schedules);
+            _scheduleRepository.AddScheduleAsync(schedules);
         }
     }
 }
