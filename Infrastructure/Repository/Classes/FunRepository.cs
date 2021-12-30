@@ -41,6 +41,11 @@ namespace Infrastructure.Repository.Classes
                 FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task DeleteSiderPicturesByFunAsync(Fun fun)
+        {
+            _context.FunSliderPictures.RemoveRange(fun.SliderPictures);
+        }
+
         /// <summary>
         /// ذخیره عملیات انجام شده
         /// </summary>

@@ -36,6 +36,8 @@ namespace Application.Services.classes
         public async Task UpdateFunAsync(UpdateFunCommand command)
         {
             var fun = await _funRepository.GetFunByIdAsynch(command.FunId);
+            await _funRepository.DeleteSiderPicturesByFunAsync(fun);
+
             if (fun == null)
             {
                 {

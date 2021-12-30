@@ -18,6 +18,11 @@ namespace Domain.RepasitoryInterfaces
         void AddFunAsync(Fun fun);
 
         /// <summary>
+        /// حذف عکسهای اسلایدی یک فان
+        /// </summary>
+        Task DeleteSiderPicturesByFunAsync(Fun fun);
+
+        /// <summary>
         /// گرفتن تفریح با آیدی :
         /// </summary>
         Task<Fun> GetFunByIdAsynch(Guid id); 
