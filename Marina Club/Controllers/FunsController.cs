@@ -44,7 +44,7 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongInformation);
             }
-            _scheduleInfoService.UpdateScheduleInfoAsync(command.ScheduleInfo);
+            await _scheduleInfoService.UpdateScheduleInfoAsync(command.ScheduleInfo);
             await _funService.UpdateFunAsync(command);
             return OkResult(ApiMessage.FunEdited);
         }

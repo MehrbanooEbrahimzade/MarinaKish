@@ -38,7 +38,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
         {
-             _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
+             await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
               CreateAndAddSchedule(command);
             var scheduleInfo = await _scheduleInfoRepository.GetByIdAsync(command.Id);
             scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration

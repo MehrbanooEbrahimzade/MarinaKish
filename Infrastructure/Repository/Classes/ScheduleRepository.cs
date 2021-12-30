@@ -51,7 +51,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task DeleteAllSchedulesOfaFun(Guid funId)
         {
-             _context.RemoveRange(_context.Schedules.Where(sc => sc.FunId == funId));
+             _context.RemoveRange( _context.Schedules.Where(sc => sc.FunId == funId));
              await _context.SaveChangesAsync();
 
         }
