@@ -20,13 +20,13 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// اضافه کردن سانس به تیبل
         /// </summary>
-        public async Task<bool> AddScheduleAsync(List<Schedule> schedules)
+        public void AddScheduleAsync(List<Schedule> schedules)
         {
             foreach (var x in schedules)
             {
-                await _context.Schedules.AddAsync(x);
+                 _context.Schedules.AddAsync(x);
+                 _context.SaveChangesAsync();
             }
-            return await _context.SaveChangesAsync() > 0;
         }
         ///// <summary>
         ///// دریافت تفریح با اسم تفریح

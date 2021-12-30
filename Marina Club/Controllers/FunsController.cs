@@ -22,13 +22,13 @@ namespace Marina_Club.Controllers
         /// اضافه کردن تفریح و اطلاعات سانس و ساختن سانس
         /// </summary>
         [HttpPost("Add")]
-        public async Task<IActionResult> AddFunAsync(AddFunCommand command)
+        public IActionResult AddFunAsync(AddFunCommand command)
         {
             //if (!command.Validate())
             //{
             //    return BadReq(ApiMessage.WrongFunInformation);
             //}
-            command.ScheduleInfo.FunId = await _funService.AddFunAsync(command);
+            command.ScheduleInfo.FunId = _funService.AddFunAsync(command);
              _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
             return OkResult(ApiMessage.FunAdded);
         }

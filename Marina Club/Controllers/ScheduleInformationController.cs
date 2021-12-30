@@ -20,15 +20,13 @@ namespace Marina_Club.Controllers
         }
 
         [HttpPost]
-        public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        public void AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
             if (!command.Validate())
             { 
                 BadReq(ApiMessage.WrongInformation);
-            }
-            await _scheduleInfoService.AddScheduleInfoAsync(command);
-            
-
+            } 
+            _scheduleInfoService.AddScheduleInfoAsync(command);
         }
 
 

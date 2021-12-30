@@ -26,11 +26,11 @@ namespace Application.Services.classes
         /// <summary>
         ///اضافه کردن اطلاعات سانس و ساخت سانس از روی اطلاعاتش
         /// </summary>
-        public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        public void AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
             var scheduleInfo = command.ToModel();
-            await CreateAndAddSchedule(command);
-            await _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
+              CreateAndAddSchedule(command);
+            _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
         }
 
         /// <summary>
@@ -39,17 +39,13 @@ namespace Application.Services.classes
         public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
         {
              _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
-             await CreateAndAddSchedule(command);
+              CreateAndAddSchedule(command);
             var scheduleInfo = await _scheduleInfoRepository.GetByIdAsync(command.Id);
             scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
         }
 
-        public async Task deleteScheduleInfoAsync(Guid funId)
-        {
-
-        }
-        public async Task CreateAndAddSchedule(AddScheduleInfoCommand command)
+        public void CreateAndAddSchedule(AddScheduleInfoCommand command)
         {
             var schedules = ScheduleMaker.MakeSchedule(command);
              _scheduleRepository.AddScheduleAsync(schedules);

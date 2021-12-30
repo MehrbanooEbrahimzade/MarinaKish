@@ -10,8 +10,7 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// اضافه کردن یک سانس
         /// </summary>
-        Task<bool> AddScheduleAsync(List<Schedule> schedules);
-
+        void AddScheduleAsync(List<Schedule> schedules);
         /// <summary>
         /// پاک کردن همه سانس های یک تفریح
         /// </summary>
