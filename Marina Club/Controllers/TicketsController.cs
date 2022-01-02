@@ -16,7 +16,7 @@ namespace Marina_Club.Controllers
         public TicketsController(ITicketService ticketService)
         {
             _ticketService = ticketService;
-        } 
+        }
 
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید 
@@ -67,8 +67,11 @@ namespace Marina_Club.Controllers
         [HttpGet("getCatchallscenarios")]
         public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)
         {
-            var result = await _ticketService.GetAll(command);
+            if (!command.Validate())
+                return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });
 
+
+            var result = await _ticketService.GetAll(command);
             return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
         }
 
@@ -192,7 +195,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت همه بلیط های رزرو شده یک تفریح با نام تفریح
         /// </summary>
-        [HttpGet("GetAll-FunActiveTickets-FunID/{id}")] 
+        [HttpGet("GetAll-FunActiveTickets-FunID/{id}")]
         public async Task<IActionResult> GetAllFunActiveTicketsWithFunName(string funName)
         {
             var result = await _ticketService.GetAllFunActiveTicketsWithFunName(funName);
@@ -249,7 +252,7 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllFunCanceledTicketsCountGetted, new { CanceledFunTicketsCount = result.Count });
         //        }
 
-       #endregion
+        #endregion
 
 
         //        #region User Options

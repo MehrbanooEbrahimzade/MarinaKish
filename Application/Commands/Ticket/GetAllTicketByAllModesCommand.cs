@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Application.Validators.Ticket;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +28,7 @@ namespace Application.Commands.Ticket
 
         public override bool Validate()
         {
-            throw new NotImplementedException();
+            return new GetAllTicketByAllModesCommandValidator().Validate(this).IsValid;
         }
     }
 }

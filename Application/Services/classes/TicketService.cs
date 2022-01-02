@@ -176,7 +176,7 @@ namespace Application.Services.classes
             ///<summary>
             ///  لغوشده
             /// </summary>
-            if (Command.Condition == Condition.Cancel)
+            else if (Command.Condition == Condition.Cancel)
             {
                 switch (Command.WhereBuy)
                 {
@@ -204,7 +204,7 @@ namespace Application.Services.classes
             ///<summary>
             /// غیر فعال
             /// </summary>
-            if (Command.Condition == Condition.InActive)
+            else if (Command.Condition == Condition.InActive)
             {
                 switch (Command.WhereBuy)
                 {
@@ -228,6 +228,10 @@ namespace Application.Services.classes
                             break;
                         }
                 }
+            }
+            else
+            {
+                throw new Exception("بلیطی با این حالات وجود ندارد");
             }
 
             return null;
