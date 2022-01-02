@@ -7,14 +7,14 @@ namespace Domain.RepasitoryInterfaces
 {
     public interface ITicketRepository
     {
-        
+
         /// <summary>
         /// اضافه کردن بلیط 
         /// </summary> 
         Task<bool> AddTicketAsync(Ticket ticket);
 
 
-        /// <summary>
+        /// <summary> 
         /// گرفتن بلیط با آیدی
         /// </summary>
         Task<Ticket> GetTicketById(Guid id);
@@ -49,8 +49,55 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<bool> DeleteTicket(Ticket ticket);
 
+        /// <summary>
+        ///  دربافت تمام بلیط های رزروشده در سایت
+        /// </summary>
+        Task<List<Ticket>> GetAllReservationBySite(Guid id);
 
+        /// <summary>
+        /// دربافت تمام بلیط ها
+        /// </summary>
         Task<List<Ticket>> GetAllScheduleTickets(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های رزروشده در سایت
+        /// </summary>
+        Task<List<Ticket>> GetAllCancelBySite(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های غیرفعال در فروشنده
+        /// </summary>
+        Task<List<Ticket>> GetAllInActiveBySeller(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های رزروشده در فروشنده
+        /// </summary>
+        Task<List<Ticket>> GetAllReservationBySeller(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های لغو شده در فروشنده
+        /// </summary>
+        Task<List<Ticket>> GetAllCancelBySeller(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های غیرفعال در فروشنده
+        /// </summary>
+        Task<List<Ticket>> GetAllInActiveBySite(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های رزروشده در حظوری
+        /// </summary>
+        Task<List<Ticket>> GetAllReservationByPresence(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های لغو شده در حظوری
+        /// </summary>
+        Task<List<Ticket>> GetAllCancelByPresence(Guid id);
+
+        /// <summary>
+        ///  دربافت تمام بلیط های غیرفعال در حظوری
+        /// </summary>
+        Task<List<Ticket>> GetAllInActiveByPresence(Guid id);
 
         //    ///// <summary>
         //    ///// دریافت تفریح با اسم تفریح

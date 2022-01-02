@@ -106,7 +106,7 @@ namespace Application.Mappers
             };
         }
 
-       
+
         //public static TicketDto ToDto(this Ticket ticket)
         //{
         //    return new TicketDto
@@ -192,25 +192,8 @@ namespace Application.Mappers
         /// </summary>
         public static List<TicketDto> ToDto(this List<Ticket> tickets)
         {
-            var Tickets = new List<TicketDto>();
-            tickets.ForEach(c => Tickets.Add(new TicketDto()
-            {
-                Id = c.Id,
-                BoughtPlace = c.WhereBuy,
-                Condition = c.Condition,
-                FunType = c.FunType,
-                gender = c.Gender,
-                ScheduleDto = c.Schedule.ToDto(),
-                UserDto = c.User.ToDto()
-
-            }));
-            return Tickets;
-
-            //which one is correct 
-
             return tickets.Select(x => new TicketDto()
             {
-                #region Select
 
                 //        public static CommentDto ToDto(this Comment comment)
                 //        {
@@ -223,13 +206,12 @@ namespace Application.Mappers
                 BoughtPlace = x.WhereBuy,
                 Condition = x.Condition,
                 gender = x.Gender,
-                ScheduleDto = x.Schedule.ToDto(),
-                UserDto = x.User.ToDto()
+                //ScheduleDto = x.Schedule.ToDto(),
+                //UserDto = x.User.ToDto()
 
-                #endregion
             }).ToList();
         }
-       
+
 
 
         /// <summary>
@@ -320,7 +302,7 @@ namespace Application.Mappers
         //            }).ToList();
         //        }
 
-        
+
 
         /// <summary>
         /// تبدیل لیست بلیط به dto لیست بلیط

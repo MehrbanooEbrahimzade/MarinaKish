@@ -13,7 +13,7 @@ namespace Domain.Models
             this.SubmitDate = DateTime.Now;
             this.WhereBuy = whereBuy;
             this.Gender = gender;
-            this.User = user;
+            this.User = user; 
             this.Schedule = schedule;
         }
         public void SetCondition(Condition condition)

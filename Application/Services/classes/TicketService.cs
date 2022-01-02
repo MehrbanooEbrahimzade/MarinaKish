@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.RepasitoryInterfaces;
+using Domain.Enums;
 
 namespace Application.Services.classes
 {
@@ -18,7 +19,7 @@ namespace Application.Services.classes
         private readonly IUserRepository _userRepository;
         private readonly IFunRepository _funRepository;
         public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)
-        { 
+        {
             this._ticketRepository = ticketRepository;
             this._scheduleRepository = _scheduleRepository;
             this._userRepository = userRepository;
@@ -131,35 +132,136 @@ namespace Application.Services.classes
             return ticket.Condition.ToString();
         }
 
-        //        #region Search Options
-        //        /// <summary>
-        //        /// جست و جوی بلیط فعال با یک تاریخ
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> SearchReservedTicketsByDate(DateTime firstMiadiParse)
-        //        {
-        //            var OneDateTickets = await _ticketRepository.OneDateReservedTicketSearch(firstMiadiParse);
-        //            if (OneDateTickets.Count == 0)
-        //                return null;
-        //            return OneDateTickets.ToDto();
-        //        }
-
-        //        /// <summary>
-        //        /// جست و جوی بلیط فعال با دو تاریخ
-        //        /// </summary>
-        //        public async Task<List<TicketDto>> SearchReservedTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse)
-        //        {
-        //            var twoDateTickets = await _ticketRepository.TwoDateReservedTicketsSearch(firstMiadiParse, secondMiladiParse);
-        //            if (twoDateTickets.Count == 0)
-        //                return null;
-        //            return twoDateTickets.ToDto();
-        //        }
-
         /// <summary>
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
         /// </summary>
         public async Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse)
         {
             return await _ticketRepository.OneDateReservedTicketsPriceSearchSum(firstMiadiParse);
+        }
+        ///<summary>
+        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
+        /// </summary>
+        public async Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command)
+        {
+            ///<summary>
+            /// رزروشده
+            /// </summary>
+            if (Command.Condition == Condition.Reservation)
+            {
+                switch (Command.WhereBuy)
+                {
+                    case (WhereBuy)1:
+                        {
+                            var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                    case (WhereBuy)2:
+                        {
+                            var getreservation = await _ticketRepository.GetAllReservationBySeller(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+
+                    case (WhereBuy)3:
+                        {
+                            var getreservation = await _ticketRepository.GetAllReservationByPresence(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                }
+            }
+
+            ///<summary>
+            ///  لغوشده
+            /// </summary>
+            if (Command.Condition == Condition.Cancel)
+            {
+                switch (Command.WhereBuy)
+                {
+                    case (WhereBuy)1:
+                        {
+                            var getreservation = await _ticketRepository.GetAllCancelBySite(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                    case (WhereBuy)2:
+                        {
+                            var getreservation = await _ticketRepository.GetAllCancelBySeller(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+
+                    case (WhereBuy)3:
+                        {
+                            var getreservation = await _ticketRepository.GetAllCancelByPresence(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                }
+            }
+            ///<summary>
+            /// غیر فعال
+            /// </summary>
+            if (Command.Condition == Condition.InActive)
+            {
+                switch (Command.WhereBuy)
+                {
+                    case (WhereBuy)1:
+                        {
+                            var getreservation = await _ticketRepository.GetAllInActiveBySite(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                    case (WhereBuy)2:
+                        {
+                            var getreservation = await _ticketRepository.GetAllInActiveBySeller(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+
+                    case (WhereBuy)3:
+                        {
+                            var getreservation = await _ticketRepository.GetAllInActiveByPresence(Command.Id);
+                            return getreservation.ToDto();
+                            break;
+                        }
+                }
+            }
+
+            return null;
+
+        }
+        ///<summary>
+        ///برکردوندن اطلاعات بلیط با توجه مکان فروش
+        /// </summary>
+        public async Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command)
+        {
+            switch (Command.WhereBuy)
+            {
+                case (WhereBuy)1:
+                    {
+                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
+                        return getreservation.ToDto();
+                        break;
+                    }
+
+                case (WhereBuy)2:
+                    {
+                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
+                        return getreservation.ToDto();
+                        break;
+                    }
+
+                case (WhereBuy)3:
+                    {
+                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
+                        return getreservation.ToDto();
+                        break;
+                    }
+            }
+            return null;
         }
 
         //        /// <summary>
@@ -356,8 +458,11 @@ namespace Application.Services.classes
             var tickets = await _ticketRepository.GetAllFunActiveTicketsWithFunName(funName);
             if (tickets == null)
                 return null;
-            return  tickets.ToDto();
+            return tickets.ToDto();
         }
+
+
+
 
         //        /// <summary>
         //        /// دریافت همه بلیط های لغو شده یک تفریح با آیدی تفریح

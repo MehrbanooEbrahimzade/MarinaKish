@@ -14,7 +14,7 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
 
-        /// <summary>
+        /// <summary> 
         /// پاک کردن بلیط
         /// </summary>
         Task<bool> DeleteTicket(Guid id);
@@ -39,6 +39,17 @@ namespace Application.Services.interfaces
         /// عوض کزدن وضعیت یک بلیط
         /// </summary>
         Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
+
+        ///<summary>
+        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
+        /// </summary>
+        Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command);
+
+        ///<summary>
+        ///برکردوندن اطلاعات بلیط با توجه مکان فروش
+        /// </summary>
+        Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command);
+
 
         ///// <summary>
         ///// ثبت خرید و فعال کردن(رزرو) بلیط

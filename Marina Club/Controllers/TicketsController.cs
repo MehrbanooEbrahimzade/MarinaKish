@@ -19,7 +19,7 @@ namespace Marina_Club.Controllers
         } 
 
         /// <summary>
-        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
+        /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید 
         /// </summary>
         [HttpPost("AddTicketBasket")] // be sabade kharid ezaf mishe -user id-
         public async Task<IActionResult> AddTicketForBasket(AddTicketToBasketCommand command)
@@ -60,6 +60,23 @@ namespace Marina_Club.Controllers
                 return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
             return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
         }
+
+        /// <summary>
+        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// </summary>
+        [HttpGet("getCatchallscenarios")]
+        public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)
+        {
+            var result = await _ticketService.GetAll(command);
+
+            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        }
+
+
+
+
+
+
 
         //        /// <summary>
         //        /// دریافت همه بلیط های فعال یک سانس با آیدی سانس
