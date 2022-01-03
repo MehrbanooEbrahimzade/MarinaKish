@@ -26,6 +26,7 @@ namespace Marina_Club.Controllers
         [HttpPost("Upload")]
         public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
+            
             var result = await _fileService.UploadFileAsync(file);
 
             if (result == null)
