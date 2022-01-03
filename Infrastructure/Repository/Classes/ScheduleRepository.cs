@@ -34,8 +34,10 @@ namespace Infrastructure.Repository.Classes
         ///// </summary>
         public async Task<Schedule> GetRecreationById(Guid id)
         {
-            return _context.Schedules.Include(f => f.Percent)
-                .SingleOrDefault(f => f.Id == id);
+            Schedule a = _context.Schedules
+                .Include(s => s.Percent)
+                .SingleOrDefault(ao => ao.Id == id);   //چرا ایسینک نمیشه
+            return a;
         }
 
         /// <summary>
