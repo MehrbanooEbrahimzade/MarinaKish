@@ -5,18 +5,10 @@ namespace Domain.Models
     public class Schedule
     {
 
-        public Schedule
-            (DateTime date, TimeSpan start, TimeSpan end, decimal price, Guid funId, Percent percent)
+        public Schedule(decimal price,Percent percent)
         {
             Price = price;
-            FunId = funId;
-            Id = Guid.NewGuid();
-            Date = date.Add(start);
-            StartTime = start;
-            EndTime = end;
             Percent = percent;
-            IsExist = true;
-            
         }
 
         public Schedule
@@ -30,7 +22,11 @@ namespace Domain.Models
             EndTime = end;
             IsExist = true;
         }
-       
+        public void UpdateSpecialOffer(decimal price, Percent percent)
+        {
+            this.Price = price;
+            this.Percent = percent;
+        }
         private Schedule() { }
 
         public void SetPersianDate(DateTime date)
