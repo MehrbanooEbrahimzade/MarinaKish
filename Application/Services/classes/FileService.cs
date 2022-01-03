@@ -26,8 +26,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<Guid?> UploadFileAsync(IFormFile file)
         {
-            string format;
-            var fileName = NameGenerator(file.FileName, out format);
+            var fileName = NameGenerator(file.FileName, out var format);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
             var size = file.Length;
             switch (format)

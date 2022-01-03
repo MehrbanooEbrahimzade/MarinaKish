@@ -65,7 +65,7 @@ namespace Marina_Club.Controllers
         /// دریافت کل بلیط های غیرفعال یک سانس
         /// </summary>
         [HttpGet("getCatchallscenarios")]
-        public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)
+        public async Task<IActionResult> GetByCatchAllScenarios(GetByFilterCommand command)
         {
             if (!command.Validate())
                 return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });

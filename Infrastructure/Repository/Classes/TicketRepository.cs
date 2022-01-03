@@ -665,6 +665,9 @@ namespace Infrastructure.Repository.Classes
             return await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
         }
 
+        public  Task<List<Ticket>> GetByFilter(GetByFilterCommand command)
+        {
 
+        }
     }
 }

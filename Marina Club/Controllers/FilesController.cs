@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Application.Services.interfaces;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Marina_Club.Controllers
 {

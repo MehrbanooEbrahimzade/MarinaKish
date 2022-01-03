@@ -96,7 +96,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateContactUsUrlLinkedinAsync(UpdateContactUsUrlLinkedinCommand command)
         {
-            var contactUsTask = FindContactUsAndCheckForNulling(command.Id);
+            var contactUsTask =FindContactUsAndCheckForNulling(command.Id);
             var contactUs = contactUsTask.Result;
             contactUs.UpdateUrlLinkedin(command.UrlLinkedin);
             CheckForSaving();

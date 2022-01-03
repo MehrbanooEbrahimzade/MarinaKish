@@ -43,12 +43,12 @@ namespace Application.Services.interfaces
         ///<summary>
         /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
         /// </summary>
-        Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command);
+        Task<List<TicketDto>> GetAll(GetByFilterCommand Command);
 
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>
-        Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command);
+        Task<List<TicketDto>> GetAllbyPlaceOfSale(GetByFilterCommand Command);
 
 
         ///// <summary>
