@@ -157,9 +157,9 @@ namespace Marina_Club.Controllers
         ///  دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس
         /// </summary>
         [HttpGet("{id}/ScheduleTicketsPrice")] 
-        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid schedulId)
+        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid Id)
         {
-            var result = await _ticketService.ScheduleTicketsPrice(schedulId);
+            var result = await _ticketService.ScheduleTicketsPrice(Id);
             return OkResult(ApiMessage.AllScheduleReservedTicketsTotalPriceGetted, new { ScheduleTicketsTotalPrice = result });
         }
 
