@@ -159,129 +159,15 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command)
         {
-            ///<summary>
-            /// رزروشده
-            /// </summary>
-            if (Command.Condition == Condition.Reservation)
-            {
-                switch (Command.WhereBuy)
-                {
-                    case (WhereBuy)1:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllReservationBySite(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                    case (WhereBuy)2:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllReservationBySeller(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
 
-                    case (WhereBuy)3:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllReservationByPresence(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                }
-            }
+            var getallticket = await _unitOfWork.Tickets.GetAllTicketbyAllScenarios(Command.FunType,Command.Condition,Command.WhereBuy);
+            if (getallticket == null)
+                throw new Exception("بلیطی در خصوص این تفریح وجود ندارد");
+            return getallticket.ToDto();
 
-            ///<summary>
-            ///  لغوشده
-            /// </summary>
-            else if (Command.Condition == Condition.Cancel)
-            {
-                switch (Command.WhereBuy)
-                {
-                    case (WhereBuy)1:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllCancelBySite(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                    case (WhereBuy)2:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllCancelBySeller(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-
-                    case (WhereBuy)3:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllCancelByPresence(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                }
-            }
-            ///<summary>
-            /// غیر فعال
-            /// </summary>
-            else if (Command.Condition == Condition.InActive)
-            {
-                switch (Command.WhereBuy)
-                {
-                    case (WhereBuy)1:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllInActiveBySite(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                    case (WhereBuy)2:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllInActiveBySeller(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-
-                    case (WhereBuy)3:
-                        {
-                            var getreservation = await _unitOfWork.Tickets.GetAllInActiveByPresence(Command.Id);
-                            return getreservation.ToDto();
-                            break;
-                        }
-                }
-            }
-            else
-            {
-                throw new Exception("بلیطی با این حالات وجود ندارد");
-            }
-
-            return null;
 
         }
-        ///<summary>
-        ///برکردوندن اطلاعات بلیط با توجه مکان فروش
-        /// </summary>
-        public async Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command)
-        {
-            switch (Command.WhereBuy)
-            {
-                case (WhereBuy)1:
-                    {
-                        var getreservation = await _unitOfWork.Tickets.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
-
-                case (WhereBuy)2:
-                    {
-                        var getreservation = await _unitOfWork.Tickets.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
-
-                case (WhereBuy)3:
-                    {
-                        var getreservation = await _unitOfWork.Tickets.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
-            }
-            return null;
-        }
+        
 
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال

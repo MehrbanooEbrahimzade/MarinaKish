@@ -62,7 +62,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// دریافت کل بلیط های یک تفریح با حالات مختلف
         /// </summary>
         [HttpGet("getCatchallscenarios")]
         public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)

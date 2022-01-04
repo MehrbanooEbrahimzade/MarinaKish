@@ -112,115 +112,24 @@ namespace Infrastructure.Repository.Classes
                 .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }
-      
-        public async Task<List<Ticket>> RefactoredMethod(Guid scheduleId, Condition condition, WhereBuy whereBuy)//TODO:refactor
-                                                                                                        //با متدای پایین جایگزین شه
+
+        /// <summary>
+        /// دریافت همه بلیط های یک تفریح با حالات متفاوت
+        /// </summary>
+        public async Task<List<Ticket>> GetAllTicketbyAllScenarios(string funtype, Condition condition, WhereBuy whereBuy)
+
         {
             return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == scheduleId && x.Condition == condition && x.WhereBuy == whereBuy)
+                         .Where(x => x.FunType == funtype && x.Condition == condition && x.WhereBuy == whereBuy)
                          .OrderByDescending(x => x.SubmitDate)
                          .ToListAsync();
         }
 
-        /// <summary>
-        ///  دربافت تمام بلیط های رزرو شده در سایت
-        /// </summary>
-        public async Task<List<Ticket>> GetAllReservationBySite(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Reservation && x.WhereBuy == WhereBuy.Site)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
 
 
         /// <summary>
-        ///  دربافت تمام بلیط های لغو شده در سایت
+        ///  این کلود برای دیتیو 
         /// </summary>
-        public async Task<List<Ticket>> GetAllCancelBySite(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Cancel && x.WhereBuy == WhereBuy.Site)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در فروشنده
-        /// </summary>
-        public async Task<List<Ticket>> GetAllInActiveBySeller(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.InActive && x.WhereBuy == WhereBuy.Seller)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در فروشنده
-        /// </summary>
-        public async Task<List<Ticket>> GetAllReservationBySeller(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Reservation && x.WhereBuy == WhereBuy.Seller)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-        /// <summary>
-        ///  دربافت تمام بلیط های لغو شده در فروشنده
-        /// </summary>
-        public async Task<List<Ticket>> GetAllCancelBySeller(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Cancel && x.WhereBuy == WhereBuy.Seller)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در فروشنده
-        /// </summary>
-        public async Task<List<Ticket>> GetAllInActiveBySite(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.InActive && x.WhereBuy == WhereBuy.Site)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
-
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در حظوری
-        /// </summary>
-        public async Task<List<Ticket>> GetAllReservationByPresence(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Reservation && x.WhereBuy == WhereBuy.Presence)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-        /// <summary>
-        ///  دربافت تمام بلیط های لغو شده در حظوری
-        /// </summary>
-        public async Task<List<Ticket>> GetAllCancelByPresence(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.Cancel && x.WhereBuy == WhereBuy.Presence)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در حظوری
-        /// </summary>
-        public async Task<List<Ticket>> GetAllInActiveByPresence(Guid id)
-        {
-            return await IncludeForTicket()
-                         .Where(x => x.Schedule.Id == id && x.Condition == Condition.InActive && x.WhereBuy == WhereBuy.Presence)
-                         .OrderByDescending(x => x.SubmitDate)
-                         .ToListAsync();
-        }
-
         public IQueryable<Ticket> IncludeForTicket()
         {
             return _context.Tickets
