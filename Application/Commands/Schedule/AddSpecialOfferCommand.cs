@@ -9,29 +9,11 @@ namespace Application.Commands.Schedule
     public class AddSpecialOfferCommand : CommandBase
     {
 
-        /// <summary>
-        /// نام تفریح
-        /// </summary>
-        public string Name { get; set; }
 
         /// <summary>
-        /// آی دیه تفریح
+        /// آی دیه سانس
         /// </summary>
-        public Guid FunId { get; set; } 
-        /// <summary>
-        /// ساعت شروع سانس
-        /// </summary>
-        public TimeSpan StartTime { get; set; }
-
-        /// <summary>
-        /// ساعت پایان سانس
-        /// </summary>
-        public TimeSpan EndTime { get; set; }
-
-        /// <summary>
-        ///  تاریخ سانس
-        /// </summary>
-        public DateTime Date { get; set; }
+        public Guid ShceduleId { get; set; }
 
         /// <summary>
         /// قیمت با تخفیف موجود

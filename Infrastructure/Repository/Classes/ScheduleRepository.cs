@@ -16,7 +16,7 @@ namespace Infrastructure.Repository.Classes
 
         }
 
-     
+
         /// <summary>
         /// اضافه کردن سانس به تیبل
         /// </summary>
@@ -24,18 +24,20 @@ namespace Infrastructure.Repository.Classes
         {
             foreach (var x in schedules)
             {
-                 _context.Schedules.AddAsync(x);
-                 _context.SaveChangesAsync();
+                _context.Schedules.AddAsync(x);
+                _context.SaveChangesAsync();
             }
         }
 
         ///// <summary>
-        ///// دریافت تفریح با اسم تفریح
+        ///// دریافت سانس با آی دیه  سانس
         ///// </summary>
-        public async Task<Fun> SeachNameRecreationAsync(Guid id, string name)
+        public async Task<Schedule> GetRecreationById(Guid id)
         {
-            return await _context.Funs.Include(f => f.ScheduleInfo)
-                .FirstOrDefaultAsync(f => f.Name == name && f.Id == id);
+            Schedule a = _context.Schedules
+                .Include(s => s.Percent)
+                .SingleOrDefault(ao => ao.Id == id);   //چرا ایسینک نمیشه
+            return a;
         }
 
         /// <summary>
@@ -52,8 +54,8 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task DeleteAllSchedulesOfaFun(Guid funId)
         {
-             _context.RemoveRange( _context.Schedules.Where(sc => sc.FunId == funId));
-             await _context.SaveChangesAsync();
+            _context.RemoveRange(_context.Schedules.Where(sc => sc.FunId == funId));
+            await _context.SaveChangesAsync();
 
         }
 
@@ -88,13 +90,13 @@ namespace Infrastructure.Repository.Classes
         //        .ToListAsync();
         //}
 
-        ///// <summary>
-        ///// ذخیره اعمال انجام شده
-        ///// </summary>
-        //public async Task<bool> UpdateScheduleAsync()
-        //{
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        /// <summary>
+        /// ذخیره اعمال انجام شده
+        /// </summary>
+        public async Task<bool> UpdateScheduleAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         ///// <summary>
         ///// دریافت سانس با آیدی

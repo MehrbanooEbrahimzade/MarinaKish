@@ -31,7 +31,11 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task AddScheduleAsync(Schedule schedule);
 
-        Task<Fun> SeachNameRecreationAsync(Guid id, string name);
+
+        /// <summary>
+        ///  دریافت سانس با آی دیه  سانس
+        /// </summary>
+        Task<Schedule> GetRecreationById(Guid id);
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         //    /// </summary>
@@ -47,10 +51,10 @@ namespace Domain.RepasitoryInterfaces
         //    /// </summary>
         //    Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id);
 
-        //    /// <summary>
-        //    /// ذخیره اعمال انجام شده
-        //    /// </summary>
-        //    Task<bool> UpdateScheduleAsync();
+        /// <summary>
+        /// ذخیره اعمال انجام شده
+        /// </summary>
+        Task<bool> UpdateScheduleAsync();
 
         //    /// <summary>
         //    /// دریافت سانس با آیدی
