@@ -25,26 +25,6 @@ namespace Infrastructure.Repository.Classes
             
         }
 
-        //public override async Task<bool> Delete(Guid id)
-        //{
-        //    try
-        //    {
-        //        var exist = await dbSet.SingleOrDefaultAsync(x => x.Id == id.ToString());
-        //        if (exist != null)
-        //        {
-        //            dbSet.Remove(exist);
-        //            return true;
-        //        }
-
-        //        return false;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "{Repo} Delete method error", typeof(UserRepository));
-        //        return false;
-        //    }
-        //}
-
 
         public async Task<User> GetUserById(string id)
         {

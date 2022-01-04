@@ -70,7 +70,7 @@ namespace Application.Services.classes
                 if (ticket == null)
                     NotDeleted.Add(id);
                 else
-                    await _unitOfWork.Tickets.DeleteTicketsFromBasketBuy(ticket);
+                    await _unitOfWork.Tickets.DeleteAsync(ticket.Id);
             }
             if (NotDeleted.Count == 0)
                 throw new NullReferenceException("بلیط فعال با این ایدی یافت نشد ");

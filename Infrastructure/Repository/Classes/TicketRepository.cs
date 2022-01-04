@@ -73,7 +73,8 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                var ticket = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
+                var ticket = await dbSet.Include(x => x.Schedule).Include(x => x.User)
+                    .SingleOrDefaultAsync(x => x.Id == id);
 
                 if (ticket == null)
                     throw new NullReferenceException("کاربر شناسایی نشد!");
@@ -91,16 +92,6 @@ namespace Infrastructure.Repository.Classes
 
         #endregion
 
-
-        /// <summary>
-        /// گرفتن بلیط با آیدی
-        /// </summary>
-        public async Task<Ticket> GetTicketById(Guid id)
-        {
-            return await dbSet.Include(x => x.Schedule).Include(x => x.User)
-                .FirstOrDefaultAsync(x => x.Id == id);
-        }
-
         /// <summary>
         /// دریافت بلیط غیرفعال با آیدی
         /// </summary>
@@ -109,23 +100,7 @@ namespace Infrastructure.Repository.Classes
             return await dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
         }
 
-        /// <summary>
-        /// پاک کردن بلیط
-        /// </summary>
-        public async Task DeleteTicket(Ticket ticket)
-        {
-            dbSet.Remove(ticket);
-        }
-
-
-        /// <summary>
-        /// حذف بلیط از سبد خرید
-        /// </summary>
-        public async Task<bool> DeleteTicketsFromBasketBuy(Ticket ticket)
-        {
-            dbSet.Remove(ticket);
-            return await _context.SaveChangesAsync() > 0;
-        }
+        
 
         /// <summary>
         /// دریافت همه بلیط های یک سانس
@@ -136,6 +111,15 @@ namespace Infrastructure.Repository.Classes
                 .Where(x => x.Schedule.Id == id)
                 .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
+        }
+      
+        public async Task<List<Ticket>> RefactoredMethod(Guid scheduleId, Condition condition, WhereBuy whereBuy)//TODO:refactor
+                                                                                                        //با متدای پایین جایگزین شه
+        {
+            return await IncludeForTicket()
+                         .Where(x => x.Schedule.Id == scheduleId && x.Condition == condition && x.WhereBuy == whereBuy)
+                         .OrderByDescending(x => x.SubmitDate)
+                         .ToListAsync();
         }
 
         /// <summary>
@@ -148,6 +132,7 @@ namespace Infrastructure.Repository.Classes
                          .OrderByDescending(x => x.SubmitDate)
                          .ToListAsync();
         }
+
 
         /// <summary>
         ///  دربافت تمام بلیط های لغو شده در سایت

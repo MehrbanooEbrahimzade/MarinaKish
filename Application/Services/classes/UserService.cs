@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
-    public class UserService
+    public class UserService: IUserService
     { 
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;

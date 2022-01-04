@@ -15,23 +15,11 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<decimal> OneDateReservedTicketsPriceSearchSum(DateTime firstDate);
 
-
-        /// <summary>
-        /// حذف بلیط از سبد خرید
-        /// </summary>
-        Task<bool> DeleteTicketsFromBasketBuy(Ticket ticket);
-
-
         /// <summary>
         /// دریافت بلیط در سبد خرید با آیدی
         /// </summary>
         Task<Ticket> GetTicketInBasketBuyById(Guid id);
 
-
-        /// <summary>
-        /// پاک کردن بلیط
-        /// </summary>
-        Task DeleteTicket(Ticket ticket);
         /// <summary>
         ///  دربافت تمام بلیط های رزروشده در سایت
         /// </summary>
