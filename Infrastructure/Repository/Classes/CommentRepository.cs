@@ -3,9 +3,9 @@ using Infrastructure.Persist;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class CommentRepository : BaseRepository, ICommentRepository
+    public class CommentRepository : ICommentRepository
     {
-        public CommentRepository(DatabaseContext context) : base(context)
+        public CommentRepository(DatabaseContext context)
         {
 
         }

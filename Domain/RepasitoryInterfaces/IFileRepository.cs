@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IFileRepository
+    public interface IFileRepository: IGenericRepository<MyFile>
     {
         /// <summary>
         /// اپلود کردن عکس

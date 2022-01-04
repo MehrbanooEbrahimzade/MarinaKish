@@ -3,9 +3,9 @@ using Infrastructure.Persist;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class MessageRepository : BaseRepository, IMessageRepository
+    public class MessageRepository : IMessageRepository
     {
-        public MessageRepository(DatabaseContext context) : base(context)
+        public MessageRepository(DatabaseContext context) 
         {
 
         }

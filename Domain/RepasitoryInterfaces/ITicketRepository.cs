@@ -5,26 +5,10 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface ITicketRepository
+    public interface ITicketRepository : IGenericRepository<Ticket>
     {
 
-        /// <summary>
-        /// اضافه کردن بلیط 
-        /// </summary> 
-        Task<bool> AddTicketAsync(Ticket ticket);
-
-
-        /// <summary> 
-        /// گرفتن بلیط با آیدی
-        /// </summary>
-        Task<Ticket> GetTicketById(Guid id);
-
-
-        /// <summary>
-        /// ثبت تغییرات
-        /// </summary>
-        Task<bool> Update();
-
+        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
 
         /// <summary>
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
@@ -47,17 +31,11 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// پاک کردن بلیط
         /// </summary>
-        Task<bool> DeleteTicket(Ticket ticket);
-
+        Task DeleteTicket(Ticket ticket);
         /// <summary>
         ///  دربافت تمام بلیط های رزروشده در سایت
         /// </summary>
         Task<List<Ticket>> GetAllReservationBySite(Guid id);
-
-        /// <summary>
-        /// دربافت تمام بلیط ها
-        /// </summary>
-        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
 
         /// <summary>
         ///  دربافت تمام بلیط های رزروشده در سایت

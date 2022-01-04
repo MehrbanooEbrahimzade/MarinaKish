@@ -18,6 +18,7 @@ using Infrastructure.Helper;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
 using Infrastructure.Repository.interfaces;
+using Domain.IConfiguration;
 
 namespace Marina_Club
 {
@@ -69,11 +70,14 @@ namespace Marina_Club
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // AddScoped for users model(table)
             services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository2, UserRepository>();
             services.AddScoped<IUserRepository2, UserRepository2>();
 
             // AddScoped for Fun model(table)

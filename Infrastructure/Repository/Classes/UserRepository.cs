@@ -1,19 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class UserRepository :  IUserRepository
     {
-        public UserRepository(DatabaseContext context) : base(context)
+      
+        protected readonly DatabaseContext _context;
+        protected UserRepository(DatabaseContext context)
         {
-
+            _context = context;
         }
+    
+        public async Task DeleteUser(User user)
+        {
+             _context.Users.Remove(user);
+            
+        }
+
+        //public override async Task<bool> Delete(Guid id)
+        //{
+        //    try
+        //    {
+        //        var exist = await dbSet.SingleOrDefaultAsync(x => x.Id == id.ToString());
+        //        if (exist != null)
+        //        {
+        //            dbSet.Remove(exist);
+        //            return true;
+        //        }
+
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "{Repo} Delete method error", typeof(UserRepository));
+        //        return false;
+        //    }
+        //}
+
 
         public async Task<User> GetUserById(string id)
         {

@@ -7,28 +7,34 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
+using Domain.IConfiguration;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
-    public class UserService : IUserService
-    {
-        private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+    public class UserService
+    { 
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-       
+
+        public UserService( ILogger<UserService> logger, IUnitOfWork unitOfWork) : base()
+        {
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+
+        }
 
         public async Task<UserDto> SearchUserById(Guid id) 
         {
-            var user =await  _userRepository.GetUserById(id.ToString());
+            var user =await  _unitOfWork.Users.GetUserById(id.ToString());
             if (user==null)
                 throw new ArgumentNullException();
 
             return user.ToDto();
             
         }
+
         //        private readonly IUserRepository _userRepository;
         //        public UserService(IUserRepository userRepository)
         //        {

@@ -29,21 +29,18 @@ namespace Application.Services.classes
         private readonly SignInManager<User> _SignInManager;
         private readonly IUserRepository _userRepository;
         private readonly JwtToken _jwtToken;
-        private readonly IUserRepository2 _iuserRepository2;
 
         private static readonly HttpClient client = new HttpClient();
 
         public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
             , IUserRepository userRepository, SignInManager<User> signInManager
-            , IConfiguration configuration,IUserRepository2 iuserRepository2
-            , IOptions<JwtToken> jwtToken)
+            , IConfiguration configuration , IOptions<JwtToken> jwtToken)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _SignInManager = signInManager;
             _userRepository = userRepository;
             _jwtToken = jwtToken.Value;
-            _iuserRepository2 = iuserRepository2;
 
         }
 
@@ -126,7 +123,7 @@ namespace Application.Services.classes
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
 
-            _iuserRepository2.DeleteUser(user);
+            _userRepository.DeleteUser(user);
         }
         private async Task<string> GenerateToken(string id , UserLoginCommand command)
         {

@@ -5,7 +5,7 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IFunRepository
+    public interface IFunRepository: IGenericRepository<Fun>
     {
         /// <summary>
         /// بررسی وجود داشتن تفریح
