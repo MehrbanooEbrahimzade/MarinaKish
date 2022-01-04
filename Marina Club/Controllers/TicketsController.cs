@@ -153,15 +153,15 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllScheduleTicketsCountGetted, new { ScheduleTicketsCount = result.Count });
         //        }
 
-        //        /// <summary>
-        //        /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس
-        //        /// </summary>
-        //        [HttpGet("{id}/ScheduleTickets-Price")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid id)
-        //        {
-        //            var result = await _ticketService.ScheduleTicketsPrice(id);
-        //            return OkResult(ApiMessage.AllScheduleReservedTicketsTotalPriceGetted, new { ScheduleTicketsTotalPrice = result });
-        //        }
+        /// <summary>
+        ///  دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس
+        /// </summary>
+        [HttpGet("{id}/ScheduleTicketsPrice")] 
+        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid schedulId)
+        {
+            var result = await _ticketService.ScheduleTicketsPrice(schedulId);
+            return OkResult(ApiMessage.AllScheduleReservedTicketsTotalPriceGetted, new { ScheduleTicketsTotalPrice = result });
+        }
 
         //        #endregion
 

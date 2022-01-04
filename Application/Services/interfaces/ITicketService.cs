@@ -61,10 +61,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<decimal?> CancelTicket(Guid id);
 
-        ///// <summary>
-        ///// دریافت مقدار پول کل بلیط های فروخته شده
-        ///// </summary>
-        //Task<decimal> ScheduleTicketsPrice(Guid id);
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده
+        /// </summary>
+        Task<decimal> ScheduleTicketsPrice(Guid schedulId);
 
         ///// <summary>
         ///// جست و جوی بلیط فعال با یک تاریخ

@@ -81,7 +81,7 @@ namespace Infrastructure.Repository.Classes
         /// </summary>
         public async Task<List<Ticket>> GetAllCancelBySite(Guid id)
         {
-            return await IncludeForTicket() 
+            return await IncludeForTicket()
                          .Where(x => x.Schedule.Id == id && x.Condition == Condition.Cancel && x.WhereBuy == WhereBuy.Site)
                          .OrderByDescending(x => x.SubmitDate)
                          .ToListAsync();
@@ -229,15 +229,15 @@ namespace Infrastructure.Repository.Classes
         //        .CountAsync(x => x.ScheduleId == id && x.Condition == Condition.Reservation);
         //}
 
-        ///// <summary>
-        ///// دریافت مقدار پول کل بلیط های فروخته شده
-        ///// </summary>
-        //public async Task<decimal> ScheduleTicketsPrice(Guid id)
-        //{
-        //    return await _context.Tickets
-        //        .Where(x => x.ScheduleId == id && x.Condition == Condition.Reservation)
-        //        .SumAsync(x => x.Price);
-        //}
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس 
+        /// </summary>
+        public async Task<decimal> ScheduleTicketsPrice(Guid id)
+        {
+            return await _context.Tickets
+                .Where(x => x.Schedule.Id == id && x.Condition == Condition.Reservation)
+                .SumAsync(x => x.Schedule.Price);
+        }
 
         //#region Search Options
 

@@ -55,7 +55,7 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         ///گرفتن تفریح  با اسم تفریح
         /// </summary>
-        Task<List<Fun>> GetFunsByFunNameAsynch(string name);
+        Task<Fun> GetFunsByFunNameAsynch(string name);
 
         /// <summary>
         /// دریافت همه تفریح های فعال

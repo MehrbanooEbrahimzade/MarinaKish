@@ -35,7 +35,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// گرفتن تفریح ها با اسم تفریح
         /// </summary>
-        Task<List<FunDto>> GetFunsWithFunNameAsynch(string name);
+        Task<FunDto> GetFunsWithFunNameAsynch(string name);
 
 
         /// <summary>

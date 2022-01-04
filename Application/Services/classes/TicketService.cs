@@ -32,17 +32,21 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command)
         {
-            var schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
-            var user = await _userRepository.GetUserById(command.UserId);
+            //var fun = await _funRepository.GetFunsByFunNameAsynch(command.FunName);
+            //if (fun.ScheduleInfo.TotalCapacity.Equals(20))
+            //    throw new Exception("ظرفیت سانس تکمیل شده");
 
-            if (schedule == null)
-                throw new ArgumentNullException("");
+            var Schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
+            var User = await _userRepository.GetUserById(command.UserId);
 
-            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule);
+            if (Schedule == null)
+                throw new ArgumentNullException("سانس با این ایدی یافت نشد");
 
+            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, User, Schedule);
+            
             var addAndSave = await _ticketRepository.AddTicketAsync(ticket);
             if (!addAndSave)
-                return null;
+                throw new Exception("بلیط به سبد خرید ادد نشد ");
             return ticket.Id;
 
         }
@@ -62,7 +66,7 @@ namespace Application.Services.classes
                     await _ticketRepository.DeleteTicketsFromBasketBuy(ticket);
             }
             if (NotDeleted.Count == 0)
-                return null;
+                throw new NullReferenceException("بلیط فعال با این ایدی یافت نشد ");
             return NotDeleted;
         }
 
@@ -113,7 +117,7 @@ namespace Application.Services.classes
         {
             var ticket = await _ticketRepository.GetTicketById(id);
             if (ticket == null)
-                return null;
+                throw new ArgumentNullException("بلیط با این ایدی یافت نشد ");
             return ticket.ToDto();
         }
 
@@ -124,11 +128,11 @@ namespace Application.Services.classes
         {
             var ticket = await _ticketRepository.GetTicketById(command.TicketId);
             if (ticket == null)
-                return null;
+                throw new ArgumentNullException("بلیط با این ایدی یافت نشد");
             ticket.SetCondition(command.ChangeCondition);
             var save = await _ticketRepository.Update();
             if (!save)
-                return null;
+                throw new Exception("وضعیت بلیط اپدیت نشد");
             return ticket.Condition.ToString();
         }
 
@@ -394,7 +398,7 @@ namespace Application.Services.classes
         {
             var tickets = await _ticketRepository.GetAllScheduleTickets(id);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیطی با این ایدی یافت نشد");
             return tickets.ToDto();
         }
 
@@ -416,17 +420,21 @@ namespace Application.Services.classes
         {
             var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیطی غیر فعالی با این ایدی یافت نشد");
             return tickets.ToDto();
         }
 
-        //        /// <summary>
-        //        /// دریافت مقدار پول کل بلیط های فروخته شده
-        //        /// </summary>
-        //        public async Task<decimal> ScheduleTicketsPrice(Guid id)
-        //        {
-        //            return await _ticketRepository.ScheduleTicketsPrice(id);
-        //        }
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس 
+        /// </summary>
+        public async Task<decimal> ScheduleTicketsPrice(Guid schedulId)
+        {
+            var TotalPrice = await _ticketRepository.ScheduleTicketsPrice(schedulId);
+            if (TotalPrice.Equals(0))
+                throw new ArgumentNullException("بلیطی یافت نشد");
+
+            return TotalPrice;
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های لغو شده یک سانس
@@ -461,7 +469,7 @@ namespace Application.Services.classes
         {
             var tickets = await _ticketRepository.GetAllFunActiveTicketsWithFunName(funName);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیط یا تفریحی یافت نشد");
             return tickets.ToDto();
         }
 

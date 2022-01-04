@@ -142,10 +142,10 @@ namespace Domain.RepasitoryInterfaces
         ///// </summary>
         //Task<int> ScheduleTicketsCount(Guid id);
 
-        ///// <summary>
-        ///// دریافت مقدار پول کل بلیط های فروخته شده
-        /////// </summary>
-        //Task<decimal> ScheduleTicketsPrice(Guid id);
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده
+        ///// </summary>
+        Task<decimal> ScheduleTicketsPrice(Guid schedulId);
 
         ///// <summary>
         /////  جست و جوی دو تاریخه برای بلیط های غیر فعال
