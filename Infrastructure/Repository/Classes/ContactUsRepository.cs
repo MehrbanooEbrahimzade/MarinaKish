@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.classes
 {
-    public class ContactUsRepository : BaseRepository, IContactUsRepository
+    public class ContactUsRepository : IContactUsRepository
     {
 
-        public ContactUsRepository(DatabaseContext context) : base(context)
+        public ContactUsRepository(DatabaseContext context)
         {
         }
 

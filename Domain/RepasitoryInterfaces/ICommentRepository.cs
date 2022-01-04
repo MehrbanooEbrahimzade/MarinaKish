@@ -1,6 +1,8 @@
-﻿namespace Domain.RepasitoryInterfaces
+﻿using Domain.Models;
+
+namespace Domain.RepasitoryInterfaces
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IGenericRepository<Comment>
     {
         
         ///// <summary>

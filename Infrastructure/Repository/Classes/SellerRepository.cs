@@ -3,9 +3,9 @@ using Infrastructure.Persist;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class SellerRepository : BaseRepository, ISellerRepository
+    public class SellerRepository : ISellerRepository
     {
-        public SellerRepository(DatabaseContext context) : base(context)
+        public SellerRepository(DatabaseContext context)
         {
 
         }

@@ -1,10 +1,11 @@
 ﻿using Domain.Models;
+using Domain.RepasitoryInterfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repository.interfaces
+namespace Domain.RepasitoryInterfaces
 {
-    public interface IContactUsRepository
+    public interface IContactUsRepository : IGenericRepository<ContactUs>
     {
         /// <summary>
         /// اضافه کردن اطلاعات  

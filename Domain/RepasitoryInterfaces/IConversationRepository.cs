@@ -1,6 +1,8 @@
-﻿namespace Domain.RepasitoryInterfaces
+﻿using Domain.Models;
+
+namespace Domain.RepasitoryInterfaces
 {
-    public interface IConversationRepository
+    public interface IConversationRepository : IGenericRepository<Conversation>
     {
         //        /// <summary>
         //        /// دریافت کاربر با آیدی

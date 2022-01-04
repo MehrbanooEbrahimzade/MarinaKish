@@ -5,7 +5,7 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IScheduleRepository
+    public interface IScheduleRepository: IGenericRepository<Schedule>
     {
         /// <summary>
         /// اضافه کردن یک سانس

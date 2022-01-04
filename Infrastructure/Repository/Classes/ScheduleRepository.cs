@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class ScheduleRepository : BaseRepository, IScheduleRepository
+    public class ScheduleRepository : IScheduleRepository
     {
-        public ScheduleRepository(DatabaseContext context) : base(context)
+        public ScheduleRepository(DatabaseContext context)
         {
 
         }
@@ -57,6 +57,15 @@ namespace Infrastructure.Repository.Classes
             _context.RemoveRange(_context.Schedules.Where(sc => sc.FunId == funId));
             await _context.SaveChangesAsync();
 
+        }
+
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
+        {
+            return await _context.Schedules
+                .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
         }
 
         ///// <summary>
@@ -169,15 +178,6 @@ namespace Infrastructure.Repository.Classes
         //        .Where(x => x.ExecuteDateTime < DateTime.Now && x.IsExist == true)
         //        .ToListAsync();
         //}
-
-        /// <summary>
-        /// دریافت سانس فعال با آیدی
-        /// </summary>
-        public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
-        {
-            return await _context.Schedules
-                .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
-        }
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح

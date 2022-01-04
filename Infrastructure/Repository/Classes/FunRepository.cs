@@ -6,15 +6,17 @@ using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class FunRepository : BaseRepository, IFunRepository
+    public class FunRepository : GenericRepository<User>, IFunRepository
     {
-        public FunRepository(DatabaseContext context) : base(context)
-        {
-        }
 
+        public FunRepository(DatabaseContext context, ILogger logger) : base(context, logger)
+        {
+
+        }
         /// <summary>
         /// چک کننده وجود داشتن تفریح
         /// </summary>

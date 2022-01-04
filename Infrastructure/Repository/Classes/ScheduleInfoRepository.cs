@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class ScheduleInfoRepository : BaseRepository, IScheduleInfoRepository
+    public class ScheduleInfoRepository : IScheduleInfoRepository
     {
 
-        public ScheduleInfoRepository(DatabaseContext context) : base(context)
+        public ScheduleInfoRepository(DatabaseContext context) 
         {
         }
 

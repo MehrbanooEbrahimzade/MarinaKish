@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class FileRepository : BaseRepository, IFileRepository
+    public class FileRepository : IFileRepository
     {
-        public FileRepository(DatabaseContext context) : base(context)
+        public FileRepository(DatabaseContext context) 
         {
             
         }
