@@ -9,7 +9,7 @@ namespace Domain.RepasitoryInterfaces
     public interface ITicketRepository : IGenericRepository<Ticket>
     {
 
-        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
+        Task<List<Ticket>> GetAllScheduleTickets(Guid scheduleId);
 
         /// <summary>
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال

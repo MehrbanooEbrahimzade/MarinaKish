@@ -34,11 +34,11 @@ namespace Application.Services.interfaces
         /// گرفتن یک بلیط با شماره بلیط
         /// </summary>
         Task<TicketDto> GetOneTicket(Guid id);
-        
+
         /// <summary>
         /// عوض کزدن وضعیت یک بلیط
         /// </summary>
-        Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
+        Task<bool> ChangeTicketCondition(EditTicketConditionCommand command);
 
         ///<summary>
         /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
@@ -48,8 +48,7 @@ namespace Application.Services.interfaces
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>
-        Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command);
-
+        //Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command);
 
         ///// <summary>
         ///// ثبت خرید و فعال کردن(رزرو) بلیط
