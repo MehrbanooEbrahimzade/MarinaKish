@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Repository.classes;
 
 namespace Infrastructure.Persist
 {
@@ -24,6 +25,7 @@ namespace Infrastructure.Persist
         public IScheduleRepository Schedules { get; private set; }
 
         public IFunRepository Funs { get; private set; }
+        public IFileRepository FileS { get; }
 
         public IFileRepository Files { get; private set; }
 

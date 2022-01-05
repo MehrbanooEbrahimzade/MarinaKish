@@ -16,6 +16,7 @@ namespace Marina_Club.Controllers
             _contactUsService = contactUsService;
         }
 
+        #region AddContactUs
         /// <summary>
         /// اضافه کردن ContactUs
         /// </summary>
@@ -30,7 +31,9 @@ namespace Marina_Club.Controllers
             _contactUsService.AddContactUsAsync(command);
             return OkResult(ApiMessage.ContactUsAdded);
         }
+        #endregion
 
+        #region GetCotactUs
         /// <summary>
         /// دریافت ContactUs
         /// </summary>
@@ -40,11 +43,13 @@ namespace Marina_Club.Controllers
             var result = await _contactUsService.GetContactUsByIdAsync(id);
 
             return result is null ?
-                 BadReq(ApiMessage.ContactUsNotExisted,
+                BadReq(ApiMessage.ContactUsNotExisted,
                     new { Reason = $"ContactUs Not Exist With This id . TryAgain!" })
                 : OkResult(ApiMessage.ContactUsGet, result);
         }
+        #endregion
 
+        #region UpdateAboutUsContactUs
         /// <summary>
         /// ویرایش قسمت درباره ما ContactUs
         /// </summary>
@@ -56,13 +61,15 @@ namespace Marina_Club.Controllers
             if (!command.Validate())
             {
                 return BadReq(ApiMessage.ContactUsWrongInformation, new
-                { Reasons = $"1-Wrong ContactUsId, 2-Wrong Command Information" });
+                    { Reasons = $"1-Wrong ContactUsId, 2-Wrong Command Information" });
             }
 
             await _contactUsService.UpdateContactUsAboutMarianaAsync(command);
             return OkResult(ApiMessage.ContactUsAboutMarianaUpdated);
         }
+        #endregion
 
+        #region UpdateRulesContactUs
         /// <summary>
         /// ویرایش قسمت قوانین ContactUs 
         /// </summary>
@@ -74,13 +81,15 @@ namespace Marina_Club.Controllers
             if (!command.Validate())
             {
                 return BadReq(ApiMessage.ContactUsWrongInformation, new
-                    {Reason = $"1-Wrong ContactUsId, 2-Wrong Command Information"});
+                    { Reason = $"1-Wrong ContactUsId, 2-Wrong Command Information" });
             }
 
             await _contactUsService.UpdateContactUsRulesAsync(command);
             return OkResult(ApiMessage.ContactUsRulesUpdated);
         }
+        #endregion
 
+        #region UpdateEmailContactUs
         /// <summary>
         /// ویرایش ایمیل ContactUs
         /// </summary>
@@ -97,7 +106,9 @@ namespace Marina_Club.Controllers
             await _contactUsService.UpdateContactUsEmailAsync(command);
             return OkResult(ApiMessage.ContactUsEmailUpdated);
         }
+        #endregion
 
+        #region UpdatePhoneNumberContactUs
         /// <summary>
         /// ویرایش شماره تلفن ContactUs
         /// </summary>
@@ -114,7 +125,9 @@ namespace Marina_Club.Controllers
             await _contactUsService.UpdateContactUsPhoneNumberAsync(command);
             return OkResult(ApiMessage.ContactUsPhoneNumberUpdated);
         }
+        #endregion
 
+        #region UpdateUrlLinkedinContactUs
         /// <summary>
         /// ویرایش آدرس لینکدین ContactUs
         /// </summary>
@@ -131,7 +144,9 @@ namespace Marina_Club.Controllers
             await _contactUsService.UpdateContactUsUrlLinkedinAsync(command);
             return OkResult(ApiMessage.ContactUsUrlLinkedinUpdated);
         }
+        #endregion
 
+        #region UpdateUrlInstagramContactUs
         /// <summary>
         /// ویرایش آدرس اینستگرام ContactUs
         /// </summary>
@@ -148,5 +163,6 @@ namespace Marina_Club.Controllers
             await _contactUsService.UpdateContactUsUrlInstagramAsync(command);
             return OkResult(ApiMessage.ContactUsUrlInstagramUpdated);
         }
+        #endregion
     }
 }
