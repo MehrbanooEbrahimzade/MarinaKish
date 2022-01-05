@@ -13,7 +13,7 @@ namespace Application.Services.interfaces
         /// <summary>
         ///ادیت کردن  
         /// </summary>
-        Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command);
+        Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command); 
         /// <summary>
         /// ساخت و اضافه کردن سانس
         /// </summary>

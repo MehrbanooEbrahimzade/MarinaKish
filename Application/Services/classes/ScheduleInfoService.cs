@@ -6,24 +6,26 @@ using Application.Commands.ScheduleInfo;
 using Application.Helper;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.IConfiguration;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class ScheduleInfoService : IScheduleInfoService
     {
-        private readonly IScheduleInfoRepository _scheduleInfoRepository;
-        private readonly IScheduleRepository _scheduleRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public ScheduleInfoService(IScheduleInfoRepository scheduleInfoRepository, IScheduleRepository scheduleRepository)
+        public ScheduleInfoService(IUnitOfWork unitOfWork,ILogger logger)
         {
-            _scheduleInfoRepository = scheduleInfoRepository;
-            _scheduleRepository = scheduleRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
 
         }
 
-        /// <summary>
+        /// <summary> 
         ///اضافه کردن اطلاعات سانس و ساخت سانس از روی اطلاعاتش
         /// </summary>
         public void AddScheduleInfoAsync(AddScheduleInfoCommand command)

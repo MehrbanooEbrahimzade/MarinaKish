@@ -19,7 +19,7 @@ namespace Application.Services.classes
        
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
-
+         
 
         public TicketService(ILogger<UserService> logger, IUnitOfWork unitOfWork)
         {
