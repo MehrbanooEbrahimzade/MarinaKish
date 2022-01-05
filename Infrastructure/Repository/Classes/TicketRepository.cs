@@ -92,7 +92,7 @@ namespace Infrastructure.Repository.Classes
 
         #endregion
 
-        /// <summary>
+        /// <summary> 
         /// دریافت بلیط غیرفعال با آیدی
         /// </summary>
         public async Task<Ticket> GetInActiveTicketById(Guid id)
