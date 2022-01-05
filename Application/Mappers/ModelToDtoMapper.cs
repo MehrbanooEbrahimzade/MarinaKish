@@ -79,7 +79,7 @@ namespace Application.Mappers
         /// <summary>
         /// تبدیل کردن لیست تفریح به dto لیست تفریح
         /// </summary>
-        public static List<FunDto> ToDto(this List<Fun> funs)
+        public static IEnumerable<FunDto> ToDto(this IEnumerable<Fun> funs)
         {
             return funs.Select(f => new FunDto
             {

@@ -10,22 +10,12 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// بررسی وجود داشتن تفریح
         /// </summary>
-        Task<bool> CheckFunTypeIsExistAsynch(Guid id);
-
-        /// <summary>
-        /// اضافه کردن تفریح به تِیبل 
-        /// </summary>
-        void AddFunAsync(Fun fun);
+        Task<bool> CheckFunTypeIsExistAsync(Guid id);
 
         /// <summary>
         /// حذف عکسهای اسلایدی یک فان
         /// </summary>
-        Task DeleteSiderPicturesByFunAsync(Fun fun);
-
-        /// <summary>
-        /// گرفتن تفریح با آیدی :
-        /// </summary>
-        Task<Fun> GetFunByIdAsynch(Guid id); 
+        Task DeleteSliderPicturesByFunAsync(Fun fun);
 
         /// <summary>
         /// گرفتن تفریح فعال با آیدی :
@@ -43,24 +33,15 @@ namespace Domain.RepasitoryInterfaces
         Task<bool> UpdateFunAsync();
 
         /// <summary>
-        /// حذف تفریح
-        /// </summary>
-        Task DeleteFunAsync(Guid id);
-
-        /// <summary>
-        /// گرفتن همه تفریح ها
-        /// </summary>
-        Task<List<Fun>> GetAllFunAsync();
-
-        /// <summary>
         ///گرفتن تفریح  با اسم تفریح
         /// </summary>
-        Task<Fun> GetFunsByFunNameAsynch(string name);
+        Task<Fun> GetFunsByFunNameAsync(string name);
 
         /// <summary>
         /// دریافت همه تفریح های فعال
         /// </summary>
-        Task<List<Fun>> GetAllActivedFunAsynh();
+        Task<List<Fun>> GetAllActiveFunAsync();
+       
         ///// <summary>
         ///// دریافت فایل با آیدی
         ///// </summary>
@@ -69,12 +50,12 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
-        Task<List<Fun>> GetAllDisActivedFunAsynch();
+        Task<List<Fun>> GetAllDisActiveFunAsync();
 
         /// <summary>
         ///  دریافت تفریح فعال با اسم
         /// </summary>
-        Task<Fun> GetActiveFunWithFunNameAsynch(string name);
+        Task<Fun> GetActiveFunWithFunNameAsync(string name);
 
         /// <summary>
         /// دریافت تفریح های فعال با آیدی
