@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Infrastructure.Repository.Classes
 {
     public class GenericRepository<T>: IGenericRepository<T> where T:class
-    {
+    { 
         protected DatabaseContext _context;
         protected DbSet<T> dbSet;
         protected readonly ILogger _logger;

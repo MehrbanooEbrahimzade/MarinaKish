@@ -8,7 +8,7 @@ namespace Domain.RepasitoryInterfaces
 {
     public interface ITicketRepository : IGenericRepository<Ticket>
     {
-
+         
         Task<List<Ticket>> GetAllScheduleTickets(Guid id);
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Application.Services.classes
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
 
-        public ScheduleInfoService(IUnitOfWork unitOfWork,ILogger logger)
+        public ScheduleInfoService(ILogger<ScheduleInfoService> logger, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -32,25 +32,44 @@ namespace Application.Services.classes
         {
             var scheduleInfo = command.ToModel();
             CreateAndAddSchedule(command);
-            _scheduleInfoRepository.AddScheduleInfoAsync(scheduleInfo);
+
+            var addschduleinfo = _unitOfWork.ScheduleInfos.AddAsync(scheduleInfo);
+
+            if (addschduleinfo == null)
+                throw new ArgumentNullException("عملیتات اضافه کردن انجام نشد");
+
+            _unitOfWork.CompleteAsync();
         }
 
         /// <summary>
         /// ادیت کردن اطلاعات سانس
         /// </summary>
-        public async Task UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
+        public async Task<bool> UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command)
         {
-            await _scheduleRepository.DeleteAllSchedulesOfaFun(command.FunId);
+            await _unitOfWork.Schedules.DeleteAllSchedulesOfaFun(command.FunId);
             CreateAndAddSchedule(command);
-            var scheduleInfo = await _scheduleInfoRepository.GetByIdAsync(command.Id);
+
+            var scheduleInfo = await _unitOfWork.ScheduleInfos.GetByIdAsync(command.Id);
+
+            if (scheduleInfo == null)
+                throw new ArgumentNullException("چنین سانسی با چنین آی دیی یافت نشد");
+
             scheduleInfo.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration
                 , command.TotalCapacity, command.PresenceCapacity, command.OnlineCapacity, command.Amount);
+
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
+        /// <summary>
+        ///ساخت سانس از روی اطلاعاتش
+        /// </summary>
         public void CreateAndAddSchedule(AddScheduleInfoCommand command)
         {
             var schedules = ScheduleMaker.MakeSchedule(command);
-            _scheduleRepository.AddScheduleAsync(schedules);
+            _unitOfWork.Schedules.AddScheduleAsync(schedules);
+
+            _unitOfWork.CompleteAsync();
         }
     }
 }

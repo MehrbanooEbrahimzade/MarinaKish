@@ -17,11 +17,11 @@ namespace Application.Services.classes
     public class TicketService : ITicketService
     {
        
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork; 
         private readonly ILogger _logger;
          
 
-        public TicketService(ILogger<UserService> logger, IUnitOfWork unitOfWork)
+        public TicketService(ILogger<TicketService> logger, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

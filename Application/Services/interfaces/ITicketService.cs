@@ -15,7 +15,7 @@ namespace Application.Services.interfaces
         Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
 
         /// <summary> 
-        /// پاک کردن بلیط 
+        /// پاک کردن بلیط  
         /// </summary>
         Task<bool> DeleteTicket(Guid id);
 
