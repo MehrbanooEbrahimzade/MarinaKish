@@ -1,45 +1,61 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Infrastructure.Persist;
-using Infrastructure.Repository.interfaces;
 using Domain.Models;
-using Microsoft.EntityFrameworkCore;
+using Domain.RepasitoryInterfaces;
+using Infrastructure.Repository.Classes;
+using Microsoft.Extensions.Logging;
 
 
 namespace Infrastructure.Repository.classes
 {
-    public class ContactUsRepository : IContactUsRepository
+    public class ContactUsRepository : GenericRepository<ContactUs>, IContactUsRepository
     {
-
-        public ContactUsRepository(DatabaseContext context)
+        public ContactUsRepository(DatabaseContext context, ILogger logger) : base(context, logger)
         {
         }
 
-
-        /// <summary>
-        /// اضافه کردن اطلاعات
-        /// </summary>
-        public async void AddContactUsAsync(ContactUs contactUs)
+        ///// <summary>
+        ///// اضافه کردن اطلاعات
+        ///// </summary>
+        public override async Task<bool> AddAsync(ContactUs contactUs)
         {
-            await _context.AddAsync(contactUs);
-            _context.SaveChanges();
+            try
+            {
+                await dbSet.AddAsync(contactUs);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e,"{ Repo } Add Method Error",typeof(CommentRepository));
+                return false;
+            }
         }
-
-        /// <summary>
-        /// برگرداندن اطلاعات با آیدی
-        /// </summary>
-        public async Task<ContactUs> GetContactUsByIdAsync(Guid id)
+        
+        ///// <summary>
+        ///// برگرداندن اطلاعات با آیدی
+        ///// </summary>
+        public override async Task<ContactUs> GetByIdAsync(Guid id)
         {
-            var contactUs = await _context.ContactUs.FirstOrDefaultAsync(c => c.Id == id);
-            return contactUs ?? throw new Exception("Null");
+            try
+            {
+                var contactUs =dbSet.Find(id);
+                return contactUs ?? throw new NullReferenceException("یافت نشد");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e,"{Repo} GetById method error",typeof(ContactUsRepository));
+                return null;
+            }
         }
-
-        /// <summary>
-        /// ویرایش درباره ماریانا
-        /// </summary>
+        
+        ///// <summary>
+        ///// ویرایش درباره ماریانا
+        ///// </summary>
         public async Task<bool> UpdateContactUsAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }
+       
     }
 }

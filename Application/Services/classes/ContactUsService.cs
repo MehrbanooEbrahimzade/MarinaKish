@@ -1,21 +1,23 @@
 ﻿using Application.Commands.ContactUs;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Infrastructure.Repository.interfaces;
 using System;
 using System.Threading.Tasks;
 using Application.Dtos;
+using Domain.IConfiguration;
 using Domain.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class ContactUsService : IContactUsService
     {
-
-        private readonly IContactUsRepository _contactUsRepository;
-        public ContactUsService(IContactUsRepository contactUsRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
+        public ContactUsService(IUnitOfWork unitOfWork,ILogger logger)
         {
-            _contactUsRepository = contactUsRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace Application.Services.classes
         public async Task AddContactUsAsync(AddContactUsCommand command)
         {
             var contactUs = command.ToModel();
-            _contactUsRepository.AddContactUsAsync(contactUs);
+            await _unitOfWork.ContactUs.AddAsync(contactUs);
         }
 
         /// <summary>
@@ -32,8 +34,10 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<ContactUsDto> GetContactUsByIdAsync(Guid id)
         {
-            var contactUs = await _contactUsRepository.GetContactUsByIdAsync(id);
-            return contactUs?.ToDto();
+            var contactUs = await _unitOfWork.ContactUs.GetByIdAsync(id);
+            return contactUs is null ?
+                throw new NullReferenceException("یافت نشد")
+                : contactUs.ToDto();
         }
 
         /// <summary>
@@ -106,20 +110,20 @@ namespace Application.Services.classes
 
         private async Task<ContactUs> FindContactUsAndCheckForNulling(Guid id)
         {
-            var contactUS =await _contactUsRepository.GetContactUsByIdAsync(id);
+            var contactUS =await _unitOfWork.ContactUs.GetByIdAsync(id);
             if (contactUS is null)
             {
-                throw new Exception("Null");
+                throw new NullReferenceException("یافت نشد");
             }
 
             return contactUS;
         }
         private async void CheckForSaving()
         {
-            var save = await _contactUsRepository.UpdateContactUsAsync();
+            var save = await _unitOfWork.ContactUs.UpdateContactUsAsync();
             if (!save)
             {
-                throw new Exception("Not Save");
+                throw new Exception("عملیات ذخیره نشد");
             }
         }
     }
