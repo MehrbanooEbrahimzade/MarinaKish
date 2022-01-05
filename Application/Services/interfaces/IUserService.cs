@@ -13,7 +13,9 @@ namespace Application.Services.interfaces
         /// دریافت کاربر با ایدی
         /// </summary>
         Task<UserDto> SearchUserById(Guid id);
-        
+
+
+        Task<bool> DeleteAsync(Guid id); 
         ////IncreaseUserWallet
         ///// <summary>
         ///// ثبت نام کاربر :

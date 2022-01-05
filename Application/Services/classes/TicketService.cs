@@ -42,10 +42,7 @@ namespace Application.Services.classes
             if (schedule == null)
                 throw new ArgumentNullException("سانس مورد نظر یافت نشد!");
 
-            if (Schedule == null)
-                throw new ArgumentNullException("سانس با این ایدی یافت نشد");
-
-            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, User, Schedule);
+            var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule);
             
             var addAndSave = await _unitOfWork.Tickets.AddAsync(ticket);
             if (!addAndSave)
@@ -137,14 +134,14 @@ namespace Application.Services.classes
         /// <summary>
         /// عوض کردن وضعیت یک بلیط
         /// </summary>
-        public async Task<string> ChangeTicketCondition(EditTicketConditionCommand command)
+        public async Task<bool> ChangeTicketCondition(EditTicketConditionCommand command)
         {
             var ticket = await _unitOfWork.Tickets.GetByIdAsync(command.TicketId);
             if (ticket == null)
                 throw new ArgumentNullException("بلیط با این ایدی یافت نشد");
             ticket.SetCondition(command.ChangeCondition);
             await _unitOfWork.CompleteAsync();
-            return ticket.Condition.ToString();
+            return true;
         }
 
         /// <summary>
@@ -291,9 +288,9 @@ namespace Application.Services.classes
         /// <summary>
         /// گرفتن همه بلیط های یک سانس
         /// </summary>
-        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
+        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid scheduleId)
         {
-            var tickets = await _unitOfWork.Tickets.GetAllScheduleTickets(id);
+            var tickets = await _unitOfWork.Tickets.GetAllScheduleTickets(scheduleId);
             if (tickets == null)
                 throw new ArgumentNullException("بلیطی با این ایدی یافت نشد");
             return tickets.ToDto();
@@ -326,7 +323,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<decimal> ScheduleTicketsPrice(Guid schedulId)
         {
-            var TotalPrice = await _ticketRepository.ScheduleTicketsPrice(schedulId);
+            var TotalPrice = await _unitOfWork.Tickets.ScheduleTicketsPrice(schedulId);
             if (TotalPrice.Equals(0))
                 throw new ArgumentNullException("بلیطی یافت نشد");
 

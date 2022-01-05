@@ -105,10 +105,10 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// دریافت همه بلیط های یک سانس
         /// </summary>
-        public async Task<List<Ticket>> GetAllScheduleTickets(Guid id)
+        public async Task<List<Ticket>> GetAllScheduleTickets(Guid scheduleId)
         {
             return await IncludeForTicket()
-                .Where(x => x.Schedule.Id == id)
+                .Where(x => x.Schedule.Id == scheduleId)
                 .OrderByDescending(x => x.SubmitDate)
                 .ToListAsync();
         }

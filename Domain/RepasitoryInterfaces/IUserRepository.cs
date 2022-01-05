@@ -10,14 +10,14 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         ///  حذف کاربر با آی دی:
         /// </summary>
-        Task DeleteUser(User user);
+        Task<bool>  DeleteAsync(Guid id);
 
         Task<User> SearchAsync(Guid id);
 
         /// <summary>
         /// دریافت کاربر با آیدی
         /// </summary>
-        Task<User> GetUserById(string id);
+        Task<User> GetUserById(Guid id);
 
 
 
