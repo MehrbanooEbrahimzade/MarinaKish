@@ -12,7 +12,7 @@ namespace Application.Commands.Ticket
         /// <summary>
         /// آی دیه سانس 
         /// </summary>
-        public Guid Id { get; set; }
+        public string FunType { get; set; }
 
         /// <summary>
         /// کجا خریداری شده

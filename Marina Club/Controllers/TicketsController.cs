@@ -40,10 +40,10 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تمام بلیط های یک سانس
         /// </summary>
-        [HttpGet("{id}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
-        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
+        [HttpGet("{scheduleId}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> GetAllScheduleTickets(Guid scheduleId)
         {
-            var result = await _ticketService.GetAllScheduleTickets(id);
+            var result = await _ticketService.GetAllScheduleTickets(scheduleId);
             if (result == null)
                 return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
             return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
@@ -62,7 +62,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// دریافت کل بلیط های غیرفعال یک سانس
+        /// دریافت کل بلیط های یک تفریح با حالات مختلف
         /// </summary>
         [HttpGet("getCatchallscenarios")]
         public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)
@@ -771,7 +771,7 @@ namespace Marina_Club.Controllers
                 return BadReq(ApiMessage.WrongTicketID, new { Reason = $"1-enter ticketID, 2-ChangeCondition must in = 1: inactive, 2: active, 3: canceled" });
 
             var result = await _ticketService.ChangeTicketCondition(command);
-            if (result == null)
+            if (!result)
                 return BadReq(ApiMessage.TicketNotChangedCondition, new { Reason = $"ticket not found" });
             return OkResult(ApiMessage.TicketChangedCondition, new { TicketCondition = $"{result} 1: inactive, 2: active, 3: canceled" });
         }
