@@ -1,38 +1,41 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Application.Commands.User;
-using Application.Dtos;
+﻿using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models;
-using Domain.RepasitoryInterfaces;
 using Domain.IConfiguration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Application.Services.classes
 {
-    public class UserService: IUserService
-    { 
+    public class UserService : IUserService
+    {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
 
 
-        public UserService( ILogger<UserService> logger, IUnitOfWork unitOfWork) : base()
+        public UserService(ILogger<UserService> logger, IUnitOfWork unitOfWork) : base()
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
 
         }
 
-        public async Task<UserDto> SearchUserById(Guid id) 
+        public async Task<UserDto> SearchUserById(Guid id)
         {
-            var user =await  _unitOfWork.Users.GetUserById(id.ToString());
-            if (user==null)
+            var user = await _unitOfWork.Users.GetUserById(id);
+            if (user == null)
                 throw new ArgumentNullException();
 
             return user.ToDto();
-            
+
+        }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var result = await _unitOfWork.Users.DeleteAsync(id);
+            if (!result)
+                throw new Exception("عملیات ناموفق");
+            return result;
         }
 
         //        private readonly IUserRepository _userRepository;

@@ -10,26 +10,52 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class UserRepository :  IUserRepository
+    public class UserRepository :  GenericRepository<User> , IUserRepository
     {
-      
-        protected readonly DatabaseContext _context;
-        protected UserRepository(DatabaseContext context)
+
+        public UserRepository(DatabaseContext context, ILogger logger) : base(context, logger)
         {
-            _context = context;
+
         }
-    
-        public async Task DeleteUser(User user)
+
+        public override async Task<bool> DeleteAsync(Guid id)
         {
-             _context.Users.Remove(user);
+            try
+            {
+                var user = await dbSet.FindAsync(id);
+                if (user != null)
+                {
+                    dbSet.Remove(user);
+                    return true;
+                }
+                    
+              
+                return false; 
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} DeleteAsync  method error", typeof(UserRepository));
+                return false;
+            }
             
         }
 
 
-        public async Task<User> GetUserById(string id)
+        public async Task<User> GetUserById(Guid id)
         {
-            var user =_context.Users.Include(x=>x.CreditCard).SingleOrDefault(x=>x.Id == id);        
-            return  user;
+            try
+            {
+                var user = await dbSet.Include(c => c.CreditCard).SingleOrDefaultAsync(x => x.Id == id.ToString());
+
+                if (user == null)
+                    throw new NullReferenceException("کاربر شناسایی نشد!");
+                return user;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} GetUserById method error", typeof(UserRepository));
+                return null;
+            }
         }
 
         public Task<User> SearchAsync(Guid id)
