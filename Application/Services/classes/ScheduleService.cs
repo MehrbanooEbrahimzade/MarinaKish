@@ -14,7 +14,7 @@ namespace Application.Services.classes
 
         private readonly ILogger _logger;
         private readonly IUnitOfWork _unitOfWork; //ghablan repository model mad nazaro inject mikardim 
-        public ScheduleService(ILogger logger , IUnitOfWork unitOfWork)
+        public ScheduleService(ILogger logger, IUnitOfWork unitOfWork)
         {
             this._logger = logger;
             this._unitOfWork = unitOfWork;
@@ -36,6 +36,7 @@ namespace Application.Services.classes
 
             var addDiscountamount = command.AddPercent.ToModel();
             searchnameRecreation.UpdateSpecialOffer(command.Price, addDiscountamount);
+            await _unitOfWork.CompleteAsync();
 
             return;
         }
