@@ -37,6 +37,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginCommand command)
         {
