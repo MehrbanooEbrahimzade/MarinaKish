@@ -14,7 +14,16 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// پاک کردن همه سانس های یک تفریح
         /// </summary>
-        Task DeleteAllSchedulesOfaFun(Guid funId);
+        Task<bool> DeleteAllSchedulesOfaFun(Guid funId);
+        /// <summary>
+        /// دریافت سانس های یک تفریح با ایدی تفریح
+        /// </summary>
+        Task<List<Schedule>> GetFunSchedulesByFunId(Guid funId);
+        
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
@@ -26,16 +35,6 @@ namespace Domain.RepasitoryInterfaces
         //    /// </summary>
         //    Task<Fun> GetFunByFunId(Guid id);
 
-        /// <summary>
-        /// اضافه کردن سانس به تیبل
-        /// </summary>
-        Task AddScheduleAsync(Schedule schedule);
-
-
-        /// <summary>
-        ///  دریافت سانس با آی دیه  سانس
-        /// </summary>
-        Task<Schedule> GetRecreationById(Guid id);
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         //    /// </summary>
@@ -51,20 +50,10 @@ namespace Domain.RepasitoryInterfaces
         //    /// </summary>
         //    Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id);
 
-        /// <summary>
-        /// ذخیره اعمال انجام شده
-        /// </summary>
-        Task<bool> UpdateScheduleAsync();
-
         //    /// <summary>
         //    /// دریافت سانس با آیدی
         //    /// </summary>
         //    Task<Schedule> GetScheduleByIdAsync(Guid id);
-
-        /// <summary>
-        /// دریافت سانس فعال با آیدی
-        /// </summary>
-        Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         //    /// <summary>
         //    /// گرفتن تاریخ اخرین سانس با نوع تفریح
