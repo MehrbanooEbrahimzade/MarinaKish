@@ -1,23 +1,21 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Helper
 {
-    public class PdfOutput
+    public  class PdfOutput
     {
-        public Document GeneratePdf(string type)
+        public Document GeneratePdf(TicketDto ticket)
         {
 
             #region DirectoryPath
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "iranyekan.ttf");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","PdfImages");
+            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","Fonts","iranyekan.ttf");
 
             #endregion
 
@@ -33,7 +31,7 @@ namespace Infrastructure.Helper
 
             Aspose.Pdf.Drawing.Rectangle schedule = new Aspose.Pdf.Drawing.Rectangle(105, 100, 240, 120);
             Aspose.Pdf.Drawing.Rectangle userInfo = new Aspose.Pdf.Drawing.Rectangle(105, 45, 240, 52);
-            Aspose.Pdf.Drawing.Rectangle totslPrice  = new Aspose.Pdf.Drawing.Rectangle(105, 8, 240, 30);
+            Aspose.Pdf.Drawing.Rectangle totslPrice = new Aspose.Pdf.Drawing.Rectangle(105, 8, 240, 30);
 
 
             ///summery
@@ -75,10 +73,10 @@ namespace Infrastructure.Helper
 
             #region Adding Image
 
-            var imageFileName = System.IO.Path.Combine(path, "logo.png");
-            var parasail = Path.Combine(path, "para.png");
-            var barcode = Path.Combine(path, "barcode.png");
-            var map = Path.Combine(path, "Map.png");
+            var imageFileName = System.IO.Path.Combine(imagePath, "logo.png");
+            var parasail = Path.Combine(imagePath, "para.png");
+            var barcode = Path.Combine(imagePath, "barcode.png");
+            var map = Path.Combine(imagePath, "Map.png");
 
             page.AddImage(imageFileName, new Aspose.Pdf.Rectangle(920, 350, 10, 300));
 
@@ -110,7 +108,7 @@ namespace Infrastructure.Helper
 
 
             ///نصب فونت کاستوم 
-             var font = FontRepository.OpenFont(iranYekan);
+            var font = FontRepository.OpenFont(iranYekan);
 
 
 
@@ -148,7 +146,7 @@ namespace Infrastructure.Helper
             ticketInfo.Position = new Position(150, 290);
             userInfoText.Position = new Position(160, 160);
 
-         
+
 
             ticketInfo.Margin.Right = 0;
             ticketInfo.Margin.Left = 0;
@@ -156,7 +154,7 @@ namespace Infrastructure.Helper
 
             ticketInfo.TextState.DrawTextRectangleBorder = false;
 
-            
+
             ///اضافه کردن متن به صفحه 
             page.Paragraphs.Add(header);
             page.Paragraphs.Add(firstMarina);
@@ -175,7 +173,6 @@ namespace Infrastructure.Helper
 
 
             return document;
-           
 
         }
         private string GenerateFileNumber()
@@ -183,8 +180,8 @@ namespace Infrastructure.Helper
             int _min = 10000;
             int _max = 99999;
             Random _rdm = new Random();
-            
-            var fileCode =  _rdm.Next(_min, _max).ToString();
+
+            var fileCode = _rdm.Next(_min, _max).ToString();
             return fileCode;
         }
     }
