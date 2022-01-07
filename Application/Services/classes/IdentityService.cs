@@ -1,24 +1,22 @@
 ﻿using Application.Commands.User;
+using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
+using Infrastructure.Helper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Formatting;
-using System.Net.Http;
-using System.Linq;
-using Application.Mappers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Security.Claims;
-using Domain.RepasitoryInterfaces;
-using Infrastructure.Helper;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Services.classes
 {
@@ -31,7 +29,7 @@ namespace Application.Services.classes
 
         private static readonly HttpClient client = new HttpClient();
 
-        public IdentityService(UserManager<User> userManager, IOptions<JwtToken> jwtToken,ILogger<IdentityService> logger)
+        public IdentityService(UserManager<User> userManager, IOptions<JwtToken> jwtToken, ILogger<IdentityService> logger)
         {
             _userManager = userManager;
             _jwtToken = jwtToken.Value;
@@ -84,8 +82,8 @@ namespace Application.Services.classes
 
             if (result == false)
                 throw new Exception("کد وارد شده صحیح نمی باشد ");
-            var token =  await GenerateToken(user.Id,command);
-            return token; 
+            var token = await GenerateToken(user.Id, command);
+            return token;
 
         }
 
@@ -113,7 +111,7 @@ namespace Application.Services.classes
         }
 
         #region GenerateToken
-        private async Task<string> GenerateToken(string id , UserLoginCommand command)
+        private async Task<string> GenerateToken(string id, UserLoginCommand command)
         {
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
             var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
@@ -128,7 +126,7 @@ namespace Application.Services.classes
                 signingCredentials: credentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-            return  tokenString; 
+            return tokenString;
         }
         #endregion
 
@@ -137,13 +135,13 @@ namespace Application.Services.classes
         {
             try
             {
-                var user =await  _userManager.FindByIdAsync(id.ToString());
+                var user = await _userManager.FindByIdAsync(id.ToString());
                 if (user != null)
                 {
                     await _userManager.DeleteAsync(user);
-                    return true; 
+                    return true;
                 }
-                return false; 
+                return false;
             }
             catch (Exception ex)
             {
@@ -151,7 +149,7 @@ namespace Application.Services.classes
                 return false;
             }
 
-            
+
         }
     }
 

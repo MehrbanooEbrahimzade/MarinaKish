@@ -136,6 +136,20 @@ namespace Infrastructure.Repository.Classes
                          .Include(x => x.User)
                          .Include(x => x.Schedule);
         }
+
+        /// <summary>
+        ///  آوردن بلیط رزو شده ی یک کاربر 
+        /// </summary>
+        public async Task<List<Ticket>> GetReservedTicketsForUser(Guid id)
+        {
+
+            return await IncludeForTicket().Where(x => x.User.Id.Equals(id.ToString())&& x.Condition.Equals(2)).ToListAsync();
+        }
+        
+
+
+
+
         /// <summary>
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
         /// </summary>

@@ -45,6 +45,12 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command);
 
+        /// <summary>
+        /// آوردن بلیط های رزرو شده ی یک کاربر
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<List<TicketDto>> GetReservedTickets(Guid id);
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>

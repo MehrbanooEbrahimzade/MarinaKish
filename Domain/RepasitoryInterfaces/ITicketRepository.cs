@@ -26,53 +26,60 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<List<Ticket>> GetAllTicketbyAllScenarios(string funtype, Condition condition, WhereBuy whereBuy);
 
+        /// <summary>
+        ///  آوردن بلیط رزو شده ی یک کاربر 
+        /// </summary>
+        Task<List<Ticket>> GetReservedTicketsForUser(Guid id);
+
+
+
           //    ///// <summary>
           //    ///// دریافت تفریح با اسم تفریح
           //    ///// </summary>
           //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
 
-          ///// <summary>
-          ///// دریافت کاربر با شماره تلفن همراه
-          ///// </summary>
-          //Task<User> GetUserByPhone(string phone);
+        ///// <summary>
+        ///// دریافت کاربر با شماره تلفن همراه
+        ///// </summary>
+        //Task<User> GetUserByPhone(string phone);
 
-          ///// <summary>
-          ///// گرفتن همه بلیط های یک تفریح
-          ///// </summary>
-          //Task<List<Ticket>> GetAllFunTickets(FunType eFun);
+        ///// <summary>
+        ///// گرفتن همه بلیط های یک تفریح
+        ///// </summary>
+        //Task<List<Ticket>> GetAllFunTickets(FunType eFun);
 
-          ///// <summary>
-          ///// گرفتن همه بلیط های یک کاربر با شماره تلفن
-          ///// </summary>
-          //Task<List<Ticket>> GetAllUserTikcets(string phone);
+        ///// <summary>
+        ///// گرفتن همه بلیط های یک کاربر با شماره تلفن
+        ///// </summary>
+        //Task<List<Ticket>> GetAllUserTikcets(string phone);
 
-          ///// <summary>
-          ///// گرفتن بلیط با شماره بلیط
-          ///// </summary>
-          //Task<Ticket> GetTicketbyTicketNumber(string ticketnumber);
-
-
-          ///// <summary>
-          ///// گرفتن بلیط ثبت نشده با آیدی
-          ///// </summary>
-          //Task<Ticket> GetNotReservedTicketById(Guid id);
-
-          ///// <summary>
-          ///// گرفتن بلیط لغو نشده با آیدی
-          ///// </summary>
-          //Task<Ticket> GetNotCanceledTicketById(Guid id);
+        ///// <summary>
+        ///// گرفتن بلیط با شماره بلیط
+        ///// </summary>
+        //Task<Ticket> GetTicketbyTicketNumber(string ticketnumber);
 
 
+        ///// <summary>
+        ///// گرفتن بلیط ثبت نشده با آیدی
+        ///// </summary>
+        //Task<Ticket> GetNotReservedTicketById(Guid id);
 
-          ///// <summary>
-          ///// دریافت تعداد بلیط های فروخته شده برای یک تفریح
-          ///// </summary>
-          //Task<int> ScheduleTicketsCount(Guid id);
+        ///// <summary>
+        ///// گرفتن بلیط لغو نشده با آیدی
+        ///// </summary>
+        //Task<Ticket> GetNotCanceledTicketById(Guid id);
 
-          /// <summary>
-          /// دریافت مقدار پول کل بلیط های فروخته شده
-          ///// </summary>
-          Task<decimal> ScheduleTicketsPrice(Guid schedulId);
+
+
+        ///// <summary>
+        ///// دریافت تعداد بلیط های فروخته شده برای یک تفریح
+        ///// </summary>
+        //Task<int> ScheduleTicketsCount(Guid id);
+
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده
+        ///// </summary>
+        Task<decimal> ScheduleTicketsPrice(Guid schedulId);
 
         ///// <summary>
         /////  جست و جوی دو تاریخه برای بلیط های غیر فعال

@@ -3,23 +3,21 @@ using Application.Commands.Ticket;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.IConfiguration;
 using Domain.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain.RepasitoryInterfaces;
-using Domain.Enums;
-using Domain.IConfiguration;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class TicketService : ITicketService
     {
-       
-        private readonly IUnitOfWork _unitOfWork; 
+
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
-         
+
 
         public TicketService(ILogger<TicketService> logger, IUnitOfWork unitOfWork)
         {
@@ -38,16 +36,16 @@ namespace Application.Services.classes
 
             var schedule = await _unitOfWork.Schedules.GetActiveScheduleByIdAsync(command.ScheduleId);
             var user = await _unitOfWork.Users.GetUserById(command.UserId);
-            
+
             if (schedule == null)
                 throw new ArgumentNullException("سانس مورد نظر یافت نشد!");
 
             var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule);
-            
+
             var addAndSave = await _unitOfWork.Tickets.AddAsync(ticket);
             if (!addAndSave)
                 throw new Exception("بلیط به سبد خرید ادد نشد ");
-                
+
 
             await _unitOfWork.CompleteAsync();
 
@@ -71,7 +69,7 @@ namespace Application.Services.classes
             }
             if (NotDeleted.Count == 0)
                 throw new NullReferenceException("بلیط فعال با این ایدی یافت نشد ");
-               
+
             await _unitOfWork.CompleteAsync();
 
             return NotDeleted;
@@ -91,7 +89,14 @@ namespace Application.Services.classes
             await _unitOfWork.CompleteAsync();
             return true;
         }
+        public async Task<List<TicketDto>> GetReservedTickets(Guid id)
+        {
+            var tickets = await _unitOfWork.Tickets.GetReservedTicketsForUser(id);
+            if (tickets == null)
+                throw new ArgumentNullException("بلیط یافت نشد");
+            return tickets.ToDto();
 
+        }
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
         /// </summary>
@@ -157,14 +162,14 @@ namespace Application.Services.classes
         public async Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command)
         {
 
-            var getallticket = await _unitOfWork.Tickets.GetAllTicketbyAllScenarios(Command.FunType,Command.Condition,Command.WhereBuy);
+            var getallticket = await _unitOfWork.Tickets.GetAllTicketbyAllScenarios(Command.FunType, Command.Condition, Command.WhereBuy);
             if (getallticket == null)
                 throw new Exception("بلیطی در خصوص این تفریح وجود ندارد");
             return getallticket.ToDto();
 
 
         }
-        
+
 
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال

@@ -254,7 +254,24 @@ namespace Marina_Club.Controllers
 
         #endregion
 
+        #region GetTickets
+        /// <summary>
+        /// آوردن بلیط های رزو شده ی یک کاربر 
+        /// </summary>
+        [HttpGet("{id}/Tickets")]
+        public async Task<IActionResult> GetUserTickets(Guid id)
+        {
+            id = CurrentUser.Id;
+            var tickets = await _ticketService.GetReservedTickets(id);
+            if (tickets.Count == 0)
+                return StatusCode(404);
+            return OkResult(ApiMessage.Ok, tickets);
+        }
 
+
+
+
+        #endregion
         //        #region User Options
 
 
