@@ -82,10 +82,10 @@ namespace Marina_Club.Controllers
         ///  حذف کاربر با آی دی
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveUser(string id)
+        public async Task<IActionResult> RemoveUser(Guid id)
         {
-            await _identity.DeleteUser(id);
-            return Ok("کاربر با موفقیت حذف شد");
+             await _identity.DeleteUser(id);
+            return OkResult(ApiMessage.Ok);
         }
 
 

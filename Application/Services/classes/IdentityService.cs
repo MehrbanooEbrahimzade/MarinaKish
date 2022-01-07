@@ -18,6 +18,7 @@ using System.Security.Claims;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
@@ -25,23 +26,16 @@ namespace Application.Services.classes
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _SignInManager;
-        private readonly IUserRepository _userRepository;
         private readonly JwtToken _jwtToken;
+        private readonly ILogger _logger;
 
         private static readonly HttpClient client = new HttpClient();
 
-        public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-            , IUserRepository userRepository, SignInManager<User> signInManager
-            , IConfiguration configuration , IOptions<JwtToken> jwtToken)
+        public IdentityService(UserManager<User> userManager, IOptions<JwtToken> jwtToken,ILogger<IdentityService> logger)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
-            _SignInManager = signInManager;
-            _userRepository = userRepository;
             _jwtToken = jwtToken.Value;
-
+            _logger = logger;
         }
 
         public async Task RegisterAsync(RegisterUserCommand command)
@@ -118,13 +112,7 @@ namespace Application.Services.classes
 
         }
 
-
-        public async Task DeleteUser(string id)
-        {
-            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
-
-            _userRepository.DeleteUser(user);
-        }
+        #region GenerateToken
         private async Task<string> GenerateToken(string id , UserLoginCommand command)
         {
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
@@ -141,6 +129,29 @@ namespace Application.Services.classes
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
             return  tokenString; 
+        }
+        #endregion
+
+
+        public async Task<bool> DeleteUser(Guid id)
+        {
+            try
+            {
+                var user =await  _userManager.FindByIdAsync(id.ToString());
+                if (user != null)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return true; 
+                }
+                return false; 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} DeleteAsync  method error", typeof(IdentityService));
+                return false;
+            }
+
+            
         }
     }
 
