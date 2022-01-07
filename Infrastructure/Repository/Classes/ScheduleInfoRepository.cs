@@ -4,34 +4,70 @@ using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class ScheduleInfoRepository : IScheduleInfoRepository
+    public class ScheduleInfoRepository : GenericRepository<ScheduleInfo>, IScheduleInfoRepository
     {
 
-        public ScheduleInfoRepository(DatabaseContext context) 
+        public ScheduleInfoRepository(DatabaseContext context, ILogger logger) : base(context, logger)
         {
         }
 
-        public async Task AddScheduleInfoAsync(ScheduleInfo scheduleInfo)
+        public override async Task<bool> AddAsync(ScheduleInfo scheduleInfo)
         {
-             _context.ScheduleInfos.Add(scheduleInfo);
-             await _context.SaveChangesAsync();
+            try
+            {
+
+                await dbSet.AddAsync(scheduleInfo);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Add method error", typeof(ScheduleInfoRepository));
+                return false;
+            }
+
         }
 
-        public async Task<ScheduleInfo> GetByIdAsync(Guid id)
+        public override async Task<ScheduleInfo> GetByIdAsync(Guid id)
         {
-            var scheduleInfo= await _context.ScheduleInfos.SingleOrDefaultAsync(x=>x.Id==id);
-            return scheduleInfo;
+            try
+            {
+                var scheduleInfo = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
+                if (scheduleInfo == null)
+                    throw new NullReferenceException("چنین سانسی شناسایی نشد!");
+                return scheduleInfo;
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} GetById method error", typeof(ScheduleInfoRepository));
+                return null;
+            }
         }
 
-        public async Task DeleteScheduleInfoAsync(Guid funId)
+        public override async Task<bool> DeleteAsync(Guid id)
         {
-            var scheduleInfo = await _context.ScheduleInfos.SingleOrDefaultAsync(x => x.FunId== funId);
-            if(scheduleInfo==null)
-                throw new ArgumentNullException("اطلاعات سانس مورد نظر پیدا نشد!");
-            _context.ScheduleInfos.Remove(scheduleInfo);
+            try
+            {
+                var scheduleInfo = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
+
+                if (scheduleInfo != null)
+                {
+                    dbSet.Remove(scheduleInfo);
+                    return true;
+                }
+                 
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Delete method error",typeof(ScheduleInfoRepository));
+                return false;
+            }
+
         }
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح

@@ -3,22 +3,26 @@ using System.Threading.Tasks;
 using Application.Commands.Schedule;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.IConfiguration;
 using Domain.RepasitoryInterfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class ScheduleService : IScheduleService
     {
 
-        private readonly IScheduleRepository _scheduleRepository;
-        public ScheduleService(IScheduleRepository scheduleRepository)
+        private readonly ILogger _logger;
+        private readonly IUnitOfWork _unitOfWork; //ghablan repository model mad nazaro inject mikardim 
+        public ScheduleService(ILogger logger, IUnitOfWork unitOfWork)
         {
-            _scheduleRepository = scheduleRepository;
+            this._logger = logger;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task AddSpecialOffer(AddSpecialOfferCommand command)
         {
-            var searchnameRecreation = await _scheduleRepository.GetRecreationById(command.ShceduleId);
+            var searchnameRecreation = await _unitOfWork.Schedules.GetActiveScheduleByIdAsync(command.ShceduleId);
             if (searchnameRecreation == null)
                 throw new Exception("چنین سانسی وجود ندرد");
 
@@ -27,13 +31,12 @@ namespace Application.Services.classes
             //decimal Discount = DiscountNumber / 100;
             //decimal resultAmount = searchnameRecreation.Price;
             //command.Price = Discount * resultAmount;
+
             command.Price -= (command.AddPercent.Value * searchnameRecreation.Price) / 100;
 
             var addDiscountamount = command.AddPercent.ToModel();
-
             searchnameRecreation.UpdateSpecialOffer(command.Price, addDiscountamount);
-
-            var savechage = _scheduleRepository.UpdateScheduleAsync();
+            await _unitOfWork.CompleteAsync();
 
             return;
         }

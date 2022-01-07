@@ -4,11 +4,8 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IScheduleInfoRepository: IGenericRepository<ScheduleInfo>
+    public interface IScheduleInfoRepository : IGenericRepository<ScheduleInfo>
     {
-        Task AddScheduleInfoAsync(ScheduleInfo scheduleInfo);
-        Task<ScheduleInfo> GetByIdAsync(Guid id);
-        Task DeleteScheduleInfoAsync(Guid id);
 
     }
 }
