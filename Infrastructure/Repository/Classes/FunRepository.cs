@@ -72,10 +72,19 @@ namespace Infrastructure.Repository.Classes
             }
         }
 
-
+        /// <summary>
+        /// خذف اسلایدر های فان
+        /// </summary>
         public async Task DeleteSliderPicturesByFunAsync(Fun fun)
         {
-            _context.FunSliderPictures.RemoveRange(fun.SliderPictures);
+            try
+            {
+                _context.FunSliderPictures.RemoveRange(fun.SliderPictures);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{ Repo} Delete Slider Picture By Fun Method Error", typeof(FunRepository));
+            }
         }
 
         /// <summary>
