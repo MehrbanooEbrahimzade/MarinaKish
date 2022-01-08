@@ -25,6 +25,10 @@ namespace Marina_Club.Controllers
         [HttpPost("Add")]
         public IActionResult AddFunAsync(AddFunCommand command)
         {
+            if(!command.Validate())
+            {
+                return BadReq(ApiMessage.WrongFunInformation);
+            }
             command.ScheduleInfo.FunId = _funService.AddFunAsync(command);
             _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
             return OkResult(ApiMessage.FunAdded);
