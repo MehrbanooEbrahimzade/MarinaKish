@@ -48,7 +48,7 @@ namespace Application.Services.classes
         //                await _userRepository.UserSignUpAsync(newUser);
 
         //                ResultList.Add("Register");
-        //                ResultList.Add(newUser.Id.ToString());
+        //                ResultList.Add(newUser.commentId.ToString());
         //                ResultList.Add(newUser.VerifyCode);
 
         //                return ResultList;
@@ -59,7 +59,7 @@ namespace Application.Services.classes
         //            user.SetVerifycode(randomVerify);
 
         //            ResultList.Add("Login");
-        //            ResultList.Add(user.Id.ToString());
+        //            ResultList.Add(user.commentId.ToString());
         //            ResultList.Add(user.VerifyCode);
 
         //            await _userRepository.SaveChanges();
@@ -149,7 +149,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<UserDto> UpdateProfileAsync(UpdateUserCommand command)
         //        {
-        //            var user = await _userRepository.GetUserById(command.Id);
+        //            var user = await _userRepository.GetUserById(command.commentId);
         //            if (user == null)
         //                return null;
 

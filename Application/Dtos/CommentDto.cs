@@ -6,7 +6,7 @@ namespace Application.Dtos
     public class CommentDto
     { 
         /// <summary>
-        /// Id 
+        /// commentId 
         /// </summary>
         public Guid Id { get; set; }
 
@@ -46,9 +46,9 @@ namespace Application.Dtos
         public Guid FunId { get; set; }
 
         /// <summary>
-        /// نام کاربری
+        /// نام کاربر
         /// </summary>
-        public string UserName { get; set; }
+        public string FullName { get; set; }
 
         /// <summary>
         /// شناسه کاربری

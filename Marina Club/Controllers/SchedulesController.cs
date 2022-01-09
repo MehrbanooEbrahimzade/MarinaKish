@@ -47,7 +47,7 @@ namespace Marina_Club.Controllers
         //{
         //    command.FunId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-wrong Id, 2-days number can't be null or equal to 0" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-wrong commentId, 2-days number can't be null or equal to 0" });
 
         //    var result = await _scheduleService.CreateSchedule(command);
         //    if (result == null)
@@ -102,7 +102,7 @@ namespace Marina_Club.Controllers
         //public async Task<IActionResult> ScheduleListCORE(ScheduleListCORECommand command)
         //{
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-IsExist can't be null, 2-IDs must have least 1 Id" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = $"1-IsExist can't be null, 2-IDs must have least 1 commentId" });
 
         //    var result = await _scheduleService.ScheduleListCORE(command);
         //    if (!result)

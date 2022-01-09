@@ -6,24 +6,24 @@ namespace Domain.Models
 {
     public class Comment : Writ
     {
-        public Comment(string text, Guid funId, string userPhoneNumber, string userName) : base(text, userName)
-        {
-            Id = Guid.NewGuid();
+        //public Comment(string text, Guid funId, string userPhoneNumber, string userName) : base(text, userName)
+        //{
+        //    Id = Guid.NewGuid();
 
-            Text = text;
+        //    Text = text;
 
-            FunId = funId;
+        //    FunId = funId;
 
-            UserPhoneNumber = userPhoneNumber;
+        //    UserPhoneNumber = userPhoneNumber;
 
-            UserName = userName;
+        //    UserName = userName;
 
-            Status = Status.Waiting;
+        //    Status = Status.Waiting;
 
-            SubmitDate = DateTime.Now;
-        }
+        //    SubmitDate = DateTime.Now;
+        //}
 
-        public Comment(string text, Guid funId,Guid userId,string fullname) : base(text,fullname)
+        public Comment(string text, Guid funId, string userId, string fullname) : base(text, fullname)
         {
             Id = Guid.NewGuid();
 
@@ -45,7 +45,7 @@ namespace Domain.Models
         /// <summary>
         /// ای دیه کاربر
         /// </summary>
-        public Guid UserId { get; private set; }
+        public string UserId { get; private set; }
 
         /// <summary>
         /// ای دیه تفریح 
@@ -72,8 +72,6 @@ namespace Domain.Models
         /// </summary>
         public string UserPhoneNumber { get; private set; } //فعلا کاربردی توش ندیدم
 
-
-
         #region + -
 
         /// <summary>
@@ -90,6 +88,11 @@ namespace Domain.Models
         public void UpdateCommentDislikes()
         {
             DisLike += 1;
+        }
+
+        public void Switching(Status status)
+        {
+            this.Status = status;
         }
 
         #endregion

@@ -39,7 +39,7 @@ namespace Marina_Club.Controllers
         //[HttpGet("GetOne/{id}")]
         //public async Task<IActionResult> GetOneMessage(Guid id, IdCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
         //        return BadReq(ApiMessage.WrongMessageID, new { Reason = $"enter messageID" });
 
@@ -70,7 +70,7 @@ namespace Marina_Club.Controllers
         //[HttpPut("Delete/{id}")]
         //public async Task<IActionResult> DeleteMessage(Guid id, IdCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
         //        return BadReq(ApiMessage.WrongMessageID, new { Reason = $"enter messageID" });
 
@@ -115,7 +115,7 @@ namespace Marina_Club.Controllers
         //[HttpGet("AllUserMessages/{id}")] //user id( users model )
         //public async Task<IActionResult> GetAllUserMessages(Guid id, IdCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
         //        return BadReq(ApiMessage.WrongMessageID, new { Reasons = $"enter message id" });
 
@@ -147,7 +147,7 @@ namespace Marina_Club.Controllers
         //[HttpGet("AllUserDeleted/{id}")] //user id (user models)
         //public async Task<IActionResult> AllUserDeletedMessages(Guid id, IdCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
         //        return BadReq(ApiMessage.WrongUserID, new { Reason = $"enter user id" });
 

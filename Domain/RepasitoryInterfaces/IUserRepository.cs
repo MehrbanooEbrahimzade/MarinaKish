@@ -51,7 +51,7 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// دریافت کاربر با آیدی
         /// </summary>
-         Task<User> GetUserById(Guid id);
+         Task<User> GetUserById(string id);
 
 
         //        /// <summary>

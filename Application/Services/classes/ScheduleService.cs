@@ -72,7 +72,7 @@ namespace Application.Services.classes
         //                    //var sansModel = new Schedule(eFun.SystemFunCode, eFun.FunType, scheduleExcuteTime, eFun.Price, startTimes, startTimes.Add(totalSansTime))
         //                    //{
         //                    // AvailableCapacity = eFun.SansTotalCapacity,
-        //                    //FunId = eFun.Id
+        //                    //FunId = eFun.commentId
         //                    //};
 
         //                    fun.PlusOnlineCapacity((int)sansModel.AvailableCapacity); 

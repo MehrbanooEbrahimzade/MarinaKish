@@ -43,7 +43,7 @@ namespace Application.Services.classes
         //        await _userRepository.UserSignUpAsync(newUser);
 
         //        ResultList.Add("Register");
-        //        ResultList.Add(newUser.Id.ToString());
+        //        ResultList.Add(newUser.commentId.ToString());
         //        ResultList.Add(newUser.VerifyCode);
 
         //        return ResultList;
@@ -54,7 +54,7 @@ namespace Application.Services.classes
         //    user.SetVerifycode(randomVerify);
 
         //    ResultList.Add("Login");
-        //    ResultList.Add(user.Id.ToString());
+        //    ResultList.Add(user.commentId.ToString());
         //    ResultList.Add(user.VerifyCode);
 
         //    await _userRepository.UpdateUserAsync();
@@ -75,9 +75,9 @@ namespace Application.Services.classes
         //    var result = await _userManager.CreateAsync(user, command.Password);
         //    if (result.Succeeded)
         //    {
-        //        return result.ToApplicationResult("", user.Id);
+        //        return result.ToApplicationResult("", user.commentId);
         //    }
-        //    return result.ToApplicationResult("", user.Id);
+        //    return result.ToApplicationResult("", user.commentId);
         //}
 
 

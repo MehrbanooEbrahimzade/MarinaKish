@@ -127,7 +127,7 @@ namespace Application.Services.classes
         //List<string> PicsResult = new List<string>();
         //foreach (var pic in pics)
         //{
-        //    PicsResult.Add(pic.Id.ToString());
+        //    PicsResult.Add(pic.commentId.ToString());
         //}
 
         //return PicsResult;
@@ -162,7 +162,7 @@ namespace Application.Services.classes
 
         //            foreach (var pic in userPics)
         //            {
-        //                UserPicsList.Add(pic.Id.ToString());
+        //                UserPicsList.Add(pic.commentId.ToString());
         //            }
 
         //            return UserPicsList;
@@ -187,7 +187,7 @@ namespace Application.Services.classes
 
         //            foreach (var pic in funPics)
         //            {
-        //                FunPicsList.Add(pic.Id.ToString());
+        //                FunPicsList.Add(pic.commentId.ToString());
         //            }
         //            return FunPicsList;
         //        }
@@ -210,7 +210,7 @@ namespace Application.Services.classes
 
         //            foreach (var pic in schedulePics)
         //            {
-        //                SchedulePicsList.Add(pic.Id.ToString());
+        //                SchedulePicsList.Add(pic.commentId.ToString());
         //            }
         //            return SchedulePicsList;
         //        }
@@ -228,7 +228,7 @@ namespace Application.Services.classes
         //            List<string> PicsResult = new List<string>();
         //            foreach (var pic in pics)
         //            {
-        //                PicsResult.Add(pic.Id.ToString());
+        //                PicsResult.Add(pic.commentId.ToString());
         //            }
 
         //            return PicsResult;
@@ -246,7 +246,7 @@ namespace Application.Services.classes
         //            List<string> PicsResult = new List<string>();
         //            foreach (var pic in pics)
         //            {
-        //                PicsResult.Add(pic.Id.ToString());
+        //                PicsResult.Add(pic.commentId.ToString());
         //            }
 
         //            return PicsResult;

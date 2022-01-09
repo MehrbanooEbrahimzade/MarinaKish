@@ -15,7 +15,7 @@ namespace Domain.Models
         //    SubmitDate = DateTime.Now;
         //}
 
-        protected Writ(string text, string fullname)
+        protected Writ(string text ,string fullname )
         {
             Id = new Guid();
 
