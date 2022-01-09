@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Helper
+﻿namespace Infrastructure
 {
     public class JwtToken
     {

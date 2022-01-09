@@ -1,8 +1,8 @@
 ﻿using Application.Commands.User;
+using Application.Exceptions;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
-using Infrastructure.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -94,7 +94,7 @@ namespace Application.Services.classes
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
 
             if (user == null)
-                throw new Exception("شماره وارد شده صحیح نمی باشد");
+                throw new NotFoundExeption(nameof(User), command.PhoneNumber, command.PhoneNumber);
 
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
 
