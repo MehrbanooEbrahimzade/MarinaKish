@@ -2,7 +2,7 @@
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IConversationRepository : IGenericRepository<Conversation>
+    public interface IConversationRepository
     {
         //        /// <summary>
         //        /// دریافت کاربر با آیدی

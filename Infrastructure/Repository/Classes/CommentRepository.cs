@@ -1,5 +1,9 @@
-﻿using Domain.RepasitoryInterfaces;
+﻿using Domain.Models;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Classes
 {
@@ -8,6 +12,26 @@ namespace Infrastructure.Repository.Classes
         public CommentRepository(DatabaseContext context)
         {
 
+        }
+
+        Task<bool> IGenericRepository<Comment>.AddAsync(Comment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Comment>> IGenericRepository<Comment>.AllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IGenericRepository<Comment>.DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Comment> IGenericRepository<Comment>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         ///// <summary>
