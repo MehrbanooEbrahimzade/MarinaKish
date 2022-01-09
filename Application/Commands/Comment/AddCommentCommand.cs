@@ -6,13 +6,15 @@ namespace Application.Commands.Comment
 {
     public class AddCommentCommand : CommandBase
     {
-        
+
         public string Message { get; set; }
         public Guid FunId { get; set; }
         public Guid UserId { get; set; }
-        public string UserName { get; set; }
-        public FunType FunType { get; set; }
-        public string  PhoneNumber { get; set; }
+        public string FullName { get; set; }
+
+        //public string UserName { get; set; }
+        //public FunType FunType { get; set; }
+        //public string  PhoneNumber { get; set; }
 
 
         /// <summary>

@@ -1,5 +1,7 @@
-﻿using Domain.RepasitoryInterfaces;
+﻿using Domain.Models;
+using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Classes
 {
@@ -10,14 +12,15 @@ namespace Infrastructure.Repository.Classes
 
         }
 
-        ///// <summary>
-        ///// اضافه کردن کامنت به تیبل
-        ///// </summary>
-        //public async Task<bool> AddAsync(Comment comment)
-        //{ 
-        //    await _context.Comments.AddAsync(comment);
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+        /// <summary> 
+        /// اضافه کردن کامنت به تیبل
+        /// </summary>
+        public async Task<bool> AddAsync(Comment comment)
+        {
+            await _context.Comments.AddAsync(comment);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         ///// <summary>
         ///// دریافت کامنت با آیدی

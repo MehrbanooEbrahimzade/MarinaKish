@@ -23,8 +23,33 @@ namespace Domain.Models
             SubmitDate = DateTime.Now;
         }
 
+        public Comment(string text, Guid funId,Guid userId,string fullname) : base(text,fullname)
+        {
+            Id = Guid.NewGuid();
+
+            Text = text;
+
+            FunId = funId;
+
+            UserId = userId;
+
+            Status = Status.Waiting;
+
+            SubmitDate = DateTime.Now;
+
+        }
+
+
         private Comment() : base() { }
 
+        /// <summary>
+        /// ای دیه کاربر
+        /// </summary>
+        public Guid UserId { get; private set; }
+
+        /// <summary>
+        /// ای دیه تفریح 
+        /// </summary>
         public Guid FunId { get; private set; }
 
         /// <summary>
@@ -45,7 +70,7 @@ namespace Domain.Models
         /// <summary>
         /// شماره تلفن کاربر
         /// </summary>
-        public string UserPhoneNumber { get; private set; }
+        public string UserPhoneNumber { get; private set; } //فعلا کاربردی توش ندیدم
 
 
 

@@ -14,7 +14,7 @@ namespace Application.Services.interfaces
         //Task<CommentDto> AddCommentToFun(AddCommentCommand command);
         ////public async Task<CommentDto> BlockingComment(Guid id)
         ////public async Task<int> BlockAllUserComments(Guid id)
-        ///// <summary>
+        ///// <summary> 
         ///// تایید شدن یا نشدن کامنت
         ///// </summary>
         //Task<bool> ChangeCommentStatus(ChangeCommentStatusCommand command);

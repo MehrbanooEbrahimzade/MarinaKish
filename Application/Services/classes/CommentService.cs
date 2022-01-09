@@ -6,44 +6,48 @@ using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
+using Domain.RepasitoryInterfaces;
 
 namespace Application.Services.classes
 {
 
     public class CommentService : ICommentService
     {
-        //        private readonly ICommentRepository _commentRepository;
-        //        private readonly IUserRepository _userRepository;
-        //        private readonly IFunRepository _funRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IFunRepository _funRepository;
 
 
-        //        public CommentService(ICommentRepository commentRepository, IUserRepository userRepository, IFunRepository funRepository)
-        //        {
-        //            _commentRepository = commentRepository;
-        //            _userRepository = userRepository;
-        //            _funRepository = funRepository;
-        //        }
+        public CommentService(ICommentRepository commentRepository, IUserRepository userRepository, IFunRepository funRepository)
+        {
+            _commentRepository = commentRepository;
+            _userRepository = userRepository;
+            _funRepository = funRepository;
+        }
 
-        //        /// <summary>
-        //        /// اضافه کردن کامنت
-        //        /// </summary>
-        //        public async Task<CommentDto> AddCommentToFun(AddCommentCommand command)
-        //        {
-        //            var user = await _userRepository.GetUserById(command.UserId);
-        //            var fun = await _funRepository.GetActiveFunByIdAsynch(command.FunId);
+        /// <summary>
+        /// اضافه کردن کامنت
+        /// </summary>
+        public async Task<CommentDto> AddCommentToFun(AddCommentCommand command)
+        {
+            var user = await _userRepository.GetUserById(command.UserId);
+            if (user == null)
+                throw new NullReferenceException("چنین کاربری یافت نشد");
 
-        //            if (user == null || fun == null)
-        //                return null;
+            var fun = await _funRepository.GetActiveFunByIdAsynch(command.FunId);
+            if (fun == null)
+                throw new NullReferenceException("چنین تفریحی یافت نشد");
 
-        //            var commentObj = new Comment(command.Message, command.FunId,  user.PhoneNumber, user.UserName);
 
-        //            var addCommentResult = await _commentRepository.AddAsync(commentObj);
+            var commentObj = new Comment(command.Message, command.FunId,command.UserId,command.FullName);
 
-        //            if (!addCommentResult)
-        //                return null;
-        //            return commentObj.ToDto();
+            var addCommentResult = await _commentRepository.AddAsync(commentObj);
 
-        //        }
+            if (!addCommentResult)
+                return null;
+            return commentObj.ToDto();
+
+        }
 
         //        /// <summary>
         //        /// تایید شدن یا نشدن کامنت
