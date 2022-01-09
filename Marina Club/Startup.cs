@@ -77,8 +77,7 @@ namespace Marina_Club
             services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository2, UserRepository>();
-            services.AddScoped<IUserRepository2, UserRepository2>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // AddScoped for Fun model(table)
             services.AddTransient<IFunService, FunService>();

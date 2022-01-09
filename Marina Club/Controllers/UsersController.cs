@@ -45,6 +45,16 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
         }
+        [AllowAnonymous]
+        [HttpPost("send")]
+        public async Task<IActionResult> SendVerifyCodeAgain(RegisterUserCommand command)
+        {
+            command.PhoneNumber = CurrentUser.PhoneNumber;
+            var result = await _identity.SendVerifyCodeAgain(command);
+            if (result)
+                return OkResult(ApiMessage.verifyCodeSent);
+            return StatusCode(404)ک
+        }
         /// <summary>
         ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
         /// </summary>

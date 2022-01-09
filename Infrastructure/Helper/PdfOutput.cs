@@ -2,12 +2,11 @@
 using Aspose.Pdf.Text;
 using System;
 using System.IO;
-
 namespace Infrastructure.Helper
 {
-    public  class PdfOutput
+    public class PdfOutput
     {
-        public Document GeneratePdf(TicketDto ticket)
+        public Document GeneratePdf()
         {
 
             #region DirectoryPath
@@ -168,7 +167,7 @@ namespace Infrastructure.Helper
             page.PageInfo.Width = 520;
             page.PageInfo.Height = 350;
 
-            var fileName = "ticket.pdf" + GenerateFileNumber();
+            var fileName = "ticket" + GenerateFileNumber() + ".pdf";
             document.Save(path + fileName);
 
 
@@ -186,3 +185,4 @@ namespace Infrastructure.Helper
         }
     }
 }
+

@@ -43,6 +43,7 @@ namespace Application.Services.classes
             {
                 user = new User(command.PhoneNumber);
                 var result = _userManager.CreateAsync(user, user.PhoneNumber);
+                
             }
 
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
@@ -50,7 +51,25 @@ namespace Application.Services.classes
             await SendSms(user.PhoneNumber, code);
             return;
         }
-
+        public async Task<bool> SendVerifyCodeAgain(RegisterUserCommand command)
+        {
+            try
+            {
+                var user = await _userManager.Users.SingleOrDefaultAsync(x => x.PhoneNumber.Equals(command.PhoneNumber));
+                if (user != null)
+                {
+                    var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
+                    await SendSms(user.PhoneNumber, code);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} sendverifycode method error", typeof(IdentityService));
+                return false;
+            }
+        }
         private async Task SendSms(string phoneNumber, string code)
         {
             try

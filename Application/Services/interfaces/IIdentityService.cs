@@ -9,6 +9,7 @@ namespace Application.Services.interfaces
     {
         Task RegisterAsync(RegisterUserCommand command);
         Task<string> LoginAsync(UserLoginCommand command);
+        Task<bool> SendVerifyCodeAgain(RegisterUserCommand command);
         Task CompleteProfile(CompleteProfileCommand command);
         Task<User> UpdateProfileAsync(UpdateUserCommand command);
         Task<bool> DeleteUser(Guid id);
