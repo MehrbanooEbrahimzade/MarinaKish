@@ -28,7 +28,7 @@ namespace Domain.RepasitoryInterfaces
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>
-        //    Task<Fun> GetFunsByFunNameAsynch(FunType fun);
+        //    Task<Fun> GetFunsByFunNameAsync(FunType fun);
 
         //    /// <summary>
         //    /// دریافت تفریح با ایدی تفریح

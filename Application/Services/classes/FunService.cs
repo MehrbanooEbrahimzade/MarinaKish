@@ -5,19 +5,19 @@ using Application.Commands.Fun;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.RepasitoryInterfaces;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Infrastructure.Repository.interfaces;
+using Domain.IConfiguration;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class FunService : IFunService
     {
-        private readonly IFunRepository _funRepository;
-
-        public FunService(IFunRepository funRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
+        public FunService(IUnitOfWork unitOfWork,ILogger logger)
         {
-            _funRepository = funRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Application.Services.classes
         public Guid AddFunAsync(AddFunCommand command)
         {
             var fun = command.ToModel();
-            _funRepository.AddFunAsync(fun);
+            _unitOfWork.Funs.AddAsync(fun);
             return fun.Id;
         }
 
@@ -35,8 +35,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task UpdateFunAsync(UpdateFunCommand command)
         {
-            var fun = await _funRepository.GetFunByIdAsynch(command.FunId);
-            await _funRepository.DeleteSiderPicturesByFunAsync(fun);
+            var fun = await _unitOfWork.Funs.GetByIdAsync(command.FunId);
+            await _unitOfWork.Funs.DeleteSliderPicturesByFunAsync(fun);
 
             if (fun == null)
             {
@@ -50,7 +50,7 @@ namespace Application.Services.classes
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
                     command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
-            var save = await _funRepository.UpdateFunAsync();
+            var save = await _unitOfWork.Funs.UpdateFunAsync();
             if (!save)
             {
                 throw new Exception("Not Save");
@@ -62,7 +62,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task DeleteFunAsync(Guid id)
         {
-            await _funRepository.DeleteFunAsync(id);
+            await _unitOfWork.Funs.DeleteAsync(id);
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<FunDto>> GetAllFunAsync()
         {
-            var funs = await _funRepository.GetAllFunAsync();
-            return funs.ToDto();
+            var funs = await _unitOfWork.Funs.AllAsync();
+            return (List<FunDto>) funs.ToDto();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<FunDto> GetOneFunAsync(Guid id)
         {
-            var fun = await _funRepository.GetFunByIdAsynch(id);
+            var fun = await _unitOfWork.Funs.GetByIdAsync(id);
             return fun?.ToDto();
         }
 
@@ -88,7 +88,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<FunDto> GetFunsWithFunNameAsynch(string name)
         {
-            var fun = await _funRepository.GetFunsByFunNameAsynch(name);
+            var fun = await _unitOfWork.Funs.GetFunsByFunNameAsync(name);
             return fun?.ToDto();
         }
 
@@ -97,17 +97,17 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> DisActiveFunByIdAsynch(Guid id)
         {
-            var result = _funRepository.CheckFunTypeIsExistAsynch(id);
+            var result = _unitOfWork.Funs.CheckFunTypeIsExistAsync(id);
             if (await result == false)
             {
                 throw new NullReferenceException();
             }
 
-            var fun = await _funRepository.GetActiveFunByIdAsynch(id);
+            var fun = await _unitOfWork.Funs.GetActiveFunByIdAsynch(id);
             if (fun == null)
                 return false;
 
-            var funActiveSchedules = await _funRepository.GetAllFunActiveSchedulesById(id);
+            var funActiveSchedules = await _unitOfWork.Funs.GetAllFunActiveSchedulesById(id);
 
             foreach (var schedule in funActiveSchedules)
             {
@@ -115,7 +115,7 @@ namespace Application.Services.classes
             }
 
             fun.SetIsActive(false);
-            return await _funRepository.UpdateFunAsync();
+            return await _unitOfWork.Funs.UpdateFunAsync();
         }
 
         /// <summary>
@@ -123,10 +123,10 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> ReActiveFunByIdAsynch(Guid id)
         {
-            var fun = await _funRepository.GetDisActiveFunByIdAsynch(id);
+            var fun = await _unitOfWork.Funs.GetDisActiveFunByIdAsynch(id);
             if (fun == null)
                 return false;
-            var funDisActiveSchedules = await _funRepository.GetAllFunDisActiveSchedulesById(id);
+            var funDisActiveSchedules = await _unitOfWork.Funs.GetAllFunDisActiveSchedulesById(id);
 
             foreach (var schedule in funDisActiveSchedules)
             {
@@ -134,7 +134,7 @@ namespace Application.Services.classes
             }
 
             fun.SetIsActive(true);
-            return await _funRepository.UpdateFunAsync();
+            return await _unitOfWork.Funs.UpdateFunAsync();
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<FunDto>> GetAllActivedFunAsynch()
         {
-            var funs = await _funRepository.GetAllActivedFunAsynh();
-            return funs.Count == 0 ? null : funs.ToDto();
+            var funs = await _unitOfWork.Funs.GetAllActiveFunAsync();
+            return (List<FunDto>) (funs.Count == 0 ? null : funs.ToDto());
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<FunDto>> GetAllDisActivedFunAsynch()
         {
-            var funs = await _funRepository.GetAllDisActivedFunAsynch();
-            return funs.Count == 0 ? null : funs.ToDto();
+            var funs = await _unitOfWork.Funs.GetAllDisActiveFunAsync();
+            return (List<FunDto>) (funs.Count == 0 ? null : funs.ToDto());
         }
     }
 }

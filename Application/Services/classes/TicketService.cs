@@ -30,7 +30,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command)
         {
-            //var fun = await _funRepository.GetFunsByFunNameAsynch(command.FunName);
+            //var fun = await _funRepository.GetFunsByFunNameAsync(command.FunName);
             //if (fun.ScheduleInfo.TotalCapacity.Equals(20))
             //    throw new Exception("ظرفیت سانس تکمیل شده");
 
