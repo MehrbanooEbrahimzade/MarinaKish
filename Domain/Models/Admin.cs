@@ -6,10 +6,10 @@ namespace Domain.Models
 {
     public class Admin : User
     {
-        public Admin(string email, string password) : base(email)
+        public Admin(string email) : base(email)
         {
             Email = email;
-            PasswordHash = password; 
+             
         }
         
     }
