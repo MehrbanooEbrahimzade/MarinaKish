@@ -17,7 +17,7 @@ using System.Net.Http.Formatting;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure;
+using Infrastructure.Helper;
 
 namespace Application.Services.classes
 {
