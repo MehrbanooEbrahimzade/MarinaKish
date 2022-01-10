@@ -2,6 +2,9 @@
 using Aspose.Pdf.Text;
 using System;
 using System.IO;
+using System.Reflection.Metadata;
+using Document = Aspose.Pdf.Document;
+
 namespace Infrastructure.Helper
 {
     public class PdfOutput
@@ -13,8 +16,8 @@ namespace Infrastructure.Helper
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","PdfImages");
-            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","Fonts","iranyekan.ttf");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
+            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
 
             #endregion
 

@@ -3,6 +3,11 @@ using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using System;
 using System.IO;
+using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Document = Aspose.Pdf.Document;
+using Page = Aspose.Pdf.Page;
+
 namespace Application.Helper
 {
     public class PdfOutput
@@ -14,8 +19,8 @@ namespace Application.Helper
 
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","PdfImages");
-            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","Fonts","iranyekan.ttf");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
+            var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
 
             #endregion
 
