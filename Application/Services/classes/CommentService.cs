@@ -51,19 +51,6 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// تایید شدن یا نشدن کامنت
-        /// </summary>
-        public async Task<bool> ChangeCommentStatus(ChangeCommentStatusCommand command)
-        {
-            var comment = await _commentRepository.GetById(command.commentId);
-
-            comment.Switching(command.Status);
-
-            return await _commentRepository.SaveChangeAsync();
-        }
-
-
-        /// <summary>
         /// تایید شدن لیستی از کامنت ها
         /// </summary>
         public async Task<bool> OkStatusCommentList(ChangeStatusCommentListCommand command)
@@ -118,7 +105,8 @@ namespace Application.Services.classes
                 throw new Exception("چنین کامنتی یافت نشد");
 
             comment.UpdateCommentLikes();
-            return await _commentRepository.SaveChangeAsync();
+             await _commentRepository.SaveChangeAsync();
+            return true;
         }
 
         /// <summary>
@@ -131,7 +119,8 @@ namespace Application.Services.classes
                 return false;
 
             comment.UpdateCommentDislikes();
-            return await _commentRepository.SaveChangeAsync();
+             await _commentRepository.SaveChangeAsync();
+            return true;
         }
 
      
