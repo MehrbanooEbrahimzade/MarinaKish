@@ -9,9 +9,9 @@ namespace Application.Services.classes
     {
         //   public void addItem(TicketItem item)
         //{
-        //    if (CartItems.Exists(i => i.Id == item.Id))
+        //    if (CartItems.Exists(i => i.commentId == item.commentId))
         //    {
-        //        CartItems.Find(i => i.CartItem.Id == item.Id)
+        //        CartItems.Find(i => i.CartItem.commentId == item.commentId)
         //            .Quantity += 1;
         //    }
         //    else
@@ -23,7 +23,7 @@ namespace Application.Services.classes
         //public void removeItem(int itemId)
         //{
         //    var item = CartItems
-        //        .SingleOrDefault(c => c.CartItem.Id == itemId);
+        //        .SingleOrDefault(c => c.CartItem.commentId == itemId);
         //    if (item?.Quantity <= 1)
         //    {
         //        CartItems.Remove(item);

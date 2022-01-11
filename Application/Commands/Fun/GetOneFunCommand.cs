@@ -8,7 +8,7 @@ namespace Application.Commands.Fun
     public class GetOneFunCommand : CommandBase
     {
         /// <summary>
-        /// Id 
+        /// commentId 
         /// </summary>
         public Guid Id { get; set; }
 

@@ -107,8 +107,8 @@ namespace Application.Mappers
         /// </summary>
         public static Comment ToModel(this AddCommentCommand command)
         {
-            return new Comment(command.Message, command.FunId, command.PhoneNumber,
-                command.UserName);
+            return new Comment(command.Message, command.FunId, command.UserId,
+                command.FullName);
 
         }
 

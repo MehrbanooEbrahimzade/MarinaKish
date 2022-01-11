@@ -78,7 +78,7 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.ProfileUpdated);
         }
 
-        //TODO: Get By Id
+        //TODO: Get By commentId
         [HttpGet("{id}")]
         public async Task<IActionResult> SearchByPhoneAsync(Guid id)
         {
@@ -202,9 +202,9 @@ namespace Marina_Club.Controllers
         //[HttpPut("Update-profile/{id}")]
         //public async Task<IActionResult> UpdateProfileAsync(Guid id, UpdateUserCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = "1-Id is wrong, 2-firstname can't be null(max : 70 charachter), 3-Gender can't be null(1:man 2:woman 3:other), 4-username can null(min:5 && max:50), 5-email can null ( but maybe you entered wrong email )" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = "1-commentId is wrong, 2-firstname can't be null(max : 70 charachter), 3-Gender can't be null(1:man 2:woman 3:other), 4-username can null(min:5 && max:50), 5-email can null ( but maybe you entered wrong email )" });
 
         //    var result = await _userService.UpdateProfileAsync(command);
         //    if (result == null)

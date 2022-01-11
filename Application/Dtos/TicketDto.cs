@@ -6,7 +6,7 @@ namespace Application.Dtos
     public class TicketDto
     {
         /// <summary>
-        /// Id 
+        /// commentId 
         /// </summary>
         public Guid Id { get; set; }
 

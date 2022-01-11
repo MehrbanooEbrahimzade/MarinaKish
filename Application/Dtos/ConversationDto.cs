@@ -7,7 +7,7 @@ namespace Application.Dtos
     public class ConversationDto
     {
         /// <summary>
-        /// Id
+        /// commentId
         /// </summary>
         public Guid Id { get; set; }
 

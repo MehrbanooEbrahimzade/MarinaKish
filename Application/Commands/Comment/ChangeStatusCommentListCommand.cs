@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using Application.Validators.Comment;
 using Domain.Enums;
@@ -11,11 +11,6 @@ namespace Application.Commands.Comment
         /// آی دی ها
         /// </summary>
         public List<Guid> IDs { get; set; }
-
-        /// <summary>
-        /// وضعیت کامنت
-        /// </summary>
-        public Status Status { get; set; }
 
         public override bool Validate()
         {
