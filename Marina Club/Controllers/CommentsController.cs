@@ -40,7 +40,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> ChangeVerifyingOkCommentList(ChangeStatusCommentListCommand command)
         {
             var result = await _commentService.OkStatusCommentList(command);
-            if (!result)
+            if (result==false)
                 return BadReq(ApiMessage.CommentsStatusNotChanged, new { Reasons = $"1-any comment not found, 2-comments already in this status" });
             return OkResult(ApiMessage.CommentsStatusChanged);
         }
@@ -52,7 +52,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> ChangeVerifyingNotOkCommentList(ChangeStatusCommentListCommand command)
         {
             var result = await _commentService.NotOkStatusCommentList(command);
-            if (!result)
+            if (result==false)
                 return BadReq(ApiMessage.CommentsStatusNotChanged, new { Reasons = $"1-any comment not found, 2-comments already in this status" });
             return OkResult(ApiMessage.CommentsStatusChanged);
         }
