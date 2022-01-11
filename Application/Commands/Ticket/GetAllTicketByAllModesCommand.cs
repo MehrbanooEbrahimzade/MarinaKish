@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Commands.Ticket
 {
-    public class GetByFilterCommand : CommandBase
+    public class GetAllTicketByAllModesCommand : CommandBase
     {
 
         /// <summary>

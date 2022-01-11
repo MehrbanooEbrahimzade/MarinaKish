@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Validators.Ticket
 {
-    public class GetAllTicketByAllModesCommandValidator : AbstractValidator<GetByFilterCommand>
+    public class GetAllTicketByAllModesCommandValidator : AbstractValidator<GetAllTicketByAllModesCommand>
     {
         public GetAllTicketByAllModesCommandValidator()
         {
