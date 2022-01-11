@@ -18,7 +18,7 @@ namespace Application.Services.classes
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
 
-
+         
         public TicketService(ILogger<TicketService> logger, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

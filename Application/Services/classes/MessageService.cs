@@ -33,7 +33,7 @@ namespace Application.Services.classes
         ////    var addAndSave = await _messageRepository.AddMessage(messageObj);
         ////    if (!addAndSave)
         ////        return null;
-        ////    return messageObj.Id;
+        ////    return messageObj.commentId;
         ////}
 
         /////// <summary>

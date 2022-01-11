@@ -7,7 +7,7 @@ namespace Application.Dtos
     {
 
         /// <summary>
-        /// Id
+        /// commentId
         /// </summary>
         public Guid Id { get; set; }
 

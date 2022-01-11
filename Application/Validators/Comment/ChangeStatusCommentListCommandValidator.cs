@@ -8,7 +8,7 @@ namespace Application.Validators.Comment
         public ChangeStatusCommentListCommandValidator()
         {
             RuleFor(x => x.IDs)
-                .NotNull().WithMessage("Comment[Id] is null. you must enter at least 1 id");
+                .NotNull().WithMessage("Comment[commentId] is null. you must enter at least 1 id");
 
             RuleFor(x => x.Status)
                 .NotNull().WithMessage(" تغییر وضعیت کامنت را وارد کنید")

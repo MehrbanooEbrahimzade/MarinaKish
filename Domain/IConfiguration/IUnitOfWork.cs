@@ -12,6 +12,7 @@ namespace Domain.IConfiguration
         IFunRepository Funs { get; }
         IFileRepository FileS { get; }
         IContactUsRepository ContactUs { get; }
+        ICommentRepository comment { get; }
 
 
         Task CompleteAsync();

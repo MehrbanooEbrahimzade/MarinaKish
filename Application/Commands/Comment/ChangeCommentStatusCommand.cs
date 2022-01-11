@@ -7,9 +7,9 @@ namespace Application.Commands.Comment
     public class ChangeCommentStatusCommand : CommandBase
     {
         /// <summary>
-        /// Id 
+        /// commentId 
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid commentId { get; set; }
 
         /// <summary>
         /// تایید شدن

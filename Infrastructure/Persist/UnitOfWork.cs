@@ -31,6 +31,7 @@ namespace Infrastructure.Persist
 
         public IContactUsRepository ContactUs { get; private set; }
 
+        public ICommentRepository comment { get; private set; }
         public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
@@ -42,6 +43,7 @@ namespace Infrastructure.Persist
             Schedules = new ScheduleRepository(_context, _logger);
             Funs = new FunRepository(_context, _logger);
             ContactUs = new ContactUsRepository(_context, _logger);
+            comment = new CommentRepository(_context, _logger);
         }
 
         public async Task CompleteAsync()

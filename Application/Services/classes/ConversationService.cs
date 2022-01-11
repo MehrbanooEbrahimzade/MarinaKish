@@ -28,7 +28,7 @@ namespace Application.Services.classes
         //            var addAndSave = await _conversationRepository.AddConversation(conversationObj);
         //            if (!addAndSave)
         //                return null;
-        //            return conversationObj.Id;
+        //            return conversationObj.commentId;
         //        }
 
         //        /// <summary>
@@ -137,7 +137,7 @@ namespace Application.Services.classes
         //            var conversations = await _conversationRepository.GetAllConversations();
         //            foreach (var conversation in conversations)
         //            {
-        //                var conversationMessages = await _conversationRepository.GetAllConversationMessageById(conversation.Id);
+        //                var conversationMessages = await _conversationRepository.GetAllConversationMessageById(conversation.commentId);
         //                if (conversationMessages != null)
         //                    conversation.ToDto().RecentMessages = conversationMessages.ToDto();
         //            }
