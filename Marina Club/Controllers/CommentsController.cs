@@ -34,32 +34,30 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// تغییر وضعیت کامنت
+        /// تغییر وضعیت لیستی از کامنت ها
         /// </summary>
-        [HttpPut("ChangeStatus")]
-        public async Task<IActionResult> ChangeCommentStatus(ChangeCommentStatusCommand command)
+        [HttpPut("OkStatusList")]
+        public async Task<IActionResult> ChangeVerifyingOkCommentList(ChangeStatusCommentListCommand command)
         {
-
-            if (!command.Validate())
-                return BadReq(ApiMessage.WrongCommentId, new { Reason = $"1-enter commentID, 2-enter Status to change . 1: waiting 2:accepted 3:Declined 4:Blocked" });
-
-            var result = await _commentService.ChangeCommentStatus(command);
+            var result = await _commentService.OkStatusCommentList(command);
             if (!result)
-                return BadReq(ApiMessage.CommentStatusNotChanged, new { Reasons = $"1-comment not found, 2-there is a problem when saving changes. TryAgain!" });
-            return OkResult(ApiMessage.CommentStatusChanged);
+                return BadReq(ApiMessage.CommentsStatusNotChanged, new { Reasons = $"1-any comment not found, 2-comments already in this status" });
+            return OkResult(ApiMessage.CommentsStatusChanged);
         }
 
         /// <summary>
         /// تغییر وضعیت لیستی از کامنت ها
         /// </summary>
-        [HttpPut("ChangeStatusList")]
-        public async Task<IActionResult> ChangeVerifyingCommentList(ChangeStatusCommentListCommand command)
+        [HttpPut("NotOkStatusList")]
+        public async Task<IActionResult> ChangeVerifyingNotOkCommentList(ChangeStatusCommentListCommand command)
         {
-            var result = await _commentService.ChangeStatusCommentList(command);
+            var result = await _commentService.NotOkStatusCommentList(command);
             if (!result)
                 return BadReq(ApiMessage.CommentsStatusNotChanged, new { Reasons = $"1-any comment not found, 2-comments already in this status" });
             return OkResult(ApiMessage.CommentsStatusChanged);
         }
+
+
 
 
         /// <summary>

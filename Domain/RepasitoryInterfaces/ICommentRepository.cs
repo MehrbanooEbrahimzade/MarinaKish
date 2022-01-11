@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface ICommentRepository
+    public interface ICommentRepository 
     {
 
         /// <summary> 

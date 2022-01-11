@@ -14,15 +14,15 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<CommentDto> AddCommentToFun(AddCommentCommand command);
 
-        /// تایید شدن یا نشدن کامنت
+        /// <summary>
+        /// تایید شدن لیستی از کامنت ها
         /// </summary>
-        Task<bool> ChangeCommentStatus(ChangeCommentStatusCommand command);
-
+        Task<bool> OkStatusCommentList(ChangeStatusCommentListCommand command);
 
         /// <summary>
-        /// تایید شدن یا نشدن لیستی از کامنت ها
+        /// تایید شدن لیستی از کامنت ها
         /// </summary>
-        Task<bool> ChangeStatusCommentList(ChangeStatusCommentListCommand command);
+        Task<bool> NotOkStatusCommentList(ChangeStatusCommentListCommand command);
 
         /// <summary>
         /// گرفتن همه کامنت های  یک تفریح با حالات مختلف

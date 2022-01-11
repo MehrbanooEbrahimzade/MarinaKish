@@ -12,11 +12,6 @@ namespace Application.Commands.Comment
         /// </summary>
         public List<Guid> IDs { get; set; }
 
-        /// <summary>
-        /// وضعیت کامنت
-        /// </summary>
-        public Status Status { get; set; }
-
         public override bool Validate()
         {
             return new ChangeStatusCommentListCommandValidator().Validate(this).IsValid;

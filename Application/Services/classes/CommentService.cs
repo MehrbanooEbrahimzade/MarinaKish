@@ -64,17 +64,37 @@ namespace Application.Services.classes
 
 
         /// <summary>
-        /// تایید شدن یا نشدن لیستی از کامنت ها
+        /// تایید شدن لیستی از کامنت ها
         /// </summary>
-        public async Task<bool> ChangeStatusCommentList(ChangeStatusCommentListCommand command)
+        public async Task<bool> OkStatusCommentList(ChangeStatusCommentListCommand command)
         {
             foreach (var guid in command.IDs)
             {
                 var comment = await _commentRepository.GetById(guid);
-                comment.Switching(command.Status);
+                comment.Switching(Status.Accepted);
             }
-            return await _commentRepository.SaveChangeAsync();
+             await _commentRepository.SaveChangeAsync();
+            return true;
         }
+
+        /// <summary>
+        /// تایید نشدن لیستی از کامنت ها
+        /// </summary>
+        public async Task<bool> NotOkStatusCommentList(ChangeStatusCommentListCommand command)
+        {
+            foreach (var guid in command.IDs)
+            {
+                var comment = await _commentRepository.GetById(guid);
+                if (command == null)
+                    throw new Exception(" کامنت یا یکی از کامت های ورودی یافت نشد");
+
+                comment.Switching(Status.Declined);
+            }
+            await _commentRepository.SaveChangeAsync();
+            return true;
+        }
+
+
 
         /// <summary>
         /// گرفتن همه کامنت های  یک تفریح با حالات مختلف
@@ -113,6 +133,8 @@ namespace Application.Services.classes
             comment.UpdateCommentDislikes();
             return await _commentRepository.SaveChangeAsync();
         }
+
+     
 
         //        /// <summary>
         //        /// تغییر وضعیت دادن یک کامنت با آیدی
