@@ -3,6 +3,7 @@ using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,58 +11,52 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : GenericRepository<Comment>, ICommentRepository
     {
-        public CommentRepository(DatabaseContext context)
-        {
-
-        }
-
-        Task<bool> IGenericRepository<Comment>.AddAsync(Comment entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Comment>> IGenericRepository<Comment>.AllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IGenericRepository<Comment>.DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Comment> IGenericRepository<Comment>.GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public CommentRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
         /// <summary> 
         /// اضافه کردن کامنت به تیبل
         /// </summary>
-        public async Task<bool> AddAsync(Comment comment)
-        {
-            await _context.Comments.AddAsync(comment);
 
-            return await _context.SaveChangesAsync() > 0;
+        public override async Task<bool> AddAsync(Comment comment)
+        {
+            try
+            {
+                await dbSet.AddAsync(comment);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Add method error", typeof(CommentRepository));
+                return false;
+            }
         }
+
 
         /// <summary>
         /// دریافت کامنت با آیدی
         /// </summary>
-        public async Task<Comment> GetById(Guid id)
+        public override async Task<Comment> GetByIdAsync(Guid id)
         {
-            return await _context.Comments.FirstOrDefaultAsync(x => x.Id == id);
-        }
+            try
+            {
+                var getcomment = await dbSet.FirstOrDefaultAsync(f => f.Id == id);
 
-        /// <summary>
-        /// ذخیره کردن عملیات انجام شده
-        /// </summary>
-        public async Task<bool> SaveChangeAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
+                if (getcomment == null)
+                    throw new NullReferenceException("کامنتی شناسایی نشد");
+
+                return getcomment;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} GetById method error", typeof(TicketRepository));
+                return null;
+            }
+
         }
+      
 
         /// <summary>
         /// دریافت کامنت های یک تفریح با وضعیت کامنت

@@ -8,22 +8,22 @@ using Application.Services.interfaces;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Domain.Enums;
+using Domain.IConfiguration;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
 
     public class CommentService : ICommentService
     {
-        private readonly ICommentRepository _commentRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IFunRepository _funRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-
-        public CommentService(ICommentRepository commentRepository, IUserRepository userRepository, IFunRepository funRepository)
+        public CommentService(ILogger<CommentService> logger, IUnitOfWork unitOfWork)
         {
-            _commentRepository = commentRepository;
-            _userRepository = userRepository;
-            _funRepository = funRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+
         }
 
         /// <summary>
@@ -31,23 +31,24 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<CommentDto> AddCommentToFun(AddCommentCommand command)
         {
-            var user = await _userRepository.GetUserById(command.UserId);
+            var user = await _unitOfWork.Users.GetUserById(command.UserId);//اینو بنداز روی یونیت اف ورگ
             if (user == null)
                 throw new NullReferenceException("چنین کاربری یافت نشد");
 
-            var fun = await _funRepository.GetActiveFunByIdAsynch(command.FunId);
+            var fun = await _unitOfWork.Funs.GetActiveFunByIdAsynch(command.FunId); //اینو بنداز روی یونیت اف ورگ
             if (fun == null)
                 throw new NullReferenceException("چنین تفریحی یافت نشد");
 
             command.FullName = user.FullName;
             var commentObj = new Comment(command.Message, command.FunId, command.UserId, command.FullName);
 
-            var addCommentResult = await _commentRepository.AddAsync(commentObj);
+            var addCommentResult = await _unitOfWork.comment.AddAsync(commentObj);
             if (addCommentResult == false)
                 throw new Exception("عملیات ادد انجام نشد");
 
-            return commentObj.ToDto();
+            await _unitOfWork.CompleteAsync();
 
+            return commentObj.ToDto();
         }
 
         /// <summary>
@@ -57,10 +58,13 @@ namespace Application.Services.classes
         {
             foreach (var guid in command.IDs)
             {
-                var comment = await _commentRepository.GetById(guid);
+                var comment = await _unitOfWork.comment.GetByIdAsync(guid);
+                if (comment == null)
+                    throw new Exception("چنین کامنتی یافت نشد");
+
                 comment.Switching(Status.Accepted);
             }
-             await _commentRepository.SaveChangeAsync();
+            await _unitOfWork.CompleteAsync();
             return true;
         }
 
@@ -71,13 +75,13 @@ namespace Application.Services.classes
         {
             foreach (var guid in command.IDs)
             {
-                var comment = await _commentRepository.GetById(guid);
+                var comment = await _unitOfWork.comment.GetByIdAsync(guid);
                 if (command == null)
                     throw new Exception(" کامنت یا یکی از کامت های ورودی یافت نشد");
 
                 comment.Switching(Status.Declined);
             }
-            await _commentRepository.SaveChangeAsync();
+            await _unitOfWork.CompleteAsync();
             return true;
         }
 
@@ -88,7 +92,7 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<CommentDto>> GetAllAcceptedCommentsForFun(GetAllCommand command)
         {
-            var comments = await _commentRepository.GetFunCommentsByStatus(command.Funid, command.status);
+            var comments = await _unitOfWork.comment.GetFunCommentsByStatus(command.Funid, command.status); //یونیت اف ورک اینو میتونی بسازی
             if (comments == null)
                 throw new Exception("کامنتی با چنین ایدیی یافت نشد");
 
@@ -100,12 +104,12 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> IncreaseLikeComment(Guid id)
         {
-            var comment = await _commentRepository.GetById(id);
+            var comment = await _unitOfWork.comment.GetByIdAsync(id);
             if (comment == null)
                 throw new Exception("چنین کامنتی یافت نشد");
 
             comment.UpdateCommentLikes();
-             await _commentRepository.SaveChangeAsync();
+            await _unitOfWork.CompleteAsync();
             return true;
         }
 
@@ -114,16 +118,16 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> DecreaseLikeComment(Guid id)
         {
-            var comment = await _commentRepository.GetById(id);
+            var comment = await _unitOfWork.comment.GetByIdAsync(id);
             if (comment == null)
-                return false;
+                throw new Exception("چنین کامنتی یافت نشد");
 
             comment.UpdateCommentDislikes();
-             await _commentRepository.SaveChangeAsync();
+            await _unitOfWork.CompleteAsync();
             return true;
         }
 
-     
+
 
         //        /// <summary>
         //        /// تغییر وضعیت دادن یک کامنت با آیدی

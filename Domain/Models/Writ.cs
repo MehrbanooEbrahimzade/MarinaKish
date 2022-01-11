@@ -4,16 +4,7 @@ namespace Domain.Models
 {
     public abstract class Writ
     {
-        //protected Writ(string userName, string text)
-        //{
-        //    Id = new Guid();
-
-        //    UserName = userName;
-
-        //    Text = text;
-
-        //    SubmitDate = DateTime.Now;
-        //}
+  
 
         protected Writ(string text ,string fullname )
         {
@@ -32,8 +23,6 @@ namespace Domain.Models
 
 
         public Guid Id { get; protected set; }
-
-        public string UserName { get; protected set; } //فعلا کاربردی ندیدم
 
         public string FullName { get; protected set; }
 

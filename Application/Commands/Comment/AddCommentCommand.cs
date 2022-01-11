@@ -9,7 +9,7 @@ namespace Application.Commands.Comment
 
         public string Message { get; set; }
         public Guid FunId { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string FullName { get; set; } // اینو وارد نکن خودش میاره
 
         //public string UserName { get; set; }
