@@ -17,7 +17,8 @@ using Domain.RepasitoryInterfaces;
 using Infrastructure.Helper;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
-using Infrastructure.Repository.interfaces;
+using Domain.IConfiguration;
+using Marina_Club.Activator.MiddleWare;
 
 namespace Marina_Club
 {
@@ -69,12 +70,14 @@ namespace Marina_Club
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // AddScoped for users model(table)
             services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRepository2, UserRepository2>();
 
             // AddScoped for Fun model(table)
             services.AddTransient<IFunService, FunService>();
@@ -130,10 +133,9 @@ namespace Marina_Club
                 app.UseDeveloperExceptionPage();
                 
             }
-
             app.UseMvc();    
             app.UseAuthentication();
-            
+            app.UseMiddleware<ErrorHandlerMiddleWare>();
             //provider.MigrateDatabases();
         }
     }

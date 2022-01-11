@@ -8,7 +8,7 @@ namespace Application.Commands.Ticket
 {
     public class AddTicketToBasketCommand : CommandBase
     {
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// آی دیه مدل سانس ها

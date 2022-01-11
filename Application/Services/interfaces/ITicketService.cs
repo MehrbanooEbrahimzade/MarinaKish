@@ -15,7 +15,7 @@ namespace Application.Services.interfaces
         Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command);
 
         /// <summary> 
-        /// پاک کردن بلیط
+        /// پاک کردن بلیط  
         /// </summary>
         Task<bool> DeleteTicket(Guid id);
 
@@ -34,17 +34,27 @@ namespace Application.Services.interfaces
         /// گرفتن یک بلیط با شماره بلیط
         /// </summary>
         Task<TicketDto> GetOneTicket(Guid id);
-        
+
         /// <summary>
         /// عوض کزدن وضعیت یک بلیط
         /// </summary>
-        Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
+        Task<bool> ChangeTicketCondition(EditTicketConditionCommand command);
 
+        ///<summary>
+        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
+        /// </summary>
+        Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command);
+
+        /// <summary>
+        /// آوردن بلیط های رزرو شده ی یک کاربر
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<List<TicketDto>> GetReservedTickets(Guid id);
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>
-        Task<List<TicketDto>> GetAllbyPlaceOfSale(GetByFilterCommand Command);
-
+        //Task<List<TicketDto>> GetAllbyPlaceOfSale(GetAllTicketByAllModesCommand Command);
 
         ///// <summary>
         ///// ثبت خرید و فعال کردن(رزرو) بلیط
@@ -56,10 +66,10 @@ namespace Application.Services.interfaces
         ///// </summary>
         //Task<decimal?> CancelTicket(Guid id);
 
-        ///// <summary>
-        ///// دریافت مقدار پول کل بلیط های فروخته شده
-        ///// </summary>
-        //Task<decimal> ScheduleTicketsPrice(Guid id);
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده
+        /// </summary>
+        Task<decimal> ScheduleTicketsPrice(Guid schedulId);
 
         ///// <summary>
         ///// جست و جوی بلیط فعال با یک تاریخ

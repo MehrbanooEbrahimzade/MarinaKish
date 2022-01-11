@@ -1,4 +1,6 @@
-﻿namespace Domain.RepasitoryInterfaces
+﻿using Domain.Models;
+
+namespace Domain.RepasitoryInterfaces
 {
     public interface IConversationRepository
     {

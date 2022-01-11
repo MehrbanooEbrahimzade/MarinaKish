@@ -6,56 +6,151 @@ using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class ScheduleRepository : BaseRepository, IScheduleRepository
+    public class ScheduleRepository : GenericRepository<Schedule>, IScheduleRepository
     {
-        public ScheduleRepository(DatabaseContext context) : base(context)
+        public ScheduleRepository(DatabaseContext context, ILogger logger) : base(context, logger)
         {
 
         }
+        #region
 
-     
         /// <summary>
         /// اضافه کردن سانس به تیبل
         /// </summary>
-        public void AddScheduleAsync(List<Schedule> schedules)
+        public override async Task<bool> AddAsync(Schedule schedule)
         {
-            foreach (var x in schedules)
+            try
             {
-                 _context.Schedules.AddAsync(x);
-                 _context.SaveChangesAsync();
+                await dbSet.AddAsync(schedule);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{ Repo} Add method eror", typeof(ScheduleRepository));
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// دریافت سانس با آی دیه  سانس
+        /// </summary>
+        public override async Task<Schedule> GetByIdAsync(Guid id)
+        {
+            try
+            {
+                var Schedule = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
+                if (Schedule == null)
+                    throw new Exception("سانسی با این ایدی یافت نشد");
+
+                return Schedule;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Reop} GetById method error", typeof(ScheduleRepository));
+                return null;
             }
         }
 
-        ///// <summary>
-        ///// دریافت تفریح با اسم تفریح
-        ///// </summary>
-        public async Task<Fun> SeachNameRecreationAsync(Guid id, string name)
+        public async override Task<IEnumerable<Schedule>> AllAsync()
         {
-            return await _context.Funs.Include(f => f.ScheduleInfo)
-                .FirstOrDefaultAsync(f => f.Name == name && f.Id == id);
+            try
+            {
+                return await dbSet.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} All method error", typeof(ScheduleRepository));
+                return null;
+            }
         }
 
-        /// <summary>
-        /// اضافه کردن سانس به تیبل
-        /// </summary>
-        public async Task AddScheduleAsync(Schedule schedule)
+        public async override Task<bool> DeleteAsync(Guid id)
         {
-            await _context.Schedules.AddAsync(schedule);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var Schedule = await GetByIdAsync(id);
+                dbSet.Remove(Schedule);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} Delete method error", typeof(ScheduleRepository));
+                return false;
+            }
+        }
+
+        #endregion
+        /// <summary>
+        /// اضافه کردن سانس ها به تیبل
+        /// </summary>
+        public void AddScheduleAsync(List<Schedule> schedules)
+        {
+            try
+            {
+                dbSet.AddRangeAsync(schedules);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} add schedules eror ", typeof(ScheduleRepository));
+            }
+
+        }
+
+        public async Task<List<Schedule>> GetFunSchedulesByFunId(Guid FunId)
+        {
+            try
+            {
+                return await dbSet.Where(x => x.FunId == FunId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} find schedule eror ", typeof(ScheduleRepository));
+                return null;
+            }
         }
 
         /// <summary>
         /// پاک کردن همه سانس های یک تفریح
         /// </summary>
-        public async Task DeleteAllSchedulesOfaFun(Guid funId)
+        public async Task<bool> DeleteAllSchedulesOfaFun(Guid funId)
         {
-             _context.RemoveRange( _context.Schedules.Where(sc => sc.FunId == funId));
-             await _context.SaveChangesAsync();
-
+            try
+            {
+                var FunSchedules = await GetFunSchedulesByFunId(funId);
+                dbSet.RemoveRange(FunSchedules);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} add schedules eror ", typeof(ScheduleRepository));
+                return false;
+            }
         }
+
+
+
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
+        {
+            try
+            {
+                return await dbSet.SingleOrDefaultAsync(x => x.Id == id);
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} get active schedule eror ", typeof(ScheduleRepository));
+                return null;
+            }
+        }
+
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح
@@ -88,13 +183,6 @@ namespace Infrastructure.Repository.Classes
         //        .ToListAsync();
         //}
 
-        ///// <summary>
-        ///// ذخیره اعمال انجام شده
-        ///// </summary>
-        //public async Task<bool> UpdateScheduleAsync()
-        //{
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
 
         ///// <summary>
         ///// دریافت سانس با آیدی
@@ -167,15 +255,6 @@ namespace Infrastructure.Repository.Classes
         //        .Where(x => x.ExecuteDateTime < DateTime.Now && x.IsExist == true)
         //        .ToListAsync();
         //}
-
-        /// <summary>
-        /// دریافت سانس فعال با آیدی
-        /// </summary>
-        public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
-        {
-            return await _context.Schedules
-                .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
-        }
 
         ///// <summary>
         ///// گرفتن همه سانس ها برای تفریح

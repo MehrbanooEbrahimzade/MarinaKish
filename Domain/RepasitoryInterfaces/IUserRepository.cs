@@ -6,7 +6,20 @@ namespace Domain.RepasitoryInterfaces
 {
     public interface IUserRepository
     {
+
+        /// <summary>
+        ///  حذف کاربر با آی دی:
+        /// </summary>
+        Task<bool>  DeleteAsync(Guid id);
+
         Task<User> SearchAsync(Guid id);
+
+        /// <summary>
+        /// دریافت کاربر با آیدی
+        /// </summary>
+        Task<User> GetUserById(Guid id);
+
+
 
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
@@ -47,12 +60,6 @@ namespace Domain.RepasitoryInterfaces
         //        /// گرفتن کاربر با کد تایید :
         //        /// </summary>
         //        Task<User> GetUserByVerifyCode(string verifyCode);
-
-        /// <summary>
-        /// دریافت کاربر با آیدی
-        /// </summary>
-         Task<User> GetUserById(string id);
-
 
         //        /// <summary>
         //        /// پیدا کردن کاربر با نام کاربری

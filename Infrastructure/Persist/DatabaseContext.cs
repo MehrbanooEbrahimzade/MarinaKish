@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,8 +20,8 @@ namespace Infrastructure.Persist
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-       
         public DbSet<MyFile> MyFiles { get; set; }
         public DbSet<ContactUs> ContactUs { get; set; }
+        
     }
 }

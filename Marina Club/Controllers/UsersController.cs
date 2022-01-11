@@ -37,12 +37,23 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// چک کردن رمز ورود و ورود کاربر 
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginCommand command)
         {
             var jwtToken = await _identity.LoginAsync(command);
             return OkResult(ApiMessage.UserLoggedIn, jwtToken);
 
+        }
+        [AllowAnonymous]
+        [HttpPost("send")]
+        public async Task<IActionResult> SendVerifyCodeAgain(RegisterUserCommand command)
+        {
+            command.PhoneNumber = CurrentUser.PhoneNumber;
+            var result = await _identity.SendVerifyCodeAgain(command);
+            if (result)
+                return OkResult(ApiMessage.verifyCodeSent);
+            return StatusCode(404);
         }
         /// <summary>
         ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 
@@ -67,11 +78,12 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.ProfileUpdated);
         }
 
-        //TODO: Get By Id
+        //TODO: Get By commentId
         [HttpGet("{id}")]
         public async Task<IActionResult> SearchByPhoneAsync(Guid id)
         {
             var user = await _userService.SearchUserById(id);
+
             return OkResult(ApiMessage.UserFound, user);
         }
 
@@ -80,10 +92,10 @@ namespace Marina_Club.Controllers
         ///  حذف کاربر با آی دی
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveUser(string id)
+        public async Task<IActionResult> RemoveUser(Guid id)
         {
-            await _identity.DeleteUser(id);
-            return Ok("کاربر با موفقیت حذف شد");
+             await _identity.DeleteUser(id);
+            return OkResult(ApiMessage.Ok);
         }
 
 
@@ -190,9 +202,9 @@ namespace Marina_Club.Controllers
         //[HttpPut("Update-profile/{id}")]
         //public async Task<IActionResult> UpdateProfileAsync(Guid id, UpdateUserCommand command)
         //{
-        //    command.Id = id;
+        //    command.commentId = id;
         //    if (!command.Validate())
-        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = "1-Id is wrong, 2-firstname can't be null(max : 70 charachter), 3-Gender can't be null(1:man 2:woman 3:other), 4-username can null(min:5 && max:50), 5-email can null ( but maybe you entered wrong email )" });
+        //        return BadReq(ApiMessage.WrongInformation, new { Reasons = "1-commentId is wrong, 2-firstname can't be null(max : 70 charachter), 3-Gender can't be null(1:man 2:woman 3:other), 4-username can null(min:5 && max:50), 5-email can null ( but maybe you entered wrong email )" });
 
         //    var result = await _userService.UpdateProfileAsync(command);
         //    if (result == null)

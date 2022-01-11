@@ -3,9 +3,9 @@ using Infrastructure.Persist;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class MarineCoinTransferRepository : BaseRepository, IMarineCoinTransferRepository
+    public class MarineCoinTransferRepository : IMarineCoinTransferRepository
     {
-        public MarineCoinTransferRepository(DatabaseContext context) : base(context)
+        public MarineCoinTransferRepository(DatabaseContext context) 
         {
 
         }

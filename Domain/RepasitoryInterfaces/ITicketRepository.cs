@@ -1,108 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Enums;
 using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface ITicketRepository
+    public interface ITicketRepository : IGenericRepository<Ticket>
     {
 
-        /// <summary>
-        /// اضافه کردن بلیط 
-        /// </summary> 
-        Task<bool> AddTicketAsync(Ticket ticket);
-
-
-        /// <summary> 
-        /// گرفتن بلیط با آیدی
-        /// </summary>
-        Task<Ticket> GetTicketById(Guid id);
-
-
-        /// <summary>
-        /// ثبت تغییرات
-        /// </summary>
-        Task<bool> Update();
-
+        Task<List<Ticket>> GetAllScheduleTickets(Guid scheduleId);
 
         /// <summary>
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
         /// </summary>
         Task<decimal> OneDateReservedTicketsPriceSearchSum(DateTime firstDate);
 
-
-        /// <summary>
-        /// حذف بلیط از سبد خرید
-        /// </summary>
-        Task<bool> DeleteTicketsFromBasketBuy(Ticket ticket);
-
-
         /// <summary>
         /// دریافت بلیط در سبد خرید با آیدی
         /// </summary>
         Task<Ticket> GetTicketInBasketBuyById(Guid id);
 
+        /// <summary>
+        /// دریافت همه بلیط های یک تفریح با حالات متفاوت
+        /// </summary>
+        Task<List<Ticket>> GetAllTicketbyAllScenarios(string funtype, Condition condition, WhereBuy whereBuy);
 
         /// <summary>
-        /// پاک کردن بلیط
+        ///  آوردن بلیط رزو شده ی یک کاربر 
         /// </summary>
-        Task<bool> DeleteTicket(Ticket ticket);
+        Task<List<Ticket>> GetReservedTicketsForUser(Guid id);
 
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در سایت
-        /// </summary>
-        Task<List<Ticket>> GetAllReservationBySite(Guid id);
 
-        /// <summary>
-        /// دربافت تمام بلیط ها
-        /// </summary>
-        Task<List<Ticket>> GetAllScheduleTickets(Guid id);
 
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در سایت
-        /// </summary>
-        Task<List<Ticket>> GetAllCancelBySite(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در فروشنده
-        /// </summary>
-        Task<List<Ticket>> GetAllInActiveBySeller(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در فروشنده
-        /// </summary>
-        Task<List<Ticket>> GetAllReservationBySeller(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های لغو شده در فروشنده
-        /// </summary>
-        Task<List<Ticket>> GetAllCancelBySeller(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در فروشنده
-        /// </summary>
-        Task<List<Ticket>> GetAllInActiveBySite(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های رزروشده در حظوری
-        /// </summary>
-        Task<List<Ticket>> GetAllReservationByPresence(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های لغو شده در حظوری
-        /// </summary>
-        Task<List<Ticket>> GetAllCancelByPresence(Guid id);
-
-        /// <summary>
-        ///  دربافت تمام بلیط های غیرفعال در حظوری
-        /// </summary>
-        Task<List<Ticket>> GetAllInActiveByPresence(Guid id);
-
-        //    ///// <summary>
-        //    ///// دریافت تفریح با اسم تفریح
-        //    ///// </summary>
-        //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
+          //    ///// <summary>
+          //    ///// دریافت تفریح با اسم تفریح
+          //    ///// </summary>
+          //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
 
         ///// <summary>
         ///// دریافت کاربر با شماره تلفن همراه
@@ -142,10 +76,10 @@ namespace Domain.RepasitoryInterfaces
         ///// </summary>
         //Task<int> ScheduleTicketsCount(Guid id);
 
-        ///// <summary>
-        ///// دریافت مقدار پول کل بلیط های فروخته شده
-        /////// </summary>
-        //Task<decimal> ScheduleTicketsPrice(Guid id);
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده
+        ///// </summary>
+        Task<decimal> ScheduleTicketsPrice(Guid schedulId);
 
         ///// <summary>
         /////  جست و جوی دو تاریخه برای بلیط های غیر فعال

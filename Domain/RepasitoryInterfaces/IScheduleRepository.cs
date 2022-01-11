@@ -5,7 +5,7 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IScheduleRepository
+    public interface IScheduleRepository: IGenericRepository<Schedule>
     {
         /// <summary>
         /// اضافه کردن یک سانس
@@ -14,24 +14,27 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// پاک کردن همه سانس های یک تفریح
         /// </summary>
-        Task DeleteAllSchedulesOfaFun(Guid funId);
+        Task<bool> DeleteAllSchedulesOfaFun(Guid funId);
+        /// <summary>
+        /// دریافت سانس های یک تفریح با ایدی تفریح
+        /// </summary>
+        Task<List<Schedule>> GetFunSchedulesByFunId(Guid funId);
+        
+        /// <summary>
+        /// دریافت سانس فعال با آیدی
+        /// </summary>
+        Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         //    /// <summary>
         //    /// دریافت تفریح با اسم تفریح
         //    /// </summary>
-        //    Task<Fun> GetFunsByFunNameAsynch(FunType fun);
+        //    Task<Fun> GetFunsByFunNameAsync(FunType fun);
 
         //    /// <summary>
         //    /// دریافت تفریح با ایدی تفریح
         //    /// </summary>
         //    Task<Fun> GetFunByFunId(Guid id);
 
-        /// <summary>
-        /// اضافه کردن سانس به تیبل
-        /// </summary>
-        Task AddScheduleAsync(Schedule schedule);
-
-        Task<Fun> SeachNameRecreationAsync(Guid id, string name);
         //    /// <summary>
         //    /// گرفتن همه سانس ها برای تفریح با نوع تفریح
         //    /// </summary>
@@ -48,19 +51,9 @@ namespace Domain.RepasitoryInterfaces
         //    Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id);
 
         //    /// <summary>
-        //    /// ذخیره اعمال انجام شده
-        //    /// </summary>
-        //    Task<bool> UpdateScheduleAsync();
-
-        //    /// <summary>
         //    /// دریافت سانس با آیدی
         //    /// </summary>
         //    Task<Schedule> GetScheduleByIdAsync(Guid id);
-
-        /// <summary>
-        /// دریافت سانس فعال با آیدی
-        /// </summary>
-        Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         //    /// <summary>
         //    /// گرفتن تاریخ اخرین سانس با نوع تفریح

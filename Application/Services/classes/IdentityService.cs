@@ -1,23 +1,23 @@
 ﻿using Application.Commands.User;
+using Application.Exceptions;
+using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Formatting;
-using System.Net.Http;
-using System.Linq;
-using Application.Mappers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Security.Claims;
-using Domain.RepasitoryInterfaces;
+using System.Text;
+using System.Threading.Tasks;
 using Infrastructure.Helper;
-using Microsoft.Extensions.Options;
 
 namespace Application.Services.classes
 {
@@ -25,26 +25,16 @@ namespace Application.Services.classes
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _SignInManager;
-        private readonly IUserRepository _userRepository;
         private readonly JwtToken _jwtToken;
-        private readonly IUserRepository2 _iuserRepository2;
+        private readonly ILogger _logger;
 
         private static readonly HttpClient client = new HttpClient();
 
-        public IdentityService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager
-            , IUserRepository userRepository, SignInManager<User> signInManager
-            , IConfiguration configuration,IUserRepository2 iuserRepository2
-            , IOptions<JwtToken> jwtToken)
+        public IdentityService(UserManager<User> userManager, IOptions<JwtToken> jwtToken, ILogger<IdentityService> logger)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
-            _SignInManager = signInManager;
-            _userRepository = userRepository;
             _jwtToken = jwtToken.Value;
-            _iuserRepository2 = iuserRepository2;
-
+            _logger = logger;
         }
 
         public async Task RegisterAsync(RegisterUserCommand command)
@@ -54,6 +44,7 @@ namespace Application.Services.classes
             {
                 user = new User(command.PhoneNumber);
                 var result = _userManager.CreateAsync(user, user.PhoneNumber);
+                
             }
 
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
@@ -61,7 +52,25 @@ namespace Application.Services.classes
             await SendSms(user.PhoneNumber, code);
             return;
         }
-
+        public async Task<bool> SendVerifyCodeAgain(RegisterUserCommand command)
+        {
+            try
+            {
+                var user = await _userManager.Users.SingleOrDefaultAsync(x => x.PhoneNumber.Equals(command.PhoneNumber));
+                if (user != null)
+                {
+                    var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
+                    await SendSms(user.PhoneNumber, code);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} sendverifycode method error", typeof(IdentityService));
+                return false;
+            }
+        }
         private async Task SendSms(string phoneNumber, string code)
         {
             try
@@ -87,14 +96,14 @@ namespace Application.Services.classes
             var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == command.PhoneNumber);
 
             if (user == null)
-                throw new Exception("شماره وارد شده صحیح نمی باشد");
+                throw new NotFoundExeption(nameof(User), command.PhoneNumber, command.PhoneNumber);
 
             var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, command.VerifyCode, command.PhoneNumber);
 
             if (result == false)
                 throw new Exception("کد وارد شده صحیح نمی باشد ");
-            var token =  await GenerateToken(user.Id,command);
-            return token; 
+            var token = await GenerateToken(user.Id, command);
+            return token;
 
         }
 
@@ -121,14 +130,8 @@ namespace Application.Services.classes
 
         }
 
-
-        public async Task DeleteUser(string id)
-        {
-            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.Id ==id);
-
-            _iuserRepository2.DeleteUser(user);
-        }
-        private async Task<string> GenerateToken(string id , UserLoginCommand command)
+        #region GenerateToken
+        private async Task<string> GenerateToken(string id, UserLoginCommand command)
         {
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtToken.Key));
             var credentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
@@ -143,7 +146,30 @@ namespace Application.Services.classes
                 signingCredentials: credentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-            return  tokenString; 
+            return tokenString;
+        }
+        #endregion
+
+
+        public async Task<bool> DeleteUser(Guid id)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id.ToString());
+                if (user != null)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} DeleteAsync  method error", typeof(IdentityService));
+                return false;
+            }
+
+
         }
     }
 

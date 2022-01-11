@@ -7,7 +7,7 @@ namespace Application.Dtos
     public class ScheduleDto
     {
         /// <summary>
-        /// Id 
+        /// commentId 
         /// </summary>
         public Guid Id { get; set; }
 

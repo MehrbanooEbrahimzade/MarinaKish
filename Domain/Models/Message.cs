@@ -9,7 +9,6 @@ namespace Domain.Models
         {
             Id = Guid.NewGuid();
           
-            UserName = username;
             
             Text = text;
             

@@ -4,7 +4,8 @@ namespace Domain.Models
 {
     public class ContactUs
     {
-        public ContactUs(string aboutMariana,string rules,string email,string phoneNumber ,string urlLinkedin, string urlInstagram)
+        public ContactUs
+            (string aboutMariana,string rules,string email,string phoneNumber ,string urlLinkedin, string urlInstagram)
         {
             Id = Guid.NewGuid();
             AboutMariana = aboutMariana;

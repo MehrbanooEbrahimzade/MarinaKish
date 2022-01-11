@@ -107,8 +107,8 @@ namespace Application.Mappers
         /// </summary>
         public static Comment ToModel(this AddCommentCommand command)
         {
-            return new Comment(command.Message, command.FunId, command.PhoneNumber,
-                command.UserName);
+            return new Comment(command.Message, command.FunId, command.UserId,
+                command.FullName);
 
         }
 
@@ -130,7 +130,7 @@ namespace Application.Mappers
         /// </summary>
         public static Schedule ToModel(this AddSpecialOfferCommand command)
         {
-            return new Schedule(command.Date, command.StartTime, command.EndTime, command.Price, command.FunId, command.AddPercent.ToModel());
+            return new Schedule(command.Price, command.AddPercent.ToModel());
 
         }
 

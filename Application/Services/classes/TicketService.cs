@@ -3,46 +3,52 @@ using Application.Commands.Ticket;
 using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.IConfiguration;
 using Domain.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain.RepasitoryInterfaces;
-using Domain.Enums;
 
 namespace Application.Services.classes
 {
     public class TicketService : ITicketService
     {
-        private readonly ITicketRepository _ticketRepository;
-        private readonly IScheduleRepository _scheduleRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IFunRepository _funRepository;
-        public TicketService(ITicketRepository ticketRepository, IScheduleRepository _scheduleRepository, IUserRepository userRepository, IFunRepository funRepository)
+
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
+
+         
+        public TicketService(ILogger<TicketService> logger, IUnitOfWork unitOfWork)
         {
-            this._ticketRepository = ticketRepository;
-            this._scheduleRepository = _scheduleRepository;
-            this._userRepository = userRepository;
-            this._funRepository = funRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
 
         }
-
         /// <summary>
         /// اضافه کردن بلیط خریده شده در سایت - به سبد خرید
         /// </summary>
         public async Task<Guid?> AddTicketToSite(AddTicketToBasketCommand command)
         {
-            var schedule = await _scheduleRepository.GetActiveScheduleByIdAsync(command.ScheduleId);
-            var user = await _userRepository.GetUserById(command.UserId);
+            //var fun = await _funRepository.GetFunsByFunNameAsync(command.FunName);
+            //if (fun.ScheduleInfo.TotalCapacity.Equals(20))
+            //    throw new Exception("ظرفیت سانس تکمیل شده");
+
+            var schedule = await _unitOfWork.Schedules.GetActiveScheduleByIdAsync(command.ScheduleId);
+            var user = await _unitOfWork.Users.GetUserById(command.UserId);
 
             if (schedule == null)
-                throw new ArgumentNullException("");
+                throw new ArgumentNullException("سانس مورد نظر یافت نشد!");
 
             var ticket = new Ticket(command.FunName, command.BoughtPlace, command.Gender, user, schedule);
 
-            var addAndSave = await _ticketRepository.AddTicketAsync(ticket);
+            var addAndSave = await _unitOfWork.Tickets.AddAsync(ticket);
             if (!addAndSave)
-                return null;
+                throw new Exception("بلیط به سبد خرید ادد نشد ");
+
+
+            await _unitOfWork.CompleteAsync();
+
             return ticket.Id;
 
         }
@@ -55,14 +61,17 @@ namespace Application.Services.classes
             List<Guid?> NotDeleted = new List<Guid?>();
             foreach (var id in command.IDs)
             {
-                var ticket = await _ticketRepository.GetTicketInBasketBuyById(id);
+                var ticket = await _unitOfWork.Tickets.GetTicketInBasketBuyById(id);
                 if (ticket == null)
                     NotDeleted.Add(id);
                 else
-                    await _ticketRepository.DeleteTicketsFromBasketBuy(ticket);
+                    await _unitOfWork.Tickets.DeleteAsync(ticket.Id);
             }
             if (NotDeleted.Count == 0)
-                return null;
+                throw new NullReferenceException("بلیط فعال با این ایدی یافت نشد ");
+
+            await _unitOfWork.CompleteAsync();
+
             return NotDeleted;
         }
 
@@ -72,12 +81,22 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<bool> DeleteTicket(Guid id)
         {
-            var ticket = await _ticketRepository.GetInActiveTicketById(id);
+            var ticket = await _unitOfWork.Tickets.GetInActiveTicketById(id);
             if (ticket == null)
                 return false;
-            return await _ticketRepository.DeleteTicket(ticket);
-        }
 
+            await _unitOfWork.Tickets.DeleteAsync(ticket.Id);
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        public async Task<List<TicketDto>> GetReservedTickets(Guid id)
+        {
+            var tickets = await _unitOfWork.Tickets.GetReservedTicketsForUser(id);
+            if (tickets == null)
+                throw new ArgumentNullException("بلیط یافت نشد");
+            return tickets.ToDto();
+
+        }
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
         /// </summary>
@@ -100,7 +119,7 @@ namespace Application.Services.classes
         //    var ticketModel = new Ticket(fun.Name, WhereBuy.Presence, command.gender, user, schedule);
 
 
-        //    var addAndSave = await _ticketRepository.AddTicketAsync(ticketModel);
+        //    var addAndSave = await _unitOfWork.Tickets.AddTicketAsync(ticketModel);
         //    if (!addAndSave)
         //        return null;
         //    return ticketModel.ToDto();
@@ -111,25 +130,23 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<TicketDto> GetOneTicket(Guid id)
         {
-            var ticket = await _ticketRepository.GetTicketById(id);
+            var ticket = await _unitOfWork.Tickets.GetByIdAsync(id);
             if (ticket == null)
-                return null;
+                throw new ArgumentNullException("بلیط با این ایدی یافت نشد ");
             return ticket.ToDto();
         }
 
         /// <summary>
         /// عوض کردن وضعیت یک بلیط
         /// </summary>
-        public async Task<string> ChangeTicketCondition(EditTicketConditionCommand command)
+        public async Task<bool> ChangeTicketCondition(EditTicketConditionCommand command)
         {
-            var ticket = await _ticketRepository.GetTicketById(command.TicketId);
+            var ticket = await _unitOfWork.Tickets.GetByIdAsync(command.TicketId);
             if (ticket == null)
-                return null;
+                throw new ArgumentNullException("بلیط با این ایدی یافت نشد");
             ticket.SetCondition(command.ChangeCondition);
-            var save = await _ticketRepository.Update();
-            if (!save)
-                return null;
-            return ticket.Condition.ToString();
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
         /// <summary>
@@ -137,143 +154,29 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse)
         {
-            return await _ticketRepository.OneDateReservedTicketsPriceSearchSum(firstMiadiParse);
+            return await _unitOfWork.Tickets.OneDateReservedTicketsPriceSearchSum(firstMiadiParse);
         }
-        /////<summary>
-        ///// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
-        ///// </summary>
-        //public async Task<List<TicketDto>> GetAll(GetByFilterCommand Command)
-        //{
-        //    ///<summary>
-        //    /// رزروشده
-        //    /// </summary>
-        //    if (Command.Condition == Condition.Reservation)
-        //    {
-        //        switch (Command.WhereBuy)
-        //        {
-        //            case (WhereBuy)1:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //            case (WhereBuy)2:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllReservationBySeller(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-
-        //            case (WhereBuy)3:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllReservationByPresence(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //        }
-        //    }
-
-        //    ///<summary>
-        //    ///  لغوشده
-        //    /// </summary>
-        //    else if (Command.Condition == Condition.Cancel)
-        //    {
-        //        switch (Command.WhereBuy)
-        //        {
-        //            case (WhereBuy)1:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllCancelBySite(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //            case (WhereBuy)2:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllCancelBySeller(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-
-        //            case (WhereBuy)3:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllCancelByPresence(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //        }
-        //    }
-        //    ///<summary>
-        //    /// غیر فعال
-        //    /// </summary>
-        //    else if (Command.Condition == Condition.InActive)
-        //    {
-        //        switch (Command.WhereBuy)
-        //        {
-        //            case (WhereBuy)1:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllInActiveBySite(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //            case (WhereBuy)2:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllInActiveBySeller(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-
-        //            case (WhereBuy)3:
-        //                {
-        //                    var getreservation = await _ticketRepository.GetAllInActiveByPresence(Command.Id);
-        //                    return getreservation.ToDto();
-        //                    break;
-        //                }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("بلیطی با این حالات وجود ندارد");
-        //    }
-
-        //    return null;
-
-        //}
         ///<summary>
-        ///برکردوندن اطلاعات بلیط با توجه مکان فروش
+        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
         /// </summary>
-        public async Task<List<TicketDto>> GetAllbyPlaceOfSale(GetByFilterCommand Command)
+        public async Task<List<TicketDto>> GetAll(GetAllTicketByAllModesCommand Command)
         {
-            switch (Command.WhereBuy)
-            {
-                case (WhereBuy)1:
-                    {
-                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
 
-                case (WhereBuy)2:
-                    {
-                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
+            var getallticket = await _unitOfWork.Tickets.GetAllTicketbyAllScenarios(Command.FunType, Command.Condition, Command.WhereBuy);
+            if (getallticket == null)
+                throw new Exception("بلیطی در خصوص این تفریح وجود ندارد");
+            return getallticket.ToDto();
 
-                case (WhereBuy)3:
-                    {
-                        var getreservation = await _ticketRepository.GetAllReservationBySite(Command.Id);
-                        return getreservation.ToDto();
-                        break;
-                    }
-            }
-            return null;
+
         }
+
 
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
         //        /// </summary>
         //        public async Task<decimal> SearchReservedTicketsPriceByDateSum(DateTime firstMiadiParse, DateTime secondMiladiParse)
         //        {
-        //            return await _ticketRepository.TwoDateReservedTicketsPriceSearchSum(firstMiadiParse, secondMiladiParse);
+        //            return await _unitOfWork.Tickets.TwoDateReservedTicketsPriceSearchSum(firstMiadiParse, secondMiladiParse);
         //        }
 
         //        /// <summary>
@@ -281,7 +184,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> SearchInActivedTicketsByDate(DateTime firstMiadiParse)
         //        {
-        //            var OneDateTickets = await _ticketRepository.OneDateInActivedTicketSearch(firstMiadiParse);
+        //            var OneDateTickets = await _unitOfWork.Tickets.OneDateInActivedTicketSearch(firstMiadiParse);
         //            if (OneDateTickets.Count == 0)
         //                return null;
         //            return OneDateTickets.ToDto();
@@ -292,7 +195,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> SearchInActivedTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse)
         //        {
-        //            var twoDateTickets = await _ticketRepository.TwoDateInActivedTicketsSearch(firstMiadiParse, secondMiladiParse);
+        //            var twoDateTickets = await _unitOfWork.Tickets.TwoDateInActivedTicketsSearch(firstMiadiParse, secondMiladiParse);
         //            if (twoDateTickets.Count == 0)
         //                return null;
         //            return twoDateTickets.ToDto();
@@ -303,7 +206,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> SearchCanceledTicketsByDate(DateTime firstMiadiParse)
         //        {
-        //            var OneDateTickets = await _ticketRepository.OneDateCanceledTicketSearch(firstMiadiParse);
+        //            var OneDateTickets = await _unitOfWork.Tickets.OneDateCanceledTicketSearch(firstMiadiParse);
         //            if (OneDateTickets.Count == 0)
         //                return null;
         //            return OneDateTickets.ToDto();
@@ -314,7 +217,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> SearchCanceledTicketsByDate(DateTime firstMiadiParse, DateTime secondMiladiParse)
         //        {
-        //            var twoDateTickets = await _ticketRepository.TwoDateCanceledTicketsSearch(firstMiadiParse, secondMiladiParse);
+        //            var twoDateTickets = await _unitOfWork.Tickets.TwoDateCanceledTicketsSearch(firstMiadiParse, secondMiladiParse);
         //            if (twoDateTickets.Count == 0)
         //                return null;
         //            return twoDateTickets.ToDto();
@@ -328,16 +231,16 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<TicketDto> EntryBuyTicket(Guid id)
         //        {
-        //            var ticket = await _ticketRepository.GetInActiveTicketById(id);
+        //            var ticket = await _unitOfWork.Tickets.GetInActiveTicketById(id);
         //            if (ticket == null)
         //                return null;
 
-        //            var schedule = await _ticketRepository.GetActiveScheduleById(ticket.ScheduleId);
+        //            var schedule = await _unitOfWork.Tickets.GetActiveScheduleById(ticket.ScheduleId);
         //            if (schedule == null)
         //                return null;
 
-        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
-        //            var user = await _ticketRepository.GetUserById(ticket.UserId);
+        //            var fun = await _unitOfWork.Tickets.GetFunByIdAsynch(schedule.FunId);
+        //            var user = await _unitOfWork.Tickets.GetUserById(ticket.UserId);
 
         //            if (user.RoleType == RoleType.Seller)
         //                fun.PlusSellerCapacity(ticket.NumberOfTicket);
@@ -349,7 +252,7 @@ namespace Application.Services.classes
         //            ticket.ConditionSet(Condition.Reservation);
         //            //schedule.AvailableCapacity -= ticket.NumberOfTicket;
 
-        //            var save = await _ticketRepository.SaveChangesAsync();
+        //            var save = await _unitOfWork.Tickets.SaveChangesAsync();
         //            if (!save)
         //                return null;
         //            return ticket.ToDto();
@@ -360,10 +263,10 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<decimal?> CancelTicket(Guid id)
         //        {
-        //            var ticket = await _ticketRepository.GetReservedTicketById(id);
-        //            var schedule = await _ticketRepository.GetScheduleByIdAsync(ticket.ScheduleId);
-        //            var fun = await _ticketRepository.GetFunByIdAsynch(schedule.FunId);
-        //            var user = await _ticketRepository.GetUserById(ticket.UserId);
+        //            var ticket = await _unitOfWork.Tickets.GetReservedTicketById(id);
+        //            var schedule = await _unitOfWork.Tickets.GetScheduleByIdAsync(ticket.ScheduleId);
+        //            var fun = await _unitOfWork.Tickets.GetFunByIdAsynch(schedule.FunId);
+        //            var user = await _unitOfWork.Tickets.GetUserById(ticket.UserId);
         //            if (ticket == null)
         //                return null;
 
@@ -378,7 +281,7 @@ namespace Application.Services.classes
         //            //schedule.AvailableCapacity += ticket.NumberOfTicket;
         //            //user.Wallet += ticket.Price;
 
-        //            var save = await _ticketRepository.SaveChangesAsync();
+        //            var save = await _unitOfWork.Tickets.SaveChangesAsync();
         //            if (!save)
         //                return null;
         //            return schedule.AvailableCapacity;
@@ -390,11 +293,11 @@ namespace Application.Services.classes
         /// <summary>
         /// گرفتن همه بلیط های یک سانس
         /// </summary>
-        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid id)
+        public async Task<List<TicketDto>> GetAllScheduleTickets(Guid scheduleId)
         {
-            var tickets = await _ticketRepository.GetAllScheduleTickets(id);
+            var tickets = await _unitOfWork.Tickets.GetAllScheduleTickets(scheduleId);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیطی با این ایدی یافت نشد");
             return tickets.ToDto();
         }
 
@@ -403,7 +306,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllScheduleActiveTickets(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllScheduleActiveTickets(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllScheduleActiveTickets(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -414,26 +317,30 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<TicketDto>> AllInActiveScheduleTickets(Guid id)
         {
-            var tickets = await _ticketRepository.AllInActiveScheduleTickets(id);
+            var tickets = await _unitOfWork.Tickets.AllInActiveScheduleTickets(id);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیطی غیر فعالی با این ایدی یافت نشد");
             return tickets.ToDto();
         }
 
-        //        /// <summary>
-        //        /// دریافت مقدار پول کل بلیط های فروخته شده
-        //        /// </summary>
-        //        public async Task<decimal> ScheduleTicketsPrice(Guid id)
-        //        {
-        //            return await _ticketRepository.ScheduleTicketsPrice(id);
-        //        }
+        /// <summary>
+        /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس 
+        /// </summary>
+        public async Task<decimal> ScheduleTicketsPrice(Guid schedulId)
+        {
+            var TotalPrice = await _unitOfWork.Tickets.ScheduleTicketsPrice(schedulId);
+            if (TotalPrice.Equals(0))
+                throw new ArgumentNullException("بلیطی یافت نشد");
+
+            return TotalPrice;
+        }
 
         //        /// <summary>
         //        /// دریافت همه بلیط های لغو شده یک سانس
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllScheduleCanceledTickets(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllScheduleCanceledTickets(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllScheduleCanceledTickets(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -448,7 +355,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllFunTicketsWithFunID(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllFunTicketsWithFunID(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllFunTicketsWithFunID(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -459,9 +366,9 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<TicketDto>> GetAllFunActiveTicketsWithFunName(string funName)
         {
-            var tickets = await _ticketRepository.GetAllFunActiveTicketsWithFunName(funName);
+            var tickets = await _unitOfWork.Tickets.GetAllFunActiveTicketsWithFunName(funName);
             if (tickets == null)
-                return null;
+                throw new ArgumentNullException("بلیط یا تفریحی یافت نشد");
             return tickets.ToDto();
         }
 
@@ -473,7 +380,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllFunCanceledTicketsWithFunID(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllFunCanceledTicketsWithFunID(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllFunCanceledTicketsWithFunID(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -484,7 +391,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllFunInActiveTickets(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.AllFunInActiveTickets(id);
+        //            var tickets = await _unitOfWork.Tickets.AllFunInActiveTickets(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -498,7 +405,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllUserInActiveTickets(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.AllUserInActiveTickets(id);
+        //            var tickets = await _unitOfWork.Tickets.AllUserInActiveTickets(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -509,7 +416,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<int> InActiveUserTicketsCount(Guid id)
         //        {
-        //            return await _ticketRepository.InActiveUserTicketsCount(id);
+        //            return await _unitOfWork.Tickets.InActiveUserTicketsCount(id);
         //        }
 
         //        /// <summary>
@@ -517,7 +424,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<int> ReservationUserTicketsCount(Guid id)
         //        {
-        //            return await _ticketRepository.ReservationUserTicketsCount(id);
+        //            return await _unitOfWork.Tickets.ReservationUserTicketsCount(id);
         //        }
 
         //        /// <summary>
@@ -525,7 +432,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<int> CanceledUserTicketsCount(Guid id)
         //        {
-        //            return await _ticketRepository.CanceledUserTicketsCount(id);
+        //            return await _unitOfWork.Tickets.CanceledUserTicketsCount(id);
         //        }
 
         //        /// <summary>
@@ -533,7 +440,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllUserTikcetsWithUserID(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllUserTikcetsWithUserID(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllUserTikcetsWithUserID(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -544,7 +451,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllUserActiveTikcetsWithUserID(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllUserActiveTikcetsWithUserID(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllUserActiveTikcetsWithUserID(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -555,7 +462,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> GetAllUserCanceledTikcetsWithUserID(Guid id)
         //        {
-        //            var tickets = await _ticketRepository.GetAllUserCanceledTikcetsWithUserID(id);
+        //            var tickets = await _unitOfWork.Tickets.GetAllUserCanceledTikcetsWithUserID(id);
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -568,7 +475,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllPresenceReservationTickets()
         //        {
-        //            var tickets = await _ticketRepository.AllPresenceReservationTickets();
+        //            var tickets = await _unitOfWork.Tickets.AllPresenceReservationTickets();
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -579,7 +486,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllSiteReservationTickets()
         //        {
-        //            var tickets = await _ticketRepository.AllSiteReservationTickets();
+        //            var tickets = await _unitOfWork.Tickets.AllSiteReservationTickets();
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -590,7 +497,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllTickets()
         //        {
-        //            var tickets = await _ticketRepository.AllTickets();
+        //            var tickets = await _unitOfWork.Tickets.AllTickets();
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -601,7 +508,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllCanceledTickets()
         //        {
-        //            var tickets = await _ticketRepository.AllCanceledTickets();
+        //            var tickets = await _unitOfWork.Tickets.AllCanceledTickets();
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -612,7 +519,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<List<TicketDto>> AllReservationTickets()
         //        {
-        //            var tickets = await _ticketRepository.AllReservationTickets();
+        //            var tickets = await _unitOfWork.Tickets.AllReservationTickets();
         //            if (tickets == null)
         //                return null;
         //            return tickets.ToDto();
@@ -627,7 +534,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<int> SetPerformedTicketsToPlayed()
         //        {
-        //            var performedTickets = await _ticketRepository.GetAllPerformedTickets();
+        //            var performedTickets = await _unitOfWork.Tickets.GetAllPerformedTickets();
         //            if (performedTickets.Count == 0)
         //                return 0;
 
@@ -636,7 +543,7 @@ namespace Application.Services.classes
         //                ticket.ConditionSet(Condition.Played);
         //            }
 
-        //            var save = await _ticketRepository.SaveChangesAsync();
+        //            var save = await _unitOfWork.Tickets.SaveChangesAsync();
         //            if (!save)
         //                return 503;
         //            return performedTickets.Count;

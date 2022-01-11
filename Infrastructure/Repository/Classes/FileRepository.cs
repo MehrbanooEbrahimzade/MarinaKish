@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class FileRepository : BaseRepository, IFileRepository
+    public class FileRepository : IFileRepository
     {
-        public FileRepository(DatabaseContext context) : base(context)
+        private readonly DatabaseContext _context;
+        public FileRepository(DatabaseContext context)
         {
-            
+            _context = context;
         }
 
 

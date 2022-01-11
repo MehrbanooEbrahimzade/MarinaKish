@@ -1,24 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class UserRepository :  GenericRepository<User> , IUserRepository
     {
-        public UserRepository(DatabaseContext context) : base(context)
+
+        public UserRepository(DatabaseContext context, ILogger logger) : base(context, logger)
         {
 
         }
 
-        public async Task<User> GetUserById(string id)
+        public override async Task<bool> DeleteAsync(Guid id)
         {
-            var user =_context.Users.Include(x=>x.CreditCard).SingleOrDefault(x=>x.Id == id);        
-            return  user;
+            try
+            {
+                var user = await dbSet.FindAsync(id);
+                if (user != null)
+                {
+                    dbSet.Remove(user);
+                    return true;
+                }
+                    
+              
+                return false; 
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} DeleteAsync  method error", typeof(UserRepository));
+                return false;
+            }
+            
+        }
+
+
+        public async Task<User> GetUserById(Guid id)
+        {
+            try
+            {
+                var user = await dbSet.Include(c => c.CreditCard).SingleOrDefaultAsync(x => x.Id == id.ToString());
+
+                if (user == null)
+                    throw new NullReferenceException("کاربر شناسایی نشد!");
+                return user;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} GetUserById method error", typeof(UserRepository));
+                return null;
+            }
         }
 
         public Task<User> SearchAsync(Guid id)

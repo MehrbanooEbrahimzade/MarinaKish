@@ -10,8 +10,8 @@ namespace Application.Validators.Schedule
     {
         public AddSpecialOfferCommandVlidator()
         {
-            RuleFor(x => x.FunId)
-                .NotNull().WithMessage("لطفا ایدی تفریح را وارد کنید");
+            RuleFor(x => x.ShceduleId)
+                .NotNull().WithMessage("لطفا ایدی سانس را وارد کنید");
 
 
             RuleFor(x => x.AddPercent.Value)

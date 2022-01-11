@@ -1,34 +1,43 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Application.Commands.User;
-using Application.Dtos;
+﻿using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
-using Domain.Models;
-using Domain.RepasitoryInterfaces;
+using Domain.IConfiguration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Application.Services.classes
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
+
+
+        public UserService(ILogger<UserService> logger, IUnitOfWork unitOfWork) : base()
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+
         }
 
-       
-
-        public async Task<UserDto> SearchUserById(Guid id) 
+        public async Task<UserDto> SearchUserById(Guid id)
         {
-            var user =await  _userRepository.GetUserById(id.ToString());
-            if (user==null)
+            var user = await _unitOfWork.Users.GetUserById(id);
+            if (user == null)
                 throw new ArgumentNullException();
 
             return user.ToDto();
-            
+
         }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var result = await _unitOfWork.Users.DeleteAsync(id);
+            if (!result)
+                throw new Exception("عملیات ناموفق");
+            return result;
+        }
+
         //        private readonly IUserRepository _userRepository;
         //        public UserService(IUserRepository userRepository)
         //        {
@@ -48,7 +57,7 @@ namespace Application.Services.classes
         //                await _userRepository.UserSignUpAsync(newUser);
 
         //                ResultList.Add("Register");
-        //                ResultList.Add(newUser.Id.ToString());
+        //                ResultList.Add(newUser.commentId.ToString());
         //                ResultList.Add(newUser.VerifyCode);
 
         //                return ResultList;
@@ -59,7 +68,7 @@ namespace Application.Services.classes
         //            user.SetVerifycode(randomVerify);
 
         //            ResultList.Add("Login");
-        //            ResultList.Add(user.Id.ToString());
+        //            ResultList.Add(user.commentId.ToString());
         //            ResultList.Add(user.VerifyCode);
 
         //            await _userRepository.SaveChanges();
@@ -149,7 +158,7 @@ namespace Application.Services.classes
         //        /// </summary>
         //        public async Task<UserDto> UpdateProfileAsync(UpdateUserCommand command)
         //        {
-        //            var user = await _userRepository.GetUserById(command.Id);
+        //            var user = await _userRepository.GetUserById(command.commentId);
         //            if (user == null)
         //                return null;
 

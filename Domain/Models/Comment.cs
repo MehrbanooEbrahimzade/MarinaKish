@@ -6,7 +6,8 @@ namespace Domain.Models
 {
     public class Comment : Writ
     {
-        public Comment(string text, Guid funId, string userPhoneNumber, string userName) : base(text, userName)
+    
+        public Comment(string text, Guid funId, Guid userId, string fullname) : base(text, fullname)
         {
             Id = Guid.NewGuid();
 
@@ -14,17 +15,25 @@ namespace Domain.Models
 
             FunId = funId;
 
-            UserPhoneNumber = userPhoneNumber;
-
-            UserName = userName;
+            UserId = userId;
 
             Status = Status.Waiting;
 
             SubmitDate = DateTime.Now;
+
         }
+
 
         private Comment() : base() { }
 
+        /// <summary>
+        /// ای دیه کاربر
+        /// </summary>
+        public Guid UserId { get; private set; }
+
+        /// <summary>
+        /// ای دیه تفریح 
+        /// </summary>
         public Guid FunId { get; private set; }
 
         /// <summary>
@@ -41,12 +50,6 @@ namespace Domain.Models
         /// نپسندیدن
         /// </summary>
         public int DisLike { get; private set; }
-
-        /// <summary>
-        /// شماره تلفن کاربر
-        /// </summary>
-        public string UserPhoneNumber { get; private set; }
-
 
 
         #region + -
@@ -65,6 +68,11 @@ namespace Domain.Models
         public void UpdateCommentDislikes()
         {
             DisLike += 1;
+        }
+
+        public void Switching(Status status)
+        {
+            this.Status = status;
         }
 
         #endregion

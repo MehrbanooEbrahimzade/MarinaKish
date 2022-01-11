@@ -3,34 +3,42 @@ using System.Threading.Tasks;
 using Application.Commands.Schedule;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.IConfiguration;
 using Domain.RepasitoryInterfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
 {
     public class ScheduleService : IScheduleService
     {
 
-        private readonly IScheduleRepository _scheduleRepository;
-        public ScheduleService(IScheduleRepository scheduleRepository)
+        private readonly ILogger _logger;
+        private readonly IUnitOfWork _unitOfWork; //ghablan repository model mad nazaro inject mikardim 
+        public ScheduleService(ILogger logger, IUnitOfWork unitOfWork)
         {
-            _scheduleRepository = scheduleRepository;
+            this._logger = logger;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task AddSpecialOffer(AddSpecialOfferCommand command)
         {
-            var searchnameRecreation = _scheduleRepository.SeachNameRecreationAsync(command.FunId, command.Name);
+            var searchnameRecreation = await _unitOfWork.Schedules.GetActiveScheduleByIdAsync(command.ShceduleId);
             if (searchnameRecreation == null)
-                throw new Exception("چنین تفریحی وجود ندرد");
+                throw new Exception("چنین سانسی وجود ندرد");
 
-            // command.Price -= (command.AddPercent.Value *  searchnameRecreation.Result.ScheduleInfo.Amount) / 100;
 
-            decimal DiscountNumber = command.AddPercent.Value;
-            decimal Discount = DiscountNumber / 100;
-            decimal resultAmount = searchnameRecreation.Result.ScheduleInfo.Amount;
-            command.Price = Discount * resultAmount;
-            var addinformation = command.ToModel();
-            await _scheduleRepository.AddScheduleAsync(addinformation);
+            //decimal DiscountNumber = command.AddPercent.Value;
+            //decimal Discount = DiscountNumber / 100;
+            //decimal resultAmount = searchnameRecreation.Price;
+            //command.Price = Discount * resultAmount;
 
+            command.Price -= (command.AddPercent.Value * searchnameRecreation.Price) / 100;
+
+            var addDiscountamount = command.AddPercent.ToModel();
+            searchnameRecreation.UpdateSpecialOffer(command.Price, addDiscountamount);
+            await _unitOfWork.CompleteAsync();
+
+            return;
         }
 
 
@@ -67,7 +75,7 @@ namespace Application.Services.classes
         //                    //var sansModel = new Schedule(eFun.SystemFunCode, eFun.FunType, scheduleExcuteTime, eFun.Price, startTimes, startTimes.Add(totalSansTime))
         //                    //{
         //                    // AvailableCapacity = eFun.SansTotalCapacity,
-        //                    //FunId = eFun.Id
+        //                    //FunId = eFun.commentId
         //                    //};
 
         //                    fun.PlusOnlineCapacity((int)sansModel.AvailableCapacity); 

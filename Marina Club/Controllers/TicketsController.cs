@@ -40,10 +40,10 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دریافت تمام بلیط های یک سانس
         /// </summary>
-        [HttpGet("{id}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
-        public async Task<IActionResult> GetAllScheduleTickets(Guid id)
+        [HttpGet("{scheduleId}/GetAllScheduleTickets")] // ScheduleId ( schedules model )
+        public async Task<IActionResult> GetAllScheduleTickets(Guid scheduleId)
         {
-            var result = await _ticketService.GetAllScheduleTickets(id);
+            var result = await _ticketService.GetAllScheduleTickets(scheduleId);
             if (result == null)
                 return BadReq(ApiMessage.ScheduleNotHaveTickets, new { Reasons = $"1-Schedule not have any ticket, 2-schedule id is wrong" });
             return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
@@ -61,19 +61,19 @@ namespace Marina_Club.Controllers
         //    return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
         //}
 
-        ///// <summary>
-        ///// دریافت کل بلیط های غیرفعال یک سانس
-        ///// </summary>
-        //[HttpGet("getCatchallscenarios")]
-        //public async Task<IActionResult> GetByCatchAllScenarios(GetByFilterCommand command)
-        //{
-        //    if (!command.Validate())
-        //        return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });
+        /// <summary>
+        /// دریافت کل بلیط های یک تفریح با حالات مختلف
+        /// </summary>
+        [HttpGet("getCatchallscenarios")]
+        public async Task<IActionResult> GetByCatchAllScenarios(GetAllTicketByAllModesCommand command)
+        {
+            if (!command.Validate())
+                return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });
 
 
-        //    var result = await _ticketService.GetAll(command);
-        //    return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
-        //}
+            var result = await _ticketService.GetAll(command);
+            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        }
 
 
 
@@ -153,15 +153,15 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.AllScheduleTicketsCountGetted, new { ScheduleTicketsCount = result.Count });
         //        }
 
-        //        /// <summary>
-        //        /// دریافت مقدار پول کل بلیط های فروخته شده یک سانس
-        //        /// </summary>
-        //        [HttpGet("{id}/ScheduleTickets-Price")] // ScheduleId ( schedules model )
-        //        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid id)
-        //        {
-        //            var result = await _ticketService.ScheduleTicketsPrice(id);
-        //            return OkResult(ApiMessage.AllScheduleReservedTicketsTotalPriceGetted, new { ScheduleTicketsTotalPrice = result });
-        //        }
+        /// <summary>
+        ///  دریافت مقدار پول کل بلیط های فروخته شده یک سانس با ایدی سانس
+        /// </summary>
+        [HttpGet("{id}/ScheduleTicketsPrice")] 
+        public async Task<IActionResult> ScheduleTicketsTotalPrice(Guid Id)
+        {
+            var result = await _ticketService.ScheduleTicketsPrice(Id);
+            return OkResult(ApiMessage.AllScheduleReservedTicketsTotalPriceGetted, new { ScheduleTicketsTotalPrice = result });
+        }
 
         //        #endregion
 
@@ -254,7 +254,24 @@ namespace Marina_Club.Controllers
 
         #endregion
 
+        #region GetTickets
+        /// <summary>
+        /// آوردن بلیط های رزو شده ی یک کاربر 
+        /// </summary>
+        [HttpGet("{id}/Tickets")]
+        public async Task<IActionResult> GetUserTickets(Guid id)
+        {
+            id = CurrentUser.Id;
+            var tickets = await _ticketService.GetReservedTickets(id);
+            if (tickets.Count == 0)
+                return StatusCode(404);
+            return OkResult(ApiMessage.Ok, tickets);
+        }
 
+
+
+
+        #endregion
         //        #region User Options
 
 
@@ -771,7 +788,7 @@ namespace Marina_Club.Controllers
                 return BadReq(ApiMessage.WrongTicketID, new { Reason = $"1-enter ticketID, 2-ChangeCondition must in = 1: inactive, 2: active, 3: canceled" });
 
             var result = await _ticketService.ChangeTicketCondition(command);
-            if (result == null)
+            if (!result)
                 return BadReq(ApiMessage.TicketNotChangedCondition, new { Reason = $"ticket not found" });
             return OkResult(ApiMessage.TicketChangedCondition, new { TicketCondition = $"{result} 1: inactive, 2: active, 3: canceled" });
         }
