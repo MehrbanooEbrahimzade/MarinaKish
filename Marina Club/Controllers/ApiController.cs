@@ -52,7 +52,7 @@ namespace Marina_Club.Controllers
             return BadRequest(new ResponseMessage(message, content));
         }
 
-        private class ResponseMessage
+        public class ResponseMessage
         {
             public string Message { get; set; }
 
