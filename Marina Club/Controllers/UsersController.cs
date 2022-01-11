@@ -53,7 +53,7 @@ namespace Marina_Club.Controllers
             var result = await _identity.SendVerifyCodeAgain(command);
             if (result)
                 return OkResult(ApiMessage.verifyCodeSent);
-            return StatusCode(404)ک
+            return StatusCode(404);
         }
         /// <summary>
         ///  تکمیل کردن پروفایل کاربر بعد ثبت نام 

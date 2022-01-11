@@ -17,6 +17,26 @@ namespace Infrastructure.Repository.Classes
 
         }
 
+        Task<bool> IGenericRepository<Comment>.AddAsync(Comment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Comment>> IGenericRepository<Comment>.AllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IGenericRepository<Comment>.DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Comment> IGenericRepository<Comment>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary> 
         /// اضافه کردن کامنت به تیبل
         /// </summary>

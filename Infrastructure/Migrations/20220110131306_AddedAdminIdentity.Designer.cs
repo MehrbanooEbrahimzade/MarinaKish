@@ -4,14 +4,16 @@ using Infrastructure.Persist;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220110131306_AddedAdminIdentity")]
+    partial class AddedAdminIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("DisLike");
 
-                    b.Property<string>("FullName");
-
                     b.Property<Guid>("FunId");
 
                     b.Property<int>("Like");
@@ -37,8 +37,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("SubmitDate");
 
                     b.Property<string>("Text");
-
-                    b.Property<string>("UserId");
 
                     b.Property<string>("UserName");
 

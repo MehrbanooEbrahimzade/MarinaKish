@@ -9,9 +9,10 @@ namespace Infrastructure.Repository.Classes
 {
     public class FileRepository : IFileRepository
     {
-        public FileRepository(DatabaseContext context) 
+        private readonly DatabaseContext _context;
+        public FileRepository(DatabaseContext context)
         {
-            
+            _context = context;
         }
 
 

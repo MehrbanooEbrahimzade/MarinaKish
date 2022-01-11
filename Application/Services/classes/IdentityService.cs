@@ -17,13 +17,15 @@ using System.Net.Http.Formatting;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Helper;
+
 namespace Application.Services.classes
 {
 
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<User> _userManager;
-        private readonly JwttToken _jwtToken;
+        private readonly JwtToken _jwtToken;
         private readonly ILogger _logger;
 
         private static readonly HttpClient client = new HttpClient();

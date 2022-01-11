@@ -41,7 +41,6 @@ namespace Infrastructure.Persist
             ScheduleInfos = new ScheduleInfoRepository(_context, _logger);
             Schedules = new ScheduleRepository(_context, _logger);
             Funs = new FunRepository(_context, _logger);
-            Files = new FileRepository(_context, _logger);
             ContactUs = new ContactUsRepository(_context, _logger);
         }
 
