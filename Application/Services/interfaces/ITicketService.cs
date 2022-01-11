@@ -41,11 +41,6 @@ namespace Application.Services.interfaces
         Task<string> ChangeTicketCondition(EditTicketConditionCommand command);
 
         ///<summary>
-        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های متفاوت 
-        /// </summary>
-        Task<List<TicketDto>> GetAll(GetByFilterCommand Command);
-
-        ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>
         Task<List<TicketDto>> GetAllbyPlaceOfSale(GetByFilterCommand Command);

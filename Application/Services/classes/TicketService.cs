@@ -643,12 +643,6 @@ namespace Application.Services.classes
         //        }
 
         //        #endregion
-        ///<summary>
-        /// برگردوندن تمام بلیط ها با وضعیت ها و محل های فروش 
-        /// </summary>
-        public async Task<List<TicketDto>> FilterBy(GetByFilterCommand command)
-        {
-            //_ticketRepository.
-        }
+      
     }
 }

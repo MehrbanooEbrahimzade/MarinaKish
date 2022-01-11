@@ -49,31 +49,31 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.AllScheduleTicketsGetted, new { ScheduleTickets = result });
         }
 
-        /// <summary>
-        /// دریافت کل بلیط های غیرفعال یک سانس
-        /// </summary>
-        [HttpGet("{id}/AllInActiveScheduleTickets")] // ScheduleId ( schedules model )
-        public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
-        {
-            var result = await _ticketService.AllInActiveScheduleTickets(id);
-            if (result == null)
-                return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
-            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
-        }
+        ///// <summary>
+        ///// دریافت کل بلیط های غیرفعال یک سانس
+        ///// </summary>
+        //[HttpGet("{id}/AllInActiveScheduleTickets")] // ScheduleId ( schedules model )
+        //public async Task<IActionResult> AllInActiveScheduleTickets(Guid id)
+        //{
+        //    var result = await _ticketService.AllInActiveScheduleTickets(id);
+        //    if (result == null)
+        //        return BadReq(ApiMessage.ScheduleNotHaveInActiveTickets, new { Reasons = $"1-Schedule not have any active ticket, 2-schedule id is wrong" });
+        //    return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        //}
 
-        /// <summary>
-        /// دریافت کل بلیط های غیرفعال یک سانس
-        /// </summary>
-        [HttpGet("getCatchallscenarios")]
-        public async Task<IActionResult> GetByCatchAllScenarios(GetByFilterCommand command)
-        {
-            if (!command.Validate())
-                return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });
+        ///// <summary>
+        ///// دریافت کل بلیط های غیرفعال یک سانس
+        ///// </summary>
+        //[HttpGet("getCatchallscenarios")]
+        //public async Task<IActionResult> GetByCatchAllScenarios(GetByFilterCommand command)
+        //{
+        //    if (!command.Validate())
+        //        return BadReq(ApiMessage.EnterNumOfTicket, new { Reasons = $"1-مقدار وضقیت نباید بیشتر از 3 باشد 2- مقدار محل خرید نباید بیشتر از 3 باشد" });
 
 
-            var result = await _ticketService.GetAll(command);
-            return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
-        }
+        //    var result = await _ticketService.GetAll(command);
+        //    return OkResult(ApiMessage.AllScheduleInActiveTicketsGetted, new { AllInActiveScheduleTickets = result });
+        //}
 
 
 
