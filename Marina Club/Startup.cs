@@ -18,6 +18,7 @@ using Infrastructure.Helper;
 using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
 using Domain.IConfiguration;
+using Marina_Club.Activator.MiddleWare;
 
 namespace Marina_Club
 {
@@ -132,10 +133,9 @@ namespace Marina_Club
                 app.UseDeveloperExceptionPage();
                 
             }
-
             app.UseMvc();    
             app.UseAuthentication();
-            
+            app.UseMiddleware<ErrorHandlerMiddleWare>();
             //provider.MigrateDatabases();
         }
     }
