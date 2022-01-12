@@ -7,7 +7,7 @@ namespace Application.Validators.User
     {
         public ForgetPasswordCommandValidator()
         {
-            RuleFor(x => x.CellPhone)
+            RuleFor(x => x.PhoneNumber)
                 .NotNull().WithMessage("شماره تلفن نمیتواند خالی باشد")
                 .MaximumLength(11).WithMessage("شماره تلفن باید حداکثر دارای 11 حرف باشد")
                 .MinimumLength(11).WithMessage("شماره تلفن باید حداقل دارای 11 حرف باشد");

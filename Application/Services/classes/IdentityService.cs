@@ -2,7 +2,9 @@
 using Application.Exceptions;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.Enums;
 using Domain.Models;
+using Infrastructure.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,7 +19,6 @@ using System.Net.Http.Formatting;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure.Helper;
 
 namespace Application.Services.classes
 {
@@ -44,7 +45,7 @@ namespace Application.Services.classes
             {
                 user = new User(command.PhoneNumber);
                 var result = _userManager.CreateAsync(user, user.PhoneNumber);
-                
+
             }
 
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
@@ -71,7 +72,7 @@ namespace Application.Services.classes
                 return false;
             }
         }
-        private async Task SendSms(string phoneNumber, string code)
+        public  async Task SendSms(string phoneNumber, string code)
         {
             try
             {
@@ -171,6 +172,47 @@ namespace Application.Services.classes
 
 
         }
+        public  async Task<bool> SendVerifyCodeAdmin(RegisterUserCommand admin)
+        {
+
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.PhoneNumber == admin.PhoneNumber && u.RoleType ==0);
+            if (user != null)
+            {
+                var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, admin.PhoneNumber);
+                await SendSms(admin.PhoneNumber, code);
+                return true;
+            }
+            if (user == null)
+            {
+                throw new NotFoundExeption(nameof(user),admin.PhoneNumber,admin.PhoneNumber);
+            }
+
+            return false;
+        }
+        public async Task<bool> ConfirmAdminPhoneNumber(string phoneNumber, string verifyCode)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(f => f.PhoneNumber == phoneNumber&&f.RoleType==0);
+
+            if (user == null)
+                throw new NotFoundExeption(nameof(User), phoneNumber, phoneNumber);
+
+            var result = await _userManager.VerifyChangePhoneNumberTokenAsync(user, verifyCode,phoneNumber);
+            return result;
+
+        }
+        public async Task<bool> RestoreAdminPassword(ForgetPasswordCommand command)
+        {
+            var result = await ConfirmAdminPhoneNumber(command.PhoneNumber,command.VerifyCode);
+            if (result)
+            {
+                var user =await  _userManager.Users.SingleOrDefaultAsync(x=>x.PhoneNumber == command.PhoneNumber &&x.RoleType==0);
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var updateResult = await _userManager.ResetPasswordAsync(user,resetToken,command.NewPassword);
+                return updateResult.Succeeded;
+            }
+            return false; 
+        }
+
     }
 
 }
