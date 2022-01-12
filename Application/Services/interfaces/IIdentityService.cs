@@ -13,9 +13,6 @@ namespace Application.Services.interfaces
         Task CompleteProfile(CompleteProfileCommand command);
         Task<User> UpdateProfileAsync(UpdateUserCommand command);
         Task<bool> DeleteUser(Guid id);
-        Task SendSms(string phoneNumber, string code);
-
-        Task<bool> SendVerifyCodeAdmin(RegisterUserCommand admin);
-        Task<bool> RestoreAdminPassword(ForgetPasswordCommand command);
+       
     }
 }

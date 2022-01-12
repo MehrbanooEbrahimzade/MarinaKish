@@ -53,6 +53,15 @@ namespace Marina_Club.Controllers
                 return OkResult(ApiMessage.UserPasswordChanged);
             return BadReq(ApiMessage.BadRequest);
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateAdminCredintials(AdminUpdateCommand command)
+        {
+            var result = await _adminService.UpdateAdminCredintials(command);
+            if (!result)
+                return BadReq(ApiMessage.BadRequest);
+            return OkResult(ApiMessage.Ok);
+        }
+
         
     }
 }

@@ -41,6 +41,7 @@ namespace Marina_Club
             services.AddOptions();
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

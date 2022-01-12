@@ -134,5 +134,19 @@ namespace Application.Services.classes
             }
             return false;
         }
+
+
+
+
+        public async Task<bool> UpdateAdminCredintials(AdminUpdateCommand command)
+        {
+            var admin = await _userManager.FindByEmailAsync(command.Email);
+            if (admin == null)
+                throw new NotFoundExeption(nameof(User), command.Email, "Email");
+            admin.Email = command.Email;
+            admin.PhoneNumber = command.PhoneNumber;
+            var result = await _userManager.UpdateAsync(admin);
+            return result.Succeeded;
+        }
     }
 }

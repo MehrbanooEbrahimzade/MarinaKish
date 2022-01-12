@@ -9,5 +9,8 @@ namespace Application.Services.interfaces
         Task<string> LoginAsync(AdminLoginCommand command);
         Task<bool> SendVerifyCodeAdmin(RegisterUserCommand admin);
         Task<bool> RestoreAdminPassword(ForgetPasswordCommand command);
+
+        Task<bool> UpdateAdminCredintials(AdminUpdateCommand command);
+
     }
 }

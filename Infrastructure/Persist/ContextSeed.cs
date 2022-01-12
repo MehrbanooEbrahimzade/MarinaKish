@@ -18,7 +18,7 @@ namespace Infrastructure.Persist
         }
         public static async Task SeedAdminAsync(UserManager<User> userManager)
         {
-            var defaultAdmin = new User("09920106044")
+            var defaultAdmin = new User("maahyar@protonmail.com")
             {
                 Email = "maahyar@protonmail.com"
             };
