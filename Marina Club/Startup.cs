@@ -34,12 +34,15 @@ namespace Marina_Club
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddOptions();
+
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
+
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
@@ -47,7 +50,16 @@ namespace Marina_Club
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             });
+
+            services.AddCors(s => s.AddPolicy("Policy", builder =>
+            {
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+                builder.AllowAnyOrigin();
+            }));
+
             services.AddAuthorization();
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -57,6 +69,7 @@ namespace Marina_Club
                 options.Password.RequiredLength = 11;
                 options.Password.RequiredUniqueChars = 0;
             });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -72,6 +85,27 @@ namespace Marina_Club
                     };
                 });
 
+            ConfigureDependency(services);
+
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+
+            }
+            app.UseMvc();
+            app.UseAuthentication();
+            app.UseMiddleware<ErrorHandlerMiddleWare>();
+            app.UseCors("Policy");
+            //provider.MigrateDatabases();
+        }
+
+        public void ConfigureDependency(IServiceCollection services)
+        {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // AddScoped for users model(table)
@@ -123,21 +157,6 @@ namespace Marina_Club
             // AddScoped for ContactUs model
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
             services.AddScoped<IContactUsService, ContactUsService>();
-
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                
-            }
-            app.UseMvc();    
-            app.UseAuthentication();
-            app.UseMiddleware<ErrorHandlerMiddleWare>();
-            //provider.MigrateDatabases();
         }
     }
 }
