@@ -72,7 +72,7 @@ namespace Application.Services.classes
                 return false;
             }
         }
-        private async Task SendSms(string phoneNumber, string code)
+        public  async Task SendSms(string phoneNumber, string code)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace Application.Services.classes
             {
                 var user =await  _userManager.Users.SingleOrDefaultAsync(x=>x.PhoneNumber == command.PhoneNumber &&x.RoleType==0);
                 var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var updateResult = await _userManager.ResetPasswordAsync(user,resetToken,command.PhoneNumber);
+                var updateResult = await _userManager.ResetPasswordAsync(user,resetToken,command.NewPassword);
                 return updateResult.Succeeded;
             }
             return false; 
