@@ -8,7 +8,7 @@ namespace Application.Commands.User
         /// <summary>
         /// شماره تلفن
         /// </summary>
-        public string CellPhone { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// رمزعبور جدید
