@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Commands;
+﻿using Application.Commands;
 using Application.Commands.Ticket;
 using Application.Dtos;
+using Aspose.Pdf;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Application.Services.interfaces
 {
@@ -51,6 +53,10 @@ namespace Application.Services.interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task<List<TicketDto>> GetReservedTickets(Guid id);
+
+
+        Task<FileContentResult> DownloadTicketAync(Guid id);
+
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش
         /// </summary>

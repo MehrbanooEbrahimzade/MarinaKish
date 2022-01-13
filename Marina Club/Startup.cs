@@ -19,6 +19,7 @@ using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
 using Domain.IConfiguration;
 using Marina_Club.Activator.MiddleWare;
+using Microsoft.Extensions.Logging;
 
 namespace Marina_Club
 {
@@ -40,6 +41,9 @@ namespace Marina_Club
             services.ConfigureApplicationPersistence(Configuration);
 
             services.AddOptions();
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<FunRepository>>();
+            services.AddSingleton(typeof(ILogger), logger);
 
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
 

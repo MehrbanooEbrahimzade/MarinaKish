@@ -143,7 +143,7 @@ namespace Infrastructure.Repository.Classes
         public async Task<List<Ticket>> GetReservedTicketsForUser(Guid id)
         {
 
-            return await IncludeForTicket().Where(x => x.User.Id.Equals(id.ToString())&& x.Condition.Equals(2)).ToListAsync();
+            return await IncludeForTicket().Where(x => x.User.Id==(id.ToString())&& x.Condition==(Condition)2).ToListAsync();
         }
         
 

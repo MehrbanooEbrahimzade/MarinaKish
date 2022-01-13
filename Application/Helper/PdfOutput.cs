@@ -1,30 +1,40 @@
 ﻿using Application.Dtos;
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
+using Infrastructure.Helper;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Document = Aspose.Pdf.Document;
 using Page = Aspose.Pdf.Page;
 
 namespace Application.Helper
 {
-    public class PdfOutput
+    public static class PdfOutput
     {
-        public Document GeneratePdf(TicketDto ticket)
+        public async static Task<FileContentResult> GeneratePdf(TicketDto ticket)
         {
 
             #region DirectoryPath
 
+            var fileName = "ticket" + GenerateFileNumber() + ".pdf";
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var path = Path.Combine(Directory.GetCurrentDirectory());
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
             var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
             var Yekan = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","Fonts","Yekan.ttf");
 
             #endregion
 
+
             ///افزودن صفحه به pdf
+            
+
             Document document = new Document();
+
             Page page = document.Pages.Add();
             Aspose.Pdf.Drawing.Graph canvas = new Aspose.Pdf.Drawing.Graph(50, 200);
 
@@ -203,15 +213,17 @@ namespace Application.Helper
             page.PageInfo.Width = 520;
             page.PageInfo.Height = 280;
 
-
-            var fileName = "ticket" + GenerateFileNumber() + ".pdf";
-            document.Save(path + fileName);
-
-
-            return document;
-
+            using (var streamOut = new MemoryStream())
+            {
+                document.Save(streamOut);
+                return new FileContentResult(streamOut.ToArray(), "application/pdf")
+                {
+                    FileDownloadName = "ticket.pdf"
+                };
+            }
+           
         }
-        private string GenerateFileNumber()
+        private static  string GenerateFileNumber()
         {
             int _min = 10000;
             int _max = 99999;

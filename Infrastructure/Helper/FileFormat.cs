@@ -88,6 +88,8 @@ namespace Infrastructure.Helper
         {".wmv", "video/x-ms-wmv"},
         {".wmx", "video/x-ms-wmx"},
         {".wvx", "video/x-ms-wvx"},
+        {".pdf", "application/pdf"},
+
         #endregion
         
         };
