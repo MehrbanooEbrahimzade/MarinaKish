@@ -5,18 +5,18 @@ namespace Application.Services.interfaces
 {
     public interface IScheduleInfoService
     {
-        /// <summary>
-        ///اضافه کردن  
-        /// </summary>
-        void AddScheduleInfoAsync(AddScheduleInfoCommand command);
+        ///// <summary>
+        /////اضافه کردن  
+        ///// </summary>
+        //void AddScheduleInfoAsync(AddScheduleInfoCommand command);
 
-        /// <summary>
-        ///ادیت کردن  
-        /// </summary>
-        Task<bool> UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command); 
-        /// <summary>
-        /// ساخت و اضافه کردن سانس
-        /// </summary> 
-        void CreateAndAddSchedule(AddScheduleInfoCommand command);
+        ///// <summary>
+        /////ادیت کردن  
+        ///// </summary>
+        //Task<bool> UpdateScheduleInfoAsync(UpdateScheduleInfoCommand command); 
+        ///// <summary>
+        ///// ساخت و اضافه کردن سانس
+        ///// </summary> 
+        //void CreateAndAddSchedule(AddScheduleInfoCommand command);
     }
 }

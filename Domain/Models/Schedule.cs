@@ -64,6 +64,12 @@ namespace Domain.Models
         /// وجود داشتن سانس 
         /// </summary>
         public bool IsExist { get; private set; }
+
+
+        public void SetIsExit(bool isExist)
+        {
+            IsExist = isExist;
+        }
     }
 
     public class Percent

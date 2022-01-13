@@ -26,7 +26,7 @@ namespace Marina_Club.Controllers
             { 
                 BadReq(ApiMessage.WrongInformation);
             } 
-            _scheduleInfoService.AddScheduleInfoAsync(command);
+            //_scheduleInfoService.AddScheduleInfoAsync(command);
         }
 
 
@@ -41,7 +41,7 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongInformation);
             }
-            await _scheduleInfoService.UpdateScheduleInfoAsync(command);
+            //await _scheduleInfoService.UpdateScheduleInfoAsync(command);
 
             return Ok(ApiMessage.Ok);
         }

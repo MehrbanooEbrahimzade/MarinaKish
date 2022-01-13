@@ -21,7 +21,7 @@ namespace Infrastructure.Repository.Classes
             dbSet = context.Set<T>();
         }
 
-        public virtual async Task<IEnumerable<T>> AllAsync()
+        public virtual async Task<List<T>> AllAsync()
         {
             return await dbSet.ToListAsync();
         }

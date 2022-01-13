@@ -87,21 +87,6 @@ namespace Infrastructure.Repository.Classes
             }
         }
 
-        /// <summary>
-        /// ذخیره عملیات انجام شده
-        /// </summary>
-        public async Task<bool> UpdateFunAsync()
-        {
-            try
-            {
-                return await _context.SaveChangesAsync() > 0;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "{ Repo} Update Fun Method Error", typeof(FunRepository));
-                return false;
-            }
-        }
 
         /// <summary>
         /// حذف تفریح 
@@ -129,7 +114,7 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// دریافت همه تفریح ها
         /// </summary>
-        public override async Task<IEnumerable<Fun>> AllAsync()
+        public override async Task<List<Fun>> AllAsync()
         {
             try
             {
@@ -213,6 +198,23 @@ namespace Infrastructure.Repository.Classes
                 return null;
             }
         }
+
+        /// <summary>
+        /// غیرفعال کردن یک فان
+        /// </summary>
+        public async Task<bool> InactivateFun(Guid fileId)
+        {
+            var fun = await _context.Funs
+                .SingleOrDefaultAsync(x => x.Id == fileId && x.IsActive == true);
+
+            if (fun == null)
+                 throw new NullReferenceException("تفریح مورد نظر یافت نشد!");
+
+            fun.SetIsActive(false);
+            return true;
+        }
+
+
         ///// <summary>
         ///// دریافت فایل با آیدی
         ///// </summary>

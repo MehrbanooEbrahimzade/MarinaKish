@@ -42,7 +42,7 @@ namespace Infrastructure.Repository.Classes
         }
 
 
-        public override async Task<IEnumerable<Ticket>> AllAsync()
+        public override async Task<List<Ticket>> AllAsync()
         {
             try
             {

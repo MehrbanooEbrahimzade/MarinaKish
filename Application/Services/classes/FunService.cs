@@ -7,6 +7,8 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.IConfiguration;
 using Microsoft.Extensions.Logging;
+using Application.Commands.ScheduleInfo;
+using Application.Helper;
 
 namespace Application.Services.classes
 {
@@ -23,11 +25,33 @@ namespace Application.Services.classes
         /// <summary>
         /// اضافه کردن تفریح
         /// </summary>
-        public Guid AddFunAsync(AddFunCommand command)
+        public async Task<Guid> AddFunAsync(AddFunCommand command)
         {
             var fun = command.ToModel();
-            _unitOfWork.Funs.AddAsync(fun);
+
+            var addFun=await _unitOfWork.Funs.AddAsync(fun);
+
+            command.ScheduleInfo.FunId = fun.Id;
+
+            CreateAndAddSchedule(command.ScheduleInfo);
+
+            var addScheduleInfo = await _unitOfWork.ScheduleInfos.AddAsync(fun.ScheduleInfo);
+
+            if (!addFun || !addScheduleInfo)
+                throw new ArgumentNullException("عملیات اضافه کردن تفریح با خطا مواجه شد!");
+
+            await _unitOfWork.CompleteAsync();
+
             return fun.Id;
+        }
+
+        /// <summary>
+        ///ساخت سانس از روی اطلاعاتش
+        /// </summary>
+        public void CreateAndAddSchedule(AddScheduleInfoCommand command)
+        {
+            var schedules = ScheduleMaker.MakeSchedule(command);
+            _unitOfWork.Schedules.AddScheduleAsync(schedules);
         }
 
         /// <summary>
@@ -50,19 +74,20 @@ namespace Application.Services.classes
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
                     command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
-            var save = await _unitOfWork.Funs.UpdateFunAsync();
-            if (!save)
-            {
-                throw new Exception("Not Save");
-            }
+
+            await _unitOfWork.CompleteAsync();
+            
         }
 
         /// <summary>
-        /// حذف تفریح
+        /// غیرفعال کردن تفریح
         /// </summary>
-        public async Task DeleteFunAsync(Guid id)
+        public async Task<bool> InactivateFunAsync(Guid id)
         {
-            await _unitOfWork.Funs.DeleteAsync(id);
+            await _unitOfWork.Funs.InactivateFun(id);
+            await _unitOfWork.Schedules.InactivateSchedulesAsync(id); 
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
         /// <summary>
@@ -71,7 +96,7 @@ namespace Application.Services.classes
         public async Task<List<FunDto>> GetAllFunAsync()
         {
             var funs = await _unitOfWork.Funs.AllAsync();
-            return (List<FunDto>) funs.ToDto();
+            return funs.ToDto();
         }
 
         /// <summary>
@@ -84,39 +109,14 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// گرفتن تفریح ها با اسم تفریح
+        /// گرفتن یک تفریح ها 
         /// </summary>
-        public async Task<FunDto> GetFunsWithFunNameAsynch(string name)
+        public async Task<FunDto> GetFunsByIdAsynch(Guid id)
         {
-            var fun = await _unitOfWork.Funs.GetFunsByFunNameAsync(name);
+            var fun = await _unitOfWork.Funs.GetByIdAsync(id);
             return fun?.ToDto();
         }
 
-        /// <summary>
-        /// غیرفعال کردن یک تفریح
-        /// </summary>
-        public async Task<bool> DisActiveFunByIdAsynch(Guid id)
-        {
-            var result = _unitOfWork.Funs.CheckFunTypeIsExistAsync(id);
-            if (await result == false)
-            {
-                throw new NullReferenceException();
-            }
-
-            var fun = await _unitOfWork.Funs.GetActiveFunByIdAsynch(id);
-            if (fun == null)
-                return false;
-
-            var funActiveSchedules = await _unitOfWork.Funs.GetAllFunActiveSchedulesById(id);
-
-            foreach (var schedule in funActiveSchedules)
-            {
-                schedule.SetIsActive(false);
-            }
-
-            fun.SetIsActive(false);
-            return await _unitOfWork.Funs.UpdateFunAsync();
-        }
 
         /// <summary>
         /// دوباره فعال کردن یک تفریح
@@ -134,7 +134,9 @@ namespace Application.Services.classes
             }
 
             fun.SetIsActive(true);
-            return await _unitOfWork.Funs.UpdateFunAsync();
+            await _unitOfWork.CompleteAsync();
+            return true;
+
         }
 
         /// <summary>

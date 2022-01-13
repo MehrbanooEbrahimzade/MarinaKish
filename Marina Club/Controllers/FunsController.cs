@@ -29,9 +29,9 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongFunInformation);
             }
-            command.ScheduleInfo.FunId = _funService.AddFunAsync(command);
-            _scheduleInfoService.AddScheduleInfoAsync(command.ScheduleInfo);
-            return OkResult(ApiMessage.FunAdded);
+            var funId = _funService.AddFunAsync(command);
+
+            return OkResult(ApiMessage.FunAdded, funId);
         }
 
         /// <summary>
@@ -45,20 +45,20 @@ namespace Marina_Club.Controllers
             {
                 return BadReq(ApiMessage.WrongInformation);
             }
-            await _scheduleInfoService.UpdateScheduleInfoAsync(command.ScheduleInfo);
+            //await _scheduleInfoService.UpdateScheduleInfoAsync(command.ScheduleInfo);
             await _funService.UpdateFunAsync(command);
             return OkResult(ApiMessage.FunEdited);
         }
 
-        /// <summary>
-        /// حذف تفریح
-        /// </summary>
-        [HttpDelete("{id}/Delete")]
-        public async Task<IActionResult> DeleteFunAsync(Guid id)
-        {
-            await _funService.DeleteFunAsync(id);
-            return OkResult(ApiMessage.FunDeleted);
-        }
+        ///// <summary>
+        ///// حذف تفریح
+        ///// </summary>
+        //[HttpDelete("{id}/Delete")]
+        //public async Task<IActionResult> DeleteFunAsync(Guid id)
+        //{
+        //    await _funService.DeleteFunAsync(id);
+        //    return OkResult(ApiMessage.FunDeleted);
+        //}
 
         /// <summary>
         /// دریافت همه تفریح ها
@@ -66,8 +66,11 @@ namespace Marina_Club.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllFunAsync()
         {
-            var result = await _funService.GetAllFunAsync();
-            return OkResult(ApiMessage.AllFunGetted, new { AllFuns = result });
+            var funs = await _funService.GetAllFunAsync();
+
+            return funs == null ?
+            BadReq(ApiMessage.NotExistFunType) :
+            OkResult(ApiMessage.FunsByFunTypeGetted, funs);
         }
 
         /// <summary>
@@ -81,19 +84,6 @@ namespace Marina_Club.Controllers
                 : OkResult(ApiMessage.FunGetted, new { FunInfo = result });
         }
 
-        /// <summary>
-        /// گرفتن تفریح ها با اسم تفریح
-        /// </summary>
-        [HttpGet("{name}/GetByName")]
-        public async Task<IActionResult> GetFunsWithFunNameAsynch(string name)
-        {
-
-            var result = await _funService.GetFunsWithFunNameAsynch(name);
-            return result == null ?
-                BadReq(ApiMessage.NotExistFunType) :
-                OkResult(ApiMessage.FunsByFunTypeGetted, new { Funs = result });
-        }
-
 
         /// <summary>
         /// غیرفعال کردن یک تفریح
@@ -101,7 +91,7 @@ namespace Marina_Club.Controllers
         [HttpPut("{id}/DisActive")]
         public async Task<IActionResult> DisActiveFunByIdAsynch(Guid id)
         {
-            var result = await _funService.DisActiveFunByIdAsynch(id);
+            var result = await _funService.InactivateFunAsync(id);
             return !result ? BadReq(ApiMessage.FunNotDisActive, new { Reasons = $"1-eFun already disActived, 2-wrong eFun id" })
                 : OkResult(ApiMessage.FunDisActived, new { DisActived = result });
         }

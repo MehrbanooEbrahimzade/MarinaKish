@@ -23,14 +23,14 @@ namespace Domain.RepasitoryInterfaces
         Task<Fun> GetActiveFunByIdAsynch(Guid id);
 
         /// <summary>
+        /// غیرفعال کردن یک فان
+        /// </summary>
+        Task<bool> InactivateFun(Guid fileId);
+
+        /// <summary>
         /// گرفتن تفریح غیرفعال با آیدی :
         /// </summary>
         Task<Fun> GetDisActiveFunByIdAsynch(Guid id);
-
-        /// <summary>
-        /// ذخیره کردن اعمال انجام شده
-        /// </summary>
-        Task<bool> UpdateFunAsync();
 
         /// <summary>
         ///گرفتن تفریح  با اسم تفریح

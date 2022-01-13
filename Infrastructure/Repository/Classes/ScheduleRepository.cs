@@ -56,7 +56,7 @@ namespace Infrastructure.Repository.Classes
             }
         }
 
-        public async override Task<IEnumerable<Schedule>> AllAsync()
+        public async override Task<List<Schedule>> AllAsync()
         {
             try
             {
@@ -85,6 +85,7 @@ namespace Infrastructure.Repository.Classes
         }
 
         #endregion
+
         /// <summary>
         /// اضافه کردن سانس ها به تیبل
         /// </summary>
@@ -96,7 +97,7 @@ namespace Infrastructure.Repository.Classes
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "{Repo} add schedules eror ", typeof(ScheduleRepository));
+                _logger.LogError(e, "{Repo} add schedules error ", typeof(ScheduleRepository));
             }
 
         }
@@ -109,7 +110,7 @@ namespace Infrastructure.Repository.Classes
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "{Repo} find schedule eror ", typeof(ScheduleRepository));
+                _logger.LogError(e, "{Repo} find schedule error ", typeof(ScheduleRepository));
                 return null;
             }
         }
@@ -127,7 +128,7 @@ namespace Infrastructure.Repository.Classes
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "{Repo} add schedules eror ", typeof(ScheduleRepository));
+                _logger.LogError(e, "{Repo} add schedules error ", typeof(ScheduleRepository));
                 return false;
             }
         }
@@ -146,235 +147,36 @@ namespace Infrastructure.Repository.Classes
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "{Repo} get active schedule eror ", typeof(ScheduleRepository));
+                _logger.LogError(e, "{Repo} get active schedule error ", typeof(ScheduleRepository));
                 return null;
             }
         }
 
 
-        ///// <summary>
-        ///// گرفتن همه سانس ها برای تفریح
-        ///// </summary>
-        //public async Task<List<Schedule>> GetAllSchedulesForFunWithFunType(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.Id == id && x.IsExist == true)
-        //        .OrderBy(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
+        /// <summary>
+        /// غیر فعال کردن سانس های یک فان
+        /// </summary>
+        public async Task<bool> InactivateSchedulesAsync(Guid funId)
+        {
+            try
+            {
+               
+                var result=  dbSet.Where(x=>x.FunId==funId);
 
-        //public async Task<List<Schedule>> GetAllSchedulesForFunWithId(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.FunId == id && x.IsExist == true)
-        //        .OrderBy(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
+                foreach (var item in result)
+                {
+                    item.SetIsExit(false);
+                }
 
-        ///// <summary>
-        ///// جستجوی سانس با تفریح و تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime.Year == excuteMiladiDate.Year && x.ExecuteDateTime.Month == excuteMiladiDate.Month &&
-        //        x.ExecuteDateTime.Day == excuteMiladiDate.Day && x.FunId == id && x.IsExist == true)//
-        //        .OrderByDescending(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
+                return true;
 
-
-        ///// <summary>
-        ///// دریافت سانس با آیدی
-        ///// </summary>
-        //public async Task<Schedule> GetScheduleByIdAsync(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .FirstOrDefaultAsync(x => x.Id == id);
-        //}
-
-        ///// <summary>
-        ///// گرفتن تاریخ اخرین سانس
-        ///// </summary>
-        //public async Task<DateTime?> GetLastScheduleTimeByFunType(FunType funType) // momeni
-        //{
-        //    var sans = await _context.Schedules.Where(s => s.FunType == funType)
-        //        .OrderByDescending(x => x.ExecuteDateTime).ToListAsync();
-
-        //    if (sans.Count > 0)
-        //    {
-        //        return sans.OrderByDescending(s => s.ExecuteDateTime).First().ExecuteDateTime;
-        //    }
-
-        //    return null;
-        //}
-
-        ///// <summary>
-        ///// جست و جوی سانس ها با یک تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchScheduleByOneDate(DateTime firstDate)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime.Year == firstDate.Year && x.ExecuteDateTime.Month == firstDate.Month &&
-        //        x.ExecuteDateTime.Day == firstDate.Day && x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// جست و جوی سانس ها با دو تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchScheduleByTwoDate(DateTime firstDate, DateTime secondDate) //with problem
-        //{
-        //    return await _context.Schedules
-        //        .FromSql("Select * from dbo.Schedules as s where s.ExecuteDateTime between {0} and {1}", firstDate, secondDate)
-        //        .Where(x => x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        //public async Task<Fun> GetFunByFunId(Guid id)
-        //{
-        //    return await _context.Funs
-        //        .SingleOrDefaultAsync(x => x.Id == id);
-        //}
-
-        //public async Task<DateTime?> GetLastScheduleTimeByFunId(Guid id)
-        //{
-        //    var sans = await _context.Schedules.Where(x => x.FunId == id).ToListAsync();
-        //    if (sans.Count == 0)
-        //        return null;
-        //    return sans.OrderByDescending(x => x.ExecuteDateTime).First().ExecuteDateTime;
-
-        //}
-
-        ///// <summary>
-        ///// دریافت همه سانس های فعال تاریخ گذشته
-        ///// </summary>
-        //public async Task<List<Schedule>> GetAllExpiredActiveSchedules()
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime < DateTime.Now && x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// گرفتن همه سانس ها برای تفریح
-        ///// </summary>
-        //public async Task<List<Schedule>> GetAllSchedulesForFunWithFunType(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.Id == id && x.IsExist == true)
-        //        .OrderBy(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
-
-        //public async Task<List<Schedule>> GetAllSchedulesForFunWithId(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.FunId == id && x.IsExist == true)
-        //        .OrderBy(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// جستجوی سانس با تفریح و تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchSchedulesByTimeAndFun(DateTime excuteMiladiDate, Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime.Year == excuteMiladiDate.Year && x.ExecuteDateTime.Month == excuteMiladiDate.Month &&
-        //        x.ExecuteDateTime.Day == excuteMiladiDate.Day && x.FunId == id && x.IsExist == true)//
-        //        .OrderByDescending(x => x.ExecuteDateTime)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// ذخیره اعمال انجام شده
-        ///// </summary>
-        //public async Task<bool> UpdateScheduleAsync()
-        //{
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
-
-        ///// <summary>
-        ///// دریافت سانس با آیدی
-        ///// </summary>
-        //public async Task<Schedule> GetScheduleByIdAsync(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .FirstOrDefaultAsync(x => x.Id == id);
-        //}
-
-        ///// <summary>
-        ///// گرفتن تاریخ اخرین سانس
-        ///// </summary>
-        //public async Task<DateTime?> GetLastScheduleTimeByFunType(FunType funType) // momeni
-        //{
-        //    var sans = await _context.Schedules.Where(s => s.FunType == funType)
-        //        .OrderByDescending(x => x.ExecuteDateTime).ToListAsync();
-
-        //    if (sans.Count > 0)
-        //    {
-        //        return sans.OrderByDescending(s => s.ExecuteDateTime).First().ExecuteDateTime;
-        //    }
-
-        //    return null;
-        //}
-
-        ///// <summary>
-        ///// جست و جوی سانس ها با یک تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchScheduleByOneDate(DateTime firstDate)
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime.Year == firstDate.Year && x.ExecuteDateTime.Month == firstDate.Month &&
-        //        x.ExecuteDateTime.Day == firstDate.Day && x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// جست و جوی سانس ها با دو تاریخ
-        ///// </summary>
-        //public async Task<List<Schedule>> SearchScheduleByTwoDate(DateTime firstDate, DateTime secondDate) //with problem
-        //{
-        //    return await _context.Schedules
-        //        .FromSql("Select * from dbo.Schedules as s where s.ExecuteDateTime between {0} and {1}", firstDate, secondDate)
-        //        .Where(x => x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        //public async Task<Fun> GetFunByFunId(Guid id)
-        //{
-        //    return await _context.Funs
-        //        .SingleOrDefaultAsync(x => x.Id == id);
-        //}
-
-        //public async Task<DateTime?> GetLastScheduleTimeByFunId(Guid id)
-        //{
-        //    var sans = await _context.Schedules.Where(x => x.FunId == id).ToListAsync();
-        //    if (sans.Count == 0)
-        //        return null;
-        //    return sans.OrderByDescending(x => x.ExecuteDateTime).First().ExecuteDateTime;
-
-        //}
-
-        ///// <summary>
-        ///// دریافت همه سانس های فعال تاریخ گذشته
-        ///// </summary>
-        //public async Task<List<Schedule>> GetAllExpiredActiveSchedules()
-        //{
-        //    return await _context.Schedules
-        //        .Where(x => x.ExecuteDateTime < DateTime.Now && x.IsExist == true)
-        //        .ToListAsync();
-        //}
-
-        ///// <summary>
-        ///// دریافت سانس فعال با آیدی
-        ///// </summary>
-        //public async Task<Schedule> GetActiveScheduleByIdAsync(Guid id)
-        //{
-        //    return await _context.Schedules
-        //        .FirstOrDefaultAsync(x => x.Id == id && x.IsExist == true);
-        //}
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} Inactivate schedules for a fun error ", typeof(ScheduleRepository));
+                return false;
+            }
+        }
 
 
     }
