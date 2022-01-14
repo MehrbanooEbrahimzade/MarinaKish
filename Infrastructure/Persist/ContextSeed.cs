@@ -18,9 +18,9 @@ namespace Infrastructure.Persist
         }
         public static async Task SeedAdminAsync(UserManager<User> userManager)
         {
-            var defaultAdmin = new User("09920106044")
+            var defaultAdmin = new User("maahyar@protonmail.com")
             {
-                Email = "maahyar@gmail.com"
+                Email = "maahyar@protonmail.com"
             };
            
             if (userManager.Users.All(u => u.Id != defaultAdmin.Id))
@@ -28,7 +28,7 @@ namespace Infrastructure.Persist
                 var user = await userManager.FindByEmailAsync(defaultAdmin.Email);
                 if (user == null)
                 {
-                    await userManager.CreateAsync(defaultAdmin,"mahyar@2022");
+                    await userManager.CreateAsync(defaultAdmin,"ano!20mahyar");
                     await userManager.AddToRoleAsync(defaultAdmin, RoleType.Admin.ToString());
                 }
             }

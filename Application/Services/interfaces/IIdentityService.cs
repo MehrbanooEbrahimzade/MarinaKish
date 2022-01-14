@@ -13,5 +13,6 @@ namespace Application.Services.interfaces
         Task CompleteProfile(CompleteProfileCommand command);
         Task<User> UpdateProfileAsync(UpdateUserCommand command);
         Task<bool> DeleteUser(Guid id);
+       
     }
 }

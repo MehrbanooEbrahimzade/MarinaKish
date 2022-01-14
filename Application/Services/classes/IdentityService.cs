@@ -2,7 +2,9 @@
 using Application.Exceptions;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Domain.Enums;
 using Domain.Models;
+using Infrastructure.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,7 +19,6 @@ using System.Net.Http.Formatting;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure.Helper;
 
 namespace Application.Services.classes
 {
@@ -44,7 +45,7 @@ namespace Application.Services.classes
             {
                 user = new User(command.PhoneNumber);
                 var result = _userManager.CreateAsync(user, user.PhoneNumber);
-                
+
             }
 
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, user.PhoneNumber);
@@ -71,7 +72,7 @@ namespace Application.Services.classes
                 return false;
             }
         }
-        private async Task SendSms(string phoneNumber, string code)
+        public  async Task SendSms(string phoneNumber, string code)
         {
             try
             {
@@ -171,6 +172,8 @@ namespace Application.Services.classes
 
 
         }
+        
+
     }
 
 }

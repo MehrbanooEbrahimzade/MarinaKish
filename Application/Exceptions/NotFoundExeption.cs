@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 namespace Application.Exceptions
 {
     public class NotFoundExeption : Exception
