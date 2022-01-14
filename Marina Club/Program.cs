@@ -24,6 +24,7 @@ namespace Marina_Club
                     var context = services.GetRequiredService<DatabaseContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+      
                     await ContextSeed.SeedRolesAsync(roleManager);
                     await ContextSeed.SeedAdminAsync(userManager);
                 }

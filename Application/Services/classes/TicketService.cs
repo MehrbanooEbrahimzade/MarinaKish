@@ -1,13 +1,19 @@
 ﻿using Application.Commands;
 using Application.Commands.Ticket;
 using Application.Dtos;
+using Application.Helper;
 using Application.Mappers;
 using Application.Services.interfaces;
+using Aspose.Pdf;
 using Domain.IConfiguration;
 using Domain.Models;
+using Infrastructure.Helper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application.Services.classes
@@ -96,6 +102,16 @@ namespace Application.Services.classes
                 throw new ArgumentNullException("بلیط یافت نشد");
             return tickets.ToDto();
 
+        }
+        public async Task<FileContentResult> DownloadTicketAync(Guid id)
+        {
+            var ticket = await GetReservedTickets(id);
+            var document =  await Application.Helper.PdfOutput.GeneratePdf(ticket.SingleOrDefault());
+
+            
+
+            return document;
+          
         }
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری

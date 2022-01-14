@@ -263,8 +263,7 @@ namespace Marina_Club.Controllers
         {
             id = CurrentUser.Id;
             var tickets = await _ticketService.GetReservedTickets(id);
-            if (tickets.Count == 0)
-                return StatusCode(404);
+            
             return OkResult(ApiMessage.Ok, tickets);
         }
 
@@ -272,6 +271,12 @@ namespace Marina_Club.Controllers
 
 
         #endregion
+        [HttpPost("{id}/download")]
+        public async Task<IActionResult> DownloadTicketAsync(Guid id)
+        {
+            var document = await _ticketService.DownloadTicketAync(id);
+            return File(document.FileContents,document.ContentType);
+        }
         //        #region User Options
 
 

@@ -44,7 +44,7 @@ namespace Application.Mappers
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
                 BirthDate = persianBirthDate,
-                CreditCard = user.CreditCard.ToDto()
+             
 
             };
         }
@@ -150,7 +150,7 @@ namespace Application.Mappers
             PersianCalendar PersianParse = new PersianCalendar();
             string PersianDate = string.Format("{0}/{1}/{2}",
                 PersianParse.GetYear(schedule.Date), PersianParse.GetMonth(schedule.Date), PersianParse.GetDayOfMonth(schedule.Date));
-
+            DateTime persianDate = Convert.ToDateTime(PersianDate);
             return new ScheduleDto()
             {
                 #region Select
@@ -159,7 +159,7 @@ namespace Application.Mappers
                 FunId = schedule.FunId,
                 Price = schedule.Price,
                 Discount = schedule.Percent,
-                Date = schedule.Date,
+                Date = persianDate,
                 StartTime = schedule.StartTime,
                 EndTime = schedule.EndTime
 
@@ -206,8 +206,8 @@ namespace Application.Mappers
                 BoughtPlace = x.WhereBuy,
                 Condition = x.Condition,
                 gender = x.Gender,
-                //ScheduleDto = x.Schedule.ToDto(),
-                //UserDto = x.User.ToDto()
+                ScheduleDto = x.Schedule.ToDto(),
+                UserDto = x.User.ToDto()
 
             }).ToList();
         }

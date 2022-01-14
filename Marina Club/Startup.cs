@@ -37,29 +37,21 @@ namespace Marina_Club
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.ConfigureApplicationPersistence(Configuration);
 
+
+
+            JwtConfiguration(services);
+            ConfigureIdentity(services);
+            ConfigureCors(services);
+
             services.AddOptions();
-
-            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
-
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
-
-            services.AddCors(s => s.AddPolicy("Policy", builder =>
-            {
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
-                builder.AllowAnyOrigin();
-            }));
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<FunRepository>>();
+            services.AddSingleton(typeof(ILogger), logger);
 
             services.AddAuthorization();
+
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<ApplicationLogs>>();
             services.AddSingleton(typeof(ILogger), logger);
@@ -160,6 +152,53 @@ namespace Marina_Club
             // AddScoped for ContactUs model
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
             services.AddScoped<IContactUsService, ContactUsService>();
+        }
+        private void JwtConfiguration(IServiceCollection services)
+        {
+            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
+        }
+        private void ConfigureIdentity(IServiceCollection services)
+        {
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 11;
+                options.Password.RequiredUniqueChars = 0;
+            });
+        }
+        private void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(s => s.AddPolicy("Policy", builder =>
+            {
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+                builder.AllowAnyOrigin();
+            }));
         }
     }
 }

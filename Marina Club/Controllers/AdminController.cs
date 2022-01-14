@@ -2,11 +2,7 @@
 using Application.Commands.User;
 using Application.Services.interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Marina_Club.Controllers
@@ -14,19 +10,19 @@ namespace Marina_Club.Controllers
     [Route("api/[controller]")]
     public class AdminController : ApiController
     {
-        private readonly IAdminService _adminService; 
-        public AdminController(IIdentityService identity,IAdminService adminService)
+        private readonly IAdminService _adminService;
+        public AdminController(IAdminService adminService)
         {
-            _adminService = adminService; 
+            _adminService = adminService;
         }
 
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAdminAsync([FromBody]AdminLoginCommand command)
+        public async Task<IActionResult> LoginAdminAsync([FromBody] AdminLoginCommand command)
         {
-           
-            var token =await  _adminService.LoginAsync(command);
+
+            var token = await _adminService.LoginAsync(command);
             return OkResult(ApiMessage.UserLoggedIn, token);
         }
 
@@ -34,7 +30,7 @@ namespace Marina_Club.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> SendConfirmationCode([FromBody]RegisterUserCommand command)
+        public async Task<IActionResult> SendConfirmationCode([FromBody] RegisterUserCommand command)
         {
             command.Validate();
             var result = await _adminService.SendVerifyCodeAdmin(command);
@@ -45,7 +41,7 @@ namespace Marina_Club.Controllers
         }
         [AllowAnonymous]
         [HttpPost("reset")]
-        public async Task<IActionResult> ResetAdminPassword([FromBody]ForgetPasswordCommand command)
+        public async Task<IActionResult> ResetAdminPassword([FromBody] ForgetPasswordCommand command)
         {
             command.Validate();
             var result = await _adminService.RestoreAdminPassword(command);
@@ -62,6 +58,6 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.Ok);
         }
 
-        
+
     }
 }

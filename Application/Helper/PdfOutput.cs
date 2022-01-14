@@ -1,29 +1,37 @@
 ﻿using Application.Dtos;
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Document = Aspose.Pdf.Document;
 using Page = Aspose.Pdf.Page;
 
 namespace Application.Helper
 {
-    public class PdfOutput
+    public static class PdfOutput
     {
-        public Document GeneratePdf(TicketDto ticket)
+        public async static Task<FileContentResult> GeneratePdf(TicketDto ticket)
         {
 
             #region DirectoryPath
 
+            var fileName = "ticket" + GenerateFileNumber() + ".pdf";
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var path = Path.Combine(Directory.GetCurrentDirectory());
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
             var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
+            var Yekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "Yekan.ttf");
 
             #endregion
 
+
             ///افزودن صفحه به pdf
+
+
             Document document = new Document();
+
             Page page = document.Pages.Add();
             Aspose.Pdf.Drawing.Graph canvas = new Aspose.Pdf.Drawing.Graph(50, 200);
 
@@ -32,9 +40,9 @@ namespace Application.Helper
             #region Rectangles
 
 
-            Aspose.Pdf.Drawing.Rectangle schedule = new Aspose.Pdf.Drawing.Rectangle(105, 100, 240, 120);
-            Aspose.Pdf.Drawing.Rectangle userInfo = new Aspose.Pdf.Drawing.Rectangle(105, 45, 240, 52);
-            Aspose.Pdf.Drawing.Rectangle totslPrice = new Aspose.Pdf.Drawing.Rectangle(105, 8, 240, 30);
+            Aspose.Pdf.Drawing.Rectangle schedule = new Aspose.Pdf.Drawing.Rectangle(-50, 160, 400, 60);
+            Aspose.Pdf.Drawing.Rectangle userInfo = new Aspose.Pdf.Drawing.Rectangle(-50, 110, 400, 45);
+            Aspose.Pdf.Drawing.Rectangle totslPrice = new Aspose.Pdf.Drawing.Rectangle(-50, 77, 400, 30);
 
 
             ///summery
@@ -71,23 +79,15 @@ namespace Application.Helper
 
             #endregion
 
-
-
-
             #region Adding Image
 
             var imageFileName = System.IO.Path.Combine(imagePath, "logo.png");
-            var parasail = Path.Combine(imagePath, "para.png");
             var barcode = Path.Combine(imagePath, "barcode.png");
-            var map = Path.Combine(imagePath, "Map.png");
 
-            page.AddImage(imageFileName, new Aspose.Pdf.Rectangle(920, 350, 10, 300));
+            page.AddImage(imageFileName, new Aspose.Pdf.Rectangle(920, 230, 6, 270));
 
-            page.AddImage(parasail, new Aspose.Pdf.Rectangle(190, 85, 10, 380));
+            page.AddImage(barcode, new Aspose.Pdf.Rectangle(50, 125, 10, 370));
 
-            page.AddImage(barcode, new Aspose.Pdf.Rectangle(50, 125, 10, 500));
-
-            page.AddImage(map, new Aspose.Pdf.Rectangle(190, 55, 10, 180));
 
             #endregion
 
@@ -99,8 +99,18 @@ namespace Application.Helper
             ///متن نوشتار
             var header = new TextFragment("مارینا کیش");
             var firstMarina = new TextFragment("اولین مارینای کشور");
-            var ticketInfo = new TextFragment($"\nمجموعه تفریحات دریایی مارینا کیش\n\n نام تفریح : {ticket.FunType} \n\n {ticket.ScheduleDto.Date} \n\n {ticket.ScheduleDto.StartTime} الی {ticket.ScheduleDto.EndTime}   \n\n کیش -بلوار مرجان-مرجان 7 -ماریناکیش");
-            var userInfoText = new TextFragment($"{ticket.UserDto.PhoneNumber}         {ticket.UserDto.NationalCode}         {ticket.UserDto.FullName}  \n\n{ticket.gender}                  ");
+            var ticketInfo = new TextFragment($"\nمجموعه تفریحات دریایی مارینا کیش\n\n\n {ticket.FunType}                                  {ticket.ScheduleDto.Date.Date}                         {ticket.ScheduleDto.StartTime} الی  {ticket.ScheduleDto.EndTime}");
+            var userInfoText = new TextFragment($"{ticket.UserDto.FullName}                         کدملی : {ticket.UserDto.NationalCode}                         {ticket.UserDto.PhoneNumber}\n\n شماره بلیط : ٥٦٨٩٥                                                                   جنسیت : {ticket.gender} ");
+            var priceInfo = new TextFragment("\n\nمبلغ : ٦٥٠.٠٠٠ هزارتومان");
+            var address = new TextFragment("آدرس  : کیش  -  بلوار مرجان  -  مرجان 7  -  مارینا کیش ");
+
+
+
+
+
+
+
+
 
 
             ///نوشتار از سمت راست
@@ -108,10 +118,12 @@ namespace Application.Helper
             firstMarina.HorizontalAlignment = HorizontalAlignment.Right;
             userInfoText.HorizontalAlignment = HorizontalAlignment.Right;
             ticketInfo.HorizontalAlignment = HorizontalAlignment.Right;
+            priceInfo.HorizontalAlignment = HorizontalAlignment.Right;
 
 
             ///نصب فونت کاستوم 
             var font = FontRepository.OpenFont(iranYekan);
+            var yekan = FontRepository.OpenFont(Yekan);
 
 
 
@@ -120,6 +132,7 @@ namespace Application.Helper
             firstMarina.TextState.Font = font;
             ticketInfo.TextState.Font = font;
             userInfoText.TextState.Font = font;
+            priceInfo.TextState.Font = font;
 
             ///تنطیم اندازه فونت 
             header.TextState.FontSize = 11;
@@ -133,6 +146,7 @@ namespace Application.Helper
             firstMarina.TextState.ForegroundColor = Aspose.Pdf.Color.DarkSlateBlue;
             ticketInfo.TextState.ForegroundColor = Aspose.Pdf.Color.Navy;
             userInfoText.TextState.ForegroundColor = Aspose.Pdf.Color.Navy;
+            priceInfo.TextState.ForegroundColor = Aspose.Pdf.Color.Navy;
 
 
 
@@ -141,18 +155,38 @@ namespace Application.Helper
             firstMarina.TextState.FontStyle = (FontStyles)0;
             ticketInfo.TextState.FontStyle = (FontStyles)0;
             userInfoText.TextState.FontStyle = (FontStyles)0;
+            priceInfo.TextState.FontStyle = (FontStyles)0;
 
 
             ///تنطیم موقعیت قرارگیری متن در صفحه 
-            header.Position = new Position(80, 320);
-            firstMarina.Position = new Position(150, 305);
-            ticketInfo.Position = new Position(150, 290);
-            userInfoText.Position = new Position(160, 160);
+            header.Position = new Position(150, 245);
+            firstMarina.Position = new Position(150, 230);
+            ticketInfo.Position = new Position(90, 222);
+            userInfoText.Position = new Position(90, 145);
+            priceInfo.Position = new Position(160, 114);
+
+
+
+
+            address.TextState.Font = yekan;
+            address.TextState.FontSize = 10;
+            address.TextState.ForegroundColor = Aspose.Pdf.Color.DarkSlateGray;
+            address.TextState.FontStyle = (FontStyles)0;
+            address.Position = new Position(90, 72);
+            address.HorizontalAlignment = HorizontalAlignment.Center;
+
+
 
 
 
             ticketInfo.Margin.Right = 0;
             ticketInfo.Margin.Left = 0;
+
+
+
+            priceInfo.Margin.Right = 0;
+            priceInfo.Margin.Left = 0;
+
 
 
             ticketInfo.TextState.DrawTextRectangleBorder = false;
@@ -163,22 +197,27 @@ namespace Application.Helper
             page.Paragraphs.Add(firstMarina);
             page.Paragraphs.Add(ticketInfo);
             page.Paragraphs.Add(userInfoText);
+            page.Paragraphs.Add(priceInfo);
+            page.Paragraphs.Add(address);
 
             #endregion
 
 
             ///تنطیم ابعاد pdf
             page.PageInfo.Width = 520;
-            page.PageInfo.Height = 350;
+            page.PageInfo.Height = 280;
 
-            var fileName = "ticket" + GenerateFileNumber() + ".pdf";
-            document.Save(path + fileName);
-
-
-            return document;
+            using (var streamOut = new MemoryStream())
+            {
+                document.Save(streamOut);
+                return new FileContentResult(streamOut.ToArray(), "application/pdf")
+                {
+                    FileDownloadName = "ticket.pdf"
+                };
+            }
 
         }
-        private string GenerateFileNumber()
+        private static string GenerateFileNumber()
         {
             int _min = 10000;
             int _max = 99999;

@@ -1,6 +1,5 @@
 ﻿using Application.Commands.User;
 using Application.Services.interfaces;
-using Domain.RepasitoryInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -94,7 +93,7 @@ namespace Marina_Club.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveUser(Guid id)
         {
-             await _identity.DeleteUser(id);
+            await _identity.DeleteUser(id);
             return OkResult(ApiMessage.Ok);
         }
 
