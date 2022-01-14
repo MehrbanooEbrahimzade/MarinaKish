@@ -36,44 +36,21 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options =>
-            {
-                options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.ConfigureApplicationPersistence(Configuration);
 
+
+
             JwtConfiguration(services);
+            ConfigureIdentity(services);
+            ConfigureCors(services);
 
             services.AddOptions();
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<FunRepository>>();
             services.AddSingleton(typeof(ILogger), logger);
 
-
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
-
-            
-
-            services.AddCors(s => s.AddPolicy("Policy", builder =>
-            {
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
-                builder.AllowAnyOrigin();
-            }));
-
             services.AddAuthorization();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 11;
-                options.Password.RequiredUniqueChars = 0;
-            });
-
-            
 
             ConfigureDependency(services);
 
@@ -148,7 +125,7 @@ namespace Marina_Club
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
             services.AddScoped<IContactUsService, ContactUsService>();
         }
-        public void JwtConfiguration(IServiceCollection services)
+        private void JwtConfiguration(IServiceCollection services)
         {
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
             services.AddAuthentication(options =>
@@ -172,6 +149,28 @@ namespace Marina_Club
                     };
                 });
 
+        }
+        private void ConfigureIdentity(IServiceCollection services)
+        {
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 11;
+                options.Password.RequiredUniqueChars = 0;
+            });
+        }
+        private void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(s => s.AddPolicy("Policy", builder =>
+            {
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+                builder.AllowAnyOrigin();
+            }));
         }
     }
 }
