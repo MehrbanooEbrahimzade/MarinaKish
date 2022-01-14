@@ -1,12 +1,9 @@
 ﻿using Application.Dtos;
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
-using Infrastructure.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Document = Aspose.Pdf.Document;
 using Page = Aspose.Pdf.Page;
@@ -25,13 +22,13 @@ namespace Application.Helper
             var path = Path.Combine(Directory.GetCurrentDirectory());
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
             var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
-            var Yekan = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","Fonts","Yekan.ttf");
+            var Yekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "Yekan.ttf");
 
             #endregion
 
 
             ///افزودن صفحه به pdf
-            
+
 
             Document document = new Document();
 
@@ -43,9 +40,9 @@ namespace Application.Helper
             #region Rectangles
 
 
-            Aspose.Pdf.Drawing.Rectangle schedule   =  new Aspose.Pdf.Drawing.Rectangle(-50, 160, 400, 60);
+            Aspose.Pdf.Drawing.Rectangle schedule = new Aspose.Pdf.Drawing.Rectangle(-50, 160, 400, 60);
             Aspose.Pdf.Drawing.Rectangle userInfo = new Aspose.Pdf.Drawing.Rectangle(-50, 110, 400, 45);
-            Aspose.Pdf.Drawing.Rectangle totslPrice =  new Aspose.Pdf.Drawing.Rectangle(-50, 77, 400, 30);
+            Aspose.Pdf.Drawing.Rectangle totslPrice = new Aspose.Pdf.Drawing.Rectangle(-50, 77, 400, 30);
 
 
             ///summery
@@ -82,9 +79,6 @@ namespace Application.Helper
 
             #endregion
 
-
-
-
             #region Adding Image
 
             var imageFileName = System.IO.Path.Combine(imagePath, "logo.png");
@@ -114,7 +108,7 @@ namespace Application.Helper
 
 
 
-            
+
 
 
 
@@ -165,7 +159,7 @@ namespace Application.Helper
 
 
             ///تنطیم موقعیت قرارگیری متن در صفحه 
-            header.Position =  new Position(150, 245);
+            header.Position = new Position(150, 245);
             firstMarina.Position = new Position(150, 230);
             ticketInfo.Position = new Position(90, 222);
             userInfoText.Position = new Position(90, 145);
@@ -221,9 +215,9 @@ namespace Application.Helper
                     FileDownloadName = "ticket.pdf"
                 };
             }
-           
+
         }
-        private static  string GenerateFileNumber()
+        private static string GenerateFileNumber()
         {
             int _min = 10000;
             int _max = 99999;

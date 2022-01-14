@@ -36,24 +36,23 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            });
             services.ConfigureApplicationPersistence(Configuration);
+
+            JwtConfiguration(services);
 
             services.AddOptions();
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<FunRepository>>();
             services.AddSingleton(typeof(ILogger), logger);
 
-            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
+            
 
             services.AddCors(s => s.AddPolicy("Policy", builder =>
             {
@@ -74,20 +73,7 @@ namespace Marina_Club
                 options.Password.RequiredUniqueChars = 0;
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
-                });
+            
 
             ConfigureDependency(services);
 
@@ -161,6 +147,31 @@ namespace Marina_Club
             // AddScoped for ContactUs model
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
             services.AddScoped<IContactUsService, ContactUsService>();
+        }
+        public void JwtConfiguration(IServiceCollection services)
+        {
+            services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
         }
     }
 }
