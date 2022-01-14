@@ -89,11 +89,11 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// اضافه کردن سانس ها به تیبل
         /// </summary>
-        public void AddScheduleAsync(List<Schedule> schedules)
+        public async Task AddScheduleAsync(List<Schedule> schedules)
         {
             try
             {
-                dbSet.AddRangeAsync(schedules);
+                 await dbSet.AddRangeAsync(schedules);
             }
             catch (Exception e)
             {

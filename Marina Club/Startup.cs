@@ -19,6 +19,7 @@ using Infrastructure.Repository.classes;
 using Infrastructure.Repository.Classes;
 using Domain.IConfiguration;
 using Marina_Club.Activator.MiddleWare;
+using Microsoft.Extensions.Logging;
 
 namespace Marina_Club
 {
@@ -47,6 +48,9 @@ namespace Marina_Club
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             });
             services.AddAuthorization();
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<ApplicationLogs>>();
+            services.AddSingleton(typeof(ILogger), logger);
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;

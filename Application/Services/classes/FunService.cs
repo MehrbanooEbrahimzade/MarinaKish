@@ -16,7 +16,7 @@ namespace Application.Services.classes
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
-        public FunService(IUnitOfWork unitOfWork,ILogger logger)
+        public FunService(IUnitOfWork unitOfWork, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -29,15 +29,13 @@ namespace Application.Services.classes
         {
             var fun = command.ToModel();
 
-            var addFun=await _unitOfWork.Funs.AddAsync(fun);
+            var addFun = await _unitOfWork.Funs.AddAsync(fun);
 
             command.ScheduleInfo.FunId = fun.Id;
 
-            CreateAndAddSchedule(command.ScheduleInfo);
+            await CreateAndAddSchedule(command.ScheduleInfo);
 
-            var addScheduleInfo = await _unitOfWork.ScheduleInfos.AddAsync(fun.ScheduleInfo);
-
-            if (!addFun || !addScheduleInfo)
+            if (!addFun)
                 throw new ArgumentNullException("عملیات اضافه کردن تفریح با خطا مواجه شد!");
 
             await _unitOfWork.CompleteAsync();
@@ -48,10 +46,10 @@ namespace Application.Services.classes
         /// <summary>
         ///ساخت سانس از روی اطلاعاتش
         /// </summary>
-        public void CreateAndAddSchedule(AddScheduleInfoCommand command)
+        public async Task CreateAndAddSchedule(AddScheduleInfoCommand command)
         {
             var schedules = ScheduleMaker.MakeSchedule(command);
-            _unitOfWork.Schedules.AddScheduleAsync(schedules);
+            await _unitOfWork.Schedules.AddScheduleAsync(schedules);
         }
 
         /// <summary>
@@ -63,11 +61,8 @@ namespace Application.Services.classes
             await _unitOfWork.Funs.DeleteSliderPicturesByFunAsync(fun);
 
             if (fun == null)
-            {
-                {
-                    throw new Exception("Null");
-                }
-            }
+                throw new NullReferenceException("تفریح یافت نشد!");
+              
 
             fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPictures.ToModel(),
                     command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
@@ -76,7 +71,7 @@ namespace Application.Services.classes
                     command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
 
             await _unitOfWork.CompleteAsync();
-            
+
         }
 
         /// <summary>
@@ -85,7 +80,7 @@ namespace Application.Services.classes
         public async Task<bool> InactivateFunAsync(Guid id)
         {
             await _unitOfWork.Funs.InactivateFun(id);
-            await _unitOfWork.Schedules.InactivateSchedulesAsync(id); 
+            await _unitOfWork.Schedules.InactivateSchedulesAsync(id);
             await _unitOfWork.CompleteAsync();
             return true;
         }
@@ -145,7 +140,7 @@ namespace Application.Services.classes
         public async Task<List<FunDto>> GetAllActivedFunAsynch()
         {
             var funs = await _unitOfWork.Funs.GetAllActiveFunAsync();
-            return (List<FunDto>) (funs.Count == 0 ? null : funs.ToDto());
+            return (List<FunDto>)(funs.Count == 0 ? null : funs.ToDto());
         }
 
         /// <summary>
@@ -154,7 +149,7 @@ namespace Application.Services.classes
         public async Task<List<FunDto>> GetAllDisActivedFunAsynch()
         {
             var funs = await _unitOfWork.Funs.GetAllDisActiveFunAsync();
-            return (List<FunDto>) (funs.Count == 0 ? null : funs.ToDto());
+            return (List<FunDto>)(funs.Count == 0 ? null : funs.ToDto());
         }
     }
 }

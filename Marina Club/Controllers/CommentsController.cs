@@ -24,6 +24,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> AddCommentToFun(Guid id, AddCommentCommand command)
         {
             command.FunId = id;
+            command.UserId = CurrentUser.Id;
             if (!command.Validate())
                 return BadReq(ApiMessage.WrongFunID, new { Reasons = $"1-enter funID, 2-enter message, 3-enter userID, 4-eFunType & Username & UserPhoneNumber must null" });
 
