@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System.Text;
-using Infrastructure.Repository;
 
 namespace Infrastructure.Extensions
 {
@@ -19,7 +16,7 @@ namespace Infrastructure.Extensions
         //{
         //    return result.Succeeded
         //        ? Result<string>.Success(message, data)
-                
+
 
 
         //}

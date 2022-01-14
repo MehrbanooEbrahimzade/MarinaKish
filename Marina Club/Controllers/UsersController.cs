@@ -1,5 +1,6 @@
 ﻿using Application.Commands.User;
 using Application.Services.interfaces;
+using Marina_Club.Activator.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> CompleteProfile([FromBody] CompleteProfileCommand command)
         {
             command.PhoneNumber = CurrentUser.PhoneNumber;
+            
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }

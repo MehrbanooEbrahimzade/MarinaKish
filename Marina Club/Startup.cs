@@ -53,9 +53,6 @@ namespace Marina_Club
             var serviceProvider = services.BuildServiceProvider();
             var logger = serviceProvider.GetService<ILogger<ApplicationLogs>>();
             services.AddSingleton(typeof(ILogger), logger);
-            
-
-           
 
             ConfigureDependency(services);
 
