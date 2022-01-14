@@ -46,9 +46,7 @@ namespace Marina_Club
             ConfigureCors(services);
 
             services.AddOptions();
-            var serviceProvider = services.BuildServiceProvider();
-            var logger = serviceProvider.GetService<ILogger<FunRepository>>();
-            services.AddSingleton(typeof(ILogger), logger);
+            
 
             services.AddAuthorization();
 
