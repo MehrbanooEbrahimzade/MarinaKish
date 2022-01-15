@@ -20,6 +20,7 @@ using Infrastructure.Repository.Classes;
 using Domain.IConfiguration;
 using Marina_Club.Activator.MiddleWare;
 using Microsoft.Extensions.Logging;
+using Marina_Club.Activator.Middleware;
 
 namespace Marina_Club
 {
@@ -36,7 +37,11 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddJsonOptions(options => 
+            {
+                options.SerializerSettings.Converters.Add(new JsonDateTimeConvertor());
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.ConfigureApplicationPersistence(Configuration);
 
 

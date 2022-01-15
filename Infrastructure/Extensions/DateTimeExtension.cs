@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Infrastructure.Extensions
 {
-    public  class DateTimeExtensionBase
+    public static class DateTimeExtensionBase
     {
-        public  readonly PersianCalendar persianCalendar = new PersianCalendar();
-        public  DateTime ConvertToShamsi(DateTime date)
+        public static readonly PersianCalendar persianCalendar = new PersianCalendar();
+        public static DateTime ConvertToShamsi(this DateTime date)
         {
             try
             {
+                
                 var persianDate = string.Format("{0}/{1}/{2}",
                 persianCalendar.GetYear(date), persianCalendar.GetMonth(date), persianCalendar.GetDayOfMonth(date));
 
@@ -23,10 +22,11 @@ namespace Infrastructure.Extensions
             }
 
         }
-        public DateTime ConvertToMiladiDate(DateTime date)
+        public static DateTime ConvertToMiladiDate(this DateTime date)
         {
             try
             {
+               
 
                 DateTime miladiDate = new DateTime(date.Year, date.Month, date.Day, persianCalendar);
                 return miladiDate;
