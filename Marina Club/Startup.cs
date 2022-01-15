@@ -60,10 +60,10 @@ namespace Marina_Club
 
             ConfigureDependency(services);
 
-            return WindsorRegistrationHelper.CreateServiceProvider(Installer.Container, services);
+            
 
             services.AddSwaggerGen();
-
+            return WindsorRegistrationHelper.CreateServiceProvider(Installer.Container, services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
