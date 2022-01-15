@@ -7,7 +7,7 @@ namespace Marina_Club.Activator.Middleware
 {
     public  class JsonDateTimeConvertor : DateTimeConverterBase
     {
-        public override void WriteJson(JsonWriter writer , object value,JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value,JsonSerializer serializer)
         {
             writer.WriteValue(((DateTime)value).ConvertToShamsi());
 
@@ -16,12 +16,13 @@ namespace Marina_Club.Activator.Middleware
         {
             try
             {
-                return reader.Value == null || string.IsNullOrEmpty(reader.Value.ToString())
+                return reader.Value == null
                     ? (object)null
-                    : ((DateTime)reader.Value).ConvertToMiladiDate();
+                    : reader.Value.ToString().ConvertToMiladiDate();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var errors = ex.Message;
                 return reader.Value;
             }
         }

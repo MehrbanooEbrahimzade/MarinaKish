@@ -10,7 +10,6 @@ namespace Infrastructure.Extensions
         {
             try
             {
-                
                 var persianDate = string.Format("{0}/{1}/{2}",
                 persianCalendar.GetYear(date), persianCalendar.GetMonth(date), persianCalendar.GetDayOfMonth(date));
 
@@ -22,13 +21,13 @@ namespace Infrastructure.Extensions
             }
 
         }
-        public static DateTime ConvertToMiladiDate(this DateTime date)
+        public static DateTime ConvertToMiladiDate(this string date)
         {
             try
             {
-               
 
-                DateTime miladiDate = new DateTime(date.Year, date.Month, date.Day, persianCalendar);
+                DateTime Date = Convert.ToDateTime(date);
+                DateTime miladiDate = new DateTime(Date.Year, Date.Month, Date.Day, persianCalendar);
                 return miladiDate;
             }
             catch (Exception)

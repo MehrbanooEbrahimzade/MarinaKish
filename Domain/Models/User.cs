@@ -34,17 +34,10 @@ namespace Domain.Models
         {
             FullName = GenerateFullName(firstName, lastName);
             NationalCode = nationalCode;
-            BirthDay = ConvertMiladiToShamsi(birthDay);
+            BirthDay = birthDay;
             CreditCard = creditCard;
         }
-        public static  DateTime ConvertMiladiToShamsi(DateTime date)
-        {
-            PersianCalendar pc = new PersianCalendar();
-            
-            DateTime birthdate = new DateTime(date.Year,date.Month,date.Day, pc);
-            return birthdate;
-
-        }
+        
 
         public CreditCard CreditCard { get; private set; }
 

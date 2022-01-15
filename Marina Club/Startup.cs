@@ -37,11 +37,12 @@ namespace Marina_Club
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().AddJsonOptions(options => 
+            services.AddMvc().AddJsonOptions(options =>
             {
+                
                 options.SerializerSettings.Converters.Add(new JsonDateTimeConvertor());
-            })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.ConfigureApplicationPersistence(Configuration);
 
 
