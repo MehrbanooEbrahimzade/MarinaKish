@@ -21,6 +21,8 @@ using Domain.IConfiguration;
 using Marina_Club.Activator.MiddleWare;
 using Microsoft.Extensions.Logging;
 using Marina_Club.Activator.Middleware;
+using CastleWindsor;
+using Castle.Windsor.MsDependencyInjection;
 
 namespace Marina_Club
 {
@@ -34,17 +36,13 @@ namespace Marina_Club
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                
-                options.SerializerSettings.Converters.Add(new JsonDateTimeConvertor());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            ConfigureMvc(services);
             services.ConfigureApplicationPersistence(Configuration);
 
+            Installer.Install(services);
 
 
             JwtConfiguration(services);
@@ -62,6 +60,8 @@ namespace Marina_Club
 
             ConfigureDependency(services);
 
+            return WindsorRegistrationHelper.CreateServiceProvider(Installer.Container, services);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +78,14 @@ namespace Marina_Club
             app.UseCors("Policy");
             //provider.MigrateDatabases();
         }
+        private void ConfigureMvc(IServiceCollection services)
+        {
+            services.AddMvc().AddJsonOptions(options =>
+            {
 
+                options.SerializerSettings.Converters.Add(new JsonDateTimeConvertor());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
         public void ConfigureDependency(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
