@@ -77,7 +77,7 @@ namespace Marina_Club
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
             });           
-            //provider.MigrateDatabases();
+            provider.MigrateDatabases();
         }
 
         public void ConfigureDependency(IServiceCollection services)
