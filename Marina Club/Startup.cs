@@ -46,7 +46,7 @@ namespace Marina_Club
             ConfigureCors(services);
 
             services.AddOptions();
-            
+
 
             services.AddAuthorization();
 
@@ -55,6 +55,8 @@ namespace Marina_Club
             services.AddSingleton(typeof(ILogger), logger);
 
             ConfigureDependency(services);
+
+            services.AddSwaggerGen();
 
         }
 
@@ -70,6 +72,11 @@ namespace Marina_Club
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlerMiddleWare>();
             app.UseCors("Policy");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+            });           
             //provider.MigrateDatabases();
         }
 
