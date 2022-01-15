@@ -11,7 +11,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// ساخت پیشنهاد ویژه 
         /// </summary>
-        Task AddSpecialOffer(AddSpecialOfferCommand command);
+        Task AddSpecialOffer(AddSpecialOfferCommand command); 
 
 
         //    /// <summary>

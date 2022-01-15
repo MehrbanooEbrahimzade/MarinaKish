@@ -50,7 +50,7 @@ namespace Marina_Club
             ConfigureCors(services);
 
             services.AddOptions();
-            
+
 
             services.AddAuthorization();
 
@@ -61,6 +61,8 @@ namespace Marina_Club
             ConfigureDependency(services);
 
             return WindsorRegistrationHelper.CreateServiceProvider(Installer.Container, services);
+
+            services.AddSwaggerGen();
 
         }
 
@@ -76,7 +78,12 @@ namespace Marina_Club
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlerMiddleWare>();
             app.UseCors("Policy");
-            //provider.MigrateDatabases();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+            });           
+            provider.MigrateDatabases();
         }
         private void ConfigureMvc(IServiceCollection services)
         {

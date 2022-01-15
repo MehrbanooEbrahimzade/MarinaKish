@@ -43,11 +43,11 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                var Schedule = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
-                if (Schedule == null)
+                var Schedule =  dbSet.SingleOrDefaultAsync(x => x.Id == id);
+                if (Schedule.Result == null)
                     throw new Exception("سانسی با این ایدی یافت نشد");
 
-                return Schedule;
+                return Schedule.Result;
             }
             catch (Exception e)
             {

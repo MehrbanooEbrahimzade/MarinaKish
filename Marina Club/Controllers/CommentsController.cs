@@ -35,7 +35,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// تغییر وضعیت لیستی از کامنت ها
+        /// تغییر وضعیت لیستی از کامنت ها به قبول شده
         /// </summary>
         [HttpPut("OkStatusList")]
         public async Task<IActionResult> ChangeVerifyingOkCommentList(ChangeStatusCommentListCommand command)
@@ -47,7 +47,7 @@ namespace Marina_Club.Controllers
         }
 
         /// <summary>
-        /// تغییر وضعیت لیستی از کامنت ها
+        /// تغییر وضعیت لیستی از کامنت ها به قبول نشده
         /// </summary>
         [HttpPut("NotOkStatusList")]
         public async Task<IActionResult> ChangeVerifyingNotOkCommentList(ChangeStatusCommentListCommand command)

@@ -21,7 +21,7 @@ namespace Marina_Club.Controllers
 
         /// <summary>
         /// ساخت پیشنهاد های ویژه
-        /// </summary>
+        /// </summary> 
         [HttpPost("AddSpecialOffer")]
         public async Task<IActionResult> AddSpecialOffer(AddSpecialOfferCommand command)
         {
