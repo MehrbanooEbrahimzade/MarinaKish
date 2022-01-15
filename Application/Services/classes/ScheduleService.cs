@@ -22,19 +22,20 @@ namespace Application.Services.classes
 
         public async Task AddSpecialOffer(AddSpecialOfferCommand command)
         {
-            var searchnameRecreation = await _unitOfWork.Schedules.GetActiveScheduleByIdAsync(command.ShceduleId);
+            var searchnameRecreation = await _unitOfWork.Schedules.GetByIdAsync(command.ShceduleId);
             if (searchnameRecreation == null)
                 throw new Exception("چنین سانسی وجود ندرد");
 
 
-            //decimal DiscountNumber = command.AddPercent.Value;
-            //decimal Discount = DiscountNumber / 100;
-            //decimal resultAmount = searchnameRecreation.Price;
-            //command.Price = Discount * resultAmount;
+            decimal DiscountNumber = command.AddPercent.Value;
+            decimal Discount = DiscountNumber / 100;
+            decimal resultAmount = searchnameRecreation.Price;
+            command.Price = Discount * resultAmount;
 
-            command.Price -= (command.AddPercent.Value * searchnameRecreation.Price) / 100;
+            //command.Price -= (command.AddPercent.Value * searchnameRecreation.Price) / 100;
 
             var addDiscountamount = command.AddPercent.ToModel();
+
             searchnameRecreation.UpdateSpecialOffer(command.Price, addDiscountamount);
             await _unitOfWork.CompleteAsync();
 
