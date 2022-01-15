@@ -18,6 +18,9 @@ namespace CastleWindsor
         {
             Container = new WindsorContainer();
             Container.Register(Classes.FromAssembly(Assembly.GetEntryAssembly()).BasedOn<ControllerBase>().LifestyleScoped());
+
+            RegisterServices();
+            RegisterRepositories();
         }
 
 
