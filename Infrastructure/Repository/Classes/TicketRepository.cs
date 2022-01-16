@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain;
+using Domain.Enums;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Persist;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -189,6 +191,20 @@ namespace Infrastructure.Repository.Classes
         {
             return await dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Condition == Condition.InActive);
         }
+
+
+        public async Task<List<Ticket>> ReportByFunType(ReportQuerySearch search)
+        {
+            //return await dbSet.FromSql("Select Tickets.Id ,UserId ,Gender,  ScheduleId, FunType , Condition, SubmitDate ,WhereBuy,Schedules.price " +
+            //    " from tickets" +
+            //    " inner join [Club].[dbo].[Schedules] on Schedules.Id = ScheduleId").ToListAsync();
+            //    //$" Where Condition = 2 and WhereBuy = 3 and FunType = N'غواصی' and SubmitDate between '2020/02/01' and '2022/04/20'").ToListAsync();
+
+            return  await dbSet.Include(x=>x.Schedule).
+              Where(t => t.SubmitDate >= search.StartDate && t.SubmitDate <= search.EndDate && t.WhereBuy == search.WhereBuy && t.FunType == search.FunType && t.Condition == (Condition)2).ToListAsync();
+            
+        }
+        
 
 
         /// /// <summary>

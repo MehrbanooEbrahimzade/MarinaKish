@@ -1,10 +1,12 @@
 ﻿using Application.Commands;
 using Application.Commands.Ticket;
 using Application.Dtos;
+using Application.Exceptions;
 using Application.Helper;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Aspose.Pdf;
+using Domain;
 using Domain.IConfiguration;
 using Domain.Models;
 using Infrastructure.Helper;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,6 +116,10 @@ namespace Application.Services.classes
             return document;
           
         }
+
+
+
+
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
         /// </summary>
@@ -187,6 +194,23 @@ namespace Application.Services.classes
         }
 
 
+        public async Task<List<ReportDto>> GetReportByFunType(ReportQuerySearch search)
+        {
+            var tickets = await _unitOfWork.Tickets.ReportByFunType(search);
+            if (tickets == null)
+                throw new NotFoundExeption(nameof(Ticket), "QuerySearch", search.ToString());
+            var test = tickets.ToReportDto();
+            var report = test.GroupBy(x => x.SubmitDate.Month).Select(x => new ReportDto
+            {
+                Date = x.Key,
+                Count = x.Count(),
+                TotalAmount = x.Sum(s => s.ScheduleDto.Price)
+            }).ToList();
+            
+            return report; 
+        }
+
+        
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
         //        /// </summary>
@@ -388,6 +412,8 @@ namespace Application.Services.classes
             return tickets.ToDto();
         }
 
+      
+
 
 
 
@@ -566,6 +592,6 @@ namespace Application.Services.classes
         //        }
 
         //        #endregion
-      
+
     }
 }

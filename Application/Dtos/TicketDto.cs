@@ -15,6 +15,7 @@ namespace Application.Dtos
         /// </summary>
         public string FunType { get; set; }
 
+        public DateTime SubmitDate { get; set;  }
         /// <summary>
         /// وضعیت
         /// </summary>
