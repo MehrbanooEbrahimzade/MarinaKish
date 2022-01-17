@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repository.Classes
 {
-    public class UserRepository :  GenericRepository<User> , IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
 
         public UserRepository(DatabaseContext context, ILogger logger) : base(context, logger)
@@ -28,18 +28,35 @@ namespace Infrastructure.Repository.Classes
                     dbSet.Remove(user);
                     return true;
                 }
-                    
-              
-                return false; 
+
+
+                return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "{Repo} DeleteAsync  method error", typeof(UserRepository));
                 return false;
             }
-            
+
         }
 
+        public async Task<List<User>> GetAll()
+        {
+            try
+            {
+                var user = await dbSet.Include(c => c.CreditCard).ToListAsync();
+                if (user == null)
+                    throw new Exception("چنین کاربری یافت نشد");
+                return user;
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "{Repo} GetAll  method error", typeof(UserRepository));
+                return null;
+            }
+
+        }
 
         public async Task<User> GetUserById(Guid id)
         {
@@ -51,7 +68,7 @@ namespace Infrastructure.Repository.Classes
                     throw new NullReferenceException("کاربر شناسایی نشد!");
                 return user;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "{Repo} GetUserById method error", typeof(UserRepository));
                 return null;

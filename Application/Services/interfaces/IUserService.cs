@@ -15,7 +15,13 @@ namespace Application.Services.interfaces
         Task<UserDto> SearchUserById(Guid id);
 
 
-        Task<bool> DeleteAsync(Guid id); 
+        Task<bool> DeleteAsync(Guid id);
+
+
+        Task<List<UserDto>> GetAllUser();
+
+        Task<UserDto> GetUser(Guid id);
+
         ////IncreaseUserWallet
         ///// <summary>
         ///// ثبت نام کاربر :
@@ -50,8 +56,8 @@ namespace Application.Services.interfaces
         ///// جستجوی کاربر
         ///// </summary>
         //Task<List<UserDto>> SearchUser(FindUserCommand command);
-        
-        
+
+
         ///// <summary>
         ///// ارتقا دادن کاربر به ادمین
         ///// </summary>
@@ -66,8 +72,8 @@ namespace Application.Services.interfaces
         ///// تنزل رتبه کاربر فروشنده/ادمین به خریدار
         ///// </summary>
         //Task<UserDto> DemoteToUser(Guid id);
-       
-     
+
+
         ///// <summary>
         ///// دریافت تعداد تفریح کردن کاربر
         ///// </summary>

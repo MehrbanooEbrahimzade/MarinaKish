@@ -34,8 +34,8 @@ namespace Application.Mappers
         {
             PersianCalendar persianParse = new PersianCalendar();
 
-            var persianBirthDate = string.Format("{0}/{1}/{2}",
-            persianParse.GetYear(user.BirthDay), persianParse.GetMonth(user.BirthDay), persianParse.GetDayOfMonth(user.BirthDay));
+            //var persianBirthDate = string.Format("{0}/{1}/{2}",
+            //persianParse.GetYear(user.BirthDay), persianParse.GetMonth(user.BirthDay), persianParse.GetDayOfMonth(user.BirthDay));
 
             return new UserDto
             {
@@ -43,11 +43,47 @@ namespace Application.Mappers
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
-                BirthDate = user.BirthDay,
+                ////ثئظظظ = user.BirthDay,
 
 
             };
         }
+
+
+
+
+        /// <summary>
+        /// تبدیل کردن کاربر به dto کاربر
+        /// </summary>
+        public static List<UserDto> ToDto(this List<User> user)
+        {
+            //PersianCalendar persianParse = new PersianCalendar();
+
+            //string persianJoinTime = string.Format("{0}/{1}/{2} {3}:{4}",
+            //    persianParse.GetYear(user.DateJoin), persianParse.GetMonth(user.DateJoin), persianParse.GetDayOfMonth(user.DateJoin),
+            //    persianParse.GetHour(user.DateJoin), persianParse.GetMinute(user.DateJoin));
+            return user.Select(x => new UserDto
+            {
+                   
+
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                FullName = x.FullName,
+                NationalCode = x.NationalCode,
+
+                //UserName = user.UserName,
+                //Gender = user.Gender,
+                //BirthDay = user.BirthDay,
+                //CardNumber = user.CreditCardCommand.CardNumber,
+                //ShabaNumber = user.CreditCardCommand.ShabaNumber,
+                //DateJoinInShamsi = persianJoinTime,
+
+          
+            }).ToList();
+        }
+
+
+
         public static CreditCardDto ToDto(this CreditCard creditCard)
         {
             return new CreditCardDto
@@ -250,33 +286,6 @@ namespace Application.Mappers
 
 
 
-        /// <summary>
-        /// تبدیل کردن کاربر به dto کاربر
-        /// </summary>
-        //        public static UserDto ToDto(this User user)
-        //        {
-        //            PersianCalendar persianParse = new PersianCalendar();
-
-        //            string persianJoinTime = string.Format("{0}/{1}/{2} {3}:{4}",
-        //                persianParse.GetYear(user.DateJoin), persianParse.GetMonth(user.DateJoin), persianParse.GetDayOfMonth(user.DateJoin),
-        //                persianParse.GetHour(user.DateJoin), persianParse.GetMinute(user.DateJoin));
-        //            return new UserDto()
-        //            {
-        //                #region Select
-
-        //                commentId = user.commentId,
-        //                FullName = user.FullName,
-        //                PhoneNumber = user.PhoneNumber,
-        //                UserName = user.UserName,
-        //                Gender = user.Gender,
-        //                BirthDay = user.BirthDay,
-        //                CardNumber = user.CreditCardCommand.CardNumber,
-        //                ShabaNumber = user.CreditCardCommand.ShabaNumber,
-        //                DateJoinInShamsi = persianJoinTime,
-
-        //                #endregion
-        //            };
-        //        }
 
         //        /// <summary>
         //        /// تبدیل لیست کاربر به dto لیست کاربر

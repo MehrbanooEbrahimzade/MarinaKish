@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
 
@@ -19,7 +20,7 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<User> GetUserById(Guid id);
 
-
+        Task<List<User>> GetAll();
 
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
