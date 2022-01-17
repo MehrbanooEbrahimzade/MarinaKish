@@ -11,12 +11,22 @@ namespace Application.Services.interfaces
         /// <summary>
         /// ساخت پیشنهاد ویژه 
         /// </summary>
-        Task AddSpecialOffer(AddSpecialOfferCommand command); 
+        Task AddSpecialOffer(AddSpecialOfferCommand command);
 
+        /// <summary>
+        /// دریافت یک سانس 
+        /// </summary>
+        Task<ScheduleDto> GetScheduleBtId(Guid id);
+
+        /// <summary>
+        /// دریافت همه سانس 
+        /// </summary>
+        Task<List<ScheduleDto>> GetAllSchedule();
+      
 
         //    /// <summary>
         //    /// ساختن سانس
-        //    /// </summary> 
+        //    /// </summary> z
         //    Task<List<ScheduleDto>> CreateSchedule(AddScheduleCommand command);
 
         //    /// <summary>

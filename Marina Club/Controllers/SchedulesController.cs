@@ -38,6 +38,31 @@ namespace Marina_Club.Controllers
         }
 
 
+        /// <summary>
+        /// گرفتن یک سانس
+        /// </summary>
+        [HttpGet("{id}/GetById")]
+        public async Task<IActionResult> GetScheduleById(Guid id)
+        {
+            var Schedule = await _scheduleService.GetScheduleBtId(id);
+            if (Schedule == null)
+                BadReq(ApiMessage.SchedulesNotExist);
+
+            return OkResult(ApiMessage.GetScheduleById, Schedule);
+
+        }
+
+        /// <summary>
+        /// گرفتن همه سانس ها
+        /// </summary>
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllSchedule()
+        {
+            var getall = await _scheduleService.GetAllSchedule();
+
+            return OkResult(ApiMessage.GetAllScheduleForFun, getall);
+        }
+
 
         ///// <summary>
         ///// ساختن سانس

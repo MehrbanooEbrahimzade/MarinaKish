@@ -32,6 +32,10 @@ namespace Application.Mappers
 
         public static UserDto ToDto(this User user)
         {
+            PersianCalendar persianParse = new PersianCalendar();
+
+            var persianBirthDate = string.Format("{0}/{1}/{2}",
+            persianParse.GetYear(user.BirthDay), persianParse.GetMonth(user.BirthDay), persianParse.GetDayOfMonth(user.BirthDay));
 
             return new UserDto
             {
@@ -40,7 +44,7 @@ namespace Application.Mappers
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
                 BirthDate = user.BirthDay,
-             
+
 
             };
         }
@@ -155,7 +159,7 @@ namespace Application.Mappers
                 FunId = schedule.FunId,
                 Price = schedule.Price,
                 Discount = schedule.Percent,
-                Date = persianDate,
+                Date = schedule.Date,
                 StartTime = schedule.StartTime,
                 EndTime = schedule.EndTime
 
@@ -182,6 +186,42 @@ namespace Application.Mappers
                 #endregion
             };
         }
+
+        /// <summary>
+        /// تبدیل لیست سانس به dto لیست سانس
+        /// </summary>
+        public static List<ScheduleDto> ToDto(this List<Schedule> schedules)
+        {
+            //foreach (var schedule in schedules)
+            //{
+            //    PersianCalendar persianParse = new PersianCalendar();
+            //    string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
+            //        persianParse.GetYear(schedule.ExecuteDateTime), persianParse.GetMonth(schedule.ExecuteDateTime), persianParse.GetDayOfMonth(schedule.ExecuteDateTime),
+            //        persianParse.GetHour(schedule.ExecuteDateTime), persianParse.GetMinute(schedule.ExecuteDateTime));
+            //    schedule.ToDto().ExcutePersianDateTime = persianDate;
+            //}
+
+            return schedules.Select(x => new ScheduleDto()
+            {
+                #region Select
+
+                Id = x.Id,
+                FunId = x.FunId,
+                Price = x.Price,
+                Discount = x.Percent,
+                Date = x.Date,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime
+                #endregion
+            }).ToList();
+        }
+
+
+
+
+
+
+
 
         /// <summary>
         /// تبدیل لیست بلیط به dto لیست بلیط
@@ -267,36 +307,6 @@ namespace Application.Mappers
 
 
 
-        //        /// <summary>
-        //        /// تبدیل لیست سانس به dto لیست سانس
-        //        /// </summary>
-        //        public static List<ScheduleDto> ToDto(this List<Schedule> schedules)
-        //        {
-        //            //foreach (var schedule in schedules)
-        //            //{
-        //            //    PersianCalendar persianParse = new PersianCalendar();
-        //            //    string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-        //            //        persianParse.GetYear(schedule.ExecuteDateTime), persianParse.GetMonth(schedule.ExecuteDateTime), persianParse.GetDayOfMonth(schedule.ExecuteDateTime),
-        //            //        persianParse.GetHour(schedule.ExecuteDateTime), persianParse.GetMinute(schedule.ExecuteDateTime));
-        //            //    schedule.ToDto().ExcutePersianDateTime = persianDate;
-        //            //}
-
-        //            return schedules.Select(x => new ScheduleDto()
-        //            {
-        //                #region Select
-
-        //                commentId = x.commentId,
-        //                ExcutePersianDateTime = x.ToDto().ExcutePersianDateTime,
-        //                AvailableCapacity = x.AvailableCapacity,
-        //                StartTime = x.StartTime,
-        //                EndTime = x.EndTime,
-        //                FunType = x.FunType,
-        //                FunId = x.FunId
-
-
-        //                #endregion
-        //            }).ToList();
-        //        }
 
 
 
