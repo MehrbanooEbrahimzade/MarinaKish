@@ -22,6 +22,8 @@ namespace Domain.RepasitoryInterfaces
 
         Task<List<User>> GetAll();
 
+        Task<User> gettest();
+
         //        /// <summary>
         //        /// چک کردن unique بودن نام کاربری
         //        /// </summary>

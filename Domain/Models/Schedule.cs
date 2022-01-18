@@ -5,7 +5,7 @@ namespace Domain.Models
     public class Schedule
     {
 
-        public Schedule(decimal price,Percent percent)
+        public Schedule(decimal price, Percent percent)
         {
             Price = price;
             Percent = percent;
@@ -59,6 +59,11 @@ namespace Domain.Models
         /// قیمت
         /// </summary>
         public decimal Price { get; private set; }
+
+        public void ForPrice(decimal price)
+        {
+            this.Price = price;
+        }
 
         /// <summary>
         /// وجود داشتن سانس 

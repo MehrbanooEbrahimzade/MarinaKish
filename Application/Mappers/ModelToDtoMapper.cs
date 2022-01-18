@@ -32,7 +32,7 @@ namespace Application.Mappers
 
         public static UserDto ToDto(this User user)
         {
-            PersianCalendar persianParse = new PersianCalendar();
+            //PersianCalendar persianParse = new PersianCalendar();
 
             //var persianBirthDate = string.Format("{0}/{1}/{2}",
             //persianParse.GetYear(user.BirthDay), persianParse.GetMonth(user.BirthDay), persianParse.GetDayOfMonth(user.BirthDay));

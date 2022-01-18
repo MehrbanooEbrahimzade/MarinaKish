@@ -5,7 +5,7 @@ using Domain.Models;
 
 namespace Domain.RepasitoryInterfaces
 {
-    public interface IScheduleRepository: IGenericRepository<Schedule>
+    public interface IScheduleRepository : IGenericRepository<Schedule>
     {
         /// <summary>
         /// اضافه کردن یک سانس
@@ -19,7 +19,7 @@ namespace Domain.RepasitoryInterfaces
         /// دریافت سانس های یک تفریح با ایدی تفریح
         /// </summary>
         Task<List<Schedule>> GetFunSchedulesByFunId(Guid funId);
-        
+
         Task<Schedule> GetActiveScheduleByIdAsync(Guid id);
 
         /// <summary>
@@ -27,6 +27,11 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<bool> InactivateSchedulesAsync(Guid funId);
 
-      
+        /// <summary>
+        /// دریافت تمام سانس های یک تفریح
+        /// </summary>
+        Task<List<Schedule>> GetAllAsync(Guid id);
+
+
     }
 }

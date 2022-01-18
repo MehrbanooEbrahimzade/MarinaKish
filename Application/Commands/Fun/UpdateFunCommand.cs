@@ -20,15 +20,6 @@ namespace Application.Commands.Fun
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// اطلاعات سانس
-        /// </summary>
-        public UpdateScheduleInfoCommand ScheduleInfo { get; set; }
-
-        /// <summary>
-        /// اسلاید عکس ها
-        /// </summary>
-        public List<AddSliderPictureFunCommand> SliderPictures { get; set; }
 
         /// <summary>
         /// فیلم تفریج
@@ -49,6 +40,18 @@ namespace Application.Commands.Fun
         /// دربار تفریح
         /// </summary>
         public string About { get; set; }
+
+        /// <summary>
+        /// اطلاعات سانس
+        /// </summary>
+        public UpdateScheduleInfoCommand ScheduleInfo { get; set; }
+
+        /// <summary>
+        /// اسلاید عکس ها
+        /// </summary>
+        public List<AddSliderPictureFunCommand> SliderPictures { get; set; }
+
+    
 
         /// <summary>
         /// Command Validation

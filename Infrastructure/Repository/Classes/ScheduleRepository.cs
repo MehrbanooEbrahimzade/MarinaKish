@@ -43,7 +43,7 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                var Schedule =  dbSet.SingleOrDefaultAsync(x => x.Id == id);
+                var Schedule = dbSet.SingleOrDefaultAsync(x => x.Id == id);
                 if (Schedule.Result == null)
                     throw new Exception("سانسی با این ایدی یافت نشد");
 
@@ -84,6 +84,30 @@ namespace Infrastructure.Repository.Classes
             }
         }
 
+
+        /// <summary>
+        /// دریافت تمام سانس های یک تفریح
+        /// </summary>
+        public  async Task<List<Schedule>> GetAllAsync(Guid id)
+        {
+            try
+            {
+                var getall = await dbSet.Where(w=>w.FunId==id).ToListAsync();
+                if (getall.Count == 0)
+                    throw new Exception("چنین سانس  هایی یافت نشدید");
+
+                 return getall;
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "{Repo} GetAll method error", typeof(ScheduleRepository));
+                return null;
+            }
+        }
+
+
+
         #endregion
 
         /// <summary>
@@ -93,7 +117,7 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                 await dbSet.AddRangeAsync(schedules);
+                await dbSet.AddRangeAsync(schedules);
             }
             catch (Exception e)
             {
@@ -160,8 +184,8 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-               
-                var result=  dbSet.Where(x=>x.FunId==funId);
+
+                var result = dbSet.Where(x => x.FunId == funId);
 
                 foreach (var item in result)
                 {
@@ -177,6 +201,8 @@ namespace Infrastructure.Repository.Classes
                 return false;
             }
         }
+
+
 
 
     }

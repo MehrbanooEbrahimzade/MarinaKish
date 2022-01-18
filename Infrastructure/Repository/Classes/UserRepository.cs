@@ -44,7 +44,9 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                var user = await dbSet.Include(c => c.CreditCard).ToListAsync();
+                var user = await dbSet
+                    //.FromSql("  select * from AspNetUsers  ")
+                    .ToListAsync();
                 if (user == null)
                     throw new Exception("چنین کاربری یافت نشد");
                 return user;
@@ -80,6 +82,17 @@ namespace Infrastructure.Repository.Classes
             return _context.Users.Include(c => c.CreditCard)
                 .FirstOrDefaultAsync(user => user.Id == id.ToString());
         }
+
+
+        public  Task<User> gettest()
+        {
+            var user =  dbSet
+                //.Where(s => s.FullName == name);
+                .FromSql("select * from aspnetuser  where name='buyer' ");
+
+            return (Task<User>)user;
+        }
+
 
         ///// <summary>
         ///// چک کردن unique بودن نام کاربری
