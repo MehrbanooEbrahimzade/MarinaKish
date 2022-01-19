@@ -182,6 +182,7 @@ namespace Marina_Club.Controllers
             public const string CancelSchedules = "سانس ها لغو شدند";
             public const string ScheduleListCORE = "سانس ها لغو شدند/برگشتند";
             public const string GetAllScheduleForFun = "همه سانس های تفریح دریافت شد";
+            public const string GetScheduleById = "سانس مورد نظر یافت شد";
             public const string GetAllScheduleForFunAtThisTime = "همه سانس های تفریح با تاریخ داده شده دریافت شد";
             public const string NoScheduleAtThisTime = "سانسی در تاریخ مورد نظر در دسترس نیست";
             public const string ScheduleFound = "سانس پیدا شد";

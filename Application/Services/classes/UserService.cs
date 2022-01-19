@@ -4,6 +4,7 @@ using Application.Services.interfaces;
 using Domain.IConfiguration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Application.Services.classes
@@ -37,6 +38,38 @@ namespace Application.Services.classes
                 throw new Exception("عملیات ناموفق");
             return result;
         }
+
+
+        /// <summary>
+        /// دریافت تمام کاربران
+        /// </summary>
+
+        public async Task<List<UserDto>> GetAllUser()
+        {
+            var getall = await _unitOfWork.Users.GetAll();
+            if (getall == null)
+                throw new Exception("چنین کاربری یافت نشد");
+
+            return getall.ToDto();
+
+        }
+
+
+
+        /// <summary>
+        /// دریافت یک کاربر
+        /// </summary>
+        public async Task<UserDto> GetUser(Guid id)
+        {
+
+            var get = await _unitOfWork.Users.GetUserById(id);
+            if (get == null)
+                throw new Exception("چنین کاربری یافت نشد");
+
+            return get.ToDto();
+        }
+
+
 
         //        private readonly IUserRepository _userRepository;
         //        public UserService(IUserRepository userRepository)

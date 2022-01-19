@@ -58,17 +58,24 @@ namespace Application.Services.classes
         public async Task UpdateFunAsync(UpdateFunCommand command)
         {
             var fun = await _unitOfWork.Funs.GetByIdAsync(command.FunId);
-            await _unitOfWork.Funs.DeleteSliderPicturesByFunAsync(fun);
 
             if (fun == null)
                 throw new NullReferenceException("تفریح یافت نشد!");
-              
 
-            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, command.SliderPictures.ToModel(),
+            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, /*command.SliderPictures.ToModel(),*/
                     command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
                     command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
                     command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
+
+            var getschedule = await _unitOfWork.Schedules.GetAllAsync(command.FunId);
+
+            foreach (var item in getschedule)
+            {
+                item.ForPrice(command.ScheduleInfo.Amount);
+            }
+
+
 
             await _unitOfWork.CompleteAsync();
 

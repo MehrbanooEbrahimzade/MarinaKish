@@ -66,7 +66,7 @@ namespace Marina_Club.Controllers
         public async Task<IActionResult> CompleteProfile([FromBody] CompleteProfileCommand command)
         {
             command.PhoneNumber = CurrentUser.PhoneNumber;
-            
+
             await _identity.CompleteProfile(command);
             return OkResult(ApiMessage.ProfileUpdated);
         }
@@ -100,6 +100,31 @@ namespace Marina_Club.Controllers
         }
 
 
+
+        /// <summary>
+        ///  دریافت  همه کاربر 
+        /// </summary>
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var getall = await _userService.GetAllUser();
+
+            return OkResult(ApiMessage.Ok, getall);
+
+        }
+
+
+        /// <summary>
+        ///  دریافت کاربر با آی دی
+        /// </summary>
+        [HttpGet("{id}/getuser")]
+        public async Task<IActionResult> GetUser(Guid id)
+        {
+            var get = await _userService.GetUser(id);
+
+            return OkResult(ApiMessage.Ok, get);
+         
+        }
 
         //private readonly IUserService _userService;
         //private static readonly HttpClient client = new HttpClient();

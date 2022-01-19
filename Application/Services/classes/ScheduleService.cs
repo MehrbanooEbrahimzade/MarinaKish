@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Schedule;
+using Application.Dtos;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.IConfiguration;
@@ -40,6 +42,32 @@ namespace Application.Services.classes
             await _unitOfWork.CompleteAsync();
 
             return;
+        }
+
+
+
+
+        /// <summary>
+        /// دریافت یک سانس 
+        /// </summary>
+        public async Task<ScheduleDto> GetScheduleBtId(Guid id)
+        {
+            var Get = await _unitOfWork.Schedules.GetByIdAsync(id);
+            if (Get == null)
+                throw new Exception("چنین سانسی یافت نشد");
+
+            return Get.ToDto();
+        }
+
+        /// <summary>
+        /// دریافت همه سانس 
+        /// </summary>
+        public async Task<List<ScheduleDto>> GetAllSchedule()
+        {
+            var GetAll = await _unitOfWork.Schedules.AllAsync();
+            if (GetAll == null)
+                throw new Exception("چنین سانسی یافت نشد");
+            return GetAll.ToDto();
         }
 
 
