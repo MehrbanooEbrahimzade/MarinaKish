@@ -204,7 +204,12 @@ namespace Infrastructure.Repository.Classes
               Where(t => t.SubmitDate >= search.StartDate && t.SubmitDate <= search.EndDate && t.WhereBuy == search.WhereBuy && t.FunType == search.FunType && t.Condition == (Condition)2).ToListAsync();
             
         }
-        
+        public async Task<List<Ticket>> GetTicketsReport(ReportQuerySearch search)
+        {
+            return await dbSet.FromSql("Select * " +
+                " from tickets" +
+                $" where SubmitDate between '{search.StartDate}' and '{search.EndDate}'").Where(x=>x.WhereBuy == search.WhereBuy).ToListAsync();
+        }
 
 
         /// /// <summary>

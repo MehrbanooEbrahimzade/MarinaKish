@@ -23,6 +23,11 @@ namespace Marina_Club.Controllers
             var tickets = await _ticketService.GetReportByFunType(search);
             return OkResult(ApiMessage.Ok, tickets);
         }
-        
+        [HttpGet("Reports")]
+        public async Task<IActionResult> GetPersentOfSales([FromBody] ReportQuerySearch search)
+        {
+            var tickets = await _ticketService.GetPercentOfSales(search);
+            return OkResult(ApiMessage.Ok, tickets);
+        }
     }
 }

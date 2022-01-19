@@ -56,6 +56,8 @@ namespace Application.Services.interfaces
         Task<List<TicketDto>> GetReservedTickets(Guid id);
 
         Task<List<ReportDto>> GetReportByFunType(ReportQuerySearch search);
+
+        Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search);
         Task<FileContentResult> DownloadTicketAync(Guid id);
 
         ///<summary>

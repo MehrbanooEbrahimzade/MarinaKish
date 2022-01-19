@@ -209,7 +209,22 @@ namespace Application.Services.classes
             
             return report; 
         }
-
+        public async Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search)
+        {
+            var tickets = await _unitOfWork.Tickets.GetTicketsReport(search);
+            if (tickets.Count==0)
+                throw new NotFoundExeption(nameof(Ticket), "QuerySearch", search.ToString());
+            var report = tickets.GroupBy(x => x.FunType).Select(x => new PercentReportDto
+            {
+                FunType = x.Key,
+                Count = x.Count(),
+                
+                Percent = Math.Round((double)x.Count()/(double)tickets.Count()*100)
+          
+            }).ToList();
+            
+            return report;
+        }
         
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال

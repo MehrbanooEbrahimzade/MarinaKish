@@ -19,7 +19,7 @@ namespace Application.Helper
 
             var fileName = "ticket" + GenerateFileNumber() + ".pdf";
 
-            var path = Path.Combine(Directory.GetCurrentDirectory());
+                var path = Path.Combine(Directory.GetCurrentDirectory());
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PdfImages");
             var iranYekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "iranyekan.ttf");
             var Yekan = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Fonts", "Yekan.ttf");

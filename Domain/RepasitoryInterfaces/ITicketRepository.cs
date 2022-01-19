@@ -32,6 +32,8 @@ namespace Domain.RepasitoryInterfaces
         Task<List<Ticket>> GetReservedTicketsForUser(Guid id);
 
         Task<List<Ticket>> ReportByFunType(ReportQuerySearch search);
+
+        Task<List<Ticket>> GetTicketsReport(ReportQuerySearch search);
         //    ///// <summary>
         //    ///// دریافت تفریح با اسم تفریح
         //    ///// </summary>
