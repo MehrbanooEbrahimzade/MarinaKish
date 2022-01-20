@@ -22,7 +22,11 @@ namespace Application.Services.interfaces
         /// دریافت همه سانس 
         /// </summary>
         Task<List<ScheduleDto>> GetAllSchedule();
-      
+
+        /// <summary>
+        /// حذف کردن سانس
+        /// </summary>
+        Task DeleteSchedule(Guid id);
 
         //    /// <summary>
         //    /// ساختن سانس
