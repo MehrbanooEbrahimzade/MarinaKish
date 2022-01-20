@@ -45,7 +45,7 @@ namespace Infrastructure.Repository.Classes
             try
             {
                 var user = await dbSet
-                    //.FromSql("  select * from AspNetUsers  ")
+                    .FromSql("   select * from AspNetUsers where Email is null ")
                     .ToListAsync();
                 if (user == null)
                     throw new Exception("چنین کاربری یافت نشد");
@@ -84,9 +84,9 @@ namespace Infrastructure.Repository.Classes
         }
 
 
-        public  Task<User> gettest()
+        public Task<User> gettest()
         {
-            var user =  dbSet
+            var user = dbSet
                 //.Where(s => s.FullName == name);
                 .FromSql("select * from aspnetuser  where name='buyer' ");
 
