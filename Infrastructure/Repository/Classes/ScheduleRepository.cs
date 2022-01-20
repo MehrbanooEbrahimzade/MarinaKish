@@ -73,7 +73,7 @@ namespace Infrastructure.Repository.Classes
         {
             try
             {
-                var Schedule = await GetByIdAsync(id);
+                var Schedule = await dbSet.SingleOrDefaultAsync(x => x.Id == id);
                 dbSet.Remove(Schedule);
                 return true;
             }

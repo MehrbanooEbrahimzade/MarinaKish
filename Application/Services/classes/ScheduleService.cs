@@ -41,7 +41,6 @@ namespace Application.Services.classes
             searchnameRecreation.UpdateSpecialOffer(command.Price, addDiscountamount);
             await _unitOfWork.CompleteAsync();
 
-            return;
         }
 
 
@@ -70,7 +69,18 @@ namespace Application.Services.classes
             return GetAll.ToDto();
         }
 
+        /// <summary>
+        /// حذف کردن سانس
+        /// </summary>
+        public async Task DeleteSchedule(Guid id)
+        {
+            var result = await _unitOfWork.Schedules.DeleteAsync(id);
 
+            if (result == false)
+                throw new Exception("چنین سانسی یافت نشد");
+
+            await _unitOfWork.CompleteAsync();
+        }
 
         //        /// <summary>
         //        /// ساختن سانس

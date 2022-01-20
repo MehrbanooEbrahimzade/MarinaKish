@@ -69,6 +69,7 @@ namespace Marina_Club.Controllers
         public static class ApiMessage
         {
             public const string Ok = "عملیات با موفقیت انجام شد ";
+            public const string Error = "خطا! ";
             public const string BadRequest = "عملیات با خطا مواجه شد";
             public const string ServiceUnAvailable = "سرویس سرور دردسترس نمیباشد";
             public const string AnyTicketForChangingNotFound = " بلیطی برای ثبت تغییرات یافت نشد";

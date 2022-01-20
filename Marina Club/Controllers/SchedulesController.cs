@@ -63,6 +63,16 @@ namespace Marina_Club.Controllers
             return OkResult(ApiMessage.GetAllScheduleForFun, getall);
         }
 
+        /// <summary>
+        /// حذف کردن سانس
+        /// </summary>
+        [HttpDelete("{id}/Delete")]
+        public async Task<IActionResult> DeleteSchedule(Guid id)
+        {
+            await _scheduleService.DeleteSchedule(id);
+
+            return OkResult(ApiMessage.Ok);
+        }
 
         ///// <summary>
         ///// ساختن سانس
