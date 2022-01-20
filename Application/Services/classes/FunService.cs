@@ -68,7 +68,7 @@ namespace Application.Services.classes
                     command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
                     command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
 
-            var getschedule = await _unitOfWork.Schedules.GetAllAsync(command.FunId);
+            var getschedule = await _unitOfWork.Schedules.GetSchedulesForFunAsync(command.FunId);
 
             foreach (var item in getschedule)
             {
@@ -109,16 +109,6 @@ namespace Application.Services.classes
             var fun = await _unitOfWork.Funs.GetByIdAsync(id);
             return fun?.ToDto();
         }
-
-        /// <summary>
-        /// گرفتن یک تفریح ها 
-        /// </summary>
-        public async Task<FunDto> GetFunsByIdAsynch(Guid id)
-        {
-            var fun = await _unitOfWork.Funs.GetByIdAsync(id);
-            return fun?.ToDto();
-        }
-
 
         /// <summary>
         /// دوباره فعال کردن یک تفریح
