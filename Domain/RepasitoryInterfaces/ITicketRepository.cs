@@ -31,12 +31,13 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<List<Ticket>> GetReservedTicketsForUser(Guid id);
 
+        Task<List<Ticket>> ReportByFunType(ReportQuerySearch search);
 
-
-          //    ///// <summary>
-          //    ///// دریافت تفریح با اسم تفریح
-          //    ///// </summary>
-          //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
+        Task<List<Ticket>> GetTicketsReport(ReportQuerySearch search);
+        //    ///// <summary>
+        //    ///// دریافت تفریح با اسم تفریح
+        //    ///// </summary>
+        //    //Task<Fun> GetFunByFunNameAsynch(FunType eFun);
 
         ///// <summary>
         ///// دریافت کاربر با شماره تلفن همراه

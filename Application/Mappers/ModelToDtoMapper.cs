@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Application.Dtos;
+using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Application.Dtos;
-using Domain.Models;
-using MD.PersianDateTime.Core;
 
 namespace Application.Mappers
 {
@@ -43,7 +42,7 @@ namespace Application.Mappers
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
-                ////ثئظظظ = user.BirthDay,
+                BirthDate = user.BirthDay,
 
 
             };
@@ -183,10 +182,7 @@ namespace Application.Mappers
         /// </summary>
         public static ScheduleDto ToDto(this Schedule schedule)
         {
-            PersianCalendar PersianParse = new PersianCalendar();
-            string PersianDate = string.Format("{0}/{1}/{2}",
-                PersianParse.GetYear(schedule.Date), PersianParse.GetMonth(schedule.Date), PersianParse.GetDayOfMonth(schedule.Date));
-            DateTime persianDate = Convert.ToDateTime(PersianDate);
+
             return new ScheduleDto()
             {
                 #region Select
@@ -278,11 +274,58 @@ namespace Application.Mappers
                 BoughtPlace = x.WhereBuy,
                 Condition = x.Condition,
                 gender = x.Gender,
+                SubmitDate = x.SubmitDate,
                 ScheduleDto = x.Schedule.ToDto(),
                 UserDto = x.User.ToDto()
 
             }).ToList();
         }
+        private static DateTime ConvertToShamsi(DateTime date)
+        {
+            PersianCalendar persianCalendar = new PersianCalendar();
+            var persianDate = string.Format("{0}/{1}/{2}",
+                persianCalendar.GetYear(date), persianCalendar.GetMonth(date), persianCalendar.GetDayOfMonth(date));
+
+            return Convert.ToDateTime(persianDate).Date;
+        }
+        public static List<TicketDto> ToReportDto(this List<Ticket> tickets)
+        {
+            return tickets.Select(x => new TicketDto()
+            {
+
+                //        public static CommentDto ToDto(this Comment comment)
+                //        {
+                //            PersianCalendar persianParse = new PersianCalendar();
+                //            string SubmitDate = string.Format("{0}/{1}/{2} {3}:{4}",
+                //                 persianParse.GetYear(comment.SubmitDate), persianParse.GetMonth(comment.SubmitDate), persianParse.GetDayOfMonth(comment.SubmitDate),
+                //                 persianParse.GetHour(comment.SubmitDate), persianParse.GetMinute(comment.SubmitDate));
+                Id = x.Id,
+                FunType = x.FunType,
+                BoughtPlace = x.WhereBuy,
+                Condition = x.Condition,
+                gender = x.Gender,
+                SubmitDate = ConvertToShamsi(x.SubmitDate),
+                ScheduleDto = x.Schedule.ToDto(),
+                //UserDto = x.User.ToDto()
+
+            }).ToList();
+        }
+        //public static List<ReportDto> ToReportDto(this List<Ticket> tickets)
+        //{
+        //    return tickets.Select(x => new ReportDto()
+        //    {
+
+
+        //        Date = ConvertToShamsi(x.SubmitDate.Date),
+        //        Count = tickets.Count(),
+        //        Amount = x.Schedule.Price,
+        //        TotalAmount = tickets.Sum(t => t.Schedule.Price)
+
+
+        //    }).ToList();
+        //}
+
+
 
 
 

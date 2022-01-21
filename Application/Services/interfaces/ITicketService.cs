@@ -2,6 +2,7 @@
 using Application.Commands.Ticket;
 using Application.Dtos;
 using Aspose.Pdf;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -54,8 +55,11 @@ namespace Application.Services.interfaces
         /// <returns></returns>
         Task<List<TicketDto>> GetReservedTickets(Guid id);
 
+        Task<List<ReportDto>> GetReportByFunType(ReportQuerySearch search);
 
+        Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search);
         Task<FileContentResult> DownloadTicketAync(Guid id);
+        Task<FileContentResult> DownloadReportAsync(ReportQuerySearch search);
 
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش

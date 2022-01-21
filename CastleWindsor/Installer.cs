@@ -1,13 +1,12 @@
 ﻿using Application.Services.classes;
+using Application.Services.interfaces;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Infrastructure.Repository.Classes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
+
 
 namespace CastleWindsor
 {
