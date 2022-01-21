@@ -1,4 +1,5 @@
 ﻿using Application.Services.classes;
+using Application.Services.interfaces;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Infrastructure.Repository.Classes;

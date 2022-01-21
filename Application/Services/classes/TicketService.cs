@@ -199,8 +199,7 @@ namespace Application.Services.classes
             var tickets = await _unitOfWork.Tickets.ReportByFunType(search);
             if (tickets == null)
                 throw new NotFoundExeption(nameof(Ticket), "QuerySearch", search.ToString());
-            var test = tickets.ToReportDto();
-            var report = test.GroupBy(x => x.SubmitDate.Month).Select(x => new ReportDto
+            var report = tickets.ToReportDto().GroupBy(x => x.SubmitDate.Month).Select(x => new ReportDto
             {
                 Date = x.Key,
                 Count = x.Count(),
@@ -208,6 +207,15 @@ namespace Application.Services.classes
             }).ToList();
             
             return report; 
+        }
+        public async Task<FileContentResult> DownloadReportAsync(ReportQuerySearch search)
+        {
+
+            var reports = await GetReportByFunType(search);
+            var reportfile = await ExcelOutput.GenerateExcel(reports);
+            return reportfile; 
+
+
         }
         public async Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search)
         {

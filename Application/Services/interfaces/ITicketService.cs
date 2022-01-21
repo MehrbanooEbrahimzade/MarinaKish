@@ -59,6 +59,7 @@ namespace Application.Services.interfaces
 
         Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search);
         Task<FileContentResult> DownloadTicketAync(Guid id);
+        Task<FileContentResult> DownloadReportAsync(ReportQuerySearch search);
 
         ///<summary>
         ///برکردوندن اطلاعات بلیط با توجه مکان فروش

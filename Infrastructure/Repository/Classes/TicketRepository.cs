@@ -195,13 +195,13 @@ namespace Infrastructure.Repository.Classes
 
         public async Task<List<Ticket>> ReportByFunType(ReportQuerySearch search)
         {
-            //return await dbSet.FromSql("Select Tickets.Id ,UserId ,Gender,  ScheduleId, FunType , Condition, SubmitDate ,WhereBuy,Schedules.price " +
-            //    " from tickets" +
-            //    " inner join [Club].[dbo].[Schedules] on Schedules.Id = ScheduleId").ToListAsync();
-            //    //$" Where Condition = 2 and WhereBuy = 3 and FunType = N'غواصی' and SubmitDate between '2020/02/01' and '2022/04/20'").ToListAsync();
+            //return await dbSet.FromSql("SELECT Tickets.Id ,UserId ,Gender,  ScheduleId, FunType , Condition, SubmitDate ,WhereBuy, Schedules.price " +
+            //    " FROM  tickets" +
+            //    " INNER JOIN schedules ON Schedules.Id = ScheduleId"+
+            //    $" WHERE Condition = 2 AND WhereBuy = 3 AND FunType = N'غواصی' AND SubmitDate BETWEEN '2020/02/01' AND '2022/04/20'").ToListAsync();
 
-            return  await dbSet.Include(x=>x.Schedule).
-              Where(t => t.SubmitDate >= search.StartDate && t.SubmitDate <= search.EndDate && t.WhereBuy == search.WhereBuy && t.FunType == search.FunType && t.Condition == (Condition)2).ToListAsync();
+           return  await dbSet.Include(x=>x.Schedule).
+            Where(t => t.SubmitDate >= search.StartDate && t.SubmitDate <= search.EndDate && t.WhereBuy == search.WhereBuy && t.FunType == search.FunType && t.Condition == (Condition)2).ToListAsync();
             
         }
         public async Task<List<Ticket>> GetTicketsReport(ReportQuerySearch search)

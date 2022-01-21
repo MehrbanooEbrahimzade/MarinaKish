@@ -1,4 +1,5 @@
-﻿using Application.Services.interfaces;
+﻿using Application.Helper;
+using Application.Services.interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,11 +24,18 @@ namespace Marina_Club.Controllers
             var tickets = await _ticketService.GetReportByFunType(search);
             return OkResult(ApiMessage.Ok, tickets);
         }
-        [HttpGet("Reports")]
+        [HttpGet("ReportsWithPercent")]
         public async Task<IActionResult> GetPersentOfSales([FromBody] ReportQuerySearch search)
         {
             var tickets = await _ticketService.GetPercentOfSales(search);
             return OkResult(ApiMessage.Ok, tickets);
+        }
+        [HttpGet("download")]
+        public async Task<IActionResult> DownloadReportAsync([FromBody] ReportQuerySearch search)
+        {
+            var document = await _ticketService.DownloadReportAsync(search);
+            return File(document.FileContents, document.ContentType);
+
         }
     }
 }
