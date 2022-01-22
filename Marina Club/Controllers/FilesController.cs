@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Application.Services.interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marina_Club.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class FilesController : ApiController
     {
 
@@ -22,10 +24,11 @@ namespace Marina_Club.Controllers
         /// اپلود کردن فایل
         /// (عکس و فیلم)
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("Upload")]
         public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
-            
+
             var result = await _fileService.UploadFileAsync(file);
 
             if (result == null)
@@ -37,6 +40,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// دانلود کردن عکس
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("{id}/Download")]
         public async Task<IActionResult> DownloadPicsAsync(Guid id)
         {
@@ -45,7 +49,7 @@ namespace Marina_Club.Controllers
             if (myFile.Bytes == null)
                 BadReq(ApiMessage.BadRequest);
 
-            return File(myFile.Bytes, myFile.Type);
+            return OkResult(ApiMessage.Ok, myFile);
         }
 
         /// <summary>

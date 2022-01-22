@@ -42,9 +42,7 @@ namespace Application.Mappers
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
-                BirthDate = user.BirthDay,
-
-
+                //BirthDate = user.BirthDay,
             };
         }
 
@@ -63,7 +61,7 @@ namespace Application.Mappers
             //    persianParse.GetHour(user.DateJoin), persianParse.GetMinute(user.DateJoin));
             return user.Select(x => new UserDto
             {
-                   
+
 
                 Id = x.Id,
                 PhoneNumber = x.PhoneNumber,
@@ -77,7 +75,7 @@ namespace Application.Mappers
                 //ShabaNumber = user.CreditCardCommand.ShabaNumber,
                 //DateJoinInShamsi = persianJoinTime,
 
-          
+
             }).ToList();
         }
 
