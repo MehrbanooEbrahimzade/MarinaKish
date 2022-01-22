@@ -33,6 +33,13 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<List<ScheduleDto>> GetSchedulesForFun(Guid funId);
 
+        /// <summary>
+        /// /آپدیت پیشنهاد ویژه 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+
+        Task UpdateSpecialOff(UpdateSpecialFunCommand command);
         //    /// <summary>
         //    /// ساختن سانس
         //    /// </summary> z

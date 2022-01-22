@@ -36,7 +36,13 @@ namespace Marina_Club.Controllers
             return OkResult("تخفیف با موفقیت اضافه شد");
 
         }
-
+        [HttpPut("{id}/Update")]
+        public async Task<IActionResult> UpdateSpecialOffer(Guid id,UpdateSpecialFunCommand command)
+        {
+            command.ShceduleId = id;
+            await _scheduleService.UpdateSpecialOff(command);
+            return OkResult(ApiMessage.Ok);
+        }
 
         /// <summary>
         /// گرفتن یک سانس با ایدی سانس

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Schedule;
 using Application.Dtos;
+using Application.Exceptions;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.IConfiguration;
@@ -42,6 +43,17 @@ namespace Application.Services.classes
             await _unitOfWork.CompleteAsync();
 
         }
+        public async Task UpdateSpecialOff(UpdateSpecialFunCommand command)
+        {
+            var specialOffer = await _unitOfWork.Schedules.GetByIdAsync(command.ShceduleId);
+            if (specialOffer is null)
+            {
+                throw new NotFoundExeption(nameof(UpdateSpecialFunCommand), command.ShceduleId, " schedule is ");
+            }
+            specialOffer.UpdateSpecialOffer(command.Price, command.AddPercent.ToModel());
+            await _unitOfWork.CompleteAsync();
+        }
+
 
 
         /// <summary>
