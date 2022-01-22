@@ -23,6 +23,7 @@ using Microsoft.Extensions.Logging;
 using Marina_Club.Activator.Middleware;
 using CastleWindsor;
 using Castle.Windsor.MsDependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Marina_Club
 {
@@ -150,12 +151,14 @@ namespace Marina_Club
         private void JwtConfiguration(IServiceCollection services)
         {
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
+            var jwtSetting = Configuration.GetSection("Jwt").Get<JwtToken>();
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             });
-
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -165,9 +168,9 @@ namespace Marina_Club
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        ValidIssuer = jwtSetting.Issuer,
+                        ValidAudience = jwtSetting.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key))
                     };
                 });
 

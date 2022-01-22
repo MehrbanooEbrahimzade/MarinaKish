@@ -42,7 +42,7 @@ namespace Application.Mappers
                 PhoneNumber = user.PhoneNumber,
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
-                BirthDate = user.BirthDay,
+                ///BirthDate = user.BirthDay,
 
 
             };
