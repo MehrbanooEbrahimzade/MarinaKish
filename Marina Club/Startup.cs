@@ -61,8 +61,6 @@ namespace Marina_Club
 
             ConfigureDependency(services);
 
-            
-
             services.AddSwaggerGen();
             return WindsorRegistrationHelper.CreateServiceProvider(Installer.Container, services);
         }
@@ -71,29 +69,29 @@ namespace Marina_Club
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
 
-            }
+            app.UseCors("Policy");
+
             app.UseMvc();
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlerMiddleWare>();
-            app.UseCors("Policy");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
-            });           
+            });
             provider.MigrateDatabases();
         }
+
         private void ConfigureMvc(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(options =>
             {
-
                 options.SerializerSettings.Converters.Add(new JsonDateTimeConvertor());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
+
         public void ConfigureDependency(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -148,6 +146,7 @@ namespace Marina_Club
             services.AddScoped<IContactUsRepository, ContactUsRepository>();
             services.AddScoped<IContactUsService, ContactUsService>();
         }
+
         private void JwtConfiguration(IServiceCollection services)
         {
             services.Configure<JwtToken>(Configuration.GetSection("Jwt"));
@@ -175,6 +174,7 @@ namespace Marina_Club
                 });
 
         }
+
         private void ConfigureIdentity(IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
@@ -188,6 +188,7 @@ namespace Marina_Club
                 options.Password.RequiredUniqueChars = 0;
             });
         }
+
         private void ConfigureCors(IServiceCollection services)
         {
             services.AddCors(s => s.AddPolicy("Policy", builder =>
