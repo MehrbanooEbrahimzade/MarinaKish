@@ -70,9 +70,7 @@ namespace Domain.Models
         /// آپدیت تفریح
         /// </summary>
         public void UpdateFun(string name, string about, string icon, string backgroundPicture,
-            string video, /*List<FunSliderPicture> sliderPictures,*/
-            TimeSpan startTime, TimeSpan endTime, int gapTime, int duration,
-            int totalCapacity, int presenceCapacity, int onlineCapacity, decimal amount)
+            string video /*List<FunSliderPicture> sliderPictures,*/)
         {
             this.Name = name;
             this.About = about;
@@ -80,7 +78,6 @@ namespace Domain.Models
             this.BackgroundPicture = backgroundPicture;
             this.Video = video;
             //this.SliderPictures = sliderPictures;
-            this.ScheduleInfo.UpdateScheduleInfo(startTime, endTime, gapTime, duration, totalCapacity, presenceCapacity, onlineCapacity, amount);
         }
 
         public void SetIsActive(bool isActive)

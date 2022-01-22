@@ -62,18 +62,14 @@ namespace Application.Services.classes
             if (fun == null)
                 throw new NullReferenceException("تفریح یافت نشد!");
 
-            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video, /*command.SliderPictures.ToModel(),*/
-                    command.ScheduleInfo.StartTime, command.ScheduleInfo.EndTime,
-                    command.ScheduleInfo.GapTime, command.ScheduleInfo.Duration,
-                    command.ScheduleInfo.TotalCapacity, command.ScheduleInfo.PresenceCapacity,
-                    command.ScheduleInfo.OnlineCapacity, command.ScheduleInfo.Amount);
+            fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video /*command.SliderPictures.ToModel(),*/);
 
             var getschedule = await _unitOfWork.Schedules.GetSchedulesForFunAsync(command.FunId);
 
-            foreach (var item in getschedule)
-            {
-                item.ForPrice(command.ScheduleInfo.Amount);
-            }
+            //foreach (var item in getschedule)
+            //{
+            //    item.ForPrice(command.ScheduleInfo.Amount);
+            //}
 
 
 

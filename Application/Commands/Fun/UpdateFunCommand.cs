@@ -41,10 +41,7 @@ namespace Application.Commands.Fun
         /// </summary>
         public string About { get; set; }
 
-        /// <summary>
-        /// اطلاعات سانس
-        /// </summary>
-        public UpdateScheduleInfoCommand ScheduleInfo { get; set; }
+        
 
         /// <summary>
         /// اسلاید عکس ها
