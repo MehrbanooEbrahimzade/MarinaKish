@@ -70,7 +70,7 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// دریافت همه سانس 
+        ///  دریافت همه سانس با تاریخ
         /// </summary>
         public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {

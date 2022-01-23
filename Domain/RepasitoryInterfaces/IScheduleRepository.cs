@@ -31,7 +31,6 @@ namespace Domain.RepasitoryInterfaces
         /// دریافت تمام سانس های یک تفریح
         /// </summary>
         Task<List<Schedule>> GetSchedulesForFunAsync(Guid id);
-        Task<List<Schedule>> GetAllAsync(Guid id);
 
         /// <summary>
         /// دریافت تمام سانس های تفریح با تاریخ 

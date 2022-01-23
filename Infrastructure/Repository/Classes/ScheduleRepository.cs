@@ -88,7 +88,6 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// دریافت تمام سانس های یک تفریح
         /// </summary>
-        public async Task<List<Schedule>> GetAllAsync(Guid id)
         public  async Task<List<Schedule>> GetSchedulesForFunAsync(Guid id)
         {
             try
