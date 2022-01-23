@@ -99,18 +99,20 @@ namespace Application.Services.classes
 
 
         /// <summary>
-        /// حذف کردن سانس
+        /// حذف لیستی از سانس 
         /// </summary>
-        public async Task DeleteSchedule(Guid id)
+        public async Task DeleteSchedule(DeleteListCommand command)
         {
-            var result = await _unitOfWork.Schedules.DeleteAsync(id);
-
-            if (result == false)
-                throw new Exception("چنین سانسی یافت نشد");
+            foreach (var item in command.IDs)
+            {
+                var result = await _unitOfWork.Schedules.DeleteAsync(item);
+                if (result == false)
+                    throw new Exception("چنین سانسی یافت نشد");
+            }
 
             await _unitOfWork.CompleteAsync();
         }
 
-     
+
     }
 }

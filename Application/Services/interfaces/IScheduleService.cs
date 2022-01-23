@@ -24,9 +24,9 @@ namespace Application.Services.interfaces
         Task<List<ScheduleDto>> GetAllSchedule( GetAllByDateTimeCommand command);
 
         /// <summary>
-        /// حذف کردن سانس
+        /// حذف لیستی از سانس ها
         /// </summary>
-        Task DeleteSchedule(Guid id);
+        Task DeleteSchedule( DeleteListCommand command);
 
         /// <summary>
         /// دریافت همه سانس های یک تفریح
