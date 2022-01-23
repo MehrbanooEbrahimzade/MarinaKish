@@ -88,7 +88,7 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// دریافت تمام سانس های یک تفریح
         /// </summary>
-        public  async Task<List<Schedule>> GetSchedulesForFunAsync(Guid id)
+        public async Task<List<Schedule>> GetSchedulesForFunAsync(Guid id)
         {
             try
             {
@@ -214,7 +214,7 @@ namespace Infrastructure.Repository.Classes
                 var dateTime1 = dateTime.AddDays(7);
 
                 //var getall = dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {dateTime} and {dateTime1}").ToListAsync();
-                var getall =await dbSet.Where(w => w.FunId == id && w.Date >= dateTime && w.Date<=dateTime1).ToListAsync();
+                var getall = await dbSet.Where(w => w.FunId == id && w.Date >= dateTime && w.Date <= dateTime1).ToListAsync();
 
                 if (getall.Count == 0)
                     throw new Exception("چنین سانس هایی وجود ندارد");

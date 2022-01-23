@@ -17,29 +17,42 @@ namespace Application.Services.classes
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
+        private readonly IFunService _funService;
 
-        public ScheduleInfoService(ILogger<ScheduleInfoService> logger, IUnitOfWork unitOfWork)
+        public ScheduleInfoService(ILogger<ScheduleInfoService> logger, IUnitOfWork unitOfWork, IFunService funService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _funService = funService;
 
         }
 
-        ///// <summary> 
-        /////اضافه کردن اطلاعات سانس و ساخت سانس از روی اطلاعاتش
-        ///// </summary>
-        //public void AddScheduleInfoAsync(AddScheduleInfoCommand command)
-        //{
-        //    var scheduleInfo = command.ToModel();
-        //    CreateAndAddSchedule(command);
+        /// <summary> 
+        ///اضافه کردن اطلاعات سانس و ساخت سانس از روی اطلاعاتش
+        /// </summary>
+        public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        {
+            var checkgetfun = await _unitOfWork.ScheduleInfos.GetFunById(command.FunId);
+            if (checkgetfun == null)
+                throw new Exception("چنین تفریحی یافت نشد");
 
-        //    var addschduleinfo = _unitOfWork.ScheduleInfos.AddAsync(scheduleInfo);
+            var scheduleInfo = command.ToModel();
 
-        //    if (addschduleinfo == null)
-        //        throw new ArgumentNullException("عملیتات اضافه کردن انجام نشد");
+            var addschduleinfo = await _unitOfWork.ScheduleInfos.AddAsync(scheduleInfo);
 
-        //    _unitOfWork.CompleteAsync();
-        //}
+            if (addschduleinfo == false)
+                throw new ArgumentNullException("عملیتات اضافه کردن اطلاعات سانس انجام نشد");
+
+
+
+            var addschedule = _funService.CreateAndAddSchedule(command);
+            if (addschedule == null)
+                throw new Exception("عملیات اضافه کردن سانس انحام نشد");
+
+             _unitOfWork.CompleteAsync();
+
+
+        }
 
         /// <summary>
         /// ادیت کردن اطلاعات سانس

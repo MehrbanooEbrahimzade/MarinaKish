@@ -6,6 +6,6 @@ namespace Domain.RepasitoryInterfaces
 {
     public interface IScheduleInfoRepository : IGenericRepository<ScheduleInfo>
     {
-
+        Task<bool> GetFunById(Guid funId);
     }
 }

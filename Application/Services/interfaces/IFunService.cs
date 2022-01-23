@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Commands.Fun;
+using Application.Commands.ScheduleInfo;
 using Application.Dtos;
 
 namespace Application.Services.interfaces
@@ -48,6 +49,14 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<List<FunDto>> GetAllDisActivedFunAsynch();
 
-        Task<string> DateTimeNow(); 
+        /// <summary>
+        /// زمان حال
+        /// </summary>
+        Task<string> DateTimeNow();
+
+
+        Task CreateAndAddSchedule(AddScheduleInfoCommand command);
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
@@ -20,7 +21,9 @@ namespace Infrastructure.Repository.Classes
             try
             {
 
-                await dbSet.AddAsync(scheduleInfo);
+              var result=  dbSet.AddAsync(scheduleInfo);
+              if (result == null)
+                  throw new Exception("");
                 return true;
             }
             catch (Exception ex)
@@ -69,6 +72,27 @@ namespace Infrastructure.Repository.Classes
             }
 
         }
+
+
+        public async Task<bool> GetFunById(Guid id)
+        {
+
+            try
+            {
+                var get = await dbSet.FirstOrDefaultAsync(f => f.FunId == id);
+                if (get == null)
+                    throw new Exception("چنین تفریحی یافت نشد");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Getfun method error", typeof(ScheduleInfoRepository));
+                return false;
+            }
+
+        }
+
+
         ///// <summary>
         ///// چک کننده وجود داشتن تفریح
         ///// </summary>
