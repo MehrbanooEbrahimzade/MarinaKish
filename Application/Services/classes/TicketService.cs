@@ -1,10 +1,12 @@
 ﻿using Application.Commands;
 using Application.Commands.Ticket;
 using Application.Dtos;
+using Application.Exceptions;
 using Application.Helper;
 using Application.Mappers;
 using Application.Services.interfaces;
 using Aspose.Pdf;
+using Domain;
 using Domain.IConfiguration;
 using Domain.Models;
 using Infrastructure.Helper;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,6 +116,10 @@ namespace Application.Services.classes
             return document;
           
         }
+
+
+
+
         /// <summary>
         /// اضافه کردن بلیط خریده شده بصورت حضوری
         /// </summary>
@@ -187,6 +194,46 @@ namespace Application.Services.classes
         }
 
 
+        public async Task<List<ReportDto>> GetReportByFunType(ReportQuerySearch search)
+        {
+            var tickets = await _unitOfWork.Tickets.ReportByFunType(search);
+            if (tickets == null)
+                throw new NotFoundExeption(nameof(Ticket), "QuerySearch", search.ToString());
+            var report = tickets.ToReportDto().GroupBy(x => x.SubmitDate.Month).Select(x => new ReportDto
+            {
+                Date = x.Key,
+                Count = x.Count(),
+                TotalAmount = x.Sum(s => s.ScheduleDto.Price)
+            }).ToList();
+            
+            return report; 
+        }
+        public async Task<FileContentResult> DownloadReportAsync(ReportQuerySearch search)
+        {
+
+            var reports = await GetReportByFunType(search);
+            var reportfile = await ExcelOutput.GenerateExcel(reports);
+            return reportfile; 
+
+
+        }
+        public async Task<List<PercentReportDto>> GetPercentOfSales(ReportQuerySearch search)
+        {
+            var tickets = await _unitOfWork.Tickets.GetTicketsReport(search);
+            if (tickets.Count==0)
+                throw new NotFoundExeption(nameof(Ticket), "QuerySearch", search.ToString());
+            var report = tickets.GroupBy(x => x.FunType).Select(x => new PercentReportDto
+            {
+                FunType = x.Key,
+                Count = x.Count(),
+                
+                Percent = Math.Round((double)x.Count()/(double)tickets.Count()*100)
+          
+            }).ToList();
+            
+            return report;
+        }
+        
         //        /// <summary>
         //        ///  جست و جوی دو تاریخه برای جمع مبلغ بلیط های فعال
         //        /// </summary>
@@ -388,6 +435,8 @@ namespace Application.Services.classes
             return tickets.ToDto();
         }
 
+      
+
 
 
 
@@ -566,6 +615,6 @@ namespace Application.Services.classes
         //        }
 
         //        #endregion
-      
+
     }
 }

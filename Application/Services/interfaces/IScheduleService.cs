@@ -16,7 +16,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// دریافت یک سانس 
         /// </summary>
-        Task<ScheduleDto> GetScheduleBtId(Guid id);
+        Task<ScheduleDto> GetScheduleById(Guid id);
 
         /// <summary>
         /// دریافت همه سانس 
@@ -28,6 +28,18 @@ namespace Application.Services.interfaces
         /// </summary>
         Task DeleteSchedule(Guid id);
 
+        /// <summary>
+        /// دریافت همه سانس های یک تفریح
+        /// </summary>
+        Task<List<ScheduleDto>> GetSchedulesForFun(Guid funId);
+
+        /// <summary>
+        /// /آپدیت پیشنهاد ویژه 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+
+        Task UpdateSpecialOff(UpdateSpecialFunCommand command);
         //    /// <summary>
         //    /// ساختن سانس
         //    /// </summary> z

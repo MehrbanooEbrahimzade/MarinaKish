@@ -89,12 +89,13 @@ namespace Infrastructure.Repository.Classes
         /// دریافت تمام سانس های یک تفریح
         /// </summary>
         public async Task<List<Schedule>> GetAllAsync(Guid id)
+        public  async Task<List<Schedule>> GetSchedulesForFunAsync(Guid id)
         {
             try
             {
                 var getall = await dbSet.Where(w => w.FunId == id).ToListAsync();
                 if (getall.Count == 0)
-                    throw new Exception("چنین سانس  هایی یافت نشدید");
+                    throw new Exception("چنین سانس هایی یافت نشد");
 
                 return getall;
             }

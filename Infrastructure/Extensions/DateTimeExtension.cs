@@ -15,8 +15,9 @@ namespace Infrastructure.Extensions
 
                 return Convert.ToDateTime(persianDate).Date;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var errors = ex.Message;
                 throw new FormatException();
             }
 

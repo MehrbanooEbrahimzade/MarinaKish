@@ -38,13 +38,13 @@ namespace Application.Services.classes
             switch (format)
             {
                 case "png":
-                case "jpg" when size>15000000:
+                case "jpg" when size > 15000000:
                     throw new InvalidDataException(" حجم عکس شماباید کمتر از15مگابیت باشد!");
                 case "mp4" when size > 500000000:
                     throw new InvalidDataException(" حجم فیلم شماباید کمتر از500 مگابایت باشد!");
             }
 
-            
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
@@ -65,19 +65,20 @@ namespace Application.Services.classes
             var myFile = await _fileRepository.GetFileByIdAsync(id);
 
             if (myFile == null)
-                 throw new ArgumentNullException(ApiMessage.nullFile);
+                throw new ArgumentNullException(ApiMessage.nullFile);
 
             var myFileDto = new MyFileDto
             {
-                Bytes = await File.ReadAllBytesAsync(myFile.FilePath),
-                Type = FileFormat.GetMimeType(myFile.Name.Split('.').Last())
+                //Bytes = await File.ReadAllBytesAsync(myFile.FilePath),
+                Type = FileFormat.GetMimeType(myFile.Name.Split('.').Last()),
+                Url = "http://194.36.174.133/" + myFile.Name
             };
 
             return myFileDto;
         }
 
 
-        
+
         /// <summary>
         /// پاک کردن فایل
         /// </summary>
@@ -274,7 +275,7 @@ namespace Application.Services.classes
             var fileArray = filename.Split(".").ToList();
             var constName = $"{fileArray[0]}MR";
             var randomNumber = new Random().Next(100, 100000).ToString();
-            format =fileArray.Last();
+            format = fileArray.Last();
 
             return constName + randomNumber + "." + format;
         }
