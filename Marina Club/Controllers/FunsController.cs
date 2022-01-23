@@ -25,11 +25,11 @@ namespace Marina_Club.Controllers
         [HttpPost("Add")]
         public async Task<IActionResult> AddFunAsync(AddFunCommand command)
         {
-            if(!command.Validate())
+            if (!command.Validate())
             {
                 return BadReq(ApiMessage.WrongFunInformation);
             }
-            var funId =await _funService.AddFunAsync(command);
+            var funId = await _funService.AddFunAsync(command);
 
             return OkResult(ApiMessage.FunAdded, funId);
         }
@@ -150,5 +150,18 @@ namespace Marina_Club.Controllers
             return result == null ? BadReq(ApiMessage.MarineNotHaveDisActiveFun) :
                 OkResult(ApiMessage.AllDisActiveFunGetted, new { DisActiveFunsCount = result.Count });
         }
+
+        /// <summary>
+        /// دریافت زمان حال
+        /// </summary>
+        [HttpGet("TimeNow")]
+        public async Task<IActionResult> GetTimeNow()
+        {
+            var resulttime = await _funService.DateTimeNow();
+
+            return OkResult(ApiMessage.Ok, new { datetimenow = resulttime });
+
+        }
+
     }
 }

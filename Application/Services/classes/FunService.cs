@@ -9,6 +9,7 @@ using Domain.IConfiguration;
 using Microsoft.Extensions.Logging;
 using Application.Commands.ScheduleInfo;
 using Application.Helper;
+using Infrastructure.Extensions;
 
 namespace Application.Services.classes
 {
@@ -159,6 +160,16 @@ namespace Application.Services.classes
         {
             var funs = await _unitOfWork.Funs.GetAllDisActiveFunAsync();
             return (List<FunDto>)(funs.Count == 0 ? null : funs.ToDto());
+        }
+
+        /// <summary>
+        /// زمان حال
+        /// </summary>
+        public async Task<string> DateTimeNow()
+        {
+           var timenow = DateTime.Now.ToString();
+           
+        return timenow;
         }
     }
 }

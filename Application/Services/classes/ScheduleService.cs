@@ -7,6 +7,7 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.IConfiguration;
 using Domain.RepasitoryInterfaces;
+using Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
@@ -61,12 +62,12 @@ namespace Application.Services.classes
         /// <summary>
         /// دریافت همه سانس 
         /// </summary>
-        public async Task<List<ScheduleDto>> GetAllSchedule(DateTime datetime , GetAllByDateTimeCommand command)
+        public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {
+            var result = DateTime.Parse(command.DateTime);
 
-            //var test =command.datetime.AddDays(7);
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, result);
 
-            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, datetime);
             if (GetAll == null)
                 throw new Exception("چنین سانسی هایی یافت نشد");
 

@@ -11,10 +11,12 @@ namespace Application.Commands.Schedule
         /// </summary>
         public Guid FunId { get; set; }
 
+
+        public string  DateTime { get; set; }
         /// <summary>
         /// زمان گرفته شده از فرانت که روزش فقط شنبس
         /// </summary>
-        public PersianDateCommand persianDate { get; set; }
+        //public PersianDateCommand persianDate { get; set; }
 
         public override bool Validate()
         {

@@ -6,6 +6,7 @@ using Application.Commands;
 using Application.Commands.Schedule;
 using Application.Services.interfaces;
 using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
+using Infrastructure.Extensions;
 
 namespace Marina_Club.Controllers
 {
@@ -56,13 +57,11 @@ namespace Marina_Club.Controllers
         /// گرفتن همه سانس ها
         /// </summary>
         [HttpGet("{id}/GetAll")]
-        public async Task<IActionResult> GetAllSchedule(GetAllByDateTimeCommand command , Guid id)
+        public async Task<IActionResult> GetAllSchedule(GetAllByDateTimeCommand command, Guid id)
         {
             command.FunId = id;
-            PersianCalendar persianCalendar = new PersianCalendar();
-            DateTime firsttime = new DateTime(command.persianDate.Year, command.persianDate.Month, command.persianDate.Day, persianCalendar);
 
-            var getall = await _scheduleService.GetAllSchedule(firsttime, command);
+            var getall = await _scheduleService.GetAllSchedule(command);
 
             return OkResult(ApiMessage.GetAllScheduleForFun, getall);
         }

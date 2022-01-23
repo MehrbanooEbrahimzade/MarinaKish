@@ -21,7 +21,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// دریافت همه سانس 
         /// </summary>
-        Task<List<ScheduleDto>> GetAllSchedule(DateTime datetime , GetAllByDateTimeCommand command);
+        Task<List<ScheduleDto>> GetAllSchedule( GetAllByDateTimeCommand command);
 
         /// <summary>
         /// حذف کردن سانس
