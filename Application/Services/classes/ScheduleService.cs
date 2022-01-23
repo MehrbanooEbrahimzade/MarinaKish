@@ -61,11 +61,15 @@ namespace Application.Services.classes
         /// <summary>
         /// دریافت همه سانس 
         /// </summary>
-        public async Task<List<ScheduleDto>> GetAllSchedule()
+        public async Task<List<ScheduleDto>> GetAllSchedule(DateTime datetime , GetAllByDateTimeCommand command)
         {
-            var GetAll = await _unitOfWork.Schedules.AllAsync();
+
+            //var test =command.datetime.AddDays(7);
+
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, datetime);
             if (GetAll == null)
-                throw new Exception("چنین سانسی یافت نشد");
+                throw new Exception("چنین سانسی هایی یافت نشد");
+
             return GetAll.ToDto();
         }
 

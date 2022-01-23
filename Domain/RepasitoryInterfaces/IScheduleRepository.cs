@@ -9,7 +9,7 @@ namespace Domain.RepasitoryInterfaces
     {
         /// <summary>
         /// اضافه کردن یک سانس
-        /// </summary>
+        /// </summary> 
         Task AddScheduleAsync(List<Schedule> schedules);
         /// <summary>
         /// پاک کردن همه سانس های یک تفریح
@@ -32,6 +32,10 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<List<Schedule>> GetAllAsync(Guid id);
 
+        /// <summary>
+        /// دریافت تمام سانس های تفریح با تاریخ 
+        /// </summary>
+        Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime dateTime);
 
     }
 }

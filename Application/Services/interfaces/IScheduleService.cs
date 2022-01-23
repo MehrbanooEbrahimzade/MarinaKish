@@ -9,7 +9,7 @@ namespace Application.Services.interfaces
     public interface IScheduleService
     {
         /// <summary>
-        /// ساخت پیشنهاد ویژه 
+        /// ساخت پیشنهاد ویژه  
         /// </summary>
         Task AddSpecialOffer(AddSpecialOfferCommand command);
 
@@ -21,7 +21,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// دریافت همه سانس 
         /// </summary>
-        Task<List<ScheduleDto>> GetAllSchedule();
+        Task<List<ScheduleDto>> GetAllSchedule(DateTime datetime , GetAllByDateTimeCommand command);
 
         /// <summary>
         /// حذف کردن سانس
