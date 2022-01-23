@@ -19,32 +19,40 @@ namespace Marina_Club.Controllers
             _scheduleInfoService = scheduleInfoService;
         }
 
+
+
+        ///// <summary>
+        ///// تمدید اطلاعات سانس
+        ///// </summary>
         [HttpPost]
-        public void AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        public async Task<IActionResult> AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
-            if (!command.Validate())
-            { 
-                BadReq(ApiMessage.WrongInformation);
-            } 
-            //_scheduleInfoService.AddScheduleInfoAsync(command);
-        }
-
-
-        /// <summary>
-        /// ویرایش اطلاعات سانس
-        /// </summary>
-        [HttpPut("{id}/Update")]
-        public async Task<IActionResult> UpdateScheduleInfoAsync(Guid id, UpdateScheduleInfoCommand command)
-        {
-            command.Id = id;
             if (!command.Validate())
             {
-                return BadReq(ApiMessage.WrongInformation);
+                BadReq(ApiMessage.WrongInformation);
             }
-            //await _scheduleInfoService.UpdateScheduleInfoAsync(command);
 
-            return Ok(ApiMessage.Ok);
+            var result = _scheduleInfoService.AddScheduleInfoAsync(command);
+
+            return OkResult(ApiMessage.Ok);
         }
+
+
+        ///// <summary>
+        ///// ویرایش اطلاعات سانس
+        ///// </summary>
+        //[HttpPut("{id}/Update")]
+        //public async Task<IActionResult> UpdateScheduleInfoAsync(Guid id, UpdateScheduleInfoCommand command)
+        //{
+        //    command.Id = id;
+        //    if (!command.Validate())
+        //    {
+        //        return BadReq(ApiMessage.WrongInformation);
+        //    }
+        //    //await _scheduleInfoService.UpdateScheduleInfoAsync(command);
+
+        //    return Ok(ApiMessage.Ok);
+        //}
 
         ///// <summary>
         ///// حذف اطلاعات سانس

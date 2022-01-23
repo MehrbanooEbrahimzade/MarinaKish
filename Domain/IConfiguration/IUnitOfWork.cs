@@ -13,8 +13,6 @@ namespace Domain.IConfiguration
         IFileRepository FileS { get; }
         IContactUsRepository ContactUs { get; }
         ICommentRepository comment { get; }
-
-
         Task CompleteAsync();
     }
 }

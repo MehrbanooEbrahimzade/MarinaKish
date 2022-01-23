@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Infrastructure.Persist;
 using Domain.Models;
 using Domain.RepasitoryInterfaces;
-using Infrastructure.Repository.Classes;
+using Infrastructure.Persist;
 using Microsoft.Extensions.Logging;
 
-
-namespace Infrastructure.Repository.classes
+namespace Infrastructure.Repository.Classes
 {
     public class ContactUsRepository : GenericRepository<ContactUs>, IContactUsRepository
     {

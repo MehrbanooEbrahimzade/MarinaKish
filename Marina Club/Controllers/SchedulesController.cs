@@ -23,7 +23,7 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// ساخت پیشنهاد های ویژه
         /// </summary> 
-        [HttpPost("AddSpecialOffer")]
+        [HttpPost("AddSpecialOffer")] 
         public async Task<IActionResult> AddSpecialOffer(AddSpecialOfferCommand command)
         {
             if (!command.Validate())
@@ -86,12 +86,12 @@ namespace Marina_Club.Controllers
 
         
         /// <summary>
-        /// حذف کردن سانس
+        /// حذف لیستی از سانس ها
         /// </summary>
-        [HttpDelete("{id}/Delete")]
-        public async Task<IActionResult> DeleteSchedule(Guid id)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteSchedule(DeleteListCommand command)
         {
-            await _scheduleService.DeleteSchedule(id);
+            await _scheduleService.DeleteSchedule(command);
 
             return OkResult(ApiMessage.Ok);
         }

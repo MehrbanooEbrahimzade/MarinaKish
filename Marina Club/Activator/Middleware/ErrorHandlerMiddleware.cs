@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Net;
 using System.Threading.Tasks;
-using System;
-using System.Net;
-using static Marina_Club.Controllers.ApiController;
-using Infrastructure.Repository;
 using Application.Exceptions;
+using Microsoft.AspNetCore.Http;
+using static Marina_Club.Controllers.ApiController;
 
-namespace Marina_Club.Activator.MiddleWare
+namespace Marina_Club.Activator.Middleware
 {
     public class ErrorHandlerMiddleWare
     {
