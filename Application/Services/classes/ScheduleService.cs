@@ -8,6 +8,7 @@ using Application.Mappers;
 using Application.Services.interfaces;
 using Domain.IConfiguration;
 using Domain.RepasitoryInterfaces;
+using Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
@@ -69,13 +70,17 @@ namespace Application.Services.classes
         }
 
         /// <summary>
-        /// دریافت همه سانس 
+        ///  دریافت همه سانس با تاریخ
         /// </summary>
-        public async Task<List<ScheduleDto>> GetAllSchedule()
+        public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {
-            var GetAll = await _unitOfWork.Schedules.AllAsync();
+            var result = DateTime.Parse(command.DateTime);
+
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, result);
+
             if (GetAll == null)
-                throw new Exception("چنین سانسی یافت نشد");
+                throw new Exception("چنین سانسی هایی یافت نشد");
+
             return GetAll.ToDto();
         }
 

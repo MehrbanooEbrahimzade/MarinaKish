@@ -96,7 +96,7 @@ namespace Infrastructure.Repository.Classes
                 if (getall.Count == 0)
                     throw new Exception("چنین سانس هایی یافت نشد");
 
-                 return getall;
+                return getall;
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace Infrastructure.Repository.Classes
 
         #endregion
 
-        /// <summary>
+        /// <summary> 
         /// اضافه کردن سانس ها به تیبل
         /// </summary>
         public async Task AddScheduleAsync(List<Schedule> schedules)
@@ -203,7 +203,31 @@ namespace Infrastructure.Repository.Classes
         }
 
 
+        /// <summary>
+        /// دریافت تمام سانس های تفریح با تاریخ 
+        /// </summary>
+        public async Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime dateTime)
+        {
+            try
+            {
 
+                var dateTime1 = dateTime.AddDays(7);
 
+                //var getall = dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {dateTime} and {dateTime1}").ToListAsync();
+                var getall =await dbSet.Where(w => w.FunId == id && w.Date >= dateTime && w.Date<=dateTime1).ToListAsync();
+
+                if (getall.Count == 0)
+                    throw new Exception("چنین سانس هایی وجود ندارد");
+
+                return getall;
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "{Repo} Get All schedule error  ", typeof(ScheduleRepository));
+                return null;
+            }
+
+        }
     }
 }

@@ -47,5 +47,7 @@ namespace Application.Services.interfaces
         /// دریافت همه تفریح های غیر فعال
         /// </summary>
         Task<List<FunDto>> GetAllDisActivedFunAsynch();
+
+        Task<string> DateTimeNow(); 
     }
 }

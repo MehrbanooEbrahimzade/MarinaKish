@@ -533,7 +533,7 @@ namespace Marina_Club.Controllers
         //            return OkResult(ApiMessage.TicketReservedSearchedDateCountGetted, new { ReservedTicketsCount = result.Count });
         //        }
 
-        /// <summary>
+        /// <summary> 
         ///  جست و جوی یک تاریخه برای جمع مبلغ بلیط های فعال
         /// </summary>
         [HttpGet("SearchReservedTicketsPriceoneDateSum")]
