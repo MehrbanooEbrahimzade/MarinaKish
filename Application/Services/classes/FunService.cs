@@ -27,6 +27,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<Guid> AddFunAsync(AddFunCommand command)
         {
+            if (command.ScheduleInfo.TotalCapacity != command.ScheduleInfo.OnlineCapacity + command.ScheduleInfo.PresenceCapacity)
+                throw new Exception("ظرفیت کل باید مجموع ظرفیت حضوری و انلاین باشد");
             var fun = command.ToModel();
 
             var addFun = await _unitOfWork.Funs.AddAsync(fun);
