@@ -12,7 +12,7 @@ namespace Application.Commands.Schedule
         public Guid FunId { get; set; }
 
 
-        public string  DateTime { get; set; }
+        public DateTime  DateTime { get; set; }
         /// <summary>
         /// زمان گرفته شده از فرانت که روزش فقط شنبس
         /// </summary>

@@ -212,7 +212,6 @@ namespace Infrastructure.Repository.Classes
             {
 
                 var dateTime1 = dateTime.AddDays(7);
-
                 //var getall = dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {dateTime} and {dateTime1}").ToListAsync();
                 var getall = await dbSet.Where(w => w.FunId == id && w.Date >= dateTime && w.Date <= dateTime1).ToListAsync();
 

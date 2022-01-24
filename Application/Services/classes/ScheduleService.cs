@@ -74,9 +74,8 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {
-            var result = DateTime.Parse(command.DateTime);
 
-            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, result);
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId,command.DateTime);
 
             if (GetAll == null)
                 throw new Exception("چنین سانسی هایی یافت نشد");
