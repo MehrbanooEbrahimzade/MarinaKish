@@ -75,7 +75,7 @@ namespace Application.Services.classes
         public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {
 
-            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId,command.DateTime);
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, command.DateTime);
 
             if (GetAll == null)
                 throw new Exception("چنین سانسی هایی یافت نشد");
@@ -100,7 +100,7 @@ namespace Application.Services.classes
         /// <summary>
         /// حذف لیستی از سانس 
         /// </summary>
-        public async Task DeleteSchedule(DeleteListCommand command)
+        public async Task<bool> DeleteSchedule(DeleteListCommand command)
         {
             foreach (var item in command.IDs)
             {
@@ -110,6 +110,7 @@ namespace Application.Services.classes
             }
 
             await _unitOfWork.CompleteAsync();
+            return true;
         }
 
 

@@ -26,7 +26,7 @@ namespace Application.Services.interfaces
         /// <summary>
         /// حذف لیستی از سانس ها
         /// </summary>
-        Task DeleteSchedule( DeleteListCommand command);
+        Task<bool> DeleteSchedule( DeleteListCommand command);
 
         /// <summary>
         /// دریافت همه سانس های یک تفریح
