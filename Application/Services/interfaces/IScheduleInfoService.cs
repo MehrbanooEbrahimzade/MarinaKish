@@ -8,7 +8,7 @@ namespace Application.Services.interfaces
         /// <summary>
         ///اضافه کردن  
         /// </summary>
-        Task AddScheduleInfoAsync(AddScheduleInfoCommand command);
+        Task<bool> AddScheduleInfoAsync(AddScheduleInfoCommand command);
 
         ///// <summary>
         /////ادیت کردن  

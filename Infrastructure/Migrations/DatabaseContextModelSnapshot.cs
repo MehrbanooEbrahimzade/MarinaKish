@@ -15,7 +15,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -25,6 +25,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("DisLike");
+
+                    b.Property<string>("FullName");
 
                     b.Property<Guid>("FunId");
 
@@ -36,9 +38,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Text");
 
-                    b.Property<string>("UserName");
-
-                    b.Property<string>("UserPhoneNumber");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 

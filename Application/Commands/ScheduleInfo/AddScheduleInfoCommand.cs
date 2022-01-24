@@ -7,6 +7,7 @@ namespace Application.Commands.ScheduleInfo
     {
         public Guid FunId { get; set; }
 
+        public Guid ScheduleInfoId { get; set; }
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }

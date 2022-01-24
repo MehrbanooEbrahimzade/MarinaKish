@@ -24,15 +24,19 @@ namespace Marina_Club.Controllers
         ///// <summary>
         ///// تمدید اطلاعات سانس
         ///// </summary>
-        [HttpPost]
-        public async Task<IActionResult> AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> AddScheduleInfoAsync(Guid id, AddScheduleInfoCommand command)
         {
+            command.ScheduleInfoId = id;
+
             if (!command.Validate())
             {
                 BadReq(ApiMessage.WrongInformation);
             }
 
-            var result = _scheduleInfoService.AddScheduleInfoAsync(command);
+            var result =await _scheduleInfoService.AddScheduleInfoAsync(command);
+            if (result == false)
+                throw new Exception(ApiMessage.BadRequest);
 
             return OkResult(ApiMessage.Ok);
         }

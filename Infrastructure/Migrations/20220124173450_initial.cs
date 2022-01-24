@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,14 +27,14 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     SubmitDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     FunId = table.Column<Guid>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     Like = table.Column<int>(nullable: false),
-                    DisLike = table.Column<int>(nullable: false),
-                    UserPhoneNumber = table.Column<string>(nullable: true)
+                    DisLike = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -21,9 +21,8 @@ namespace Infrastructure.Repository.Classes
             try
             {
 
-              var result=  dbSet.AddAsync(scheduleInfo);
-              if (result == null)
-                  throw new Exception("");
+                var result = dbSet.AddAsync(scheduleInfo);
+
                 return true;
             }
             catch (Exception ex)
@@ -62,12 +61,12 @@ namespace Infrastructure.Repository.Classes
                     dbSet.Remove(scheduleInfo);
                     return true;
                 }
-                 
+
                 return false;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "{Repo} Delete method error",typeof(ScheduleInfoRepository));
+                _logger.LogError(ex, "{Repo} Delete method error", typeof(ScheduleInfoRepository));
                 return false;
             }
 

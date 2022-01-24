@@ -67,7 +67,7 @@ namespace Application.Services.classes
 
             fun.UpdateFun(command.Name, command.About, command.Icon, command.BackgroundPicture, command.Video /*command.SliderPictures.ToModel(),*/);
 
-            var getschedule = await _unitOfWork.Schedules.GetSchedulesForFunAsync(command.FunId);
+            //var getschedule = await _unitOfWork.Schedules.GetSchedulesForFunAsync(command.FunId);
 
             //foreach (var item in getschedule)
             //{

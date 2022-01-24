@@ -30,28 +30,30 @@ namespace Application.Services.classes
         /// <summary> 
         ///اضافه کردن اطلاعات سانس و ساخت سانس از روی اطلاعاتش
         /// </summary>
-        public async Task AddScheduleInfoAsync(AddScheduleInfoCommand command)
+        public async Task<bool> AddScheduleInfoAsync(AddScheduleInfoCommand command)
         {
             var checkgetfun = await _unitOfWork.ScheduleInfos.GetFunById(command.FunId);
-            if (checkgetfun == null)
+            if (checkgetfun == false)
                 throw new Exception("چنین تفریحی یافت نشد");
 
-            var scheduleInfo = command.ToModel();
+            //var scheduleInfo = new ScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration, command.TotalCapacity, 
+            //     command.PresenceCapacity, command.OnlineCapacity, command.Amount, command.FunId);
 
-            var addschduleinfo = await _unitOfWork.ScheduleInfos.AddAsync(scheduleInfo);
+            var getschedule = await _unitOfWork.ScheduleInfos.GetByIdAsync(command.ScheduleInfoId);
+            if (getschedule == null)
+                throw new Exception("چنین اطلاعات سانسی وجود ندارد");
 
-            if (addschduleinfo == false)
-                throw new ArgumentNullException("عملیتات اضافه کردن اطلاعات سانس انجام نشد");
-
+            getschedule.UpdateScheduleInfo(command.StartTime, command.EndTime, command.GapTime, command.Duration, command.TotalCapacity,
+                command.PresenceCapacity, command.OnlineCapacity, command.Amount);
 
 
             var addschedule = _funService.CreateAndAddSchedule(command);
             if (addschedule == null)
                 throw new Exception("عملیات اضافه کردن سانس انحام نشد");
 
-             _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();
 
-
+            return true;
         }
 
         /// <summary>
