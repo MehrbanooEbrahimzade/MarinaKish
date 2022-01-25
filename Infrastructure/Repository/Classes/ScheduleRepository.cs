@@ -20,7 +20,7 @@ namespace Infrastructure.Repository.Classes
 
         /// <summary>
         /// اضافه کردن سانس به تیبل
-        /// </summary>
+        /// </summary> 
         public override async Task<bool> AddAsync(Schedule schedule)
         {
             try
@@ -227,6 +227,26 @@ namespace Infrastructure.Repository.Classes
                 return null;
             }
 
+        }
+        /// <summary>
+        /// دریافت اخرین تاریخ 
+        /// </summary>
+        /// <param name="id"></param>
+        public async Task<List<Schedule>> GetEndDate(Guid id)
+        {
+            try
+            {
+                var getdate = await dbSet.FromSql($"select top 1  *  from Schedules where  funid={id} order by Date DESC; ").ToListAsync();
+                if (getdate == null)
+                    throw new Exception("چنین تفریحی یافت نشد");
+
+                return getdate;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} Get  schedule date error  ", typeof(ScheduleRepository));
+                return null;
+            }
         }
     }
 }

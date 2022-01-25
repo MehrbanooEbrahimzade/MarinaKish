@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Domain.Models
 {
@@ -27,15 +28,23 @@ namespace Domain.Models
             this.Price = price;
             this.Percent = percent;
         }
+
+        public void UpdateSchedule(TimeSpan stattime, TimeSpan edetime, DateTime date, decimal price)
+        {
+            this.StartTime = stattime;
+            this.EndTime = edetime;
+            this.Date = date;
+            this.Price = price;
+        }
         private Schedule() { }
 
-        
+
         public Guid FunId { get; private set; }
         public Guid Id { get; private set; }
 
         /// <summary>
         /// تخفیف
-        /// </summary>
+        /// </summary> 
         public Percent Percent { get; private set; }
         /// <summary>
         ///  ساعت شروع سانس

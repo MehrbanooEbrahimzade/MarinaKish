@@ -14,7 +14,7 @@ namespace Application.Commands.Schedule
         /// آیدی تفریح
         /// </summary> 
         public Guid FunId { get; set; }
-
+         
 
         public override bool Validate()
         {

@@ -5,6 +5,7 @@ using System.Globalization;
 using Application.Commands;
 using Application.Commands.Schedule;
 using Application.Services.interfaces;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using Infrastructure.Extensions;
 
@@ -95,5 +96,43 @@ namespace Marina_Club.Controllers
 
             return OkResult(ApiMessage.Ok);
         }
+
+
+        /// <summary>
+        /// ویرایش سانس
+        /// </summary>
+        [HttpPut("{id}/ScheduleUpdate")]
+
+        public async Task<IActionResult> UpdateSchedule(Guid id,UpdateScheduleCommand command)
+        {
+            command.ScheduleId = id;
+
+            if (!command.Validate())
+            {
+                return BadReq(ApiMessage.BadRequest, new {Request = "1-ای دیه سانس را وارد کنید"});
+            }
+
+            var result = await _scheduleService.UpdateSchedule(command);
+            if (result == false)
+                throw new Exception(ApiMessage.BadRequest);
+
+            return OkResult(ApiMessage.UpdateSchedule);
+
+        }
+
+        /// <summary>
+        /// گرفتن اخرین زمان سانس یک تفریح 
+        /// </summary>
+        [HttpGet("{id}/getdate")]
+        public async Task<IActionResult> GetEndDate(Guid id)
+        {
+            var result = await _scheduleService.GetTimeAndId(id);
+
+            if (result == null)
+                throw new Exception("عملیات با خطا مواجه شد");
+
+            return OkResult(ApiMessage.Ok, new {result});
+        }
+
     }
 }

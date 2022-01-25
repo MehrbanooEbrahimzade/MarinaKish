@@ -37,5 +37,9 @@ namespace Domain.RepasitoryInterfaces
         /// </summary>
         Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime dateTime);
 
+        /// <summary>
+        /// گرفتن اخرین زمان سانس 
+        /// </summary>
+        Task<List<Schedule>> GetEndDate(Guid id);
     }
 }

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace Application.Mappers
 {
@@ -67,6 +69,7 @@ namespace Application.Mappers
                 PhoneNumber = x.PhoneNumber,
                 FullName = x.FullName,
                 NationalCode = x.NationalCode,
+                isactive = x
 
                 //UserName = user.UserName,
                 //Gender = user.Gender,
@@ -402,167 +405,183 @@ namespace Application.Mappers
                 FullName = x.FullName,
 
             }).ToList();
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل فایل به dto فایل
-            //        /// </summary>
-            //        public static FilesDto ToDto(this MyFile file)
-            //        {
-            //            PersianCalendar persianParse = new PersianCalendar();
-            //            string shamsiPlaceDate = string.Format("{0}/{1}/{2} {3}:{4}",
-            //                persianParse.GetYear(file.PlaceDate), persianParse.GetMonth(file.PlaceDate), persianParse.GetDayOfMonth(file.PlaceDate),
-            //                persianParse.GetHour(file.PlaceDate), persianParse.GetMinute(file.PlaceDate));
-
-            //            return new FilesDto()
-            //            {
-            //                #region Select
-            //                commentId = file.commentId,
-            //                Name = file.Name,
-            //                ShamsiPlaceDate = shamsiPlaceDate,
-            //                isActive = file.IsActive
-            //                #endregion
-            //            };
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل لیست فایل به dto لیست فایل
-            //        /// </summary>
-            //        public static List<FilesDto> ToDto(this List<MyFile> pics)
-            //        {
-            //            return pics.Select(x => new FilesDto
-            //            {
-            //                #region Select
-
-            //                commentId = x.commentId,
-            //                Name = x.Name,
-            //                ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
-            //                isActive = x.IsActive
-
-            //                #endregion
-            //            }).ToList();
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل تالار گفت و گو به dto تالار گفت و گو
-            //        /// </summary>
-            //        public static ConversationDto ToDto(this Conversation conversation)
-            //        {
-            //            PersianCalendar persianParse = new PersianCalendar();
-            //            string shamsiCreatedTime = string.Format("{0}/{1}/{2} {3}:{4}",
-            //                persianParse.GetYear(conversation.CreatedTime), persianParse.GetMonth(conversation.CreatedTime), persianParse.GetDayOfMonth(conversation.CreatedTime),
-            //                persianParse.GetHour(conversation.CreatedTime), persianParse.GetMinute(conversation.CreatedTime));
-
-            //            string shamsiLastActivity = string.Format("{0}/{1}/{2} {3}:{4}",
-            //                persianParse.GetYear(conversation.LastActivity), persianParse.GetMonth(conversation.LastActivity), persianParse.GetDayOfMonth(conversation.LastActivity),
-            //                persianParse.GetHour(conversation.LastActivity), persianParse.GetMinute(conversation.LastActivity));
-            //            return new ConversationDto
-            //            {
-            //                #region Select
-
-            //                commentId = conversation.commentId,
-            //                Title = conversation.Title,
-            //                Priority = conversation.Priority,
-            //                ShamsiLastActivity = shamsiLastActivity,
-            //                CreatedTime = shamsiCreatedTime
-
-            //                #endregion
-            //            };
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل لیست تالار گفت و گو به dto لیست تالار گفت و گو
-            //        /// </summary>
-            //        public static List<ConversationDto> ToDto(this List<Conversation> conversations)
-            //        {
-            //            return conversations.Select(x => new ConversationDto
-            //            {
-            //                #region Select
-
-            //                commentId = x.commentId,
-            //                Title = x.Title,
-            //                Priority = x.Priority,
-            //                ShamsiLastActivity = x.ToDto().ShamsiLastActivity,
-            //                CreatedTime = x.ToDto().CreatedTime
-
-            //                #endregion
-            //            }).ToList();
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل پیام به dto پیام
-            //        /// </summary>
-            //        public static MessageDto ToDto(this Message message)
-            //        {
-
-            //            PersianCalendar persianParse = new PersianCalendar();
-            //            string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-            //                persianParse.GetYear(message.SubmitDate), persianParse.GetMonth(message.SubmitDate), persianParse.GetDayOfMonth(message.SubmitDate),
-            //                persianParse.GetHour(message.SubmitDate), persianParse.GetMinute(message.SubmitDate));
-
-            //            return new MessageDto
-            //            {
-            //                #region Select
-
-            //                commentId = message.commentId,
-            //                UserName = message.UserName,
-            //                ShamsiPlaceDate = persianDate,
-            //                Text = message.Text,
-            //                ConversationID = message.ConversationId,
-            //                MessageStatus = message.MessageStatus
-
-            //                #endregion
-            //            };
-            //        }
-
-            //        /// <summary>
-            //        /// تبدیل لیست پیام به dto لیست پیام
-            //        /// </summary>
-            //        public static List<MessageDto> ToDto(this List<Message> messages)
-            //        {
-            //            return messages.Select(x => new MessageDto
-            //            {
-            //                #region Select
-
-            //                commentId = x.commentId,
-            //                UserName = x.UserName,
-            //                ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
-            //                Text = x.Text,
-            //                ConversationID = x.ConversationId,
-            //                MessageStatus = x.MessageStatus
-
-            //                #endregion
-            //            }).ToList();
-            //        }
-
-            //        public static CashTransferDto ToDto(this CashTransfer marineCoin)
-            //        {
-            //            PersianCalendar persianParse = new PersianCalendar();
-            //            string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-            //                persianParse.GetYear(marineCoin.TransferDate), persianParse.GetMonth(marineCoin.TransferDate), persianParse.GetDayOfMonth(marineCoin.TransferDate),
-            //                persianParse.GetHour(marineCoin.TransferDate), persianParse.GetMinute(marineCoin.TransferDate));
-
-            //            return new CashTransferDto
-            //            {
-            //                commentId = marineCoin.commentId,
-            //                MarineCoin = marineCoin.MarineCoin,
-            //                PersianTransferDate = persianDate,
-            //                TransferNumber = marineCoin.TransferNumber,
-            //                UserId = marineCoin.UserId
-            //            };
-            //        }
-
-            //        public static List<CashTransferDto> ToDto(this List<CashTransfer> marineCoins)
-            //        {
-            //            return marineCoins.Select(x => new CashTransferDto
-            //            {
-            //                commentId = x.commentId,
-            //                MarineCoin = x.MarineCoin,
-            //                PersianTransferDate = x.ToDto().PersianTransferDate,
-            //                TransferNumber = x.TransferNumber,
-            //                UserId = x.UserId
-            //            }).ToList();
-            //        }
         }
+
+        /// <summary>
+        /// تاریخ و ای دیه اخرین سانس به dto
+        /// </summary>
+        public static DateAndTimeScheduleDto ToDtos(this Schedule schedule)
+        {
+            return new DateAndTimeScheduleDto()
+            {
+                ScheduleId = schedule.Id,
+                DateTime = schedule.Date
+            };
+        }
+
+
+
+
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل فایل به dto فایل
+        //        /// </summary>
+        //        public static FilesDto ToDto(this MyFile file)
+        //        {
+        //            PersianCalendar persianParse = new PersianCalendar();
+        //            string shamsiPlaceDate = string.Format("{0}/{1}/{2} {3}:{4}",
+        //                persianParse.GetYear(file.PlaceDate), persianParse.GetMonth(file.PlaceDate), persianParse.GetDayOfMonth(file.PlaceDate),
+        //                persianParse.GetHour(file.PlaceDate), persianParse.GetMinute(file.PlaceDate));
+
+        //            return new FilesDto()
+        //            {
+        //                #region Select
+        //                commentId = file.commentId,
+        //                Name = file.Name,
+        //                ShamsiPlaceDate = shamsiPlaceDate,
+        //                isActive = file.IsActive
+        //                #endregion
+        //            };
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل لیست فایل به dto لیست فایل
+        //        /// </summary>
+        //        public static List<FilesDto> ToDto(this List<MyFile> pics)
+        //        {
+        //            return pics.Select(x => new FilesDto
+        //            {
+        //                #region Select
+
+        //                commentId = x.commentId,
+        //                Name = x.Name,
+        //                ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
+        //                isActive = x.IsActive
+
+        //                #endregion
+        //            }).ToList();
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل تالار گفت و گو به dto تالار گفت و گو
+        //        /// </summary>
+        //        public static ConversationDto ToDto(this Conversation conversation)
+        //        {
+        //            PersianCalendar persianParse = new PersianCalendar();
+        //            string shamsiCreatedTime = string.Format("{0}/{1}/{2} {3}:{4}",
+        //                persianParse.GetYear(conversation.CreatedTime), persianParse.GetMonth(conversation.CreatedTime), persianParse.GetDayOfMonth(conversation.CreatedTime),
+        //                persianParse.GetHour(conversation.CreatedTime), persianParse.GetMinute(conversation.CreatedTime));
+
+        //            string shamsiLastActivity = string.Format("{0}/{1}/{2} {3}:{4}",
+        //                persianParse.GetYear(conversation.LastActivity), persianParse.GetMonth(conversation.LastActivity), persianParse.GetDayOfMonth(conversation.LastActivity),
+        //                persianParse.GetHour(conversation.LastActivity), persianParse.GetMinute(conversation.LastActivity));
+        //            return new ConversationDto
+        //            {
+        //                #region Select
+
+        //                commentId = conversation.commentId,
+        //                Title = conversation.Title,
+        //                Priority = conversation.Priority,
+        //                ShamsiLastActivity = shamsiLastActivity,
+        //                CreatedTime = shamsiCreatedTime
+
+        //                #endregion
+        //            };
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل لیست تالار گفت و گو به dto لیست تالار گفت و گو
+        //        /// </summary>
+        //        public static List<ConversationDto> ToDto(this List<Conversation> conversations)
+        //        {
+        //            return conversations.Select(x => new ConversationDto
+        //            {
+        //                #region Select
+
+        //                commentId = x.commentId,
+        //                Title = x.Title,
+        //                Priority = x.Priority,
+        //                ShamsiLastActivity = x.ToDto().ShamsiLastActivity,
+        //                CreatedTime = x.ToDto().CreatedTime
+
+        //                #endregion
+        //            }).ToList();
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل پیام به dto پیام
+        //        /// </summary>
+        //        public static MessageDto ToDto(this Message message)
+        //        {
+
+        //            PersianCalendar persianParse = new PersianCalendar();
+        //            string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
+        //                persianParse.GetYear(message.SubmitDate), persianParse.GetMonth(message.SubmitDate), persianParse.GetDayOfMonth(message.SubmitDate),
+        //                persianParse.GetHour(message.SubmitDate), persianParse.GetMinute(message.SubmitDate));
+
+        //            return new MessageDto
+        //            {
+        //                #region Select
+
+        //                commentId = message.commentId,
+        //                UserName = message.UserName,
+        //                ShamsiPlaceDate = persianDate,
+        //                Text = message.Text,
+        //                ConversationID = message.ConversationId,
+        //                MessageStatus = message.MessageStatus
+
+        //                #endregion
+        //            };
+        //        }
+
+        //        /// <summary>
+        //        /// تبدیل لیست پیام به dto لیست پیام
+        //        /// </summary>
+        //        public static List<MessageDto> ToDto(this List<Message> messages)
+        //        {
+        //            return messages.Select(x => new MessageDto
+        //            {
+        //                #region Select
+
+        //                commentId = x.commentId,
+        //                UserName = x.UserName,
+        //                ShamsiPlaceDate = x.ToDto().ShamsiPlaceDate,
+        //                Text = x.Text,
+        //                ConversationID = x.ConversationId,
+        //                MessageStatus = x.MessageStatus
+
+        //                #endregion
+        //            }).ToList();
+        //        }
+
+        //        public static CashTransferDto ToDto(this CashTransfer marineCoin)
+        //        {
+        //            PersianCalendar persianParse = new PersianCalendar();
+        //            string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
+        //                persianParse.GetYear(marineCoin.TransferDate), persianParse.GetMonth(marineCoin.TransferDate), persianParse.GetDayOfMonth(marineCoin.TransferDate),
+        //                persianParse.GetHour(marineCoin.TransferDate), persianParse.GetMinute(marineCoin.TransferDate));
+
+        //            return new CashTransferDto
+        //            {
+        //                commentId = marineCoin.commentId,
+        //                MarineCoin = marineCoin.MarineCoin,
+        //                PersianTransferDate = persianDate,
+        //                TransferNumber = marineCoin.TransferNumber,
+        //                UserId = marineCoin.UserId
+        //            };
+        //        }
+
+        //        public static List<CashTransferDto> ToDto(this List<CashTransfer> marineCoins)
+        //        {
+        //            return marineCoins.Select(x => new CashTransferDto
+        //            {
+        //                commentId = x.commentId,
+        //                MarineCoin = x.MarineCoin,
+        //                PersianTransferDate = x.ToDto().PersianTransferDate,
+        //                TransferNumber = x.TransferNumber,
+        //                UserId = x.UserId
+        //            }).ToList();
+        //        }
     }
 }

@@ -12,7 +12,7 @@ namespace Application.Services.interfaces
         /// ساخت پیشنهاد ویژه  
         /// </summary>
         Task AddSpecialOffer(AddSpecialOfferCommand command);
-
+         
         /// <summary>
         /// دریافت یک سانس 
         /// </summary>
@@ -37,9 +37,21 @@ namespace Application.Services.interfaces
         /// /آپدیت پیشنهاد ویژه 
         /// </summary>
         /// <param name="command"></param>
-        /// <returns></returns>
+       Task UpdateSpecialOff(UpdateSpecialFunCommand command);
 
-        Task UpdateSpecialOff(UpdateSpecialFunCommand command);
+
+        /// <summary>
+        /// آپدیت سانس
+        /// </summary>
+        Task<bool> UpdateSchedule(UpdateScheduleCommand command);
+
+
+        /// <summary>
+        /// گرفتن اخرین تاریخ سانس ایجاد شده برای یک تفریح
+        /// </summary>
+        Task<DateAndTimeScheduleDto> GetTimeAndId(Guid id);
+
+
         //    /// <summary>
         //    /// ساختن سانس
         //    /// </summary> z

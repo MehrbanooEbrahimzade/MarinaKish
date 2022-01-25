@@ -9,6 +9,7 @@ using Application.Services.interfaces;
 using Domain.IConfiguration;
 using Domain.RepasitoryInterfaces;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services.classes
@@ -24,6 +25,9 @@ namespace Application.Services.classes
             this._unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// ساخت پیشنهاد ویژه
+        /// </summary>
         public async Task AddSpecialOffer(AddSpecialOfferCommand command)
         {
             var searchnameRecreation = await _unitOfWork.Schedules.GetByIdAsync(command.ShceduleId);
@@ -44,6 +48,10 @@ namespace Application.Services.classes
             await _unitOfWork.CompleteAsync();
 
         }
+
+        /// <summary>
+        /// آپدیت پیشنهاد ویژه
+        /// </summary>
         public async Task UpdateSpecialOff(UpdateSpecialFunCommand command)
         {
             var specialOffer = await _unitOfWork.Schedules.GetByIdAsync(command.ShceduleId);
@@ -112,6 +120,48 @@ namespace Application.Services.classes
             await _unitOfWork.CompleteAsync();
             return true;
         }
+
+
+        /// <summary>
+        /// ویزایش سانس
+        /// </summary>
+
+        public async Task<bool> UpdateSchedule(UpdateScheduleCommand command)
+        {
+            var checkexistschedule = await _unitOfWork.Schedules.GetByIdAsync(command.ScheduleId);
+
+            if (checkexistschedule == null)
+                throw new NotFoundExeption(nameof(UpdateScheduleCommand), command.ScheduleId, "scheduleid is");
+
+            checkexistschedule.UpdateSchedule(command.StartTime, command.EndTime, command.Date, command.Price);
+
+            await _unitOfWork.CompleteAsync();
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// گرفتن اخرین تاریخ سانس ایجاد شده برای یک تفریح
+        /// </summary>
+        public async Task<DateAndTimeScheduleDto> GetTimeAndId(Guid id)
+        {
+
+            var checkschedule = await _unitOfWork.Schedules.GetEndDate(id);
+            if (checkschedule == null)
+                throw new NotFoundExeption(nameof(id), id, "scheduleid is");
+
+            DateAndTimeScheduleDto z = new DateAndTimeScheduleDto();
+
+            foreach (var VARIABLE in checkschedule)
+            {
+                z= VARIABLE.ToDtos();
+            }
+
+            return z;
+        }
+
+
 
 
     }
