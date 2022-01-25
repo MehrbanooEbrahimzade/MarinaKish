@@ -51,6 +51,8 @@ namespace Application.Services.interfaces
         /// </summary>
         Task<DateAndTimeScheduleDto> GetTimeAndId(Guid id);
 
+  
+
 
         //    /// <summary>
         //    /// ساختن سانس

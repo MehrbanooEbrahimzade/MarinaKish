@@ -69,7 +69,6 @@ namespace Application.Mappers
                 PhoneNumber = x.PhoneNumber,
                 FullName = x.FullName,
                 NationalCode = x.NationalCode,
-                isactive = x
 
                 //UserName = user.UserName,
                 //Gender = user.Gender,
