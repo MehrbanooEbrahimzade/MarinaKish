@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220125094326_addedprofilepic")]
-    partial class addedprofilepic
+    [Migration("20220125124829_profilepicture")]
+    partial class profilepicture
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -276,6 +276,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("ProfilePicture");
 
                     b.Property<int>("RoleType");
 

@@ -45,6 +45,7 @@ namespace Application.Mappers
                 FullName = user.FullName,
                 NationalCode = user.NationalCode,
                 //BirthDate = user.BirthDay,
+                ProfilePicture = user.ProfilePicture
             };
         }
 

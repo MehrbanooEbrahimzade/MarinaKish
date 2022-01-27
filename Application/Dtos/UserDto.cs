@@ -11,7 +11,7 @@ namespace Application.Dtos
         public string PhoneNumber { get; set; }
         public string  FullName { get; set; }
         public string  NationalCode { get; set; }
-
+        public string ProfilePicture { get; set;  }
     }
     public class CreditCardDto
     {

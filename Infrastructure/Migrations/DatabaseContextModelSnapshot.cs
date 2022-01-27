@@ -275,6 +275,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("ProfilePicture");
+
                     b.Property<int>("RoleType");
 
                     b.Property<string>("SecurityStamp");

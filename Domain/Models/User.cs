@@ -30,11 +30,12 @@ namespace Domain.Models
         }
 
         public void UpdateProfile(string firstName, string lastName,
-            string nationalCode, DateTime birthDay, CreditCard creditCard)
+            string nationalCode, DateTime birthDay, string profilePicture , CreditCard creditCard)
         {
             FullName = GenerateFullName(firstName, lastName);
             NationalCode = nationalCode;
             BirthDay = birthDay;
+            ProfilePicture = profilePicture;
             CreditCard = creditCard;
         }
         
@@ -63,6 +64,7 @@ namespace Domain.Models
         /// </summary>
         public DateTime BirthDay { get; private set; }
 
+        public string  ProfilePicture { get; private set; }
         /// <summary>
         /// پشتیبانی
         /// </summary>

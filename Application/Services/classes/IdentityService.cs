@@ -125,7 +125,7 @@ namespace Application.Services.classes
             var user = _userManager.Users.SingleOrDefault(item => item.Id == command.Id.ToString());
 
             user.UpdateProfile(command.FirstName, command.LastName
-                             , command.NationalCode, command.BirthDay, command.CreditCardCommand.ToModel());
+                             , command.NationalCode, command.BirthDay, command.ProfilePicture,command.CreditCardCommand.ToModel());
             await _userManager.UpdateAsync(user);
             return user;
 

@@ -22,6 +22,7 @@ namespace Application.Commands.User
         /// </summary>
         public DateTime BirthDay { get; set; }
 
+        public string ProfilePicture { get; set;  }
         /// <summary>
         /// کد ملی
         /// </summary>
