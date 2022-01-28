@@ -100,10 +100,7 @@ namespace Application.Services.classes
 
             var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, beforDate, afterDate);
 
-            if (GetAll == null)
-                throw new Exception("چنین سانسی هایی یافت نشد");
-
-            return GetAll.ToDto();
+            return GetAll?.ToDto();
         }
 
 
