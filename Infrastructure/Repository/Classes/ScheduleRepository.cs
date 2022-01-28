@@ -213,9 +213,6 @@ namespace Infrastructure.Repository.Classes
             
                 var getAll = await dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {beforDate} and {afterDate} order by [Date],startTime;").ToListAsync();
 
-                if (getAll.Count == 0)
-                    throw new Exception("چنین سانس هایی وجود ندارد");
-
                 return getAll;
             }
             catch (Exception ex)
