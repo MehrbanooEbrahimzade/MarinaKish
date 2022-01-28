@@ -12,7 +12,7 @@ namespace Marina_Club
             using (provider.CreateScope())
             using (var context = provider.GetRequiredService<DatabaseContext>())
             {
-                context.Database.Migrate();
+                //context.Database.Migrate();
             }
         }
     }

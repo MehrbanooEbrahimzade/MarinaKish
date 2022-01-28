@@ -82,8 +82,23 @@ namespace Application.Services.classes
         /// </summary>
         public async Task<List<ScheduleDto>> GetAllSchedule(GetAllByDateTimeCommand command)
         {
+            DateTime dateTime = command.DateTime;
+            var DayOfWeek = (int)dateTime.DayOfWeek;
 
-            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, command.DateTime);
+            var after = 5 - DayOfWeek;
+            var befor = DayOfWeek + 1;
+
+            if (DayOfWeek == 6)
+                befor = 0;
+
+            if (after == -1)
+                after = 6;
+
+
+            var beforDate = dateTime.AddDays(-befor);
+            var afterDate = dateTime.AddDays(+after);
+
+            var GetAll = await _unitOfWork.Schedules.GetAllByDateAsync(command.FunId, beforDate, afterDate);
 
             if (GetAll == null)
                 throw new Exception("چنین سانسی هایی یافت نشد");

@@ -35,7 +35,7 @@ namespace Domain.RepasitoryInterfaces
         /// <summary>
         /// دریافت تمام سانس های تفریح با تاریخ 
         /// </summary>
-        Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime dateTime);
+        Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime beforDate, DateTime afterDate);
 
         /// <summary>
         /// گرفتن اخرین زمان سانس 

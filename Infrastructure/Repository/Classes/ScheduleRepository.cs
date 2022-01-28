@@ -206,19 +206,17 @@ namespace Infrastructure.Repository.Classes
         /// <summary>
         /// دریافت تمام سانس های تفریح با تاریخ 
         /// </summary>
-        public async Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime dateTime)
+        public async Task<List<Schedule>> GetAllByDateAsync(Guid id, DateTime beforDate, DateTime afterDate)
         {
             try
             {
+            
+                var getAll = await dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {beforDate} and {afterDate} order by [Date],startTime;").ToListAsync();
 
-                var dateTime1 = dateTime.AddDays(7);
-                //var getall = dbSet.FromSql($"select * from Schedules where FunId={id} and Date between {dateTime} and {dateTime1}").ToListAsync();
-                var getall = await dbSet.Where(w => w.FunId == id && w.Date >= dateTime && w.Date <= dateTime1).ToListAsync();
-
-                if (getall.Count == 0)
+                if (getAll.Count == 0)
                     throw new Exception("چنین سانس هایی وجود ندارد");
 
-                return getall;
+                return getAll;
             }
             catch (Exception ex)
             {

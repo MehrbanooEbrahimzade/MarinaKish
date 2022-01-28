@@ -63,14 +63,12 @@ namespace Marina_Club.Controllers
         /// <summary>
         /// گرفتن همه سانس ها
         /// </summary>
-        [HttpGet("{id}/GetAll")]
-        public async Task<IActionResult> GetAllSchedule(GetAllByDateTimeCommand command, Guid id)
+        [HttpPost("GetAll")]
+        public async Task<IActionResult> GetAllSchedule(GetAllByDateTimeCommand command)
         {
-            command.FunId = id;
+            var getAll = await _scheduleService.GetAllSchedule(command);
 
-            var getall = await _scheduleService.GetAllSchedule(command);
-
-            return OkResult(ApiMessage.GetAllScheduleForFun, getall);
+            return OkResult(ApiMessage.GetAllScheduleForFun, getAll);
         }
 
 
