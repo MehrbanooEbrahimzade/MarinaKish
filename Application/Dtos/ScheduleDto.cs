@@ -41,6 +41,9 @@ namespace Application.Dtos
         /// </summary>
         public Percent Discount{ get; set; }
 
-
+        /// <summary>
+        /// عدد روز هفته
+        /// </summary>
+        public int? DayOfWeek { get; set; }
     }
 }

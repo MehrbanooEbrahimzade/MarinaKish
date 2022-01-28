@@ -225,15 +225,6 @@ namespace Application.Mappers
         /// </summary>
         public static List<ScheduleDto> ToDto(this List<Schedule> schedules)
         {
-            //foreach (var schedule in schedules)
-            //{
-            //    PersianCalendar persianParse = new PersianCalendar();
-            //    string persianDate = string.Format("{0}/{1}/{2} {3}:{4}",
-            //        persianParse.GetYear(schedule.ExecuteDateTime), persianParse.GetMonth(schedule.ExecuteDateTime), persianParse.GetDayOfMonth(schedule.ExecuteDateTime),
-            //        persianParse.GetHour(schedule.ExecuteDateTime), persianParse.GetMinute(schedule.ExecuteDateTime));
-            //    schedule.ToDto().ExcutePersianDateTime = persianDate;
-            //}
-
             return schedules.Select(x => new ScheduleDto()
             {
                 #region Select
@@ -244,7 +235,8 @@ namespace Application.Mappers
                 Discount = x.Percent,
                 Date = x.Date,
                 StartTime = x.StartTime,
-                EndTime = x.EndTime
+                EndTime = x.EndTime,
+                DayOfWeek = (int)x.Date.DayOfWeek
                 #endregion
             }).ToList();
         }
